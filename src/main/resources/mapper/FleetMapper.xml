@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.bbs.dao.AdminDao">
+    <select id="findByAdminName" parameterType="String" resultType="User">
+        select * from user where userName = #{userName} and type=2
+    </select>
+</mapper>

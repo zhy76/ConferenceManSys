@@ -8,6 +8,10 @@
     </script>
 </head>
 <body>
-    
+    <div th:text="${msg}">
+
+    </div>
+    <div th:utext="${msg}"></div>
+    <h3 th:each="users:${users}" th:text="${users}"></h3>
 </body>
 </html>
