@@ -1,7 +1,11 @@
 package com.conference.mapper;
 
+import com.conference.entity.Fleet;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @ClassName: FleetMapper
@@ -20,4 +24,7 @@ public interface FleetMapper {
  *  5. 删除车队
  */
 
+    List<Fleet> findAllFleet();
+
+    void deleteFleetById(@Param("fleetId") int fleetId);
 }

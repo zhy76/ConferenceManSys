@@ -1,26 +1,31 @@
 package com.conference.entity;
 
 
+
 /**
  * @ClassName: Driver
  * @Description: TODO
  * @Author: Lance
  * @Date: 2020/12/1 16:57
  */
+
+
 public class Driver {
     private int driverId;
-    private String driverDame;
+    private String driverName;
     private String carNumber;
+    private int fleetId;
     private String driverPass;
     private String driverPhone;
-    private Boolean isAssign;
+    private boolean isAssign;
 
     @Override
     public String toString() {
         return "Driver{" +
                 "driverId=" + driverId +
-                ", driverDame='" + driverDame + '\'' +
+                ", driverName='" + driverName + '\'' +
                 ", carNumber='" + carNumber + '\'' +
+                ", fleetId=" + fleetId +
                 ", driverPass='" + driverPass + '\'' +
                 ", driverPhone='" + driverPhone + '\'' +
                 ", isAssign=" + isAssign +
@@ -35,12 +40,12 @@ public class Driver {
         this.driverId = driverId;
     }
 
-    public String getDriverDame() {
-        return driverDame;
+    public String getDriverName() {
+        return driverName;
     }
 
-    public void setDriverDame(String driverDame) {
-        this.driverDame = driverDame;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
     public String getCarNumber() {
@@ -49,6 +54,14 @@ public class Driver {
 
     public void setCarNumber(String carNumber) {
         this.carNumber = carNumber;
+    }
+
+    public int getFleetId() {
+        return fleetId;
+    }
+
+    public void setFleetId(int fleetId) {
+        this.fleetId = fleetId;
     }
 
     public String getDriverPass() {
@@ -67,7 +80,7 @@ public class Driver {
         this.driverPhone = driverPhone;
     }
 
-    public Boolean getAssign() {
+    public boolean getAssign() {
         return isAssign;
     }
 

@@ -2,8 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.bbs.dao.AdminDao">
-    <select id="findByAdminName" parameterType="String" resultType="User">
-        select * from user where userName = #{userName} and type=2
+<mapper namespace="com.conference.mapper.DriverMapper">
+    <select id="findAllDriver" resultType="Driver">
+        select * from driver
     </select>
+
+    <select id="findFleetAllDriver" resultType="Driver">
+        select * from driver where fleet_id=#{fleetId}
+    </select>
+
+    <select id="findDriverById" resultType="Driver">
+        select * from driver where driver_id=#{driverId}
+    </select>
+<!--    <insert id="insertUser" parameterType="com.dahuici.zyb.entity.User" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert into user(name,sex,age) values(#{name},#{sex},#{age})-->
+<!--    </insert>-->
+
+    <insert id="addDriver" useGeneratedKeys="true" keyProperty="id" parameterType="Driver">
+        INSERT INTO driver(driver_name, car_number, fleet_id, driver_pass, driver_phone)
+        VALUES(#{driverName}, #{carNumber}, #{fleetId}, #{driverPass}, #{driverPhone})
+    </insert>
+
+
+    <delete id="deleteDriverById">
+        DELETE FROM driver WHERE driver_id=#{driverId}
+    </delete>
+
+
+
+<!--    <resultMap type="Driver" id="DriverResultMap" >-->
+<!--        <result property="driverId" column="driver_id"/>-->
+<!--    </resultMap>-->
 </mapper>
