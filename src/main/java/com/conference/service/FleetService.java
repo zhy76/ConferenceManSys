@@ -1,26 +1,14 @@
 package com.conference.service;
 
-import com.conference.entity.Fleet;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * @ClassName: FleetService
  * @Description: TODO
  * @Author: Lance
- * @Date: 2020/12/5 17:21
+ * @Date: 2020/12/2 21:16
  */
-public interface FleetService {
-    List<Fleet> findAllFleet();
+@Service("FleetService")
+public class FleetService {
 
-    Fleet findFleetById(Integer fleetId);
-
-    Fleet findFleetByPhone(String fleetPhone);
-
-    int deleteFleetById(Integer fleetId);
-
-    int addFleet(Fleet fleet);
-
-    int updateFleet(Fleet fleet);
 }

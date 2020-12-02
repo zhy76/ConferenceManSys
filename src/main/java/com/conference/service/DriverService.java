@@ -1,33 +1,22 @@
 package com.conference.service;
 
-import com.conference.entity.Driver;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
+import com.conference.mapper.DriverMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @ClassName: DriverService
- * @Description:
+ * @Description: TODO
  * @Author: Lance
- * @Date: 2020/12/5 17:20
+ * @Date: 2020/12/2 21:11
  */
-public interface DriverService {
+@Service("DriverService")
+public class DriverService {
 
-    List<Driver> findAllDriver();
+    @Autowired
+    DriverMapper driverMapper;
 
-    List<Driver> findFleetAllDriver(Integer fleetId);
 
-    Driver findDriverById(Integer driverId);
-
-    Driver findDriverByPhone(String driverPhone);
-
-    int updateDriver(Driver driver);
-
-    int addDriver(Driver driver);
-
-    int deleteDriverById(Integer driverId);
-
-    int updateDriverIsAssign(Integer driverId, Boolean isAssign);
 
 
 }

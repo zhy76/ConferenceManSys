@@ -1,47 +1,23 @@
 package com.conference.entity;
 
 
-import com.conference.util.vaild.DriverLogin;
-import com.conference.util.vaild.DriverRegister;
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 /**
  * @ClassName: Driver
- * @Description: todo https://www.jianshu.com/p/c8686fa5ef63
+ * @Description: TODO
  * @Author: Lance
  * @Date: 2020/12/1 16:57
  */
 
 
 public class Driver {
-
-    private Integer driverId;
-
-    @NotNull(message = "姓名不能为空", groups = {DriverRegister.class})
-    @Length(min = 1, max = 10, message = "姓名长度应该在1至10之间", groups = {DriverRegister.class})
-    @Pattern(regexp = "^[^\\s]+$", message = "用户名不能包含空白字符", groups = {DriverRegister.class})
+    private int driverId;
     private String driverName;
-    
     private String carNumber;
-
-    private Integer fleetId;
-
-
-
-    @NotNull(message = "密码不能为空", groups = {DriverRegister.class, DriverLogin.class})
-    @Length(min = 6, max = 26, message = "密码长度应该在6至26之间", groups = {DriverRegister.class})
-    @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符", groups = {DriverRegister.class, DriverLogin.class})
+    private int fleetId;
     private String driverPass;
-
-    @NotNull(message = "电话号码不能为空", groups = {DriverRegister.class, DriverLogin.class})
-    @Pattern(regexp = "^1[3456789]\\d{9}$", message = "电话不能包含空白或电话格式不正确", groups = {DriverRegister.class, DriverLogin.class})
     private String driverPhone;
-
-    private Boolean isAssign;
+    private boolean isAssign;
 
     @Override
     public String toString() {
@@ -56,25 +32,12 @@ public class Driver {
                 '}';
     }
 
-    public Integer getDriverId() {
+    public int getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(Integer driverId) {
+    public void setDriverId(int driverId) {
         this.driverId = driverId;
-    }
-
-    public Driver(Integer driverId, @NotNull(message = "姓名必须存在") @Length(min = 1, max = 10, message = "姓名长度应该在1至10之间") @Pattern(regexp = "^[^\\s]+$", message = "用户名不能包含空白字符") String driverName, String carNumber, Integer fleetId, @NotNull(message = "密码必须存在") @Length(min = 6, max = 26, message = "密码长度应该在6至26之间") @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符") String driverPass, @NotNull(message = "电话号码必须存在") @Pattern(regexp = "^1[3456789]\\d{9}$", message = "请输入正确的电话号码格式") String driverPhone, Boolean isAssign) {
-        this.driverId = driverId;
-        this.driverName = driverName;
-        this.carNumber = carNumber;
-        this.fleetId = fleetId;
-        this.driverPass = driverPass;
-        this.driverPhone = driverPhone;
-        this.isAssign = isAssign;
-    }
-
-    public Driver() {
     }
 
     public String getDriverName() {
@@ -93,11 +56,11 @@ public class Driver {
         this.carNumber = carNumber;
     }
 
-    public Integer getFleetId() {
+    public int getFleetId() {
         return fleetId;
     }
 
-    public void setFleetId(Integer fleetId) {
+    public void setFleetId(int fleetId) {
         this.fleetId = fleetId;
     }
 
@@ -117,7 +80,7 @@ public class Driver {
         this.driverPhone = driverPhone;
     }
 
-    public Boolean getAssign() {
+    public boolean getAssign() {
         return isAssign;
     }
 
