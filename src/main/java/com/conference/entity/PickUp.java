@@ -15,6 +15,6 @@ public class PickUp {
     private String trainNumber; // 车次航班号
     private Date toTime; //参会往时间
     private Date returnTime; //参会往时间
-    private Boolean isFinishPickUp; //是否完成接送
+    private Boolean isFinishPickup; //是否完成接送
 
 }

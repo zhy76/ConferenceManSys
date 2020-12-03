@@ -5,14 +5,28 @@
 
 
 <!--管理员接口对应的映射文件-->
+<!--namespace绑定一个Mapper接口-->
 <mapper namespace="com.conference.mapper.AdminMapper">
 
-<!--    <select id="getDepartments" resultType="Department">-->
-<!--       select * from admin;-->
-<!--    </select>-->
+    <!--    id对应方法名 resultType结果集类型-->
+    <select id="queryAdmins" resultType="Admin">
+       select * from admin;
+    </select>
 
-<!--    <select id="getDepartment" resultType="Department" parameterType="int">-->
-<!--       select * from department where id = #{id};-->
-<!--    </select>-->
+    <select id="queryAdminByAccountAndPass" resultType="Admin" >
+       select * from admin where admin_account = #{account} and admin_pass = #{pass};
+    </select>
+
+    <insert id="addAdmin" parameterType="Admin" >
+        insert into admin(admin_id,admin_name,admin_pass,admin_account) values(#{adminId},#{adminName},#{adminPass},#{adminAccount});
+    </insert>
+
+    <update id = "updateAdmin" parameterType="Admin">
+        update admin set admin_name=#{adminName},admin_pass=#{adminPass},admin_account=#{adminAccount} where id=#{id};
+    </update>
+
+    <delete id = "deleteAdmin">
+        delete from admin where admin_id = #{id};
+    </delete>
 
 </mapper>
