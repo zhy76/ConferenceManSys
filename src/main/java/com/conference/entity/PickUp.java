@@ -14,9 +14,9 @@ public class PickUp {
     private int participantId;
     private int driverId;
     private String trainNumber;
-    private Date toTime;
-    private Date returnTime;
-    private Boolean isFinishPickup;
+    private String toTime;
+    private String returnTime;
+    private boolean isFinishPickup;
 
     @Override
     public String toString() {
@@ -54,27 +54,27 @@ public class PickUp {
         this.trainNumber = trainNumber;
     }
 
-    public Date getToTime() {
+    public String getToTime() {
         return toTime;
     }
 
-    public void setToTime(Date toTime) {
+    public void setToTime(String toTime) {
         this.toTime = toTime;
     }
 
-    public Date getReturnTime() {
+    public String getReturnTime() {
         return returnTime;
     }
 
-    public void setReturnTime(Date returnTime) {
+    public void setReturnTime(String returnTime) {
         this.returnTime = returnTime;
     }
 
-    public Boolean getFinishPickup() {
+    public boolean isFinishPickup() {
         return isFinishPickup;
     }
 
-    public void setFinishPickup(Boolean finishPickup) {
+    public void setFinishPickup(boolean finishPickup) {
         isFinishPickup = finishPickup;
     }
 }

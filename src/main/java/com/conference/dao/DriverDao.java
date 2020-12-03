@@ -17,33 +17,23 @@ import java.util.List;
  */
 @Component
 @Mapper
-@Repository
-@Service
 public interface DriverDao {
-/**
- * 	1. 查询所有司机
- * 	2. 查询一个车队的司机
- * 	3. 按照id查询司机
- * 	4. 增
- * 	5. 改
- *  6. 删
- */
+
+    /**查询所有司机*/
     List<Driver> findAllDriver();
-
+    /**查询一个车队的司机*/
     List<Driver> findFleetAllDriver(@Param("fleetId") int fleetId);
-
+    /**按照id查询司机*/
     Driver findDriverById(@Param("driverId") int driverId);
-
-
-
-
+    /**改*/
     int updateDriver(@Param("driverId") int driverId, @Param("driverName")String driverName,
                       @Param("carNumber")String carNumber, @Param("fleetId")int fleetId,
                       @Param("driverPass")String driverPass, @Param("driverPhone")String driverPhone,
                       @Param("isAssign")boolean isAssign);
-
-
+    /**增*/
     int addDriver(@Param("driverName")String driverName, @Param("carNumber")String carNumber, @Param("fleetId")int fleetId, @Param("driverPass")String driverPass, @Param("driverPhone")String driverPhone);
-
+    /**删*/
     int deleteDriverById(@Param("driverId") int driverId);
+    /**修改司机的状态isAssign*/
+    int updateDriverIsAssign(@Param("driverId") int driverId, @Param("isAssign")boolean isAssign);
 }

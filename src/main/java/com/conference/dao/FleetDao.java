@@ -16,22 +16,13 @@ import java.util.List;
 @Component
 @Mapper
 public interface FleetDao {
-/**
- * 	1. 查询所有车队
- * 	2. 按id查询车队
- * 	3. 添加车队
- * 	4. 改
- *  5. 删
- */
-
+    /**查询所有车队*/
     List<Fleet> findAllFleet();
-
+    /**按id查询车队*/
     Fleet findFleetById(@Param("fleetId") int fleetId);
-
-
+    /**删*/
     int deleteFleetById(@Param("fleetId") int fleetId);
-
+    /**增*/
     int addFleet(@Param("fleetName")String fleetName, @Param("fleetPass")String fleetPass, @Param("fleetPhone")String fleetPhone);
-
 
 }
