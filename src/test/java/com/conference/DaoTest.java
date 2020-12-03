@@ -30,7 +30,7 @@ public class DaoTest {
 //        System.out.println(pickUpDao.updatePickUpByDriverId(1,1,"1","2020-10-10 10:50","2020-10-10 10:40",false));
 //        System.out.println(pickUpDao.updatePickUpByParticipantId(1,1,"1","2020-10-10 10:30","2020-10-10 10:40",false));
 //        System.out.println(pickUpDao.findAllFleetPickUp(1));
-        System.out.println(pickUpDao.addPickUp(1,1,"1","2020-10-10 10:20","2020-10-10 10:40",false));
+//        System.out.println(pickUpDao.addPickUp(1,1,"1","2020-10-10 10:20","2020-10-10 10:40",false));
 //        System.out.println(driverDao.updateDriverIsAssign(1, true));
         System.out.println(fleetDao.findFleetById(1));
 //        System.out.println(driverDao.findFleetAllDriver(1));
