@@ -63,11 +63,11 @@ create table conference
 create table driver
 (
    driver_id            int auto_increment,
-   driver_name          varchar(40) not null,
-   car_number           varchar(20) not null,
+   driver_name          varchar(40),
+   car_number           varchar(20),
    fleet_id             int,
-   driver_pass          varchar(20) not null,
-   driver_phone         varchar(20) not null,
+   driver_pass          varchar(20),
+   driver_phone         varchar(20),
    is_assign            bool not null DEFAULT 0,
    primary key (driver_id),
    unique key AK_Key_2 (car_number, driver_phone)
@@ -79,9 +79,9 @@ create table driver
 create table fleet
 (
    fleet_id             int not null auto_increment,
-   fleet_name           varchar(50) not null,
-   fleet_pass           varchar(20) not null,
-   fleet_phone          varchar(20) not null,
+   fleet_name           varchar(50),
+   fleet_pass           varchar(20),
+   fleet_phone          varchar(20),
    primary key (fleet_id),
    unique key AK_Key_2 (fleet_phone)
 );
