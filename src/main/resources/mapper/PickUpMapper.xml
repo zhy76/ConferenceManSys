@@ -4,4 +4,47 @@
 
 <mapper namespace="com.conference.dao.PickUpDao">
 
+    <insert id="addPickUp">
+        INSERT INTO pick_up
+        VALUES(#{participantId}, #{driverId}, #{trainNumber}, #{toTime}, #{returnTime}, #{isFinishPickup});
+    </insert>
+
+
+    <select id="findAllPickUp" resultType="PickUp">
+        SELECT * FROM pick_up;
+    </select>
+
+    <select id="findAllFleetPickUp" resultType="PickUp">
+        SELECT * FROM pick_up WHERE driver_id =
+        (SELECT driver_id FROM fleet WHERE fleet_id=#{fleetId});
+    </select>
+
+    <select id="findAllDriverPickUp" resultType="PickUp">
+        SELECT * FROM pick_up WHERE driver_id =#{driverId};
+    </select>
+
+    <select id="findAllParticipantPickUp" resultType="PickUp">
+        SELECT * FROM pick_up WHERE participant_id=1;
+    </select>
+
+<!--    <delete id="deletePickUp">-->
+<!--        DELETE from pick_up where driver_id=#{driverId};-->
+<!--    </delete>-->
+
+    <delete id="deletePickUp">
+        DELETE from pick_up where participant_id=#{participantId} AND driver_id=#{driverId};
+    </delete>
+
+
+    <update id="updatePickUpByDriverId">
+        UPDATE pick_up SET participant_id=#{participantId}, train_number=#{trainNumber}, to_time=#{toTime},
+        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE driver_id=#{driverId};
+    </update>
+
+    <update id="updatePickUpByParticipantId">
+        UPDATE pick_up SET driver_id=#{driverId}, train_number=#{trainNumber}, to_time=#{toTime},
+        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId};
+    </update>
+
+
 </mapper>

@@ -35,7 +35,9 @@
         UPDATE driver SET driver_name=#{driverName}, car_number=#{carNumber}, fleet_id=#{fleetId},
         driver_pass=#{driverPass}, is_assign=#{isAssign} WHERE driver_id=#{driverId};
     </update>
-
+    <update id="updateDriverIsAssign">
+        UPDATE driver SET is_assign=#{isAssign} WHERE driver_id=#{driverId};
+    </update>
 <!--    <resultMap type="Driver" id="DriverResultMap" >-->
 <!--        <result property="driverId" column="driver_id"/>-->
 <!--    </resultMap>-->

@@ -20,4 +20,6 @@
         INSERT INTO fleet(fleet_id, fleet_name, fleet_pass, fleet_phone)
         VALUES(null, #{fleetName}, #{fleetPass}, #{fleetPhone});
     </insert>
+
+
 </mapper>

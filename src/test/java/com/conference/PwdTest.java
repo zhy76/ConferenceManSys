@@ -13,14 +13,18 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 public class PwdTest {
-    @Autowired
-    StringEncryptor stringEncryptor;
-    @Test
-    void contextLoads() {
-        String result = stringEncryptor.encrypt("toor");
-        System.out.println("==================");
-        System.out.println(result);
-    }
-    // 合并成功
 
+    //注入StringEncryptor
+    @Autowired
+    StringEncryptor encryptor;
+
+    @Test
+    public void encry() {
+        //加密
+        String usernameE = encryptor.encrypt("admin");
+        //解密
+        String usernameD = encryptor.decrypt(usernameE);
+        System.out.println(usernameE);
+        System.out.println(usernameD);
+    }
 }
