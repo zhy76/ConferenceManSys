@@ -1,4 +1,4 @@
-package com.conference.mapper;
+package com.conference.dao;
 
 import com.conference.entity.Driver;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,14 +19,14 @@ import java.util.List;
 @Mapper
 @Repository
 @Service
-public interface DriverMapper {
+public interface DriverDao {
 /**
  * 	1. 查询所有司机
  * 	2. 查询一个车队的司机
  * 	3. 按照id查询司机
- * 	4. 添加一个司机
- * 	5. 修改一个司机的信息
- *  6. 删除一个司机
+ * 	4. 增
+ * 	5. 改
+ *  6. 删
  */
     List<Driver> findAllDriver();
 
@@ -36,8 +36,14 @@ public interface DriverMapper {
 
 
 
+
+    int updateDriver(@Param("driverId") int driverId, @Param("driverName")String driverName,
+                      @Param("carNumber")String carNumber, @Param("fleetId")int fleetId,
+                      @Param("driverPass")String driverPass, @Param("driverPhone")String driverPhone,
+                      @Param("isAssign")boolean isAssign);
+
+
     int addDriver(@Param("driverName")String driverName, @Param("carNumber")String carNumber, @Param("fleetId")int fleetId, @Param("driverPass")String driverPass, @Param("driverPhone")String driverPhone);
 
-
-    void deleteDriverById(@Param("driverId") int driverId);
+    int deleteDriverById(@Param("driverId") int driverId);
 }

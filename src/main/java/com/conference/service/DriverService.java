@@ -1,6 +1,6 @@
 package com.conference.service;
 
-import com.conference.mapper.DriverMapper;
+import com.conference.dao.DriverDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class DriverService {
 
     @Autowired
-    DriverMapper driverMapper;
+    DriverDao driverDao;
 
 
 

@@ -1,4 +1,4 @@
-package com.conference.mapper;
+package com.conference.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Mapper
-public interface PickUpMapper {
+public interface PickUpDao {
 /**
  *
  * 	1. 查询所有接送
@@ -20,9 +20,12 @@ public interface PickUpMapper {
  * 	4. 查询一个车队的接送信息
  * 	5. 查询一个司机的接送信息
  * 	6. 查询个人的接送信息
- * 	7. 删除接送
- * 	8. 修改接送
- *  9. 添加接送
+ * 	7. 删
+ * 	8. 改
+ *  9. 增
  */
+
+
+
 
 }
