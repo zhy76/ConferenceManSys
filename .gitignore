@@ -1,3 +1,6 @@
+# Project exclude paths
+/target/
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -18,8 +21,7 @@ target/
 *.iws
 *.iml
 *.ipr
-**/pom.xml
-
+pom.xml
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
