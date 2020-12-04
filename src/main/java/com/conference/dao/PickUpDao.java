@@ -35,9 +35,7 @@ public interface PickUpDao {
                   @Param("trainNumber")String trainNumber, @Param("toTime") String toTime,
                   @Param("returnTime") String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
     /**删*/
-    int deletePickUp(@Param("participantId")int participantId, @Param("driverId")int driverId,
-                     @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
-                     @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
+    int deletePickUp(@Param("participantId")int participantId, @Param("driverId")int driverId);
 
     /**查*/
     List<PickUp> findAllPickUp();
