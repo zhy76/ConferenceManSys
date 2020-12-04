@@ -20,9 +20,7 @@ public class PwdTest {
 
     @Test
     public void encry() {
-        //加密
         String usernameE = encryptor.encrypt("admin");
-        //解密
         String usernameD = encryptor.decrypt(usernameE);
         System.out.println(usernameE);
         System.out.println(usernameD);
