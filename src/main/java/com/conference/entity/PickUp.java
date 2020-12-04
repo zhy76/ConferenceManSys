@@ -1,8 +1,6 @@
 package com.conference.entity;
 
 
-import java.util.Date;
-
 /**
  * @ClassName: pickUp
  * @Description: TODO
@@ -11,11 +9,8 @@ import java.util.Date;
  */
 
 public class PickUp {
-
-    private Integer pickUpId;
-    private Integer participantId;
-    private Integer driverId;
-    private Integer conferenceId;
+    private int participantId;
+    private int driverId;
     private String trainNumber;
     private String toTime;
     private String returnTime;
@@ -23,48 +18,30 @@ public class PickUp {
 
     @Override
     public String toString() {
-        return "PickUp{" +
-                "pickUpId=" + pickUpId +
-                ", participantId=" + participantId +
+        return "pickUp{" +
+                "participantId=" + participantId +
                 ", driverId=" + driverId +
-                ", conferenceId=" + conferenceId +
                 ", trainNumber='" + trainNumber + '\'' +
-                ", toTime='" + toTime + '\'' +
-                ", returnTime='" + returnTime + '\'' +
+                ", toTime=" + toTime +
+                ", returnTime=" + returnTime +
                 ", isFinishPickup=" + isFinishPickup +
                 '}';
     }
 
-    public Integer getPickUpId() {
-        return pickUpId;
-    }
-
-    public void setPickUpId(Integer pickUpId) {
-        this.pickUpId = pickUpId;
-    }
-
-    public Integer getParticipantId() {
+    public int getParticipantId() {
         return participantId;
     }
 
-    public void setParticipantId(Integer participantId) {
+    public void setParticipantId(int participantId) {
         this.participantId = participantId;
     }
 
-    public Integer getDriverId() {
+    public int getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(Integer driverId) {
+    public void setDriverId(int driverId) {
         this.driverId = driverId;
-    }
-
-    public Integer getConferenceId() {
-        return conferenceId;
-    }
-
-    public void setConferenceId(Integer conferenceId) {
-        this.conferenceId = conferenceId;
     }
 
     public String getTrainNumber() {

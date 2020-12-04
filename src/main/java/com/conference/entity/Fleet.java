@@ -1,10 +1,5 @@
 package com.conference.entity;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 /**
  * @ClassName: Fleet
  * @Description: TODO
@@ -12,18 +7,9 @@ import javax.validation.constraints.Pattern;
  * @Date: 2020/12/1 18:37
  */
 public class Fleet {
-
-    private Integer fleetId;
-    @NotNull(message = "车队名必须存在")
+    private int fleetId;
     private String fleetName;
-
-    @NotNull(message = "密码必须存在")
-    @Length(min = 6, max = 26, message = "密码长度应该在6至26之间")
-    @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符")
     private String fleetPass;
-
-    @NotNull(message = "电话号码必须存在")
-    @Pattern(regexp = "^1[3456789]\\d{9}$", message = "请输入正确的电话号码格式")
     private String fleetPhone;
 
     @Override
@@ -36,11 +22,11 @@ public class Fleet {
                 '}';
     }
 
-    public Integer getFleetId() {
+    public int getFleetId() {
         return fleetId;
     }
 
-    public void setFleetId(Integer fleetId) {
+    public void setFleetId(int fleetId) {
         this.fleetId = fleetId;
     }
 
@@ -60,11 +46,7 @@ public class Fleet {
         this.fleetPass = fleetPass;
     }
 
-    public String getFleetPhone() {
-        return fleetPhone;
-    }
+    public String getFleetPhone() { return fleetPhone; }
 
-    public void setFleetPhone(String fleetPhone) {
-        this.fleetPhone = fleetPhone;
-    }
+    public void setFleetPhone(String fleetPhone) { this.fleetPhone = fleetPhone; }
 }

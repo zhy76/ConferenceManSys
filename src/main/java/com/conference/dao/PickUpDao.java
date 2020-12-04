@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +34,9 @@ public interface PickUpDao {
                   @Param("trainNumber")String trainNumber, @Param("toTime") String toTime,
                   @Param("returnTime") String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
     /**删*/
-    int deletePickUp(@Param("participantId")int participantId, @Param("driverId")int driverId);
+    int deletePickUp(@Param("participantId")int participantId, @Param("driverId")int driverId,
+                     @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
+                     @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
 
     /**查*/
     List<PickUp> findAllPickUp();
