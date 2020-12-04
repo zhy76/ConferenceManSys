@@ -3,6 +3,9 @@
 /* Created on:     2020/12/4 10:13:48                           */
 /*==============================================================*/
 
+drop database if exists conference;
+create database conference;
+use conference;
 
 drop table if exists admin;
 
