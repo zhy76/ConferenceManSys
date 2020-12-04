@@ -1,11 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/11/29 21:26:40                          */
+/* Created on:     2020/12/4 10:13:48                           */
 /*==============================================================*/
 
-drop database if exists conference;
-create database conference;
-use conference;
 
 drop table if exists admin;
 
@@ -62,13 +59,13 @@ create table conference
 /*==============================================================*/
 create table driver
 (
-   driver_id            int auto_increment,
+   driver_id            int not null auto_increment,
    driver_name          varchar(40) not null,
    car_number           varchar(20) not null,
    fleet_id             int,
    driver_pass          varchar(20) not null,
    driver_phone         varchar(20) not null,
-   is_assign            bool not null DEFAULT 0,
+   is_assign            bool not null,
    primary key (driver_id),
    unique key AK_Key_2 (car_number, driver_phone)
 );
@@ -123,8 +120,9 @@ create table live_room
 (
    participant_id       int not null,
    hotel_id             int not null,
+   conference_id        int not null,
    room_id              varchar(20),
-   primary key (participant_id, hotel_id)
+   primary key (participant_id, hotel_id, conference_id)
 );
 
 /*==============================================================*/
@@ -166,11 +164,12 @@ create table pick_up
 (
    participant_id       int not null,
    driver_id            int not null,
+   conference_id        int not null,
    train_number         varchar(50),
    to_time              timestamp,
    return_time          timestamp,
    is_finish_pickup     bool not null,
-   primary key (participant_id, driver_id)
+   primary key (participant_id, driver_id, conference_id)
 );
 
 alter table conference add constraint FK_organise_conference foreign key (organizer_id)
@@ -197,9 +196,20 @@ alter table live_room add constraint FK_live_room foreign key (participant_id)
 alter table live_room add constraint FK_live_room2 foreign key (hotel_id)
       references hotel (hotel_id) on delete restrict on update restrict;
 
+alter table live_room add constraint FK_live_room3 foreign key (conference_id)
+      references conference (conference_id) on delete restrict on update restrict;
+
 alter table pick_up add constraint FK_pick_up foreign key (participant_id)
       references participant (participant_id) on delete restrict on update restrict;
 
 alter table pick_up add constraint FK_pick_up2 foreign key (driver_id)
       references driver (driver_id) on delete restrict on update restrict;
+
+alter table pick_up add constraint FK_pick_up3 foreign key (conference_id)
+      references conference (conference_id) on delete restrict on update restrict;
+
+
+-- 脚本最后加一句，防止服务器的字符集出问题，
+-- 本地是不需要的
+alter database conference character set utf8;
 

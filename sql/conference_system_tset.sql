@@ -7,7 +7,8 @@ drop database if exists conference;
 create database conference;
 use conference;
 
-drop table if exists admin;
+drop table if 
+exists admin;
 
 drop table if exists conference;
 
@@ -203,3 +204,6 @@ alter table pick_up add constraint FK_pick_up foreign key (participant_id)
 alter table pick_up add constraint FK_pick_up2 foreign key (driver_id)
       references driver (driver_id) on delete restrict on update restrict;
 
+-- 脚本最后加一句，防止服务器的字符集出问题，
+-- 本地是不需要的
+alter database conference character set utf8;
