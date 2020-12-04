@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.conference.dao.FleetDao">
+    <select id="findAllFleet" resultType="Fleet">
+        select * from Fleet
+    </select>
+
+    <select id="findFleetById" resultType="Fleet">
+        SELECT * FROM fleet WHERE fleet_id=#{fleetId};
+    </select>
+
+    <delete id="deleteFleetById">
+        DELETE FROM driver WHERE driver_id=#{driverId}
+    </delete>
+
+
+    <insert id="addFleet">
+        INSERT INTO fleet(fleet_id, fleet_name, fleet_pass, fleet_phone)
+        VALUES(null, #{fleetName}, #{fleetPass}, #{fleetPhone});
+    </insert>
+
+
+</mapper>
