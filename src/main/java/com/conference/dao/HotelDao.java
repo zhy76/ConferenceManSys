@@ -9,4 +9,5 @@ import java.util.List;
 @Mapper
 public interface HotelDao {
     List<Hotel> findAllHotel();
+    List<Hotel> getHotel();
 }

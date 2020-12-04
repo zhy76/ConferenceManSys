@@ -3,7 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.conference.dao.HotelDao">
+<!--    得到所有酒店-->
     <select id="findAllHotel" resultType="Hotel">
         select * from Hotel
     </select>
+<!--    通过酒店ID查找酒店-->
+    <select id="getHotel" resultType="Hotel">
+        select * from Hotel where hotel_id=#{hotelId}
+    </select>
+
 </mapper>
