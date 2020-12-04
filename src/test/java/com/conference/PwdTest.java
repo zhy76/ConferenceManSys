@@ -1,5 +1,6 @@
 package com.conference;
 
+import com.conference.dao.HotelDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 public class PwdTest {
-    // 合并成功
+    @Autowired
+    HotelDao hoteldao;
+    @Test
+    void contextLoads() {
+        System.out.println(hoteldao.findAllHotel());
+    }
+
 
 }
