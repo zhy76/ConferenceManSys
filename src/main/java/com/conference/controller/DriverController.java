@@ -34,8 +34,8 @@ public class DriverController {
 
     // /addDriver/ggg/123/1/123/123
     @GetMapping("/addDriver/{driverName}/{carNumber}/{fleetId}/{driverPass}/{driverPhone}")
-    public void register(@PathVariable String driverName, @PathVariable String carNumber,@PathVariable int fleetId, @PathVariable String driverPass, @PathVariable String driverPhone) {
-
+    public void register(@PathVariable String driverName, @PathVariable String carNumber,@PathVariable int fleetId,
+                         @PathVariable String driverPass, @PathVariable String driverPhone) {
         driverDao.addDriver(driverName, carNumber, fleetId, driverPass, driverPhone);
         //        driverMapper.addDriver();
     }
