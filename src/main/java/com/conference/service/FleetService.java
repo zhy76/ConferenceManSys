@@ -1,14 +1,10 @@
 package com.conference.service;
 
-import org.springframework.stereotype.Service;
-
 /**
  * @ClassName: FleetService
  * @Description: TODO
  * @Author: Lance
- * @Date: 2020/12/2 21:16
+ * @Date: 2020/12/5 17:21
  */
-@Service("FleetService")
-public class FleetService {
-
+public interface FleetService {
 }
