@@ -9,7 +9,7 @@ spring:
 #整合mybatis
 mybatis:
   type-aliases-package: com.conference.entity
-  mapper-locations: classpath:mybatis/dao/*.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
 
