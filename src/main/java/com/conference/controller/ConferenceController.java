@@ -15,7 +15,7 @@ import java.util.List;
  * @Author: liuCenYu
  * @Date: 2020/12/4 23:44
  **/
-@RestController
+@Controller
 @RequestMapping("/conference")
 public class ConferenceController {
 

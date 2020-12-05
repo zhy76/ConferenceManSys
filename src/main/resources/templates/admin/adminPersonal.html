@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员个人中心</title>
+</head>
+<body>
+    <form th:action="@{/admin/adminUpdate}" method = "post">
+        <input type="hidden" name = adminId th:value = "${session.admin.getAdminId()}" >
+        <table>
+            <tr>
+                <td>管理员姓名:<input type="text" name = adminName th:value="${session.admin.getAdminName()}"></td>
+            </tr>
+            <tr>
+                <td>管理员账户:<input type="text" name = adminAccount th:value="${session.admin.getAdminAccount()}"></td>
+            </tr>
+            <tr>
+                <td>管理员密码:<input type="text" name = adminPass th:value="${session.admin.getAdminPass()}"></td>
+            </tr>
+            <tr style = " text-align: center ">
+                <td><input type="submit" value = "提交修改"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

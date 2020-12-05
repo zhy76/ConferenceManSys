@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员主界面</title>
+    <link rel="stylesheet" th:href="@{/css/style_adminMain.css}">
+</head>
+<body>
+    <div class = "topHeader">
+        <span th:text="${session.loginAdminName}"></span>
+        <a th:href = "@{/admin/adminPersonal}">个人中心</a>
+    </div>
+
+    <div class="btn-group-vertical">
+        <button type="button" class="btn btn-default">按钮 1</button>
+        <button type="button" class="btn btn-default">按钮 2</button>
+        <div class="btn-group-vertical">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                下拉
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">下拉链接 1</a></li>
+                <li><a href="#">下拉链接 2</a></li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
