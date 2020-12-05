@@ -1,50 +1,50 @@
 package com.conference.entity;
 
 public class LiveRoom {
-    private int participant_id ;
-    private int hotel_id;
-    private int conference_id;
-    private String room_id;
+    private int participantId ;
+    private int hotelId;
+    private int conferenceId;
+    private String roomId;
 
     @Override
     public String toString() {
-        return "liveRoom{" +
-                "participant_id=" + participant_id +
-                ", hotel_id=" + hotel_id +
-                ", conference_id=" + conference_id +
-                ", room_id='" + room_id + '\'' +
+        return "LiveRoom{" +
+                "participantId=" + participantId +
+                ", hotelId=" + hotelId +
+                ", conferenceId=" + conferenceId +
+                ", roomId='" + roomId + '\'' +
                 '}';
     }
 
-    public int getParticipant_id() {
-        return participant_id;
+    public int getParticipantId() {
+        return participantId;
     }
 
-    public void setParticipant_id(int participant_id) {
-        this.participant_id = participant_id;
+    public void setParticipantId(int participantId) {
+        this.participantId = participantId;
     }
 
-    public int getHotel_id() {
-        return hotel_id;
+    public int getHotelId() {
+        return hotelId;
     }
 
-    public void setHotel_id(int hotel_id) {
-        this.hotel_id = hotel_id;
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
-    public int getConference_id() {
-        return conference_id;
+    public int getConferenceId() {
+        return conferenceId;
     }
 
-    public void setConference_id(int conference_id) {
-        this.conference_id = conference_id;
+    public void setConferenceId(int conferenceId) {
+        this.conferenceId = conferenceId;
     }
 
-    public String getRoom_id() {
-        return room_id;
+    public String getRoomId() {
+        return roomId;
     }
 
-    public void setRoom_id(String room_id) {
-        this.room_id = room_id;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 }

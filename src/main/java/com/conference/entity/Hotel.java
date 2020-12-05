@@ -1,70 +1,70 @@
 package com.conference.entity;
 
 public class Hotel {
-    private int hotel_id;
-    private String hotel_name ;
-    private String hotel_location;
-    private String hotel_phone;
-    private String hotel_pass;
-    private String hotel_info;
+    private int hotelId;
+    private String hotelName ;
+    private String hotelLocation;
+    private String hotelPhone;
+    private String hotelPass;
+    private String hotelInfo;
 
     @Override
     public String toString() {
         return "Hotel{" +
-                "hotel_id=" + hotel_id +
-                ", hotel_name='" + hotel_name + '\'' +
-                ", hotel_location='" + hotel_location + '\'' +
-                ", hotel_phone='" + hotel_phone + '\'' +
-                ", hotel_pass='" + hotel_pass + '\'' +
-                ", hotel_info='" + hotel_info + '\'' +
+                "hotelId=" + hotelId +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelLocation='" + hotelLocation + '\'' +
+                ", hotelPhone='" + hotelPhone + '\'' +
+                ", hotelPass='" + hotelPass + '\'' +
+                ", hotelInfo='" + hotelInfo + '\'' +
                 '}';
     }
 
-    public int getHotel_id() {
-        return hotel_id;
+    public int getHotelId() {
+        return hotelId;
     }
 
-    public void setHotel_id(int hotel_id) {
-        this.hotel_id = hotel_id;
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
     }
 
-    public String getHotel_name() {
-        return hotel_name;
+    public String getHotelName() {
+        return hotelName;
     }
 
-    public void setHotel_name(String hotel_name) {
-        this.hotel_name = hotel_name;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
-    public String getHotel_location() {
-        return hotel_location;
+    public String getHotelLocation() {
+        return hotelLocation;
     }
 
-    public void setHotel_location(String hotel_location) {
-        this.hotel_location = hotel_location;
+    public void setHotelLocation(String hotelLocation) {
+        this.hotelLocation = hotelLocation;
     }
 
-    public String getHotel_phone() {
-        return hotel_phone;
+    public String getHotelPhone() {
+        return hotelPhone;
     }
 
-    public void setHotel_phone(String hotel_phone) {
-        this.hotel_phone = hotel_phone;
+    public void setHotelPhone(String hotelPhone) {
+        this.hotelPhone = hotelPhone;
     }
 
-    public String getHotel_pass() {
-        return hotel_pass;
+    public String getHotelPass() {
+        return hotelPass;
     }
 
-    public void setHotel_pass(String hotel_pass) {
-        this.hotel_pass = hotel_pass;
+    public void setHotelPass(String hotelPass) {
+        this.hotelPass = hotelPass;
     }
 
-    public String getHotel_info() {
-        return hotel_info;
+    public String getHotelInfo() {
+        return hotelInfo;
     }
 
-    public void setHotel_info(String hotel_info) {
-        this.hotel_info = hotel_info;
+    public void setHotelInfo(String hotelInfo) {
+        this.hotelInfo = hotelInfo;
     }
 }
