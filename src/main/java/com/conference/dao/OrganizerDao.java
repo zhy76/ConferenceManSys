@@ -12,7 +12,7 @@ import java.util.List;
  **/
 @Mapper
 @Repository
-public interface OrganizerMapper {
+public interface OrganizerDao {
     /**
      * 1、查询展示出所有注册的组织者
      * 2、查询出指定单位的组织者

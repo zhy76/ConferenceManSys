@@ -16,7 +16,7 @@ import java.util.List;
 //管理员操作数据库Dao接口
 @Mapper
 @Repository
-public interface AdminMapper {
+public interface AdminDao {
 
     /**
      * 5、查询出所有的管理员

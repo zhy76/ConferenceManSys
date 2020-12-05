@@ -12,7 +12,7 @@ import java.util.List;
  **/
 @Mapper
 @Repository
-public interface ParticipantMapper {
+public interface ParticipantDao {
     /**
      * 1、查询展示出所有注册的参会人员
      * 2、查询出指定姓名的参会人信息

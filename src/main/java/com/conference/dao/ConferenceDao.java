@@ -13,7 +13,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface ConferenceMapper {
+public interface ConferenceDao {
     /**
      * 1、展示所有会议---- 查询所有会议
      * 2、删除会议

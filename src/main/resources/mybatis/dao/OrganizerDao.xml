@@ -6,7 +6,7 @@
 
 <!--管理员接口对应的映射文件-->
 <!--namespace绑定一个Mapper接口-->
-<mapper namespace="com.conference.dao.OrganizerMapper">
+<mapper namespace="com.conference.dao.OrganizerDao">
 
     <!--    id对应方法名 resultType结果集类型-->
     <select id="queryOrganizers" resultType="Organizer">

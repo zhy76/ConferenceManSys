@@ -1,7 +1,7 @@
 package com.conference.service.impl;
 
 import com.conference.entity.Conference;
-import com.conference.dao.ConferenceMapper;
+import com.conference.dao.ConferenceDao;
 import com.conference.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,20 +16,20 @@ import java.util.List;
 public class ConferenceServiceImpl implements ConferenceService {
 
     @Autowired
-    private ConferenceMapper conferenceMapper;
+    private ConferenceDao conferenceDao;
 
     @Override
     public List<Conference> queryConferences() {
-        return conferenceMapper.queryConferences();
+        return conferenceDao.queryConferences();
     }
 
     @Override
     public int updateConference(Conference conference) {
-        return conferenceMapper.updateConference(conference);
+        return conferenceDao.updateConference(conference);
     }
 
     @Override
     public int deleteConference(Integer conferenceId) {
-        return conferenceMapper.deleteConference(conferenceId);
+        return conferenceDao.deleteConference(conferenceId);
     }
 }

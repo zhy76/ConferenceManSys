@@ -12,18 +12,18 @@ import java.util.List;
  * @Date: 2020/12/3 20:44
  **/
 @SpringBootTest
-public class AdminMapperTest {
+public class AdminDaoTest {
     @Autowired
-    private AdminMapper adminmapper;
+    private AdminDao adminDao;
 
     @Test
     public void contextLoads(){
-        List<Admin> lists = adminmapper.queryAdmins();
+        List<Admin> lists = adminDao.queryAdmins();
         for(Admin list : lists)
         System.out.println(list);
-        System.out.println(adminmapper.queryAdminByAccountAndPass("admin","lcy"));
-        System.out.println(adminmapper.addAdmin(new Admin(null , "yk" , "yk" ,"yk" )));
-        System.out.println(adminmapper.updateAdmin(new Admin(1,"lyc","lyc","adminlyc")));
-        System.out.println(adminmapper.deleteAdmin(6));
+        System.out.println(adminDao.queryAdminByAccountAndPass("admin","lcy"));
+        System.out.println(adminDao.addAdmin(new Admin(null , "yk" , "yk" ,"yk" )));
+        System.out.println(adminDao.updateAdmin(new Admin(1,"lyc","lyc","adminlyc")));
+        System.out.println(adminDao.deleteAdmin(6));
     }
 }
