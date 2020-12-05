@@ -11,13 +11,13 @@ package com.conference.entity;
 
 
 public class Driver {
-    private int driverId;
+    private Integer driverId;
     private String driverName;
     private String carNumber;
-    private int fleetId;
+    private Integer fleetId;
     private String driverPass;
     private String driverPhone;
-    private boolean isAssign;
+    private Boolean isAssign;
 
     @Override
     public String toString() {
@@ -32,11 +32,11 @@ public class Driver {
                 '}';
     }
 
-    public int getDriverId() {
+    public Integer getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(int driverId) {
+    public void setDriverId(Integer driverId) {
         this.driverId = driverId;
     }
 
@@ -56,11 +56,11 @@ public class Driver {
         this.carNumber = carNumber;
     }
 
-    public int getFleetId() {
+    public Integer getFleetId() {
         return fleetId;
     }
 
-    public void setFleetId(int fleetId) {
+    public void setFleetId(Integer fleetId) {
         this.fleetId = fleetId;
     }
 
@@ -80,7 +80,7 @@ public class Driver {
         this.driverPhone = driverPhone;
     }
 
-    public boolean getAssign() {
+    public Boolean getAssign() {
         return isAssign;
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @ClassName: DriverService
- * @Description: TODO
+ * @Description: TODO 外键约束
  * @Author: Lance
  * @Date: 2020/12/2 21:11
  */
@@ -26,12 +26,12 @@ public class DriverServiceImp implements DriverService {
     }
 
     @Override
-    public List<Driver> findFleetAllDriver(int fleetId) {
+    public List<Driver> findFleetAllDriver(Integer fleetId) {
         return driverDao.findFleetAllDriver(fleetId);
     }
 
     @Override
-    public Driver findDriverById(int driverId) {
+    public Driver findDriverById(Integer driverId) {
         return driverDao.findDriverById(driverId);
     }
 
@@ -42,9 +42,9 @@ public class DriverServiceImp implements DriverService {
     }
 
     /**
-     * @todo 外键约束
      * @param driver
      * @return
+     * @todo 外键约束
      */
     @Override
     public int addDriver(Driver driver) {
@@ -53,18 +53,18 @@ public class DriverServiceImp implements DriverService {
     }
 
     /**
-     * @todo 外键约束
      * @param driverId
      * @return
+     * @todo 外键约束
      */
     @Override
-    public int deleteDriverById(int driverId) {
-        return 0;
+    public int deleteDriverById(Integer driverId) {
+        return driverDao.deleteDriverById(driverId);
     }
 
 
     @Override
-    public int updateDriverIsAssign(int driverId, boolean isAssign) {
-        return 0;
+    public int updateDriverIsAssign(Integer driverId, Boolean isAssign) {
+        return updateDriverIsAssign(driverId, isAssign);
     }
 }

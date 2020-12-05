@@ -14,15 +14,15 @@ public interface DriverService {
 
     List<Driver> findAllDriver();
 
-    List<Driver> findFleetAllDriver(int fleetId);
+    List<Driver> findFleetAllDriver(Integer fleetId);
 
-    Driver findDriverById(int driverId);
+    Driver findDriverById(Integer driverId);
 
     int updateDriver(Driver driver);
 
     int addDriver(Driver driver);
 
-    int deleteDriverById(int driverId);
+    int deleteDriverById(Integer driverId);
 
-    int updateDriverIsAssign(int driverId, boolean isAssign);
+    int updateDriverIsAssign(Integer driverId, Boolean isAssign);
 }

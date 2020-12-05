@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @ClassName: PickUpService
- * @Description: TODO
+ * @Description: TODO 外键约束
  * @Author: Lance
  * @Date: 2020/12/3 14:44
  */
@@ -27,7 +27,7 @@ public class PickUpServiceImp implements PickUpService {
     }
 
     @Override
-    public int deletePickUp(int participantId, int driverId) {
+    public int deletePickUp(Integer participantId, Integer driverId) {
         return pickUpDao.deletePickUp(participantId, driverId);
     }
 
@@ -37,17 +37,17 @@ public class PickUpServiceImp implements PickUpService {
     }
 
     @Override
-    public List<PickUp> findAllFleetPickUp(int fleetId) {
+    public List<PickUp> findAllFleetPickUp(Integer fleetId) {
         return pickUpDao.findAllFleetPickUp(fleetId);
     }
 
     @Override
-    public List<PickUp> findAllDriverPickUp(int driverId) {
+    public List<PickUp> findAllDriverPickUp(Integer driverId) {
         return pickUpDao.findAllDriverPickUp(driverId);
     }
 
     @Override
-    public List<PickUp> findAllParticipantPickUp(int participantId) {
+    public List<PickUp> findAllParticipantPickUp(Integer participantId) {
         return pickUpDao.findAllParticipantPickUp(participantId);
     }
 
