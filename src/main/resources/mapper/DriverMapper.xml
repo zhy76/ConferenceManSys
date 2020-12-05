@@ -21,8 +21,10 @@
 
 
     <insert id="addDriver">
-        INSERT INTO driver(driver_name, car_number, fleet_id, driver_pass, driver_phone)
-        VALUES(#{driverName}, #{carNumber}, #{fleetId}, #{driverPass}, #{driverPhone})
+        INSERT INTO driver
+        VALUES(#{driverName}, #{carNumber}, #{fleetId}, #{driverPass}, #{driverPhone}, 0)
+--         INSERT INTO driver(driver_name, car_number, fleet_id, driver_pass, driver_phone)
+--         VALUES(#{driverName}, #{carNumber}, #{fleetId}, #{driverPass}, #{driverPhone})
     </insert>
 
 

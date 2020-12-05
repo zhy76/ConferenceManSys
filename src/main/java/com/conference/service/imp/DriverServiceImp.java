@@ -2,6 +2,7 @@ package com.conference.service.imp;
 
 import com.conference.dao.DriverDao;
 import com.conference.entity.Driver;
+import com.conference.service.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,25 +15,45 @@ import java.util.List;
  * @Date: 2020/12/2 21:11
  */
 @Service("DriverService")
-public class DriverServiceImp {
+public class DriverServiceImp implements DriverService {
 
     @Autowired
     private DriverDao driverDao;
 
+    @Override
     public List<Driver> findAllDriver() {
         return driverDao.findAllDriver();
     }
 
-//    public List<Driver> findFleetAllDriver {
-//
-////        return driverDao.findAllDriver();
-//    }
+    @Override
+    public List<Driver> findFleetAllDriver(int fleetId) {
+        return driverDao.findFleetAllDriver(fleetId);
+    }
 
+    @Override
+    public Driver findDriverById(int driverId) {
+        return driverDao.findDriverById(driverId);
+    }
 
+    @Override
+    public int updateDriver(Driver driver) {
+        return driverDao.updateDriver(driver.getDriverId(), driver.getDriverName(), driver.getCarNumber(),
+                driver.getFleetId(), driver.getDriverPass(), driver.getDriverPhone(), driver.getAssign());
+    }
 
+    @Override
+    public int addDriver(Driver driver) {
+        return driverDao.addDriver(driver.getDriverName(),driver.getCarNumber(),driver.getFleetId(),
+                driver.getDriverPass(),driver.getDriverPhone());
+    }
 
+    @Override
+    public int deleteDriverById(int driverId) {
+        return 0;
+    }
 
-
-
-
+    @Override
+    public int updateDriverIsAssign(int driverId, boolean isAssign) {
+        return 0;
+    }
 }
