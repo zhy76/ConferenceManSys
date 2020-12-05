@@ -1,7 +1,7 @@
 package com.conference.service.impl;
 
 import com.conference.entity.Conference;
-import com.conference.mapper.ConferenceMapper;
+import com.conference.dao.ConferenceMapper;
 import com.conference.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

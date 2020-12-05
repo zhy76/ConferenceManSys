@@ -1,4 +1,4 @@
-package com.conference.mapper;
+package com.conference.dao;
 
 import com.conference.entity.Admin;
 import org.junit.jupiter.api.Test;

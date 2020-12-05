@@ -1,13 +1,8 @@
-package com.conference.mapper;
+package com.conference.dao;
 
-import com.conference.entity.Conference;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @Author: liuCenYu

@@ -1,6 +1,5 @@
-package com.conference.mapper;
+package com.conference.dao;
 
-import com.conference.entity.Organizer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

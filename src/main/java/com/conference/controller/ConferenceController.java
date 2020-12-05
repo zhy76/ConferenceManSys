@@ -26,7 +26,7 @@ public class ConferenceController {
     @ResponseBody
     public List<Conference> showConferences(){
         List<Conference> conferencesList = conferenceService.queryConferences();
-        System.out.println(conferencesList);
         return conferencesList;
     }
+
 }
