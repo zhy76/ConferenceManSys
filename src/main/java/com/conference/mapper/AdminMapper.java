@@ -27,11 +27,11 @@ public interface AdminMapper {
      */
     public List<Admin> queryAdmins();
 
-    public Admin queryAdminByAccountAndPass(@Param("account")String account , @Param("pass") String pass);
+    public Admin queryAdminByAccountAndPass(@Param("adminAccount")String adminAccount , @Param("adminPass") String adminPass);
 
     public int addAdmin(Admin admin);
 
     public int updateAdmin(Admin admin);
 
-    public int deleteAdmin(Integer id);
+    public int deleteAdmin(Integer adminId);
 }

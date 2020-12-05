@@ -22,6 +22,8 @@ public class AdminMapperTest {
         for(Admin list : lists)
         System.out.println(list);
         System.out.println(adminmapper.queryAdminByAccountAndPass("admin","lcy"));
-        //System.out.println(adminmapper.addAdmin(new Admin(null , "yk" , "yk" ,"yk" )));
+        System.out.println(adminmapper.addAdmin(new Admin(null , "yk" , "yk" ,"yk" )));
+        System.out.println(adminmapper.updateAdmin(new Admin(1,"lyc","lyc","adminlyc")));
+        System.out.println(adminmapper.deleteAdmin(6));
     }
 }

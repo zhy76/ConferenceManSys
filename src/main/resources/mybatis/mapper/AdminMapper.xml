@@ -14,7 +14,7 @@
     </select>
 
     <select id="queryAdminByAccountAndPass" resultType="Admin" >
-       select * from admin where admin_account = #{account} and admin_pass = #{pass};
+       select * from admin where admin_account = #{adminAccount} and admin_pass = #{adminPass};
     </select>
 
     <insert id="addAdmin" parameterType="Admin" >
@@ -22,11 +22,11 @@
     </insert>
 
     <update id = "updateAdmin" parameterType="Admin">
-        update admin set admin_name=#{adminName},admin_pass=#{adminPass},admin_account=#{adminAccount} where id=#{id};
+        update admin set admin_name=#{adminName},admin_pass=#{adminPass},admin_account=#{adminAccount} where admin_id=#{adminId};
     </update>
 
     <delete id = "deleteAdmin">
-        delete from admin where admin_id = #{id};
+        delete from admin where admin_id = #{adminId};
     </delete>
 
 </mapper>
