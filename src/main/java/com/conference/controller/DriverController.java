@@ -46,6 +46,5 @@ public class DriverController {
                              @PathVariable String driverPass, @PathVariable String driverPhone) {
         driverDao.updateDriver(driverId,driverName, carNumber, fleetId,
         driverPass, driverPhone, false);
-
     }
 }
