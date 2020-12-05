@@ -7,7 +7,7 @@ package com.conference.entity;
  * @Date: 2020/12/1 18:37
  */
 public class Fleet {
-    private int fleetId;
+    private Integer fleetId;
     private String fleetName;
     private String fleetPass;
     private String fleetPhone;
@@ -22,11 +22,11 @@ public class Fleet {
                 '}';
     }
 
-    public int getFleetId() {
+    public Integer getFleetId() {
         return fleetId;
     }
 
-    public void setFleetId(int fleetId) {
+    public void setFleetId(Integer fleetId) {
         this.fleetId = fleetId;
     }
 
@@ -46,7 +46,11 @@ public class Fleet {
         this.fleetPass = fleetPass;
     }
 
-    public String getFleetPhone() { return fleetPhone; }
+    public String getFleetPhone() {
+        return fleetPhone;
+    }
 
-    public void setFleetPhone(String fleetPhone) { this.fleetPhone = fleetPhone; }
+    public void setFleetPhone(String fleetPhone) {
+        this.fleetPhone = fleetPhone;
+    }
 }

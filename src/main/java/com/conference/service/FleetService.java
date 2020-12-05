@@ -14,9 +14,9 @@ import java.util.List;
 public interface FleetService {
     List<Fleet> findAllFleet();
 
-    Fleet findFleetById(int fleetId);
+    Fleet findFleetById(Integer fleetId);
 
-    int deleteFleetById(int fleetId);
+    int deleteFleetById(Integer fleetId);
 
     int addFleet(Fleet fleet);
 }

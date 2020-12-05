@@ -25,35 +25,35 @@ public interface DriverDao {
     /**
      * 查询一个车队的司机
      */
-    List<Driver> findFleetAllDriver(@Param("fleetId") int fleetId);
+    List<Driver> findFleetAllDriver(@Param("fleetId") Integer fleetId);
 
     /**
      * 按照id查询司机
      */
-    Driver findDriverById(@Param("driverId") int driverId);
+    Driver findDriverById(@Param("driverId") Integer driverId);
 
     /**
      * 改
      */
-    int updateDriver(@Param("driverId") int driverId, @Param("driverName") String driverName,
-                     @Param("carNumber") String carNumber, @Param("fleetId") int fleetId,
+    int updateDriver(@Param("driverId") Integer driverId, @Param("driverName") String driverName,
+                     @Param("carNumber") String carNumber, @Param("fleetId") Integer fleetId,
                      @Param("driverPass") String driverPass, @Param("driverPhone") String driverPhone,
-                     @Param("isAssign") boolean isAssign);
+                     @Param("isAssign") Boolean isAssign);
 
     /**
      * 增
      */
     int addDriver(@Param("driverName") String driverName, @Param("carNumber") String carNumber,
-                  @Param("fleetId") int fleetId, @Param("driverPass") String driverPass,
+                  @Param("fleetId") Integer fleetId, @Param("driverPass") String driverPass,
                   @Param("driverPhone") String driverPhone);
 
     /**
      * 删
      */
-    int deleteDriverById(@Param("driverId") int driverId);
+    int deleteDriverById(@Param("driverId") Integer driverId);
 
     /**
      * 修改司机的状态isAssign
      */
-    int updateDriverIsAssign(@Param("driverId") int driverId, @Param("isAssign") boolean isAssign);
+    int updateDriverIsAssign(@Param("driverId") Integer driverId, @Param("isAssign") Boolean isAssign);
 }
