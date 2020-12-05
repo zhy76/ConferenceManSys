@@ -34,7 +34,7 @@ public class FleetController {
     }
 
     @GetMapping("/addFleet/{fleetName}/{fleetPass}/{fleetPhone}")
-    public void addFleet(@PathVariable String fleetName, @PathVariable  String fleetPass, @PathVariable  String fleetPhone) {
+    public void addFleet(@PathVariable String fleetName, @PathVariable String fleetPass, @PathVariable String fleetPhone) {
         fleetDao.addFleet(fleetName, fleetPass, fleetPhone);
     }
 

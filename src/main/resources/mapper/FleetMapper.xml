@@ -8,17 +8,17 @@
     </select>
 
     <select id="findFleetById" resultType="Fleet">
-        SELECT * FROM fleet WHERE fleet_id=#{fleetId};
+        SELECT * FROM fleet WHERE fleet_id=#{fleetId}
     </select>
 
     <delete id="deleteFleetById">
-        DELETE FROM driver WHERE driver_id=#{driverId}
+        DELETE FROM fleet WHERE fleet_id=#{fleetId}
     </delete>
 
 
     <insert id="addFleet">
         INSERT INTO fleet(fleet_id, fleet_name, fleet_pass, fleet_phone)
-        VALUES(null, #{fleetName}, #{fleetPass}, #{fleetPhone});
+        VALUES(null, #{fleetName}, #{fleetPass}, #{fleetPhone})
     </insert>
 
 

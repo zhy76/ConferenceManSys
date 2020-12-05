@@ -4,6 +4,7 @@ import com.conference.dao.PickUpDao;
 import com.conference.entity.PickUp;
 import com.conference.service.PickUpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
  * @Author: Lance
  * @Date: 2020/12/3 14:44
  */
+@Service("PickUpService")
 public class PickUpServiceImp implements PickUpService {
 
     @Autowired

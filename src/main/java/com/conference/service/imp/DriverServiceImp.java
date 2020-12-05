@@ -41,16 +41,27 @@ public class DriverServiceImp implements DriverService {
                 driver.getFleetId(), driver.getDriverPass(), driver.getDriverPhone(), driver.getAssign());
     }
 
+    /**
+     * @todo 外键约束
+     * @param driver
+     * @return
+     */
     @Override
     public int addDriver(Driver driver) {
-        return driverDao.addDriver(driver.getDriverName(),driver.getCarNumber(),driver.getFleetId(),
-                driver.getDriverPass(),driver.getDriverPhone());
+        return driverDao.addDriver(driver.getDriverName(), driver.getCarNumber(), driver.getFleetId(),
+                driver.getDriverPass(), driver.getDriverPhone());
     }
 
+    /**
+     * @todo 外键约束
+     * @param driverId
+     * @return
+     */
     @Override
     public int deleteDriverById(int driverId) {
         return 0;
     }
+
 
     @Override
     public int updateDriverIsAssign(int driverId, boolean isAssign) {
