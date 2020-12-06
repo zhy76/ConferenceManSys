@@ -40,6 +40,6 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public Participant queryParticipantByParticipantId(Integer participantId) {
-        return participantDao.queryOrganizerByParticipantId(participantId);
+        return participantDao.queryParticipantByParticipantId(participantId);
     }
 }

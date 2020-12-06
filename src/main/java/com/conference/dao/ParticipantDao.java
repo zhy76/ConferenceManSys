@@ -29,5 +29,5 @@ public interface ParticipantDao {
 
     public int deleteParticipant(Integer participantId);
 
-    public Participant queryOrganizerByParticipantId(Integer participantId);
+    public Participant queryParticipantByParticipantId(Integer participantId);
 }

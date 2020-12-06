@@ -28,7 +28,7 @@
         delete from participant where participant_id = #{participantId};
     </delete>
 
-    <select id="queryOrganizerByParticipantId" resultType="Participant" >
+    <select id="queryParticipantByParticipantId" resultType="Participant" >
        select * from participant where participant_id = #{participantId};
     </select>
 
