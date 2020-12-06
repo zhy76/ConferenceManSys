@@ -1,6 +1,7 @@
 package com.conference.service;
 
 import com.conference.entity.Driver;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,6 +19,8 @@ public interface DriverService {
 
     Driver findDriverById(Integer driverId);
 
+    Driver findDriverByPhone(String driverPhone);
+
     int updateDriver(Driver driver);
 
     int addDriver(Driver driver);
@@ -25,4 +28,6 @@ public interface DriverService {
     int deleteDriverById(Integer driverId);
 
     int updateDriverIsAssign(Integer driverId, Boolean isAssign);
+
+
 }

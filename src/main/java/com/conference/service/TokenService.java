@@ -1,19 +1,14 @@
 package com.conference.service;
 
-import com.conference.entity.Participant;
+import com.conference.entity.Driver;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
-
-/**
- * @Description
- * @Author 谢 娇
- * @Date 2020/12/7 8:46
- * @sno 6109118015
- */
+import java.util.List;
 
 
 @Service("TokenService")
@@ -23,15 +18,13 @@ public class TokenService {
     private static int expiration = 3600 * 2;
 
     //登录成功后，将用户的用户名和用户类型写入token
-    public String getToken(Participant participant){
+    public String getToken(Driver driver){
         String token = "";
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("participantId", participant.getParticipantId())
+                .claim("userName", driver.getDriverName())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
-        System.out.println(participant.getParticipantId());
-        System.out.println(token);
         return token;
     }
 
@@ -46,7 +39,7 @@ public class TokenService {
         return token;
     }
 
-//        public List<String> getToken(List<Column> columns){
+//    public List<String> getToken(List<Column> columns){
 //        List<String> tokenList=new ArrayList<>();
 //        for(int i=0;i<columns.size();i++){
 //            String token="";

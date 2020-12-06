@@ -11,8 +11,13 @@
         select * from driver where fleet_id=#{fleetId}
     </select>
 
+
     <select id="findDriverById" resultType="Driver">
         select * from driver where driver_id=#{driverId}
+    </select>
+
+    <select id="findDriverByPhone" resultType="Driver">
+        select * from driver where driver_phone=#{driverPhone}
     </select>
 <!--    <insert id="insertUser" parameterType="com.dahuici.zyb.entity.User" useGeneratedKeys="true" keyProperty="id">-->
 <!--        insert into user(name,sex,age) values(#{name},#{sex},#{age})-->

@@ -36,6 +36,11 @@ public class DriverServiceImp implements DriverService {
     }
 
     @Override
+    public Driver findDriverByPhone(String driverPhone) {
+        return driverDao.findDriverByPhone(driverPhone);
+    }
+
+    @Override
     public int updateDriver(Driver driver) {
         return driverDao.updateDriver(driver.getDriverId(), driver.getDriverName(), driver.getCarNumber(),
                 driver.getFleetId(), driver.getDriverPass(), driver.getDriverPhone(), driver.getAssign());
