@@ -12,6 +12,6 @@ public class LiveRoomTest {
     @Test
     void contextLoads() {
             //liveroomdao.deleteLiveRoom(1,1);
-        System.out.println(liveroomdao.addLiveRoom(1,2,1,"D111"));
+        System.out.println("okk");
     }
 }
