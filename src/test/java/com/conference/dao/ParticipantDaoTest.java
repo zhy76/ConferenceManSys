@@ -17,9 +17,9 @@ public class ParticipantDaoTest {
     @Test
     public void contextLoads(){
         System.out.println(participantDao.queryParticipants());
-        System.out.println(participantDao.queryParticipantByParticipantName("刘涔宇"));
-        System.out.println(participantDao.updateParticipant(new Participant(2,"abc","abc","abc","11111","11111","1111111","男","1111111111111")));
-        System.out.println(participantDao.deleteParticipant(2));
+//        System.out.println(participantDao.queryParticipantByParticipantName("刘涔宇"));
+//        System.out.println(participantDao.updateParticipant(new Participant(2,"abc","abc","abc","11111","11111","1111111","男","1111111111111")));
+//        System.out.println(participantDao.deleteParticipant(2));
 
     }
 }

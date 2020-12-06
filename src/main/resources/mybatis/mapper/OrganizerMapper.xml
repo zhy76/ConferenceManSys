@@ -26,4 +26,8 @@
         delete from organizer where organizer_id = #{organizerId};
     </delete>
 
+    <select id="queryOrganizerByOrganizerId" resultType="Organizer" >
+       select * from organizer where organizer_id = #{organizerId};
+    </select>
+
 </mapper>

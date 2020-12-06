@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>管理员个人中心</title>
+    <title>组织者信息修改</title>
     <script type="text/javascript" th:src="@{/script/jquery-3.3.1.js}"></script>
     <script>
         function submitUpdate(){
-            var form = new FormData(document.getElementById("updateAdminForm"));//把表单的对象作为一个参数
+            var form = new FormData(document.getElementById("updateOrganizerForm"));//把表单的对象作为一个参数
             $.ajax({
                 type:"post",
-                url: "/admin/adminUpdate",
+                url: "/organizer/updateOrganizer",
                 data: form,
                 dataType:"text",
                 processData:false,
@@ -29,23 +29,30 @@
     </script>
 </head>
 <body>
-    <form th:action="@{/admin/adminUpdate}" method = "post" id = "updateAdminForm">
-        <input type="hidden" name = adminId th:value = "${session.admin.getAdminId()}" >
+<div>
+    <form  th:action = "@{/organizer/updateOrganizer}" method = "post" id = "updateOrganizerForm">
+        <input type="hidden" name = organizerId th:value = "${organizer.getOrganizerId()}" >
         <table>
             <tr>
-                <td>管理员姓名:<input type="text" name = adminName th:value="${session.admin.getAdminName()}"></td>
+                <td>ID:<input type="text" name = organizerId disabled = "disabled" th:value="${organizer.getOrganizerId()}"></td>
             </tr>
             <tr>
-                <td>管理员账户:<input type="text" name = adminAccount th:value="${session.admin.getAdminAccount()}"></td>
+                <td>单位:<input type="text" name = organizerUnit th:value="${organizer.getOrganizerUnit()}"></td>
             </tr>
             <tr>
-                <td>管理员密码:<input type="text" name = adminPass th:value="${session.admin.getAdminPass()}"></td>
+                <td>联系电话:<input type="text" name = organizerPhone th:value="${organizer.getOrganizerPhone()}"></td>
+            </tr>
+            <tr>
+                <td>电子邮箱:<input type="text" name = organizerEmail th:value="${organizer.getOrganizerEmail()}"></td>
+            </tr>
+            <tr>
+                <td>账户密码:<input type="text" name = organizerPass th:value="${organizer.getOrganizerPass()}"></td>
             </tr>
             <tr style = " text-align: center ">
                 <td><input type="button" value = "提交修改" onclick="submitUpdate()"></td>
             </tr>
         </table>
     </form>
-
+</div>
 </body>
 </html>

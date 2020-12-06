@@ -18,6 +18,7 @@ public interface ConferenceDao {
      * 1、展示所有会议---- 查询所有会议
      * 2、删除会议
      * 3、更改会议信息
+     * 4、根据id查询会议
      */
 
     public List<Conference> queryConferences();
@@ -25,4 +26,6 @@ public interface ConferenceDao {
     public int updateConference(Conference conference);
 
     public int deleteConference(Integer conferenceId);
+
+    public Conference queryConferenceById(Integer conferenceId);
 }

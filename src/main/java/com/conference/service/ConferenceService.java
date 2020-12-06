@@ -14,4 +14,6 @@ public interface ConferenceService {
     public int updateConference(Conference conference);
 
     public int deleteConference(Integer conferenceId);
+
+    public Conference queryConferenceById(Integer conferenceId);
 }

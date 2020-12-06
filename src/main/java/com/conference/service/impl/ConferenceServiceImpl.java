@@ -32,4 +32,9 @@ public class ConferenceServiceImpl implements ConferenceService {
     public int deleteConference(Integer conferenceId) {
         return conferenceDao.deleteConference(conferenceId);
     }
+
+    @Override
+    public Conference queryConferenceById(Integer conferenceId) {
+        return conferenceDao.queryConferenceById(conferenceId);
+    }
 }

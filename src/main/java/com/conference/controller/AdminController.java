@@ -4,6 +4,8 @@ import com.conference.entity.Admin;
 import com.conference.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,12 +56,12 @@ public class AdminController {
 
     //处理管理员修改个人信息请求
     @PostMapping("/admin/adminUpdate")
-    public String adminUpdate(Admin admin,HttpSession session){
-        //System.out.println(admin);
+    @ResponseBody
+    public String adminUpdate(Admin admin, HttpSession session){
         session.setAttribute("loginAdminName", admin.getAdminName());
         session.setAttribute("admin",admin);
         adminService.updateAdmin(admin);
-        return "redirect:/admin/adminPersonal";
+        return "success";
     }
 
 }

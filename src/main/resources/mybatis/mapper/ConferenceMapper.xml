@@ -24,4 +24,8 @@
         delete from conference where conference_id = #{conferenceId};
     </delete>
 
+    <select id = "queryConferenceById" resultType="Conference">
+       select * from conference where conference_id = #{conferenceId};
+    </select>
+
 </mapper>
