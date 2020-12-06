@@ -16,17 +16,25 @@ public class ParticipantDaoTest {
     @Autowired
     private ParticipantDao participantDao;
 
+    /**
+     * @Author 谢娇
+     * @Description
+     * @return
+     **/
     @Test
     void contextLoads() {
-        System.out.println(participantDao.queryParticipants());
-        System.out.println(participantDao.queryParticipantByParticipantName("刘涔宇1"));
 
-//        System.out.println(participantDao.addAParticipant(new Participant(3,"abc","abc","abc","11111","11111","1111111","男","1111111111111")));
+
+        System.out.println(participantDao.queryParticipantByParticipantName("刘涔宇"));
+
+        System.out.println(participantDao.addAParticipant(new Participant(4,"凌宸","学生","南昌大学","chen@qq.com","lingchen0522","18897991060","男","3254345412222211122")));
+
         System.out.println(participantDao.queryParticipants());
-        System.out.println(participantDao.updateParticipant(new Participant(2,"abc","abc","abc","11111","11111","11111111111","男","1111111111111")));
-        System.out.println(participantDao.queryParticipants());
-        System.out.println(participantDao.deleteParticipant(2));
-        System.out.println(participantDao.queryParticipants());
+
+//        System.out.println(participantDao.updateParticipant(new Participant(2,"abc","abc","abc","11111","11111","11111111111","男","1111111111111")));
+
+//        System.out.println(participantDao.deleteParticipant(2));
+
 
     }
 
