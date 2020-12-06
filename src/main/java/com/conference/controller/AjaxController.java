@@ -14,16 +14,11 @@ import java.io.IOException;
  */
 
 @Controller
-@RequestMapping("/ajax")
+//@RequestMapping("/ajax")
 public class AjaxController {
-
-    @RequestMapping("/a1")
-    public void ajax(String name, HttpServletResponse response) throws IOException {
-        if ("admin".equals(name)) {
-            response.getWriter().print("true");
-        } else {
-            response.getWriter().println("false");
-        }
+    @RequestMapping("/login")
+    public String test() {
+        return "popupsignin.html";
     }
-
+//    @RequestMapping("/a1")
 }

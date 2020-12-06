@@ -31,6 +31,10 @@ public interface DriverDao {
      * 按照id查询司机
      */
     Driver findDriverById(@Param("driverId") Integer driverId);
+    /**
+     * 按照电话查询司机
+     */
+    Driver findDriverByPhone(@Param("driverPhone") String driverPhone);
 
     /**
      * 改
@@ -56,4 +60,6 @@ public interface DriverDao {
      * 修改司机的状态isAssign
      */
     int updateDriverIsAssign(@Param("driverId") Integer driverId, @Param("isAssign") Boolean isAssign);
+
+
 }

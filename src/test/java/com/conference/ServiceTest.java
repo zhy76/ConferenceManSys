@@ -37,6 +37,7 @@ public class ServiceTest {
     }
     @Test
     void fleetTest() {
+        System.out.println(driverServiceImp.findDriverByPhone("12121212"));
         System.out.println(fleetServiceImp.findAllFleet());
         System.out.println(fleetServiceImp.findFleetById(1));
         System.out.println(fleetDao.deleteFleetById(1));
