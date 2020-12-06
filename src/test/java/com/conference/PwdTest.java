@@ -16,10 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 public class PwdTest {
+    @Autowired
     LiveRoomDao liveroomdao;
     @Test
     void contextLoads() {
-        System.out.println(liveroomdao.findAllLiveRoom());
+        System.out.println("ok");
+
     }
 
 
