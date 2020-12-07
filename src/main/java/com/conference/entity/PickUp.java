@@ -11,38 +11,39 @@ import java.util.Date;
  */
 
 public class PickUp {
-    private int participantId;
-    private int driverId;
+    private Integer participantId;
+    private Integer driverId;
     private String trainNumber;
     private String toTime;
     private String returnTime;
     private boolean isFinishPickup;
 
+
     @Override
     public String toString() {
-        return "pickUp{" +
+        return "PickUp{" +
                 "participantId=" + participantId +
                 ", driverId=" + driverId +
                 ", trainNumber='" + trainNumber + '\'' +
-                ", toTime=" + toTime +
-                ", returnTime=" + returnTime +
+                ", toTime='" + toTime + '\'' +
+                ", returnTime='" + returnTime + '\'' +
                 ", isFinishPickup=" + isFinishPickup +
                 '}';
     }
 
-    public int getParticipantId() {
+    public Integer getParticipantId() {
         return participantId;
     }
 
-    public void setParticipantId(int participantId) {
+    public void setParticipantId(Integer participantId) {
         this.participantId = participantId;
     }
 
-    public int getDriverId() {
+    public Integer getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(int driverId) {
+    public void setDriverId(Integer driverId) {
         this.driverId = driverId;
     }
 
