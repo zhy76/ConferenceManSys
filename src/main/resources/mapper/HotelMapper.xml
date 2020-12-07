@@ -8,8 +8,12 @@
         select * from hotel
     </select>
 <!--    通过酒店ID查找酒店-->
-    <select id="getHotel" resultType="Hotel">
+    <select id="getHotelById" resultType="Hotel">
         select * from Hotel where hotel_id=#{hotelId}
+    </select>
+<!--通过电话查找酒店-->
+    <select id="getHotelByPhone" resultType="Hotel">
+        select * from Hotel where hotel_phone=#{hotelPhone}
     </select>
 <!--    酒店增加-->
     <insert id="addHotel">

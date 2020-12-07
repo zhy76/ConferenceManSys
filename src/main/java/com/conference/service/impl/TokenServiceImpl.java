@@ -1,6 +1,7 @@
 package com.conference.service.impl;
 
 import com.conference.entity.Driver;
+import com.conference.entity.Hotel;
 import com.conference.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,7 +19,7 @@ public class TokenServiceImpl implements TokenService {
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
     private static int expiration = 3600 * 2;
 
-    //登录成功后，将用户的用户名和用户类型写入token
+    //登录成功后，将用户的用户名和用户类型写入token(司机)
     public String getToken(Driver driver){
         String token = "";
         token = Jwts.builder()
@@ -28,7 +29,16 @@ public class TokenServiceImpl implements TokenService {
                 .compact();
         return token;
     }
-
+    //登录成功后，将用户的用户名和用户类型写入token(酒店)
+    public String getToken(Hotel hotel){
+        String token = "";
+        token = Jwts.builder()
+                .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
+                .claim("userName", hotel.getHotelName())
+                .signWith(signatureAlgorithm, SECRET)
+                .compact();
+        return token;
+    }
     //将增加用户的人数写入token
     public String getToken(int i){
         String token="";

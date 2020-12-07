@@ -10,7 +10,8 @@ import java.util.List;
 //@Service("HotelService")
 public interface HotelService {
     List<Hotel> findAllHotel();
-    Hotel getHotel(int hotelId);
+    Hotel getHotelById(int hotelId);
+    Hotel getHotelByPhone(String hotelPhone);
     int addHotel(Hotel hotel);
     int deleteHotelById(int hotelId);
     int updateHotel(Hotel hotel);

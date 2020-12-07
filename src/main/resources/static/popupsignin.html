@@ -185,11 +185,14 @@
             $.ajax({
                 type: "POST",
                 dataType: "json",
-                url: '/Driver/login',
+                //url: '/Driver/login',
+                url:'/Hotel/login',
                 contentType: "application/json",
                 data: JSON.stringify({
-                    "driverPhone": "" + username,
-                    "driverPass": "" + password
+                    // "driverPhone": "" + username,
+                    // "driverPass": "" + password
+                    "hotelPhone": ""+username,
+                    "hotelPass": ""+password,
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result)

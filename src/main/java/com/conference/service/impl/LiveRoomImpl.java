@@ -1,4 +1,4 @@
-package com.conference.service.imp;
+package com.conference.service.impl;
 
 import com.conference.dao.LiveRoomDao;
 import com.conference.entity.LiveRoom;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("LiveRoomService")
-public class LiveRoomImp implements LiveRoomService {
+public class LiveRoomImpl implements LiveRoomService {
     @Autowired
     LiveRoomDao liveRoomDao;
 

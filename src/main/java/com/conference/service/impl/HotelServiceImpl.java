@@ -1,4 +1,4 @@
-package com.conference.service.imp;
+package com.conference.service.impl;
 
 import com.conference.dao.HotelDao;
 import com.conference.entity.Hotel;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service("HotelService")
-public class HotelServiceImp implements HotelService {
+public class HotelServiceImpl implements HotelService {
     @Autowired
     HotelDao hotelDao;
 
@@ -19,8 +19,13 @@ public class HotelServiceImp implements HotelService {
     }
 
     @Override
-    public Hotel getHotel(int hotelId) {
-        return hotelDao.getHotel(hotelId);
+    public Hotel getHotelById(int hotelId) {
+        return hotelDao.getHotelById(hotelId);
+    }
+
+    @Override
+    public Hotel getHotelByPhone(String hotelPhone) {
+        return hotelDao.getHotelByPhone(hotelPhone);
     }
 
     @Override

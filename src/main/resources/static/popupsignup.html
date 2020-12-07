@@ -148,18 +148,26 @@
     </body>
 	<script type="text/javascript">
 		$("#submit").click(function(){
-			let driverPhone=$("#loginUserName").val();
-			let driverPass = $("#loginUserPassword").val();
+			let hotelPhone = $("#loginUserName").val();
+			let hotelPass = $("#loginUserPassword").val();
+			// let driverPhone=$("#loginUserName").val();
+			// let driverPass = $("#loginUserPassword").val();
 			$.ajax({
 				type: "POST",
 				dataType: "json",
-				url: '/Driver/register',
+				//url: '/Driver/register',
+				url:'/Hotel/register',
 				contentType: "application/json",
 				data:JSON.stringify({
-					"driverPhone": ""+driverPhone,
-					"driverPass": ""+driverPass,
-					"driverName": "hcs",
-					"carNumber": "888888"
+					// "driverPhone": ""+driverPhone,
+					// "driverPass": ""+driverPass,
+					// "driverName": "hcs",
+					// "carNumber": "888888"
+					"hotelPhone": ""+hotelPhone,
+					"hotelPass": ""+hotelPass,
+					"hotelName": "前湖大宾馆",
+					"hotelLocation": "前湖",
+					"hotelInfo": "干就完了！"
 				}),
 				success: function (jsonData,result) {
 					console.log("data is :" + result);

@@ -62,6 +62,13 @@
             <version>0.10.7</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- spring-boot-devtools依赖包 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
