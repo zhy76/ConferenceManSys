@@ -1,11 +1,11 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/12/4 10:13:48                           */
+/* Created on:     2020/12/7 9:41:56                            */
 /*==============================================================*/
-
 drop database if exists conference;
 create database conference;
 use conference;
+
 
 drop table if exists admin;
 
@@ -112,7 +112,7 @@ create table join_conference
    is_pickup            smallint,
    to_time              timestamp not null,
    return_time          timestamp not null,
-   Train_number         varchar(50),
+   train_number         varchar(50),
    primary key (participant_id, conference_id)
 );
 
@@ -123,9 +123,8 @@ create table live_room
 (
    participant_id       int not null,
    hotel_id             int not null,
-   conference_id        int not null,
    room_id              varchar(20),
-   primary key (participant_id, hotel_id, conference_id)
+   primary key (participant_id, hotel_id)
 );
 
 /*==============================================================*/
@@ -167,12 +166,11 @@ create table pick_up
 (
    participant_id       int not null,
    driver_id            int not null,
-   conference_id        int not null,
    train_number         varchar(50),
    to_time              timestamp,
    return_time          timestamp,
    is_finish_pickup     bool not null,
-   primary key (participant_id, driver_id, conference_id)
+   primary key (participant_id, driver_id)
 );
 
 alter table conference add constraint FK_organise_conference foreign key (organizer_id)
@@ -199,20 +197,16 @@ alter table live_room add constraint FK_live_room foreign key (participant_id)
 alter table live_room add constraint FK_live_room2 foreign key (hotel_id)
       references hotel (hotel_id) on delete restrict on update restrict;
 
-alter table live_room add constraint FK_live_room3 foreign key (conference_id)
-      references conference (conference_id) on delete restrict on update restrict;
-
 alter table pick_up add constraint FK_pick_up foreign key (participant_id)
       references participant (participant_id) on delete restrict on update restrict;
 
 alter table pick_up add constraint FK_pick_up2 foreign key (driver_id)
       references driver (driver_id) on delete restrict on update restrict;
 
-alter table pick_up add constraint FK_pick_up3 foreign key (conference_id)
-      references conference (conference_id) on delete restrict on update restrict;
-
 
 -- 脚本最后加一句，防止服务器的字符集出问题，
 -- 本地是不需要的
-alter database conference character set utf8;
+-- 改了配置文件不需要
+-- alter database conference character set utf8;
+-- alter database conference character SET utf8mb4;
 
