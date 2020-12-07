@@ -1,18 +1,11 @@
 package com.conference.service;
 
-import com.conference.entity.Driver;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-
-
+/**
+ * @ClassName: TokenService
+ * @Description: That's enough.
+ * @Author: Lance
+ * @Date: 2020/12/7 10:20
+ */
 public interface TokenService {
-
 
 }

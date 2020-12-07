@@ -1,4 +1,4 @@
-package com.conference.service.imp;
+package com.conference.service.impl;
 
 import com.conference.entity.Driver;
 import com.conference.service.TokenService;
@@ -7,10 +7,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 
 @Service("TokenService")
-public class TokenServiceImp implements TokenService {
+public class TokenServiceImpl implements TokenService {
     private static final String SECRET = "asfdsfadsfLMNQNQJQKdfkjsdrow32234545fdffdhgdhfgdhgfdhgfdhfgdhfgdh";
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
     private static int expiration = 3600 * 2;
@@ -37,7 +40,7 @@ public class TokenServiceImp implements TokenService {
         return token;
     }
 
-    //    public List<String> getToken(List<Column> columns){
+//    public List<String> getToken(List<Column> columns){
 //        List<String> tokenList=new ArrayList<>();
 //        for(int i=0;i<columns.size();i++){
 //            String token="";
@@ -51,8 +54,8 @@ public class TokenServiceImp implements TokenService {
 //            tokenList.add(token);
 //        }
 //        return tokenList;
-//
 //    }
+
     public Claims parseToken(String token){
         Claims claims = Jwts.parser()
                 .setSigningKey(SECRET)

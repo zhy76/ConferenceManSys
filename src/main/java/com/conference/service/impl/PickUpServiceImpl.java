@@ -1,4 +1,4 @@
-package com.conference.service.imp;
+package com.conference.service.impl;
 
 import com.conference.dao.PickUpDao;
 import com.conference.entity.PickUp;
@@ -15,7 +15,7 @@ import java.util.List;
  * @Date: 2020/12/3 14:44
  */
 @Service("PickUpService")
-public class PickUpServiceImp implements PickUpService {
+public class PickUpServiceImpl implements PickUpService {
 
     @Autowired
     private PickUpDao pickUpDao;
