@@ -4,16 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.conference.entity.Driver;
 import com.conference.dao.DriverDao;
 import com.conference.service.DriverService;
-import com.conference.service.TokenService;
-import com.conference.util.encrypt.MD5SaltEncryption;
-import com.conference.util.result.Result;
-import jdk.nashorn.internal.ir.Node;
+import com.conference.service.impl.TokenServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @ClassName: DriverController
@@ -27,7 +22,7 @@ import java.util.List;
 public class DriverController {
 
     @Autowired
-    private TokenService tokenService;
+    private TokenServiceImpl tokenServiceImpl;
 
     @Autowired
     private DriverDao driverDao;
@@ -58,7 +53,7 @@ public class DriverController {
         }
         int addNumber = driverService.addDriver(driver);
         if(addNumber>0){
-            String token=tokenService.getToken(addNumber);
+            String token= tokenServiceImpl.getToken(addNumber);
             jsonObject.put("token",token);
             return jsonObject;
         }else{
@@ -87,7 +82,7 @@ public class DriverController {
                 jsonObject.put("message","登录失败,密码错误");
                 return jsonObject;
             }else {
-                String token = tokenService.getToken(driverForBase);
+                String token = tokenServiceImpl.getToken(driverForBase);
                 jsonObject.put("token", token);
                 return jsonObject;
             }
