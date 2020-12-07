@@ -11,9 +11,14 @@
         SELECT * FROM fleet WHERE fleet_id=#{fleetId}
     </select>
 
+    <select id="findFleetByPhone" resultType="Fleet">
+        SELECT * FROM fleet WHERE fleet_phone=#{fleetPhone}
+    </select>
+
     <delete id="deleteFleetById">
         DELETE FROM fleet WHERE fleet_id=#{fleetId}
     </delete>
+
 
 
     <insert id="addFleet">

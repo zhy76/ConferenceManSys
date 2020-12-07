@@ -20,6 +20,9 @@ public interface FleetDao {
     List<Fleet> findAllFleet();
     /**按id查询车队*/
     Fleet findFleetById(@Param("fleetId") int fleetId);
+
+    Fleet findFleetByPhone(@Param("fleetPhone") String fleetPhone);
+
     /**删*/
     int deleteFleetById(@Param("fleetId") int fleetId);
     /**增*/
