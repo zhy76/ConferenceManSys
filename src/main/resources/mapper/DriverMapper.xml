@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.conference.dao.DriverDao">
+    <select id="findAllDriver" resultType="Driver">
+        select * from driver
+    </select>
+
+    <select id="findFleetAllDriver" resultType="Driver">
+        select * from driver where fleet_id=#{fleetId}
+    </select>
+
+
+    <select id="findDriverById" resultType="Driver">
+        select * from driver where driver_id=#{driverId}
+    </select>
+
+    <select id="findDriverByPhone" resultType="Driver">
+        select * from driver where driver_phone=#{driverPhone}
+    </select>
+<!--    <insert id="insertUser" parameterType="com.dahuici.zyb.entity.User" useGeneratedKeys="true" keyProperty="id">-->
+<!--        insert into user(name,sex,age) values(#{name},#{sex},#{age})-->
+<!--    </insert>-->
+
+
+
+    <insert id="addDriver">
+        INSERT INTO driver
+        VALUES(null,#{driverName}, #{carNumber}, #{fleetId}, #{driverPass}, #{driverPhone}, false)
+    </insert>
+    <!--    INSERT INTO driver-->
+    <!--    VALUES(null,"glz", "111111", null, "123456", "19914665732", 0);-->
+
+    <delete id="deleteDriverById">
+        DELETE FROM driver WHERE driver_id=#{driverId}
+    </delete>
+
+
+    <update id="updateDriver">
+        UPDATE driver SET driver_name=#{driverName}, car_number=#{carNumber}, fleet_id=#{fleetId},
+        driver_pass=#{driverPass},driver_phone=#{driverPhone}, is_assign=#{isAssign} WHERE driver_id=#{driverId};
+    </update>
+
+    <update id="updateDriverIsAssign">
+        UPDATE driver SET is_assign=#{isAssign} WHERE driver_id=#{driverId};
+    </update>
+<!--    <resultMap type="Driver" id="DriverResultMap" >-->
+<!--        <result property="driverId" column="driver_id"/>-->
+<!--    </resultMap>-->
+</mapper>
