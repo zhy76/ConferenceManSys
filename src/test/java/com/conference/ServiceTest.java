@@ -2,12 +2,9 @@ package com.conference;
 
 import com.conference.dao.DriverDao;
 import com.conference.dao.FleetDao;
-import com.conference.entity.Driver;
-import com.conference.entity.Fleet;
-import com.conference.service.FleetService;
-import com.conference.service.imp.DriverServiceImp;
-import com.conference.service.imp.FleetServiceImp;
-import com.conference.service.imp.PickUpServiceImp;
+import com.conference.service.impl.DriverServiceImpl;
+import com.conference.service.impl.FleetServiceImpl;
+import com.conference.service.impl.PickUpServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,14 +21,14 @@ public class ServiceTest {
 //    @Autowired()
 
     @Autowired
-    private FleetServiceImp fleetServiceImp;
+    private FleetServiceImpl fleetServiceImpl;
     @Autowired
-    private DriverServiceImp driverServiceImp;
+    private DriverServiceImpl driverServiceImpl;
 
     @Autowired
     DriverDao driverDao;
     @Autowired
-    private PickUpServiceImp pickUpServiceImp;
+    private PickUpServiceImpl pickUpServiceImpl;
     @Autowired
     private FleetDao fleetDao;
 
@@ -40,7 +37,7 @@ public class ServiceTest {
 
 
 //        System.out.println(fleetDao.findAllFleet());
-        System.out.println(fleetServiceImp.findAllFleet());
+        System.out.println(fleetServiceImpl.findAllFleet());
     }
     @Test
     void fleetTest() {

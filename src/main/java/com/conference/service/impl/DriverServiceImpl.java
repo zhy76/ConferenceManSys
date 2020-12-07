@@ -1,4 +1,4 @@
-package com.conference.service.imp;
+package com.conference.service.impl;
 
 import com.conference.dao.DriverDao;
 import com.conference.entity.Driver;
@@ -15,7 +15,7 @@ import java.util.List;
  * @Date: 2020/12/2 21:11
  */
 @Service("DriverService")
-public class DriverServiceImp implements DriverService {
+public class DriverServiceImpl implements DriverService {
 
     @Autowired
     private DriverDao driverDao;

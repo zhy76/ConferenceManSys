@@ -1,4 +1,4 @@
-package com.conference.service.imp;
+package com.conference.service.impl;
 
 import com.conference.dao.DriverDao;
 import com.conference.dao.FleetDao;
@@ -17,7 +17,7 @@ import java.util.List;
  * @Date: 2020/12/2 21:16
  */
 @Service("FleetService")
-public class FleetServiceImp implements FleetService {
+public class FleetServiceImpl implements FleetService {
 
     @Autowired
     private FleetDao fleetDao;
