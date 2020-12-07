@@ -16,6 +16,8 @@ public interface FleetService {
 
     Fleet findFleetById(Integer fleetId);
 
+    Fleet findFleetByPhone(String fleetPhone);
+
     int deleteFleetById(Integer fleetId);
 
     int addFleet(Fleet fleet);

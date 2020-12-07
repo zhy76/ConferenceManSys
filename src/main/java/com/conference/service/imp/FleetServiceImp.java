@@ -35,6 +35,10 @@ public class FleetServiceImp implements FleetService {
         return fleetDao.findFleetById(fleetId);
     }
 
+    public Fleet findFleetByPhone(String fleetPhone) {
+        return fleetDao.findFleetByPhone(fleetPhone);
+    }
+
     /**
      * 1. 设置空闲司机，解决外键约束
      * 2. null？？？

@@ -23,7 +23,7 @@ import java.util.List;
  */
 // /driver/register
 @RestController
-@RequestMapping("/driver")
+@RequestMapping("/Driver")
 public class DriverController {
 
     @Autowired
@@ -50,11 +50,22 @@ public class DriverController {
 
     // /addDriver/ggg/123/1/123/123
     @PostMapping("/register")
-    public Result register(@Valid @RequestBody Driver driver) {
-        String encryptedPasswd = MD5SaltEncryption.encrypt(driver.getDriverPass(), driver.getDriverName());
-        driver.setDriverPass(encryptedPasswd);
-        driverService.addDriver(driver);
-        return Result.success("name", driver.getDriverName());
+    public Object register(@Valid @RequestBody Driver driver) {
+        JSONObject jsonObject=new JSONObject();
+        if(driver.getDriverName() == null || driver.getDriverPass() == null){
+            jsonObject.put("message","表单错误");
+            return jsonObject;
+        }
+        int addNumber = driverService.addDriver(driver);
+        if(addNumber>0){
+            String token=tokenService.getToken(addNumber);
+            jsonObject.put("token",token);
+            return jsonObject;
+        }else{
+            jsonObject.put("message","注册失败");
+            return jsonObject;
+        }
+//        return jsonObject;
     }
 
     @PostMapping("/login")
@@ -81,15 +92,8 @@ public class DriverController {
                 return jsonObject;
             }
         }
-//        return jsonObject;
-//        Driver driverForBase = driverDao.find
     }
-//    @GetMapping("/addDriver/{driverName}/{carNumber}/{fleetId}/{driverPass}/{driverPhone}")
-//    public void register(@PathVariable String driverName, @PathVariable String carNumber,@PathVariable int fleetId,
-//                         @PathVariable String driverPass, @PathVariable String driverPhone) {
-//        driverDao.addDriver(driverName, carNumber, fleetId, driverPass, driverPhone);
-//        //        driverMapper.addDriver();
-//    }
+
 // /updateDriver/1/hh/88888/1/1/12121212
     @GetMapping("/updateDriver/{driverId}/{driverName}/{carNumber}/{fleetId}/{driverPass}/{driverPhone}")
     public void updateDriver(@PathVariable int driverId, @PathVariable String driverName,

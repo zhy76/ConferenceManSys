@@ -186,7 +186,7 @@
             $.ajax({
                 type: "POST",
                 dataType: "json",
-                url: '/driver/login',
+                url: '/Driver/login',
                 contentType: "application/json",
                 data: JSON.stringify({
                     "driverPhone": "" + username,
@@ -201,14 +201,12 @@
                         } else {
                             window.location.href = "index.html";
                         }
-
                     } else {
                         alert("登录失败，请重试");
                     }
                 }
             });
         })
-
     </script>
 </body>
 
