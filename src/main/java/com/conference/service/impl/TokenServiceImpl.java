@@ -23,9 +23,10 @@ public class TokenServiceImpl implements TokenService {
         String token = "";
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("userName", driver.getDriverName())
+                .claim("driverId", driver.getDriverId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
+        System.out.println(token);
         return token;
     }
 
@@ -61,9 +62,6 @@ public class TokenServiceImpl implements TokenService {
                 .setSigningKey(SECRET)
                 .parseClaimsJws(token)
                 .getBody();
-//        Date timeExpiration = new Date((long)claims.get("timeExpiration"));
-//        String userName = (String) claims.get("userName");
-//        int type = (int) claims.get("type");
         return claims;
     }
 }
