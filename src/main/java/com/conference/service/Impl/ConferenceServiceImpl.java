@@ -17,6 +17,7 @@ import java.util.List;
 @Service("conferenceService")
 public class ConferenceServiceImpl implements ConferenceService {
 
+
     @Autowired
     private ConferenceDao conferenceDao;
 

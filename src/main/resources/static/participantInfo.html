@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>参与者完善信息界面</title>
+    <!-- Common plugins -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/simple-line-icons.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/pace.css" rel="stylesheet">
+    <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/nanoscroller.css">
+    <link rel="stylesheet" href="css/metismenu.min.css">
+    <link href="css/c3.min.css" rel="stylesheet">
+    <link href="css/blue.css" id="theme" rel="stylesheet">
+    <!--jquery steps-->
+    <link rel="stylesheet" href="css/jquery-steps.css">
+    <!-- dataTables -->
+    <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!--top bar start-->
+<div class="top-bar light-top-bar"><!--by default top bar is dark, add .light-top-bar class to make it light-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6">
+                <a href="index.html" class="admin-logo">
+                    <h1><img src="picture/meeting.jpg" alt=""></h1>
+                </a>
+                <!--                        以下这段作用是什么？？？-->
+                <div class="left-nav-toggle visible-xs visible-sm">
+                    <a href="">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                    </a>
+                </div><!--end nav toggle icon-->
+            </div>
+            <div class="col-xs-6">
+                <ul class="list-inline top-right-nav">
+                    <li >
+                        <a href="参与者.html" >
+                            <span class="glyphicon glyphicon-envelope"> 消息</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="参与者.html" >
+                            <span class="glyphicon glyphicon-cog"> 设置</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="popupsignin.html" >
+                            <span class="glyphicon glyphicon-log-out"> 退出登录</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="popupsignin.html" >
+                            <span><img src="picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- top bar end-->
+
+<!--left navigation start-->
+<aside class="float-navigation light-navigation">
+    <div class="nano">
+        <div class="nano-content">
+            <ul class="metisMenu nav" id="menu">
+                <li class="nav-heading"><span>Navigation</span></li>
+                <li>
+                    <a href="index.html"><i class="icon-home"></i> 主页 </a>
+                </li>
+                <li class="active">
+                    <a href="javascript: void(0);" aria-expanded="true"><i class="icon-user"></i> 基本资料 <span class="fa arrow"></span></a>
+                    <ul class="nav-second-level nav" aria-expanded="true">
+                        <li class="active"><a href="participantInfo.html">个人信息</a></li>
+                        <li class="active"><a href="participantInfo.html">酒店出行</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" aria-expanded="true"><i class="icon-note"></i> 会议 <span class="fa arrow"></span></a>
+                    <ul class="nav-second-level nav" aria-expanded="true">
+                        <li><a href="index.html">选择会议</a></li>
+                        <li><a href="index.html">查看会议</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html"><i class="icon-envelope-letter"></i> 消息 </a>
+                </li>
+                <li>
+                    <a href="index.html"><i class="icon-settings"></i> 设置 </a>
+                </li>
+
+                <!--<li><a href="landing/index.html" target="_blank" class="bg-primary"><i class="icon-star"></i>Landing page</a></li>-->
+            </ul>
+        </div><!--nano content-->
+    </div><!--nano scroll end-->
+</aside>
+<!--left navigation end-->
+
+
+<!--main content start-->
+<section class="main-content">
+
+    <!--page header start-->
+    <div class="page-header">
+        <div class="row">
+<!--            <div class="col-sm-6 text-left">-->
+<!--                <h5>个人信息</h5>-->
+<!--            </div>-->
+            <div class="col-sm-12 text-right">
+                <ol class="breadcrumb">
+                    <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                    <li>基本资料</li>
+                    <li>个人信息</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!--page header end-->
+
+    <!--start page content-->
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-sm-11">
+                    <div class="card">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs profile-tab" role="tablist"><li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#个人信息" role="tab">
+                            个人信息</a> </li>
+                            <li class="nav-item active"> <a class="nav-link" data-toggle="tab" href="#hotel" role="tab">酒店出行</a> </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane" id="个人信息" role="tabpanel">
+                                <div class="card-body">
+                                    <form class="form-horizontal form-material">
+                                        <br>
+                                        <div class="form-group">
+                                            <label class="col-md-12">姓名</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line" value="凌宸">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">职业</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line" value="学生">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">工作或学习单位</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line" value="南昌大学">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="example-email" class="col-md-12">邮箱</label>
+                                            <div class="col-md-12">
+                                                <input type="email" value="123456@qq.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">密码</label>
+                                            <div class="col-md-12">
+                                                <input type="password" value="password" class="form-control form-control-line">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">电话</label>
+                                            <div class="col-md-12">
+                                                <input type="text" value="123 456 7890" class="form-control form-control-line">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">性别</label>
+                                            <div class="col-md-12">
+                                                <div class="radio-inline">
+                                                    <label>
+                                                        <input  type="radio" name="sex"
+                                                               value="男">男
+                                                    </label>
+                                                </div>
+                                                &nbsp; &nbsp; &nbsp;
+                                                <div class="radio-inline">
+                                                    <label>
+                                                        <input type="radio" name="sex"
+                                                               value="男">女
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">身份证号</label>
+                                            <div class="col-md-12">
+                                                <input type="text" value="1111111111111" class="form-control form-control-line">
+                                            </div>
+                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-md-12">个人介绍</label>-->
+<!--                                            <div class="col-md-12">-->
+<!--                                                <textarea rows="5" class="form-control form-control-line">-->
+<!--                                                    啊哈！-->
+<!--                                                </textarea>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-sm-12">Select Country</label>-->
+<!--                                            <div class="col-sm-12">-->
+<!--                                                <select class="form-control form-control-line">-->
+<!--                                                    <option>London</option>-->
+<!--                                                    <option>India</option>-->
+<!--                                                    <option>Usa</option>-->
+<!--                                                    <option>Canada</option>-->
+<!--                                                    <option>Thailand</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <br/>
+                                        <br/>
+                                        <div class="form-group">
+                                            <div class="col-sm-12 text-center" >
+                                                <button class="btn btn-info">更新</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="hotel" role="tabpanel">
+                                <div class="card-body">
+                                    <form class="form-horizontal form-material">
+                                        <div class="panel-group" id="accordion">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+<!--                                                        <a data-toggle="collapse" data-parent="#accordion"-->
+<!--                                                           href="#collapseOne">-->
+                                                            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#collapseOne">
+                                                                预定酒店
+                                                            </button>
+<!--                                                        </a>-->
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseOne" class="panel-collapse collapse in">
+                                                    <div class="panel-body">
+                                                        <div class="form-group">
+
+                                                            <label class="col-md-12">请选择房间类型</label>
+                                                            <div class="col-md-12">
+                                                                <div class="radio-inline">
+                                                                    <label>
+                                                                        <input id="optionsRadios1" type="radio" name="optionsRadios"
+                                                                               value="option2">单人
+                                                                    </label>
+                                                                </div>
+                                                                &nbsp; &nbsp; &nbsp;
+                                                                <div class="radio-inline">
+                                                                    <label>
+                                                                        <input id="optionsRadios2" type="radio" name="optionsRadios"
+                                                                               value="option2">双人
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-12">其他住宿要求</label>
+                                                            <div class="col-md-12">
+                                                <textarea rows="5" class="form-control form-control-line" >
+                                                    啊哈！
+                                                </textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+<!--                                                        <a data-toggle="collapse" data-parent="#accordion"-->
+<!--                                                           href="#collapseTwo">-->
+                                                            <button type="button" class="btn btn-default" data-toggle="collapse"
+                                                                    data-target="#collapseTwo">
+                                                                不预定酒店
+                                                            </button>
+<!--                                                        </a>-->
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseTwo" class="collapse in" align="center">
+                                                    <b>我们将不会为您预订酒店！</b>
+                                                </div>
+                                            </div>
+                                        </div>
+<!--                                        <div class="form-group">-->
+<!--                                            <br>-->
+<!--                                            <label class="col-md-12">是否要预订酒店？</label>-->
+<!--                                            <div class="col-md-12">-->
+<!--                                                <div class="radio-inline">-->
+<!--                                                    <label>-->
+<!--                                                        <input id="optionsRadios1" type="radio" name="optionsRadios" value="option1" checked="">是-->
+<!--                                                    </label>-->
+<!--                                                </div>-->
+<!--                                                &nbsp; &nbsp; &nbsp;-->
+<!--                                                <div class="radio-inline">-->
+<!--                                                    <label>-->
+<!--                                                        <input id="optionsRadios2" type="radio" name="optionsRadios" value="option2">否-->
+<!--                                                    </label>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label class="col-md-12">其他住宿要求</label>-->
+<!--                                            <div class="col-md-12">-->
+<!--                                                <textarea rows="5" class="form-control form-control-line" >-->
+<!--                                                    啊哈！-->
+<!--                                                </textarea>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                        <div class="form-group">
+                                            <div class="col-sm-12 text-center" >
+                                                <button class="btn btn-info">更新</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+            <!-- Row -->
+
+        </div>
+    </div>
+
+    <!--end page content-->
+
+
+    <!--Start footer-->
+    <footer class="footer">
+        <span>Copyright &copy; 2020. 南昌大学</span>
+    </footer>
+    <!--end footer-->
+
+</section>
+<!--end main content-->
+
+
+
+<!--Common plugins-->
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/pace.min.js"></script>
+<script src="js/jasny-bootstrap.min.js"></script>
+<script src="js/jquery.slimscroll.min.js"></script>
+<script src="js/jquery.nanoscroller.min.js"></script>
+<script src="js/metismenu.min.js"></script>
+<script src="js/float-custom.js"></script>
+<script src="js/waves.js"></script>
+<script src="js/custom.min.js"></script>
+<script src="js/sidebarmenu.js"></script>
+<!--stickey kit -->
+<script src="js/sticky-kit.min.js"></script>
+<script src="js/jquery.sparkline.min.js"></script>
+<!--jquery steps-->
+<script src="js/jQuery.style.switcher.js"></script>
+<script src="js/jquery.steps.min.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+
+<script>
+
+    $("#example-basic").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+
+        autoFocus: true
+    });
+    //steps with form
+    var form = $("#example-form");
+    form.validate({
+        errorPlacement: function errorPlacement(error, element) {
+            element.before(error);
+        },
+        rules: {
+            confirm: {
+                equalTo: "#password"
+            }
+        }
+    });
+    form.children("div").steps({
+        headerTag: "h3",
+        bodyTag: "section",
+        transitionEffect: "slideLeft",
+        onStepChanging: function (event, currentIndex, newIndex)
+        {
+            form.validate().settings.ignore = ":disabled,:hidden";
+            return form.valid();
+        },
+        onFinishing: function (event, currentIndex)
+        {
+            form.validate().settings.ignore = ":disabled";
+            return form.valid();
+        },
+        onFinished: function (event, currentIndex)
+        {
+            alert("Submitted!");
+        }
+    });
+</script>
+
+</body>
+</html>

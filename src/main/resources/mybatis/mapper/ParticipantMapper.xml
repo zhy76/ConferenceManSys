@@ -35,4 +35,11 @@
         #{participantEmail},#{participantPass},#{participantPhone},#{participantSex},#{participantIdCard});
     </insert>
 
+    <select id="queryParticipantByParticipantId" resultType="Participant">
+        select * from participant where participant_id = #{participantId}
+    </select>
+
+    <select id="queryParticipantByParticipantPhone" resultType="Participant">
+        select * from participant where participant_phone = #{participantPhone}
+    </select>
 </mapper>
