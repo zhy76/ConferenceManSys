@@ -7,38 +7,33 @@ import com.conference.entity.PickUp;
 import com.conference.service.DriverService;
 import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
-import com.conference.service.impl.PickUpServiceImpl;
-import com.conference.service.impl.TokenServiceImpl;
 import io.jsonwebtoken.Claims;
-import org.apache.ibatis.jdbc.Null;
 import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.zip.DataFormatException;
 
 /**
  * @ClassName: DriverController
- * @Description: TODO
+ * @Description: TODO  司机的分派算法：
+ * 参考因素
+ * 1. 司机的未完成订单量
+ * 2. 司机的从现在到未来第一个订单的时间长度（司机当前空闲时间）
  * @Author: Lance
  * @Date: 2020/12/2 18:52
  */
 // /driver/register
 @RestController
-@RequestMapping("/Driver")
+@RequestMapping("/driver")
 public class DriverController {
 
     @Autowired
     private TokenService tokenService;
 
-    @Autowired
-    private DriverDao driverDao;
 
-    //    @Resource(name = "driverServiceImpl")
     @Autowired
     private DriverService driverService;
 
@@ -53,15 +48,17 @@ public class DriverController {
 //    }
 
     @GetMapping("/deleteDriver/{id}")
-    public void deleteDriver(@PathVariable int id) {
-        driverDao.deleteDriverById(id);
+    public int deleteDriver(@PathVariable int id) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("message", "删除成功");
+        return driverService.deleteDriverById(id);
     }
 
     // /addDriver/ggg/123/1/123/123
     @PostMapping("/register")
     public Object register(@Valid @RequestBody Driver driver) {
         JSONObject jsonObject = new JSONObject();
-        if (driver.getDriverName() == null || driver.getDriverPass() == null) {
+        if (driver.getDriverPhone() == null || driver.getDriverPass() == null) {
             jsonObject.put("message", "表单错误");
             return jsonObject;
         }
@@ -104,19 +101,22 @@ public class DriverController {
     }
 
     // 司机自己通过司机id查找所有的接送记录
-    @RequestMapping("/getDriverAllPickUpById")
-    public List<PickUp> getDriverAllPickUp(@RequestParam(value ="driverId")Integer driverId) {
+    @GetMapping("/getDriverAllPickUpById")
+    public List<PickUp> getDriverAllPickUp(@RequestParam("driverId")Integer driverId) {
         return pickUpService.findAllDriverPickUp(driverId);
     }
 
-    // 司机修改自己的信息
+    /**
+     * 司机自己修改自己的信息
+     * @param driver
+     * @param request
+     * @return
+     */
     @PostMapping("/updateDriver")
-//    @GetMapping("/updateDriver/{driverId}/{driverName}/{carNumber}/{fleetId}/{driverPass}/{driverPhone}")
     public Object updateDriver(@RequestBody Driver driver, HttpServletRequest request) {
         JSONObject result=new JSONObject();
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
-
 
         driver.setDriverId((Integer) claims.get("driverId"));
         driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
@@ -128,6 +128,18 @@ public class DriverController {
         }
         result.put("state",1);
         return result.toJSONString();
+    }
+
+
+    /**
+     * 根据id查找车队所有的司机
+     * /driver/getAllFleetDriver
+     * @param fleetId
+     * @return
+     */
+    @GetMapping("/getAllFleetDriver")
+    public List<Driver> getAllFleetDriver(@RequestParam("fleetId")Integer fleetId) {
+        return driverService.findFleetAllDriver(fleetId);
     }
 
 }

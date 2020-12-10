@@ -21,4 +21,6 @@ public interface FleetService {
     int deleteFleetById(Integer fleetId);
 
     int addFleet(Fleet fleet);
+
+    int updateFleet(Integer fleetId);
 }

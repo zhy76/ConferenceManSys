@@ -9,24 +9,35 @@ package com.conference.entity;
  */
 
 public class PickUp {
+    private Integer pickUpId;
     private Integer participantId;
     private Integer driverId;
+    private Integer conferenceId;
     private String trainNumber;
     private String toTime;
     private String returnTime;
     private boolean isFinishPickup;
 
-
     @Override
     public String toString() {
         return "PickUp{" +
-                "participantId=" + participantId +
+                "pickUpId=" + pickUpId +
+                ", participantId=" + participantId +
                 ", driverId=" + driverId +
+                ", conferenceId=" + conferenceId +
                 ", trainNumber='" + trainNumber + '\'' +
                 ", toTime='" + toTime + '\'' +
                 ", returnTime='" + returnTime + '\'' +
                 ", isFinishPickup=" + isFinishPickup +
                 '}';
+    }
+
+    public Integer getPickUpId() {
+        return pickUpId;
+    }
+
+    public void setPickUpId(Integer pickUpId) {
+        this.pickUpId = pickUpId;
     }
 
     public Integer getParticipantId() {
@@ -43,6 +54,14 @@ public class PickUp {
 
     public void setDriverId(Integer driverId) {
         this.driverId = driverId;
+    }
+
+    public Integer getConferenceId() {
+        return conferenceId;
+    }
+
+    public void setConferenceId(Integer conferenceId) {
+        this.conferenceId = conferenceId;
     }
 
     public String getTrainNumber() {
