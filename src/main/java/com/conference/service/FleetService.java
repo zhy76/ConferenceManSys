@@ -22,5 +22,5 @@ public interface FleetService {
 
     int addFleet(Fleet fleet);
 
-    int updateFleet(Integer fleetId);
+    int updateFleet(Fleet fleet);
 }

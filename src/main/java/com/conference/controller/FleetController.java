@@ -120,7 +120,10 @@ public class FleetController {
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         fleet.setFleetId((Integer) claims.get("fleetId"));
         try {
-            fleetService.updateFleet(fleet.getFleetId());
+            /**
+             * @TODO debug
+             */
+//            fleetService.updateFleet(fleet.getFleetId());
         } catch (DataAccessException e) {
             throw new RuntimeException("修改失败");
         }

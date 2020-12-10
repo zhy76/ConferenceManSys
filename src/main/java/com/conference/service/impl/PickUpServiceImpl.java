@@ -52,13 +52,13 @@ public class PickUpServiceImpl implements PickUpService {
     }
 
     @Override
-    public PickUp findPickUp(int participantId, int driverId, int conferenceId) {
+    public PickUp findPickUp(Integer participantId, Integer driverId, Integer conferenceId) {
         return pickUpDao.findPickUp(participantId, driverId, conferenceId);
     }
 
     @Override
-    public PickUp findPickUpById(int pickUpId) {
-        return pickUpDao.findPickById(pickUpId);
+    public PickUp findPickUpById(Integer pickUpId) {
+        return pickUpDao.findPickUpById(pickUpId);
     }
 
 

@@ -33,7 +33,7 @@
     </select>
 
     <select id="findPickUpById" resultType="PickUp">
-        SELECT * FROM pick_up WHERE pickUpId=#{PickUpId};
+        SELECT * FROM pick_up WHERE pick_up_id=#{pickUpId};
     </select>
 
     <delete id="deletePickUpById">

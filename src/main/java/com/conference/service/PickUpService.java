@@ -29,9 +29,9 @@ public interface PickUpService {
     List<PickUp> findAllParticipantPickUp(Integer participantId);
 
     // 精确查
-    PickUp findPickUp(int participantId, int driverId, int conferenceId);
+    PickUp findPickUp(Integer participantId, Integer driverId, Integer conferenceId);
 
-    PickUp findPickUpById(int pickUpId);
+    PickUp findPickUpById(Integer pickUpId);
 //    // 改
 //    int updatePickUpByDriverId(PickUp pickUp);
 //
