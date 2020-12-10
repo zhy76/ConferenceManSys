@@ -1,6 +1,7 @@
 package com.conference.service;
 
 import com.conference.entity.PickUp;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public interface PickUpService {
     int addPickUp(PickUp pickUp);
     /**删*/
-    int deletePickUp(Integer participantId, Integer driverId);
+    int deletePickUp(Integer participantId, Integer driverId, Integer conferenceId);
 
     /**查*/
     List<PickUp> findAllPickUp();
@@ -27,10 +28,17 @@ public interface PickUpService {
     // 查询个人的接送信息
     List<PickUp> findAllParticipantPickUp(Integer participantId);
 
-    // 改
-    int updatePickUpByDriverId(PickUp pickUp);
+    // 精确查
+    PickUp findPickUp(int participantId, int driverId, int conferenceId);
 
-    // 改
-    int updatePickUpByParticipantId(PickUp pickUp);
+    PickUp findPickUpById(int pickUpId);
+//    // 改
+//    int updatePickUpByDriverId(PickUp pickUp);
+//
+//    // 改
+//    int updatePickUpByParticipantId(PickUp pickUp);
+
+    // 单独改
+    int updatePickUp(PickUp pickUp);
 
 }

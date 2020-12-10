@@ -32,10 +32,13 @@ public interface PickUpDao {
 
     /**增*/
     int addPickUp(@Param("participantId")int participantId, @Param("driverId")int driverId,
+                  @Param("conferenceId")int conferenceId,
                   @Param("trainNumber")String trainNumber, @Param("toTime") String toTime,
                   @Param("returnTime") String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
-    /**删*/
-    int deletePickUp(@Param("participantId")int participantId, @Param("driverId")int driverId);
+    /**精确删*/
+    int deletePickUp(@Param("participantId")int participantId,
+                     @Param("driverId")int driverId,
+                     @Param("conferenceId")int conferenceId);
 
     /**查*/
     List<PickUp> findAllPickUp();
@@ -49,14 +52,27 @@ public interface PickUpDao {
     // 查询个人的接送信息
     List<PickUp> findAllParticipantPickUp(@Param("participantId")int participantId);
 
-    // 改
-    int updatePickUpByDriverId(@Param("participantId")int participantId, @Param("driverId")int driverId,
-                               @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
-                               @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
+    // 精确查
+    PickUp findPickUp(@Param("participantId")int participantId,
+                      @Param("driverId")int driverId,
+                      @Param("conferenceId")int conferenceId);
 
+    PickUp findPickById(@Param("PickUpId")int pickUpId);
     // 改
-    int updatePickUpByParticipantId(@Param("participantId")int participantId, @Param("driverId")int driverId,
+//    int updatePickUpByDriverId(@Param("participantId")int participantId, @Param("driverId")int driverId,
+//                               @Param("conferenceId")int conferenceId,
+//                               @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
+//                               @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
+//
+//    // 改
+//    int updatePickUpByParticipantId(@Param("participantId")int participantId, @Param("driverId")int driverId,
+//                                    @Param("conferenceId")int conferenceId,
+//                                    @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
+//                                    @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
+
+    // 精确修改
+    int updatePickUp(@Param("participantId")int participantId, @Param("driverId")int driverId,
+                                               @Param("conferenceId")int conferenceId,
                                     @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
                                     @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
-
 }
