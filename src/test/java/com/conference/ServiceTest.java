@@ -2,6 +2,8 @@ package com.conference;
 
 import com.conference.dao.DriverDao;
 import com.conference.dao.FleetDao;
+import com.conference.dao.PickUpDao;
+import com.conference.service.PickUpService;
 import com.conference.service.impl.DriverServiceImpl;
 import com.conference.service.impl.FleetServiceImpl;
 import com.conference.service.impl.PickUpServiceImpl;
@@ -28,10 +30,12 @@ public class ServiceTest {
     @Autowired
     DriverDao driverDao;
     @Autowired
-    private PickUpServiceImpl pickUpServiceImpl;
+    private PickUpService pickUpService;
     @Autowired
     private FleetDao fleetDao;
 
+    @Autowired
+    private PickUpDao pickUpDao;
     @Test
     void contextLoads() {
 
@@ -41,9 +45,14 @@ public class ServiceTest {
     }
     @Test
     void fleetTest() {
+//        System.out.println(fleetDao.findFleetById(1));
+        System.out.println(fleetDao.updateFleet(1, "hhh", "123456", "19914665733"));
+
+        System.out.println(pickUpDao.findPickUpById(1));
+//        System.out.println(pickUpService.findPickUpById(1));
 //        Driver driver = new Driver(4, "hsc", "888888", null, "123456", "19914665732", false);
 //        System.out.println(driverServiceImp.addDriver(driver));
-        System.out.println(driverDao.addDriver("hsc", "888888", null, "123456", "19914665732"));
+//        System.out.println(driverDao.addDriver("hsc", "888888", null, "123456", "19914665732"));
 //        System.out.println(driverServiceImp.findDriverByPhone("12121212"));
 //        System.out.println(fleetServiceImp.findAllFleet());
 //        System.out.println(fleetServiceImp.findFleetById(1));

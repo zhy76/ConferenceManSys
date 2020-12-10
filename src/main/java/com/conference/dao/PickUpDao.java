@@ -57,7 +57,7 @@ public interface PickUpDao {
                       @Param("driverId")int driverId,
                       @Param("conferenceId")int conferenceId);
 
-    PickUp findPickById(@Param("PickUpId")int pickUpId);
+    PickUp findPickUpById(@Param("pickUpId")int pickUpId);
     // 改
 //    int updatePickUpByDriverId(@Param("participantId")int participantId, @Param("driverId")int driverId,
 //                               @Param("conferenceId")int conferenceId,
