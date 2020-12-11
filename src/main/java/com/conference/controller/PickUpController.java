@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @ClassName: PickUpController
@@ -66,22 +67,52 @@ public class PickUpController {
     @PostMapping("/addPickUp")
     public int addPickUp(@Valid @RequestBody PickUp pickUp) {
         JSONObject result=new JSONObject();
-
         int addNumber = pickUpService.addPickUp(pickUp);
-
         return addNumber;
     }
 
+    /**
+     * 查找所有的接送
+     * /pickUp/getAllPickUp
+     * @return
+     */
+    @GetMapping("/getAllPickUp")
+    public List<PickUp> getAllPickUp() {
+        return pickUpService.findAllPickUp();
+    }
+
+    /**
+     * 乘客通过id查找所有的接送记录
+     * /pickUp/getParticipantAllPickUp
+     * @test done
+     * @param participantId
+     * @return
+     */
+    @GetMapping("/getParticipantAllPickUp")
+    public List<PickUp> getParticipantAllPickUp(@RequestParam("participantId")Integer participantId){
+        return pickUpService.findAllParticipantPickUp(participantId);
+    }
+
+    /**
+     * 司机自己通过id查找所有的接送记录
+     * /pickUp/getDriverAllPickUp
+     * @test done
+     * @param driverId
+     * @return
+     */
+    @GetMapping("/getDriverAllPickUp")
+    public List<PickUp> getDriverAllPickUp(@RequestParam("driverId")Integer driverId) {
+        return pickUpService.findAllDriverPickUp(driverId);
+    }
 
 
-//    public Object completePickUp(@RequestParam("participantId")Integer participantId,
-//                                 @RequestParam("driverId")Integer driverId,
-//                                 @RequestParam("conferenceId")Integer conferenceId) {
-//        JSONObject result=new JSONObject();
-//        PickUp pickUp = pickUpService.findPickUp(participantId, driverId, conferenceId);
-//        pickUp.setFinishPickup(true);
-//        pickUpService.updatePickUp(pickUp);
-//        result.put("state",1);
-//        return result.toJSONString();
-//    }
+    /**
+     * 会议接送记录
+     * @param conferenceId
+     * @return
+     */
+    @GetMapping("/getDriverAllPickUp")
+    public List<PickUp> getAllConferencePickUp(@RequestParam("conferenceId")Integer conferenceId) {
+        return pickUpService.findAllConferencePickUp(conferenceId);
+    }
 }

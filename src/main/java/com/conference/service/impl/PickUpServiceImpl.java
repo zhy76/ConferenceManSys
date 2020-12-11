@@ -57,6 +57,11 @@ public class PickUpServiceImpl implements PickUpService {
     }
 
     @Override
+    public List<PickUp> findAllConferencePickUp(Integer conferenceId) {
+        return pickUpDao.findAllConferencePickUp(conferenceId);
+    }
+
+    @Override
     public PickUp findPickUp(Integer participantId, Integer driverId, Integer conferenceId) {
         return pickUpDao.findPickUp(participantId, driverId, conferenceId);
     }
