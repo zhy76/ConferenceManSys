@@ -11,7 +11,7 @@ import com.conference.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
+
 import java.util.List;
 
 /**
@@ -69,9 +69,9 @@ public class JoinConferenceController {
             Conference conf = conferenceService.queryConferenceByConferenceId(alreadyJoinConferences.get(i).getConferenceId());
             String starts = conf.getConferenceStart();
             String ends = conf.getConferenceEnd();
-            if ((start.compareTo(starts) > 0 && start.compareTo(ends) < 0)
-                || (end.compareTo(starts) > 0 && end.compareTo(ends) < 0)
-                ||(start.compareTo(starts) < 0 && end.compareTo(ends) > 0 )){
+            if ((start.compareTo(starts) >= 0 && start.compareTo(ends) <= 0)
+                || (end.compareTo(starts) >= 0 && end.compareTo(ends) <= 0)
+                ||(start.compareTo(starts) <= 0 && end.compareTo(ends) >= 0 )){
                     jsonObject.put("message","当前会议时间与已选会议时间冲突！");
                     return jsonObject;
                 }

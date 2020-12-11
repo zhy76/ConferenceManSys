@@ -23,6 +23,7 @@ public class ConferenceDaoTest {
 //        System.out.println(conferenceDao.queryConferences());
 //        System.out.println(conferenceDao.updateConference(new Conference(1,1,1,1,"刘涔宇", Timestamp.valueOf("2008-08-08 12:10:00") , Timestamp.valueOf("2008-08-10 12:10:00"),"信工e224","阿巴阿巴")));
 //        System.out.println(conferenceDao.deleteConference(2));
-        System.out.println(conferenceDao.queryConferenceByConferenceId(1));
+        System.out.println(conferenceDao.updateConference(new Conference(5,1,1,1,"凌宸","2008-08-07 12:10:00","2008-08-11 12:10:00","信工e224","阿巴阿巴")));
+        System.out.println(conferenceDao.queryConferenceByConferenceId(5));
     }
 }
