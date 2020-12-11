@@ -22,13 +22,18 @@ public class PickUpServiceImpl implements PickUpService {
 
     @Override
     public int addPickUp(PickUp pickUp) {
-        return pickUpDao.addPickUp(pickUp.getParticipantId(), pickUp.getDriverId(), pickUp.getTrainNumber(),
-                pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
+        return pickUpDao.addPickUp(pickUp.getParticipantId(), pickUp.getDriverId(), pickUp.getConferenceId(),
+                pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
     }
 
     @Override
-    public int deletePickUp(Integer participantId, Integer driverId) {
-        return pickUpDao.deletePickUp(participantId, driverId);
+    public int deletePickUp(Integer participantId, Integer driverId, Integer conferenceId) {
+        return pickUpDao.deletePickUp(participantId, driverId, conferenceId);
+    }
+
+    @Override
+    public int deletePickUpId(Integer pickUpId) {
+        return pickUpDao.deletePickUpById(pickUpId);
     }
 
     @Override
@@ -52,14 +57,36 @@ public class PickUpServiceImpl implements PickUpService {
     }
 
     @Override
-    public int updatePickUpByDriverId(PickUp pickUp) {
-        return pickUpDao.updatePickUpByDriverId(pickUp.getParticipantId(), pickUp.getDriverId(),
-                pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
+    public List<PickUp> findAllConferencePickUp(Integer conferenceId) {
+        return pickUpDao.findAllConferencePickUp(conferenceId);
     }
 
     @Override
-    public int updatePickUpByParticipantId(PickUp pickUp) {
-        return pickUpDao.updatePickUpByParticipantId(pickUp.getParticipantId(), pickUp.getDriverId(),
+    public PickUp findPickUp(Integer participantId, Integer driverId, Integer conferenceId) {
+        return pickUpDao.findPickUp(participantId, driverId, conferenceId);
+    }
+
+    @Override
+    public PickUp findPickUpById(Integer pickUpId) {
+        return pickUpDao.findPickUpById(pickUpId);
+    }
+
+
+//    @Override
+//    public int updatePickUpByDriverId(PickUp pickUp) {
+//        return pickUpDao.updatePickUpByDriverId(pickUp.getParticipantId(), pickUp.getDriverId(),
+//                pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
+//    }
+//
+//    @Override
+//    public int updatePickUpByParticipantId(PickUp pickUp) {
+//        return pickUpDao.updatePickUpByParticipantId(pickUp.getParticipantId(), pickUp.getDriverId(),
+//                pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
+//    }
+
+    @Override
+    public int updatePickUp(PickUp pickUp) {
+        return pickUpDao.updatePickUp(pickUp.getParticipantId(), pickUp.getDriverId(), pickUp.getConferenceId(),
                 pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
     }
 }

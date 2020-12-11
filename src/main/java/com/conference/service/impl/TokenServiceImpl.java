@@ -1,6 +1,7 @@
 package com.conference.service.impl;
 
 import com.conference.entity.Driver;
+import com.conference.entity.Fleet;
 import com.conference.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,16 +19,37 @@ public class TokenServiceImpl implements TokenService {
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
     private static int expiration = 3600 * 2;
 
-    //登录成功后，将用户的用户名和用户类型写入token
+    /**
+     * 登录成功后，将用户的用户id写入,
+     * driver
+     */
+
     public String getToken(Driver driver){
         String token = "";
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("userName", driver.getDriverName())
+                .claim("driverId", driver.getDriverId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
+        System.out.println(token);
         return token;
     }
+    /**
+     * 登录成功后，将用户的用户id写入,
+     * fleet
+     */
+    public String getToken(Fleet fleet){
+        String token = "";
+        token = Jwts.builder()
+                .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
+                .claim("driverId", fleet.getFleetId())
+                .signWith(signatureAlgorithm, SECRET)
+                .compact();
+        System.out.println(fleet.getFleetId());
+        System.out.println(token);
+        return token;
+    }
+
 
     //将增加用户的人数写入token
     public String getToken(int i){
@@ -61,9 +83,6 @@ public class TokenServiceImpl implements TokenService {
                 .setSigningKey(SECRET)
                 .parseClaimsJws(token)
                 .getBody();
-//        Date timeExpiration = new Date((long)claims.get("timeExpiration"));
-//        String userName = (String) claims.get("userName");
-//        int type = (int) claims.get("type");
         return claims;
     }
 }

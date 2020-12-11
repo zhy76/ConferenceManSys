@@ -28,4 +28,7 @@ public interface FleetDao {
     /**增*/
     int addFleet(@Param("fleetName")String fleetName, @Param("fleetPass")String fleetPass, @Param("fleetPhone")String fleetPhone);
 
+
+    /**改*/
+    int updateFleet(@Param("fleetId")int fleetId, @Param("fleetName")String fleetName, @Param("fleetPass")String fleetPass, @Param("fleetPhone")String fleetPhone);
 }

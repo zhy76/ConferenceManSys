@@ -14,7 +14,6 @@ import javax.validation.constraints.Pattern;
 public class Fleet {
 
     private Integer fleetId;
-
     @NotNull(message = "车队名必须存在")
     private String fleetName;
 
