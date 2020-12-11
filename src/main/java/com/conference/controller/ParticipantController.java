@@ -5,12 +5,15 @@ import com.conference.dao.ParticipantDao;
 import com.conference.entity.Participant;
 import com.conference.service.ParticipantService;
 import com.conference.service.TokenService;
+import io.jsonwebtoken.Claims;
+import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -79,7 +82,23 @@ public class ParticipantController {
         }
     }
 
+    @PostMapping("/updateParticipant")
+    public Object updateDriver(@RequestBody Participant participant, HttpServletRequest request) {
+        JSONObject result=new JSONObject();
+        System.out.println(request.getHeader("token"));
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
 
-
+        participant.setParticipantId((Integer) claims.get("participantId"));
+//        participant.setAssign(participantService.queryParticipantByParticipantId(participant.getParticipantId()))
+//        driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
+        System.out.println(participant.getParticipantId());
+        try {
+            participantService.updateParticipant(participant);
+        } catch (DataAccessException e) {
+            throw new RuntimeException("修改失败");
+        }
+        result.put("state",1);
+        return result.toJSONString();
+    }
 
 }
