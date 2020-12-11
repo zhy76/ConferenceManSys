@@ -9,6 +9,7 @@ package com.conference.entity;
  */
 
 public class PickUp {
+
     private Integer pickUpId;
     private Integer participantId;
     private Integer driverId;

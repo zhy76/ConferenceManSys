@@ -7,9 +7,9 @@ import com.conference.service.FleetService;
 import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @ClassName: PickUpController
@@ -31,7 +31,11 @@ public class PickUpController {
     @Autowired
     private PickUpService pickUpService;
 
-    // 确认完成接送Complete pickup
+    /**
+     * 确认完成接送Complete pickup
+     * @param pickUpId
+     * @return
+     */
     @RequestMapping("/completePickUp")
     public Object completePickUp(@RequestParam("pickUpId")Integer pickUpId) {
         JSONObject result=new JSONObject();
@@ -40,6 +44,32 @@ public class PickUpController {
         pickUpService.updatePickUp(pickUp);
         result.put("state",1);
         return result.toJSONString();
+    }
+
+    /**
+     * 通过id删除接送
+     * /pickUp/deletePickUp
+     * @param pickUpId
+     * @return
+     */
+    @RequestMapping("/deletePickUp")
+    public int deletePickUp(@RequestParam("pickUpId")Integer pickUpId) {
+        return pickUpService.deletePickUpId(pickUpId);
+    }
+
+    /**
+     * 添加接送
+     * /pickUp/addPickUp
+     * @param pickUp
+     * @return
+     */
+    @PostMapping("/addPickUp")
+    public int addPickUp(@Valid @RequestBody PickUp pickUp) {
+        JSONObject result=new JSONObject();
+
+        int addNumber = pickUpService.addPickUp(pickUp);
+
+        return addNumber;
     }
 
 

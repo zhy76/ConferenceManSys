@@ -32,6 +32,11 @@ public class PickUpServiceImpl implements PickUpService {
     }
 
     @Override
+    public int deletePickUpId(Integer pickUpId) {
+        return pickUpDao.deletePickUpById(pickUpId);
+    }
+
+    @Override
     public List<PickUp> findAllPickUp() {
         return pickUpDao.findAllPickUp();
     }
