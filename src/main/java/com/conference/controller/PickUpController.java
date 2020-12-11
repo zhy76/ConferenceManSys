@@ -6,6 +6,8 @@ import com.conference.service.DriverService;
 import com.conference.service.FleetService;
 import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
+import com.conference.util.result.Result;
+import com.conference.util.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,47 +35,54 @@ public class PickUpController {
     private PickUpService pickUpService;
 
     /**
-     * 确认完成接送Complete pickup
-     * @param pickUpId
-     * @return
+     * 确认完成接送 Api
+     * /pickUp/completePickUp
+     *
+     * @param pickUpId Integer
+     * @return result {
+     * <p>
+     * }
      */
-    @RequestMapping("/completePickUp")
-    public Object completePickUp(@RequestParam("pickUpId")Integer pickUpId) {
-        JSONObject result=new JSONObject();
+    @GetMapping("/completePickUp")
+    public Result completePickUp(@RequestParam("pickUpId") Integer pickUpId) {
         PickUp pickUp = pickUpService.findPickUpById(pickUpId);
         pickUp.setFinishPickup(true);
         pickUpService.updatePickUp(pickUp);
-        result.put("state",1);
-        return result.toJSONString();
+        return Result.success();
     }
 
     /**
      * 通过id删除接送
      * /pickUp/deletePickUp
+     *
      * @param pickUpId
      * @return
      */
     @RequestMapping("/deletePickUp")
-    public int deletePickUp(@RequestParam("pickUpId")Integer pickUpId) {
-        return pickUpService.deletePickUpId(pickUpId);
+    public Result deletePickUp(@RequestParam("pickUpId") Integer pickUpId) {
+        int deleteNum = pickUpService.deletePickUpId(pickUpId);
+        if (deleteNum == 0) return new Result(ResultCode.FAIL);
+        return Result.success();
     }
 
     /**
      * 添加接送
      * /pickUp/addPickUp
+     *
      * @param pickUp
      * @return
      */
     @PostMapping("/addPickUp")
-    public int addPickUp(@Valid @RequestBody PickUp pickUp) {
-        JSONObject result=new JSONObject();
+    public Result addPickUp(@Valid @RequestBody PickUp pickUp) {
         int addNumber = pickUpService.addPickUp(pickUp);
-        return addNumber;
+        if (addNumber == 0) return new Result(ResultCode.FAIL);
+        return Result.success();
     }
 
     /**
      * 查找所有的接送
      * /pickUp/getAllPickUp
+     *
      * @return
      */
     @GetMapping("/getAllPickUp")
@@ -84,36 +93,40 @@ public class PickUpController {
     /**
      * 乘客通过id查找所有的接送记录
      * /pickUp/getParticipantAllPickUp
-     * test done
-     * @param participantId
+     *
+     * @param participantId Integer
      * @return
      */
     @GetMapping("/getParticipantAllPickUp")
-    public List<PickUp> getParticipantAllPickUp(@RequestParam("participantId")Integer participantId){
-        return pickUpService.findAllParticipantPickUp(participantId);
+    public Result getParticipantAllPickUp(@RequestParam("participantId") Integer participantId) {
+        List<PickUp> getParticipantAllPickUp = pickUpService.findAllParticipantPickUp(participantId);
+        return Result.success("getParticipantAllPickUp", getParticipantAllPickUp);
     }
 
     /**
      * 司机自己通过id查找所有的接送记录
      * /pickUp/getDriverAllPickUp
-     * @test done
-     * @param driverId
+     *
+     * @param driverId Integer
      * @return
      */
     @GetMapping("/getDriverAllPickUp")
-    public List<PickUp> getDriverAllPickUp(@RequestParam("driverId")Integer driverId) {
-        return pickUpService.findAllDriverPickUp(driverId);
+    public Result getDriverAllPickUp(@RequestParam("driverId") Integer driverId) {
+        List<PickUp> getDriverAllPickUp = pickUpService.findAllDriverPickUp(driverId);
+        return Result.success("getDriverAllPickUp", getDriverAllPickUp);
     }
 
 
     /**
      * 会议接送记录
      * /pickUp/getAllConferencePickUp
-     * @param conferenceId
+     *
+     * @param conferenceId Integer
      * @return
      */
     @GetMapping("/getAllConferencePickUp")
-    public List<PickUp> getAllConferencePickUp(@RequestParam("conferenceId")Integer conferenceId) {
-        return pickUpService.findAllConferencePickUp(conferenceId);
+    public Result getAllConferencePickUp(@RequestParam("conferenceId") Integer conferenceId) {
+        List<PickUp> getAllConferencePickUp = pickUpService.findAllConferencePickUp(conferenceId);
+        return Result.success("getAllConferencePickUp", getAllConferencePickUp);
     }
 }
