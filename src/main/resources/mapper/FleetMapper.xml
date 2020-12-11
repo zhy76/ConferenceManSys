@@ -26,5 +26,9 @@
         VALUES(null, #{fleetName}, #{fleetPass}, #{fleetPhone})
     </insert>
 
+    <update id="updateFleet">
+        UPDATE fleet SET fleet_name=#{fleetName}, fleet_pass=#{fleetPass},fleet_phone=#{fleetPhone}
+         WHERE fleet_id=#{fleetId};
+    </update>
 
 </mapper>

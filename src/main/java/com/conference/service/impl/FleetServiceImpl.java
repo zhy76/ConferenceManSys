@@ -59,4 +59,10 @@ public class FleetServiceImpl implements FleetService {
     public int addFleet(Fleet fleet) {
         return fleetDao.addFleet(fleet.getFleetName(), fleet.getFleetPass(), fleet.getFleetPhone());
     }
+
+    @Override
+    public int updateFleet(Fleet fleet) {
+        return fleetDao.updateFleet(fleet.getFleetId(), fleet.getFleetName(), fleet.getFleetPass(),fleet.getFleetPhone());
+    }
+
 }

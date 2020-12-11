@@ -6,7 +6,7 @@
 
     <insert id="addPickUp">
         INSERT INTO pick_up
-        VALUES(#{participantId}, #{driverId}, #{trainNumber}, #{toTime}, #{returnTime}, #{isFinishPickup});
+        VALUES(null, #{participantId}, #{driverId}, #{conferenceId}, #{trainNumber}, #{toTime}, #{returnTime}, #{isFinishPickup});
     </insert>
 
 
@@ -24,27 +24,44 @@
     </select>
 
     <select id="findAllParticipantPickUp" resultType="PickUp">
-        SELECT * FROM pick_up WHERE participant_id=1;
+        SELECT * FROM pick_up WHERE participant_id=#{participantId};
     </select>
 
-<!--    <delete id="deletePickUp">-->
-<!--        DELETE from pick_up where driver_id=#{driverId};-->
-<!--    </delete>-->
+    <select id="findPickUp" resultType="PickUp">
+        SELECT * FROM pick_up WHERE participant_id=#{participantId}
+        and driver_id =#{driverId} and conference_id=#{conferenceId};
+    </select>
 
-    <delete id="deletePickUp">
-        DELETE from pick_up where participant_id=#{participantId} AND driver_id=#{driverId};
+    <select id="findPickUpById" resultType="PickUp">
+        SELECT * FROM pick_up WHERE pick_up_id=#{pickUpId};
+    </select>
+
+    <delete id="deletePickUpById">
+        DELETE from pick_up where pick_up_id=#{pickUpId};
     </delete>
 
 
-    <update id="updatePickUpByDriverId">
-        UPDATE pick_up SET participant_id=#{participantId}, train_number=#{trainNumber}, to_time=#{toTime},
-        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE driver_id=#{driverId};
-    </update>
 
-    <update id="updatePickUpByParticipantId">
-        UPDATE pick_up SET driver_id=#{driverId}, train_number=#{trainNumber}, to_time=#{toTime},
-        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId};
-    </update>
+<!--    <delete id="deletePickUp">-->
+<!--        DELETE from pick_up where participant_id=#{participantId} AND driver_id=#{driverId};-->
+<!--    </delete>-->
 
+
+<!--    <update id="updatePickUpByDriverId">-->
+<!--        UPDATE pick_up SET participant_id=#{participantId}, #{conferenceId}, train_number=#{trainNumber}, to_time=#{toTime},-->
+<!--        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE driver_id=#{driverId};-->
+<!--    </update>-->
+
+<!--    <update id="updatePickUpByParticipantId">-->
+<!--        UPDATE pick_up SET driver_id=#{driverId}, #{conferenceId}, train_number=#{trainNumber}, to_time=#{toTime},-->
+<!--        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId};-->
+<!--    </update>-->
+
+
+    <update id="updatePickUp">
+        UPDATE pick_up SET train_number=#{trainNumber}, to_time=#{toTime},
+        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId}
+        and driver_id=#{driverId} and conference_id=#{conferenceId};
+    </update>
 
 </mapper>

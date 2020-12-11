@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/Hotel")
+@RequestMapping("/hotel")
 public class HotelController {
     @Autowired
     private TokenServiceImpl tokenServiceImpl;
@@ -55,7 +55,7 @@ public class HotelController {
             jsonObject.put("message","表单错误");
             return jsonObject;
         }
-        Hotel hotelForBase = hotelDao.getHotelByPhone(hotel.getHotelPhone());
+        Hotel hotelForBase = hotelService.getHotelByPhone(hotel.getHotelPhone());
         System.out.println(hotelForBase);
 //        User userForBase =userDao.findByUsername(loginUser.getUserName());
         if(hotelForBase == null){
