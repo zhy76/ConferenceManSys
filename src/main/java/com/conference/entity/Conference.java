@@ -21,8 +21,8 @@ public class Conference {
     private Integer fleetId;
     private Integer hotelId;
     private String conferenceName;
-    private Timestamp conferenceStart; //会议开始时间
-    private Timestamp conferenceEnd; //会议结束时间
+    private String conferenceStart; //会议开始时间
+    private String conferenceEnd; //会议结束时间
     private String conferenceLocation; //会议地址
     private String conferenceInfo; //会议相关信息
 }
