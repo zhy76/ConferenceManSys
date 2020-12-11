@@ -40,6 +40,7 @@ public interface PickUpDao {
                      @Param("driverId")int driverId,
                      @Param("conferenceId")int conferenceId);
 
+    int deletePickUpById(@Param("pickUpId")int pickUpId);
     /**查*/
     List<PickUp> findAllPickUp();
 

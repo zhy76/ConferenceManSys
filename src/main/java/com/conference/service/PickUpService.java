@@ -16,6 +16,7 @@ public interface PickUpService {
     /**删*/
     int deletePickUp(Integer participantId, Integer driverId, Integer conferenceId);
 
+    int deletePickUpId(Integer pickUpId);
     /**查*/
     List<PickUp> findAllPickUp();
 

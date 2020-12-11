@@ -11,6 +11,7 @@ import java.util.Date;
  */
 
 public class PickUp {
+
     private Integer pickUpId;
     private Integer participantId;
     private Integer driverId;

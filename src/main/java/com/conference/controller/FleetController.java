@@ -123,7 +123,7 @@ public class FleetController {
             /**
              * @TODO debug
              */
-//            fleetService.updateFleet(fleet.getFleetId());
+            fleetService.updateFleet(fleet);
         } catch (DataAccessException e) {
             throw new RuntimeException("修改失败");
         }
