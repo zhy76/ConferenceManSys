@@ -2,6 +2,8 @@ package com.conference.service;
 
 import com.conference.entity.JoinConference;
 
+import java.util.List;
+
 /**
  * @Description
  * @Author 谢 娇
@@ -23,5 +25,9 @@ public interface JoinConferenceService {
      **/
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
 
-
+    /*
+     * @Description 通过参会者id查询他参加的所有会议
+     * @return  JoinConference 的列表
+     **/
+    public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
 }

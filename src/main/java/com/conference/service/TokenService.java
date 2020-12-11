@@ -28,8 +28,11 @@ public class TokenService {
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
                 .claim("userName", participant.getParticipantName())
+                .claim("participantId",participant.getParticipantId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
+        System.out.println(participant.getParticipantId());
+        System.out.println(token);
         return token;
     }
 

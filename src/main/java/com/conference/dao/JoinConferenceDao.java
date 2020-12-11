@@ -1,8 +1,11 @@
 package com.conference.dao;
 
 import com.conference.entity.JoinConference;
+import com.conference.entity.Participant;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @Description
@@ -16,7 +19,7 @@ public interface JoinConferenceDao {
     /**
      * 1、加入会议
      * 2、取消已参加的会议
-     *
+     * 3、查询某人参加的所有会议
      * @
      **/
 
@@ -24,5 +27,5 @@ public interface JoinConferenceDao {
 
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
 
-
+    public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
 }

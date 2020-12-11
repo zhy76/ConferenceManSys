@@ -14,4 +14,8 @@
     <delete id="cancelAJoinedConferenceById">
         delete from join_conference where participant_id = #{participantId} and conference_id = #{conferenceId};
     </delete>
+
+    <select id="queryConferenceByParticipantId" resultType="JoinConference">
+        select * from join_conference where participant_id = #{participantId}
+    </select>
 </mapper>
