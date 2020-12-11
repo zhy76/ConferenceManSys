@@ -7,8 +7,9 @@ package com.conference.util.result;
  * @Date: 2020/12/6 18:51
  */
 public enum ResultCode {
-    SUCCESS(0, "操作成功"),
+    SUCCESS(200, "成功"),
     ERROR(1, "错误"),
+    FAIL(2, "失败"),
     DuplicateKeyException(101, "插入的唯一性字段数据已存在"),
     BindException(111, "参数校验失败"),
     NeedLogin(121, "该操作需要先登录"),
