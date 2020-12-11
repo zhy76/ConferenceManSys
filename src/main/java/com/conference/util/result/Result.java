@@ -13,20 +13,9 @@ import java.util.Map;
  * @Date: 2020/12/6 18:51
  */
 public class Result implements Serializable {
-    /**
-     * 状态码
-     */
-    @JsonProperty
+
     private int code;
-    /**
-     * 提示信息
-     */
-    @JsonProperty
     private String message;
-    /**
-     * 返回的数据
-     */
-    @JsonProperty
     private Object data;
 
     public Result() {
@@ -63,8 +52,6 @@ public class Result implements Serializable {
     }
 
     /**
-     * 大多数数据均为 Map<String, Object> 类型，且只有一个数据
-     * 将其封装，简化开发
      * @param singleDataKey 唯一的数据的key
      * @param singleDataValue 唯一的数据的value
      * @return 返回封装好的 Result
@@ -77,6 +64,18 @@ public class Result implements Serializable {
 
     public static Result error() {
         return new Result(ResultCode.ERROR);
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public Object getData() {
+        return data;
     }
 
     public static Result error(Object data) {
