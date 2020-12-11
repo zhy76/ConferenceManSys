@@ -7,8 +7,12 @@ import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
+import com.conference.util.vaild.DriverLogin;
 import io.jsonwebtoken.Claims;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +53,7 @@ public class DriverController {
      * }
      */
     @GetMapping("/deleteDriver")
-    public Result deleteDriver(@RequestParam int driverId) {
+    public Result deleteDriver(@RequestParam Integer driverId) {
         int driverNum = driverService.deleteDriverById(driverId);
 //        if (driverNum < 1) return new Result(ResultCode.FAIL);
         return Result.success();
@@ -74,9 +78,9 @@ public class DriverController {
      */
     @PostMapping("/register")
     public Result register(@Valid @RequestBody Driver driver) {
-        if (driver.getDriverPhone() == null || driver.getDriverPass() == null) {
-            return new Result(ResultCode.IllegalArgumentException);
-        }
+//        if (driver.getDriverPhone() == null || driver.getDriverPass() == null) {
+//            return new Result(ResultCode.IllegalArgumentException);
+//        }
         int addNumber = driverService.addDriver(driver);
         if (addNumber > 0) {
             String token = tokenService.getToken(addNumber);
@@ -89,14 +93,22 @@ public class DriverController {
     /**
      * 司机登入 Api
      *
-     * @param driver
-     * @return result {}
+     * @param driver {
+     *               "driverId": Integer, auto increment,
+     *               "driverName": String, not null,
+     *               "carNumber": String, not null,
+     *               "fleetId": Integer, 外键
+     *               "driverPass": String, not null, 六位以上
+     *               "isAssign": Boolean, not null 默认false
+     *               }
+     * @return result {
+     * "status":
+     * "message":
+     * "data": {}
+     * }
      */
     @PostMapping("/login")
-    public Result login(@RequestBody Driver driver) {
-        if (driver.getDriverPhone() == null || driver.getDriverPass() == null) {
-            return new Result(ResultCode.IllegalArgumentException);
-        }
+    public Result login(@Validated({DriverLogin.class}) @RequestBody Driver driver) {
         Driver driverForBase = driverService.findDriverByPhone(driver.getDriverPhone());
 //        System.out.println(driverForBase);
         if (driverForBase == null) {
@@ -112,10 +124,33 @@ public class DriverController {
     }
 
     /**
+     *
+     * @return
+     */
+    @PostMapping("/logout")
+    public Result logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return Result.success();
+    }
+
+
+    /**
+     * 管理员修改司机的信息
+     *
+     * @param driver
+     * @return result {}
+     */
+    @PostMapping("/adminUpdateDriver")
+    public Result adminUpdateDriver(@Valid @RequestBody Driver driver) {
+        driverService.updateDriver(driver);
+        return Result.success();
+    }
+    /**
      * 司机自己修改自己的信息
      *
      * @param driver
-     * @param
+     * @param request
      * @return result {}
      */
     @PostMapping("/updateDriver")
@@ -124,7 +159,6 @@ public class DriverController {
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         driver.setDriverId((Integer) claims.get("driverId"));
         driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
-//        System.out.println(driver.getDriverId());
         driverService.updateDriver(driver);
         return Result.success();
     }
