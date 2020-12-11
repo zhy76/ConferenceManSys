@@ -2,14 +2,12 @@ package com.conference.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.conference.entity.Driver;
-import com.conference.dao.DriverDao;
-import com.conference.entity.PickUp;
 import com.conference.service.DriverService;
 import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
+import com.conference.util.result.ResultCode;
 import io.jsonwebtoken.Claims;
-import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,127 +41,114 @@ public class DriverController {
 
     /**
      * 删除司机 Api
-     * @param id (the driver id),
+     *
+     * @param driverId (the driver id),
      * @return {
-     *     "status": 1,
-     *     "message": "删除司机成功"
+     * "code": 200,
+     * "message": "成功"
      * }
      */
     @GetMapping("/deleteDriver")
-    public JSONObject deleteDriver(@RequestParam int id) {
-        JSONObject response = new JSONObject();
-        response.put("status", 1);
-        response.put("message", "删除司机成功");
-        driverService.deleteDriverById(id);
-        return response;
+    public Result deleteDriver(@RequestParam int driverId) {
+        int driverNum = driverService.deleteDriverById(driverId);
+//        if (driverNum < 1) return new Result(ResultCode.FAIL);
+        return Result.success();
     }
 
     /**
      * 司机注册 Api
+     *
      * @param driver {
-     * "driverId": Integer, auto increment,
-     * "driverName": String, not null,
-     * "carNumber": String, not null, TODO 格式（汉字+大写字母+5位数字）,
-     * "fleetId": Integer, 外键
-     * "driverPass": String, not null, 六位以上
-     * "isAssign": Boolean, not null 默认false
+     *               "driverId": Integer, auto increment,
+     *               "driverName": String, not null,
+     *               "carNumber": String, not null,
+     *               "fleetId": Integer, 外键
+     *               "driverPass": String, not null, 六位以上
+     *               "isAssign": Boolean, not null 默认false
+     *               }
+     * @return result {
+     * "status":
+     * "message":
+     * "data": {}
      * }
-     * @return response {
-     *     "status":
-     *     "message":
-     *     "data": {}
      */
     @PostMapping("/register")
-    public JSONObject register(@Valid @RequestBody Driver driver) {
-        JSONObject response = new JSONObject();
+    public Result register(@Valid @RequestBody Driver driver) {
         if (driver.getDriverPhone() == null || driver.getDriverPass() == null) {
-            response.put("message", "表单错误");
-            return response;
+            return new Result(ResultCode.IllegalArgumentException);
         }
         int addNumber = driverService.addDriver(driver);
         if (addNumber > 0) {
             String token = tokenService.getToken(addNumber);
-            response.put("token", token);
+            return Result.success("token", token);
         } else {
-            response.put("message", "注册失败");
+            return new Result(ResultCode.FAIL);
         }
-        return response;
     }
 
     /**
      * 司机登入 Api
+     *
      * @param driver
-     * @return
+     * @return result {}
      */
     @PostMapping("/login")
-    public JSONObject login(@RequestBody Driver driver) {
-        JSONObject jsonObject = new JSONObject();
+    public Result login(@RequestBody Driver driver) {
         if (driver.getDriverPhone() == null || driver.getDriverPass() == null) {
-//            System.out.println("null");
-            jsonObject.put("message", "表单错误");
-            return jsonObject;
+            return new Result(ResultCode.IllegalArgumentException);
         }
         Driver driverForBase = driverService.findDriverByPhone(driver.getDriverPhone());
-        System.out.println(driverForBase);
-//        User userForBase =userDao.findByUsername(loginUser.getUserName());
+//        System.out.println(driverForBase);
         if (driverForBase == null) {
-            jsonObject.put("message", "登录失败,用户不存在");
-            return jsonObject;
+            return new Result(ResultCode.UnknownAccountException);
         } else {
             if (!driverForBase.getDriverPass().equals(driver.getDriverPass())) {
-                jsonObject.put("message", "登录失败,密码错误");
-                return jsonObject;
+                return new Result(ResultCode.IncorrectCredentialsException);
             } else {
                 String token = tokenService.getToken(driverForBase);
-                jsonObject.put("token", token);
-                return jsonObject;
+                return Result.success("token", token);
             }
         }
     }
-
 
     /**
      * 司机自己修改自己的信息
      *
      * @param driver
-     * @param request
-     * @return
+     * @param
+     * @return result {}
      */
     @PostMapping("/updateDriver")
-    public JSONObject updateDriver(@RequestBody Driver driver, HttpServletRequest request) {
-        JSONObject result = new JSONObject();
+    public Result updateDriver(@Valid @RequestBody Driver driver, HttpServletRequest request) {
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
-
         driver.setDriverId((Integer) claims.get("driverId"));
         driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
-        System.out.println(driver.getDriverId());
-        try {
-            driverService.updateDriver(driver);
-        } catch (DataAccessException e) {
-            throw new RuntimeException("修改失败");
-        }
-        result.put("state", 1);
-        return result;
+//        System.out.println(driver.getDriverId());
+        driverService.updateDriver(driver);
+        return Result.success();
     }
-
 
     /**
      * 根据id查找车队所有的司机
      * /driver/getAllFleetDriver
      *
      * @param fleetId
-     * @return
+     * @return result {}
      */
     @GetMapping("/getAllFleetDriver")
-    public List<Driver> getAllFleetDriver(@RequestParam("fleetId") Integer fleetId) {
-        return driverService.findFleetAllDriver(fleetId);
+    public Result getAllFleetDriver(@RequestParam("fleetId") Integer fleetId) {
+        List<Driver> getAllFleetDriver = driverService.findFleetAllDriver(fleetId);
+        if (fleetId == null)
+            return new Result(ResultCode.IllegalArgumentException);
+        return Result.success("getAllFleetDriver", getAllFleetDriver);
     }
 
     /**
      * 查找所有的司机
      * /driver/getAllDriver
-     * @return
+     *
+     * @return result {}
      */
     @GetMapping("/getAllDriver")
     public Result getAllDriver() {
