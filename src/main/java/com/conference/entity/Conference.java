@@ -22,6 +22,21 @@ public class Conference {
     private String conferenceLocation; //会议地址
     private String conferenceInfo; //会议相关信息
 
+    public Conference(Integer conferenceId, Integer organizerId, Integer fleetId, Integer hotelId, String conferenceName, Timestamp conferenceStart, Timestamp conferenceEnd, String conferenceLocation, String conferenceInfo) {
+        this.conferenceId = conferenceId;
+        this.organizerId = organizerId;
+        this.fleetId = fleetId;
+        this.hotelId = hotelId;
+        this.conferenceName = conferenceName;
+        this.conferenceStart = conferenceStart;
+        this.conferenceEnd = conferenceEnd;
+        this.conferenceLocation = conferenceLocation;
+        this.conferenceInfo = conferenceInfo;
+    }
+
+    public Conference() {
+    }
+
     @Override
     public String toString() {
         return "Conference{" +

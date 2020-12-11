@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<!--管理员接口对应的映射文件-->
+<!--组织者接口对应的映射文件-->
 <!--namespace绑定一个Mapper接口-->
 <mapper namespace="com.conference.dao.ConferenceDao">
 
@@ -23,6 +23,11 @@
     <delete id = "deleteConference">
         delete from conference where conference_id = #{conferenceId};
     </delete>
+
+    <insert id="addConference">
+        INSERT INTO conference
+        VALUES(null,#{organizerId}, #{fleetId}, #{hotelId}, #{conferenceName}, #{conferenceStart}, #{conferenceEnd},#{conferenceLocation},#{conferenceInfo})
+    </insert>
 
     <select id = "queryConferenceById" resultType="Conference">
        select * from conference where conference_id = #{conferenceId};
