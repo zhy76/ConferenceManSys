@@ -108,10 +108,11 @@ public class PickUpController {
 
     /**
      * 会议接送记录
+     * /pickUp/getAllConferencePickUp
      * @param conferenceId
      * @return
      */
-    @GetMapping("/getDriverAllPickUp")
+    @GetMapping("/getAllConferencePickUp")
     public List<PickUp> getAllConferencePickUp(@RequestParam("conferenceId")Integer conferenceId) {
         return pickUpService.findAllConferencePickUp(conferenceId);
     }
