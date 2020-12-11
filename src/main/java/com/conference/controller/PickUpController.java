@@ -1,6 +1,5 @@
 package com.conference.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.conference.entity.PickUp;
 import com.conference.service.DriverService;
 import com.conference.service.FleetService;
@@ -52,11 +51,11 @@ public class PickUpController {
     }
 
     /**
-     * 通过id删除接送
+     * 通过id删除接送 Api
      * /pickUp/deletePickUp
      *
-     * @param pickUpId
-     * @return
+     * @param pickUpId Integer
+     * @return result{}
      */
     @RequestMapping("/deletePickUp")
     public Result deletePickUp(@RequestParam("pickUpId") Integer pickUpId) {
@@ -66,11 +65,11 @@ public class PickUpController {
     }
 
     /**
-     * 添加接送
+     * 添加接送 Api
      * /pickUp/addPickUp
      *
-     * @param pickUp
-     * @return
+     * @param pickUp {}
+     * @return result{}
      */
     @PostMapping("/addPickUp")
     public Result addPickUp(@Valid @RequestBody PickUp pickUp) {
@@ -80,10 +79,10 @@ public class PickUpController {
     }
 
     /**
-     * 查找所有的接送
+     * 查找所有的接送 Api
      * /pickUp/getAllPickUp
      *
-     * @return
+     * @return result{}
      */
     @GetMapping("/getAllPickUp")
     public List<PickUp> getAllPickUp() {
@@ -91,11 +90,11 @@ public class PickUpController {
     }
 
     /**
-     * 乘客通过id查找所有的接送记录
+     * 乘客通过id查找所有的接送记录 Api
      * /pickUp/getParticipantAllPickUp
      *
      * @param participantId Integer
-     * @return
+     * @return result{}
      */
     @GetMapping("/getParticipantAllPickUp")
     public Result getParticipantAllPickUp(@RequestParam("participantId") Integer participantId) {
@@ -104,11 +103,11 @@ public class PickUpController {
     }
 
     /**
-     * 司机自己通过id查找所有的接送记录
+     * 通过id司机查找自己所有的接送记录 Api
      * /pickUp/getDriverAllPickUp
      *
      * @param driverId Integer
-     * @return
+     * @return result{}
      */
     @GetMapping("/getDriverAllPickUp")
     public Result getDriverAllPickUp(@RequestParam("driverId") Integer driverId) {
@@ -118,11 +117,11 @@ public class PickUpController {
 
 
     /**
-     * 会议接送记录
+     * 会议接送记录 Api
      * /pickUp/getAllConferencePickUp
      *
      * @param conferenceId Integer
-     * @return
+     * @return result{}
      */
     @GetMapping("/getAllConferencePickUp")
     public Result getAllConferencePickUp(@RequestParam("conferenceId") Integer conferenceId) {

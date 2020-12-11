@@ -1,6 +1,5 @@
 package com.conference.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.conference.entity.Driver;
 import com.conference.service.DriverService;
 import com.conference.service.PickUpService;
@@ -22,9 +21,10 @@ import java.util.List;
 /**
  * @ClassName: DriverController
  * @Description: TODO  司机的分派算法：
- * 参考因素
  * 1. 司机的未完成订单量
  * 2. 司机的从现在到未来第一个订单的时间长度（司机当前空闲时间）
+ * 3. 司机的接送订单中，前1hour和后1hour不能有其他接送订单了
+ * 4. 考虑司机不够，乘客要等待的情况，使用先来先服务
  * @Author: Lance
  * @Date: 2020/12/2 18:52
  */
@@ -45,6 +45,7 @@ public class DriverController {
 
     /**
      * 删除司机 Api
+     * /driver/deleteDriver
      *
      * @param driverId (the driver id),
      * @return {
@@ -61,6 +62,7 @@ public class DriverController {
 
     /**
      * 司机注册 Api
+     * /driver/register
      *
      * @param driver {
      *               "driverId": Integer, auto increment,
@@ -92,14 +94,11 @@ public class DriverController {
 
     /**
      * 司机登入 Api
+     * /driver/login
      *
      * @param driver {
-     *               "driverId": Integer, auto increment,
      *               "driverName": String, not null,
-     *               "carNumber": String, not null,
-     *               "fleetId": Integer, 外键
      *               "driverPass": String, not null, 六位以上
-     *               "isAssign": Boolean, not null 默认false
      *               }
      * @return result {
      * "status":
@@ -110,7 +109,6 @@ public class DriverController {
     @PostMapping("/login")
     public Result login(@Validated({DriverLogin.class}) @RequestBody Driver driver) {
         Driver driverForBase = driverService.findDriverByPhone(driver.getDriverPhone());
-//        System.out.println(driverForBase);
         if (driverForBase == null) {
             return new Result(ResultCode.UnknownAccountException);
         } else {
@@ -124,7 +122,9 @@ public class DriverController {
     }
 
     /**
-     *
+     * 司机登出 Api
+     * @TODO 登出
+     * /driver/logout
      * @return
      */
     @PostMapping("/logout")
@@ -136,9 +136,10 @@ public class DriverController {
 
 
     /**
-     * 管理员修改司机的信息
+     * 管理员修改司机的信息 Api
+     * /driver/adminUpdateDriver
      *
-     * @param driver
+     * @param driver {}
      * @return result {}
      */
     @PostMapping("/adminUpdateDriver")
@@ -146,10 +147,11 @@ public class DriverController {
         driverService.updateDriver(driver);
         return Result.success();
     }
+
     /**
-     * 司机自己修改自己的信息
-     *
-     * @param driver
+     * 司机自己修改自己的信息 Api
+     * /driver/updateDriver
+     * @param driver {}
      * @param request
      * @return result {}
      */
@@ -164,7 +166,7 @@ public class DriverController {
     }
 
     /**
-     * 根据id查找车队所有的司机
+     * 根据id查找车队所有的司机 Api
      * /driver/getAllFleetDriver
      *
      * @param fleetId
@@ -179,7 +181,7 @@ public class DriverController {
     }
 
     /**
-     * 查找所有的司机
+     * 查找所有的司机 Api
      * /driver/getAllDriver
      *
      * @return result {}
