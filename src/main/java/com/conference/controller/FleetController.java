@@ -1,7 +1,5 @@
 package com.conference.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
 import com.conference.service.DriverService;
 import com.conference.service.FleetService;
@@ -10,7 +8,8 @@ import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
 import io.jsonwebtoken.Claims;
-import org.apache.shiro.dao.DataAccessException;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,15 +38,19 @@ public class FleetController {
 
     /**
      * 车队注册 Api
+     * /fleet/register
      *
      * @param fleet {
-     *              <p>
-     *              <p>
+     *              "fleetId": Integer
+     *              "fleetName": String
+     *              "fleetPass": String
+     *              "fleetPhone": String
      *              }
      * @return result {
      * "status":
      * "message":
      * "data": {}
+     * }
      */
     @PostMapping("/register")
     public Result register(@Valid @RequestBody Fleet fleet) {
@@ -61,14 +64,22 @@ public class FleetController {
     }
 
     /**
-     * @param fleet
-     * @return
+     * 车队登入 Api
+     * /fleet/login
+     *
+     * @param fleet {
+     *              "fleetPass": String
+     *              "fleetPhone": String
+     *              }
+     * @return result {
+     * "status":
+     * "message":
+     * "data": {}
+     * }
      */
     @PostMapping("/login")
     public Result login(@RequestBody Fleet fleet) {
         Fleet fleetForBase = fleetService.findFleetByPhone(fleet.getFleetPhone());
-        System.out.println(fleetForBase);
-//        User userForBase =userDao.findByUsername(loginUser.getUserName());
         if (fleetForBase == null) {
             return new Result(ResultCode.UnknownAccountException);
         } else {
@@ -82,7 +93,24 @@ public class FleetController {
     }
 
     /**
+     * 车队登出 Api
+     * /fleet/logout
+     *
      * @return
+     * @TODO 登出
+     */
+    @PostMapping("/logout")
+    public Result logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return Result.success();
+    }
+
+    /**
+     * 查找所有车队 Api
+     * /fleet/getAllFleet
+     *
+     * @return result {}
      */
     @GetMapping("/getAllFleet")
     public Result getAllFleet() {
@@ -92,11 +120,11 @@ public class FleetController {
 
 
     /**
-     * http://localhost:8081/fleet/deleteFleet
-     * 按照id删除车队
+     * 按照id删除车队 Api
+     * /fleet/deleteFleet
      *
-     * @param fleetId
-     * @return
+     * @param fleetId Integer
+     * @return result {}
      */
     @GetMapping("/deleteFleet")
     public Result deleteFleet(@RequestParam("fleetId") Integer fleetId) {
@@ -105,18 +133,15 @@ public class FleetController {
     }
 
     /**
-     * 车队自己改信息
+     * 车队自己改信息 Api
      * /fleet/updateFleet
      *
-     * @param fleet
+     * @param fleet   {}
      * @param request
-     * @return
+     * @return result {}
      */
     @PostMapping("/updateFleet")
     public Result updateDriver(@RequestBody Fleet fleet, HttpServletRequest request) {
-
-//        System.out.println(request.getHeader("token"));
-//        Claims claims = tokenService.parseToken(login(fleet).toString());
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         fleet.setFleetId((Integer) claims.get("fleetId"));
         fleetService.updateFleet(fleet);
