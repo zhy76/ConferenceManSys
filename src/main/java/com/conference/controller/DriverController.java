@@ -47,8 +47,8 @@ public class DriverController {
 //        return driverDao.findAllDriver();
 //    }
 
-    @GetMapping("/deleteDriver/{id}")
-    public int deleteDriver(@PathVariable int id) {
+    @GetMapping("/deleteDriver")
+    public int deleteDriver(@RequestParam int id) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("message", "删除成功");
         return driverService.deleteDriverById(id);
@@ -100,11 +100,8 @@ public class DriverController {
         }
     }
 
-    // 司机自己通过司机id查找所有的接送记录
-    @GetMapping("/getDriverAllPickUpById")
-    public List<PickUp> getDriverAllPickUp(@RequestParam("driverId")Integer driverId) {
-        return pickUpService.findAllDriverPickUp(driverId);
-    }
+
+
 
     /**
      * 司机自己修改自己的信息
@@ -142,4 +139,13 @@ public class DriverController {
         return driverService.findFleetAllDriver(fleetId);
     }
 
+    /**
+     * 查找所有的司机
+     * /driver/getAllDriver
+     * @return
+     */
+    @GetMapping("/getAllDriver")
+    public List<Driver> getAllDriver() {
+        return driverService.findAllDriver();
+    }
 }

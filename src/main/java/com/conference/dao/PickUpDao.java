@@ -5,12 +5,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * @ClassName: PickUpMapper
- * @Description: TODO
+ * @Description: TODO 1
  * @Author: Lance
  * @Date: 2020/12/1 18:53
  */
@@ -50,6 +49,15 @@ public interface PickUpDao {
     // 查询一个司机的接送信息
     List<PickUp> findAllDriverPickUp(@Param("driverId")int driverId);
 
+    /**
+     * TODO
+     * @param conferenceId
+     * @return
+     */
+    List<PickUp> findAllConferencePickUp(@Param("conferenceId")int conferenceId);
+    List<PickUp> findAllDriverDonePickUp(@Param("driverId")int driverId);
+    List<PickUp> findAllParticipantDonePickUp(@Param("participantId")int participantId);
+
     // 查询个人的接送信息
     List<PickUp> findAllParticipantPickUp(@Param("participantId")int participantId);
 
@@ -59,21 +67,10 @@ public interface PickUpDao {
                       @Param("conferenceId")int conferenceId);
 
     PickUp findPickUpById(@Param("pickUpId")int pickUpId);
-    // 改
-//    int updatePickUpByDriverId(@Param("participantId")int participantId, @Param("driverId")int driverId,
-//                               @Param("conferenceId")int conferenceId,
-//                               @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
-//                               @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
-//
-//    // 改
-//    int updatePickUpByParticipantId(@Param("participantId")int participantId, @Param("driverId")int driverId,
-//                                    @Param("conferenceId")int conferenceId,
-//                                    @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
-//                                    @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
 
     // 精确修改
     int updatePickUp(@Param("participantId")int participantId, @Param("driverId")int driverId,
-                                               @Param("conferenceId")int conferenceId,
-                                    @Param("trainNumber")String trainNumber, @Param("toTime")String toTime,
-                                    @Param("returnTime")String returnTime, @Param("isFinishPickup")boolean isFinishPickup);
+                     @Param("conferenceId")int conferenceId, @Param("trainNumber")String trainNumber,
+                     @Param("toTime")String toTime, @Param("returnTime")String returnTime,
+                     @Param("isFinishPickup")boolean isFinishPickup);
 }

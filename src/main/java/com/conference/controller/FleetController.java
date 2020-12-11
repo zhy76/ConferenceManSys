@@ -106,6 +106,7 @@ public class FleetController {
     }
 
     /**
+     * 车队自己改信息
      * /fleet/updateFleet
      * @param fleet
      * @param request

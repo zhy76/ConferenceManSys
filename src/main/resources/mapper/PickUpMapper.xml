@@ -23,6 +23,18 @@
         SELECT * FROM pick_up WHERE driver_id =#{driverId};
     </select>
 
+    <select id="findAllConferencePickUp" resultType="PickUp">
+        SELECT * FROM pick_up WHERE conference_id=#{conferenceId};
+    </select>
+
+<!--    <select id="findAllDriverDonePickUp" resultType="PickUp">-->
+<!--        -->
+<!--    </select>-->
+
+<!--    <select id="findAllParticipantDonePickUp" resultType="PickUp">-->
+
+<!--    </select>-->
+
     <select id="findAllParticipantPickUp" resultType="PickUp">
         SELECT * FROM pick_up WHERE participant_id=#{participantId};
     </select>
@@ -35,6 +47,8 @@
     <select id="findPickUpById" resultType="PickUp">
         SELECT * FROM pick_up WHERE pick_up_id=#{pickUpId};
     </select>
+
+
 
     <delete id="deletePickUpById">
         DELETE from pick_up where pick_up_id=#{pickUpId};
