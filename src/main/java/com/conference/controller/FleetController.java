@@ -1,9 +1,7 @@
 package com.conference.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
-import com.conference.dao.FleetDao;
 import com.conference.service.DriverService;
 import com.conference.service.FleetService;
 import com.conference.service.PickUpService;
@@ -106,6 +104,7 @@ public class FleetController {
     }
 
     /**
+     * 车队自己改信息
      * /fleet/updateFleet
      * @param fleet
      * @param request

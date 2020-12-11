@@ -29,6 +29,8 @@ public interface PickUpService {
     // 查询个人的接送信息
     List<PickUp> findAllParticipantPickUp(Integer participantId);
 
+    List<PickUp> findAllConferencePickUp(Integer conferenceId);
+
     // 精确查
     PickUp findPickUp(Integer participantId, Integer driverId, Integer conferenceId);
 
