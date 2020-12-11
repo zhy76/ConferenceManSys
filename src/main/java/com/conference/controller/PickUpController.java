@@ -84,7 +84,7 @@ public class PickUpController {
     /**
      * 乘客通过id查找所有的接送记录
      * /pickUp/getParticipantAllPickUp
-     * @test done
+     * test done
      * @param participantId
      * @return
      */

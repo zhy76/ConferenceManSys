@@ -42,7 +42,7 @@ public class TokenServiceImpl implements TokenService {
         String token = "";
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("driverId", fleet.getFleetId())
+                .claim("fleetId", fleet.getFleetId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
         System.out.println(fleet.getFleetId());
@@ -62,21 +62,6 @@ public class TokenServiceImpl implements TokenService {
         return token;
     }
 
-//    public List<String> getToken(List<Column> columns){
-//        List<String> tokenList=new ArrayList<>();
-//        for(int i=0;i<columns.size();i++){
-//            String token="";
-//            System.out.println(columns.get(i).getColumnName());
-//            token+=Jwts.builder()
-//                    .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-//                    .claim("columnId"+i,columns.get(i).getColumnId())
-//                    .claim("columnName"+i,columns.get(i).getColumnName())
-//                    .signWith(signatureAlgorithm, SECRET)
-//                    .compact();
-//            tokenList.add(token);
-//        }
-//        return tokenList;
-//    }
 
     public Claims parseToken(String token){
         Claims claims = Jwts.parser()
