@@ -29,6 +29,16 @@ public class LiveRoomImpl implements LiveRoomService {
     }
 
     @Override
+    public List<LiveRoom> findAllLiveRoomByHotelId(int hotelId) {
+        return liveRoomDao.findAllLiveRoomByHotelId(hotelId);
+    }
+
+    @Override
+    public List<LiveRoom> findAllLiveRoomByAll(int participantId, int conferenceId, int hotelId) {
+        return liveRoomDao.findAllLiveRoomByAll(participantId,conferenceId,hotelId);
+    }
+
+    @Override
     public int addLiveRoom(LiveRoom liveRoom) {
         return liveRoomDao.addLiveRoom(liveRoom.getParticipantId(),liveRoom.getHotelId(),liveRoom.getConferenceId(),liveRoom.getRoomId());
     }
@@ -39,7 +49,12 @@ public class LiveRoomImpl implements LiveRoomService {
     }
 
     @Override
-    public int updateLiveRoomByParticipantId(LiveRoom liveRoom) {
-        return liveRoomDao.updateLiveRoomByParticipantId(liveRoom.getRoomId(),liveRoom.getParticipantId());
+    public int updateLiveRoom(LiveRoom liveRoom) {
+        return liveRoomDao.updateLiveRoom(liveRoom.getRoomId(),liveRoom.getParticipantId(),liveRoom.getConferenceId());
+    }
+
+    @Override
+    public int deleteLiveRoomByAll(int participantId, int conferenceId, int hotelId) {
+        return liveRoomDao.deleteLiveRoomByAll(participantId,conferenceId,hotelId);
     }
 }

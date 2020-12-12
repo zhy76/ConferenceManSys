@@ -15,6 +15,15 @@
     <select id="findAllLiveRoomByParticipantId" resultType="LiveRoom">
         SELECT * FROM live_room WHERE participant_id=#{participantId};
     </select>
+<!--    通过酒店查看-->
+    <select id="findAllLiveRoomByHotelId" resultType="LiveRoom">
+        SELECT * FROM live_room WHERE hotel_id=#{hotelId};
+    </select>
+<!--    精确查找-->
+    <select id="findAllLiveRoomByAll" resultType="LiveRoom">
+        SELECT * FROM live_room WHERE participant_id=#{participantId} AND
+                            conference_id=#{conferenceId} AND hotel_id=#{hotelId};
+    </select>
 <!--    插入住宿信息-->
     <insert id="addLiveRoom">
         INSERT INTO live_room
@@ -24,8 +33,12 @@
     <delete id="deleteLiveRoom">
         DELETE from live_room where participant_id=#{participantId} AND conference_id=#{conferenceId};
     </delete>
+<!--    精准删除-->
+    <delete id="deleteLiveRoomByAll">
+        DELETE from live_room where participant_id=#{participantId} AND conference_id=#{conferenceId} AND hotel_id=#{hotelId};
+    </delete>
 <!--    更新房间-->
-    <update id="updateLiveRoomByParticipantId">
-        UPDATE live_room SET room_id=#{roomId} WHERE participant_id=#{participantId};
+    <update id="updateLiveRoom">
+        UPDATE live_room SET room_id=#{roomId} WHERE participant_id=#{participantId} AND conference_id=#{conferenceId};
     </update>
 </mapper>
