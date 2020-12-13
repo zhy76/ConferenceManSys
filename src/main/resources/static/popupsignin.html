@@ -192,15 +192,11 @@
                     "driverPass": "" + password
                 }),
                 success: function (jsonData, result) {
-                    console.log("data is :" + result)
-                    if (jsonData["token"]) {
-                        localStorage.setItem("bbsNCU", jsonData["token"]);
-                        if (parseJwt(jsonData["token"]).type == 2) {
-                            window.location.href = "admin.html"
-                        } else {
-                            window.location.href = "index.html";
-                        }
+                    console.log("data is :" + result);
+                    if (jsonData["data"]["token"]) {
+                        window.location.href = "driverindex.html";
                     } else {
+                        console.log(jsonData["data"]["token"]);
                         alert("登录失败，请重试");
                     }
                 }

@@ -106,7 +106,7 @@ public class DriverController {
      * "data": {}
      * }
      */
-    @PostMapping("/login")
+    @RequestMapping("/login")
     public Result login(@Validated({DriverLogin.class}) @RequestBody Driver driver) {
         Driver driverForBase = driverService.findDriverByPhone(driver.getDriverPhone());
         if (driverForBase == null) {
@@ -190,5 +190,18 @@ public class DriverController {
     public Result getAllDriver() {
         List<Driver> getAllDriver = driverService.findAllDriver();
         return Result.success("getAllDriver", getAllDriver);
+    }
+
+    /**
+     * 查找登入司机的所有信息
+     * /driver/getDriverInfo
+     * @param request
+     * @return
+     */
+    @GetMapping("/getDriverInfo")
+    public Result getDriverInfo(HttpServletRequest request) {
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        Driver getDriverInfo = driverService.findDriverById((Integer) claims.get("driverId"));
+        return Result.success("getDriverInfo", getDriverInfo);
     }
 }
