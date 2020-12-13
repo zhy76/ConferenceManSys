@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName: PickUpController
@@ -103,6 +103,40 @@ public class PickUpController {
     }
 
     /**
+     * 通过id司机查找自己待接送的接送记录 Api
+     * /pickUp/getDriverWaitPickUp
+     *
+     * @param driverId Integer
+     * @return result{}
+     */
+    @GetMapping("/getDriverWaitPickUp")
+    public Result getDriverWaitPickUp(@RequestParam("driverId") Integer driverId) {
+        List<PickUp> getDriverAllPickUp = pickUpService.findAllDriverPickUp(driverId);
+        List<PickUp> getDriverWaitPickUp = new ArrayList<PickUp>();
+        for (PickUp it : getDriverAllPickUp) {
+            if (it.isFinishPickup() == false) {
+                getDriverWaitPickUp.add(it);
+            }
+        }
+        return Result.success("getDriverWaitPickUp", getDriverWaitPickUp);
+    }
+    /**
+     * 通过id司机查找自己已完成接送的接送记录 Api
+     * /pickUp/getDriverDonePickUp
+     *
+     * @param driverId Integer
+     * @return result{}
+     */
+    @GetMapping("/getDriverDonePickUp")
+    public Result getDriverDonePickUp(@RequestParam("driverId") Integer driverId) {
+        List<PickUp> getDriverAllPickUp = pickUpService.findAllDriverPickUp(driverId);
+        List<PickUp> getDriverDonePickUp = new ArrayList<PickUp>();
+        for (PickUp it : getDriverAllPickUp)
+            if (it.isFinishPickup())
+                getDriverDonePickUp.add(it);
+        return Result.success("getDriverWaitPickUp", getDriverDonePickUp);
+    }
+    /**
      * 通过id司机查找自己所有的接送记录 Api
      * /pickUp/getDriverAllPickUp
      *
@@ -115,7 +149,6 @@ public class PickUpController {
         return Result.success("getDriverAllPickUp", getDriverAllPickUp);
     }
 
-
     /**
      * 会议接送记录 Api
      * /pickUp/getAllConferencePickUp
@@ -127,5 +160,52 @@ public class PickUpController {
     public Result getAllConferencePickUp(@RequestParam("conferenceId") Integer conferenceId) {
         List<PickUp> getAllConferencePickUp = pickUpService.findAllConferencePickUp(conferenceId);
         return Result.success("getAllConferencePickUp", getAllConferencePickUp);
+    }
+
+    /**
+     * 车队接送记录 Api
+     * /pickUp/getAllFleetPickUp
+     *
+     * @param fleetId Integer
+     * @return result{}
+     */
+    @GetMapping("/getAllFleetPickUp")
+    public Result getAllFleetPickUp(@RequestParam("fleetId") Integer fleetId) {
+        List<PickUp> getAllFleetPickUp = pickUpService.findAllFleetPickUp(fleetId);
+        return Result.success("getAllFleetPickUp", getAllFleetPickUp);
+    }
+
+    /**
+     * 车队待完成接送记录 Api
+     * /pickUp/getAllFleetWaitPickUp
+     *
+     * @param fleetId Integer
+     * @return result{}
+     */
+    @GetMapping("/getAllFleetWaitPickUp")
+    public Result getAllFleetWaitPickUp(@RequestParam("fleetId") Integer fleetId) {
+        List<PickUp> getAllFleetPickUp = pickUpService.findAllFleetPickUp(fleetId);
+        List<PickUp> getAllFleetWaitPickUp = new ArrayList<PickUp>();
+        for (PickUp it : getAllFleetPickUp)
+            if (!it.isFinishPickup())
+                getAllFleetWaitPickUp.add(it);
+        return Result.success("getAllFleetWaitPickUp", getAllFleetWaitPickUp);
+    }
+
+    /**
+     * 车队已完成接送记录 Api
+     * /pickUp/getAllFleetDonePickUp
+     *
+     * @param fleetId Integer
+     * @return result{}
+     */
+    @GetMapping("/getAllFleetDonePickUp")
+    public Result getAllFleetDonePickUp(@RequestParam("fleetId") Integer fleetId) {
+        List<PickUp> getAllFleetPickUp = pickUpService.findAllFleetPickUp(fleetId);
+        List<PickUp> getAllFleetDonePickUp = new ArrayList<PickUp>();
+        for (PickUp it : getAllFleetPickUp)
+            if (it.isFinishPickup())
+                getAllFleetDonePickUp.add(it);
+        return Result.success("getAllFleetDonePickUp", getAllFleetDonePickUp);
     }
 }

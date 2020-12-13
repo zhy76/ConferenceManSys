@@ -2,8 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>参与者开始界面</title>
         <!-- Common plugins -->
@@ -12,22 +12,25 @@
         <link href="css/font-awesome.min.css" rel="stylesheet">
         <link href="css/pace.css" rel="stylesheet">
         <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/nanoscroller.css">
-        <link rel="stylesheet" href="css/metismenu.min.css">
+        <link href="css/nanoscroller.css" rel="stylesheet">
+        <link href="css/metismenu.min.css" rel="stylesheet">
         <link href="css/c3.min.css" rel="stylesheet">
         <link href="css/blue.css" rel="stylesheet">
         <!-- dataTables -->
         <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
         <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="css/jquery.toast.min.css" rel="stylesheet">
-        <!--template css-->
         <link href="css/style.css" rel="stylesheet">
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="js/html5shiv.min.js"></script>
-          <script src="js/respond.min.js"></script>
+
+        <script src="js/jquery.min.js"></script>
+
+        <script src="js/html5shiv.min.js"></script>
+        <script src="js/respond.min.js"></script>
         <![endif]-->
+
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/ajax/driver.js"></script>
+        <script src="js/ajax/1.js"></script>
     </head>
     <body>
 
@@ -36,10 +39,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-6">
-                        <a href="index.html" class="admin-logo">
-                            <h1><img src="picture/meeting.jpg" alt=""></h1>
+                        <a class="admin-logo" href="driverindex.html">
+                            <h1><img alt="" src="picture/meeting.jpg"></h1>
                         </a>
-<!--                        以下这段作用是什么？？？-->
+                        <!--                        以下这段作用是什么？？？-->
                         <div class="left-nav-toggle visible-xs visible-sm">
                             <a href="">
                                 <i class="glyphicon glyphicon-menu-hamburger"></i>
@@ -48,27 +51,27 @@
                     </div>
                     <div class="col-xs-6">
                         <ul class="list-inline top-right-nav">
-                            <li >
-                                <a href="参与者.html" >
+                            <li>
+                                <a href="参与者.html">
                                     <span class="glyphicon glyphicon-envelope"> 消息</span>
                                 </a>
                             </li>
-                            <li >
-                                <a href="参与者.html" >
+                            <li>
+                                <a href="参与者.html">
                                     <span class="glyphicon glyphicon-cog"> 设置</span>
                                 </a>
                             </li>
-                            <li >
-                                <a href="popupsignin.html" >
+                            <li>
+                                <a href="popupsignin.html">
                                     <span class="glyphicon glyphicon-log-out"> 退出登录</span>
                                 </a>
                             </li>
-                            <li >
-                                <a href="popupsignin.html" >
-                                    <span><img src="picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
+                            <li>
+                                <a href="popupsignin.html">
+                                    <span><img alt="" class="img-circle" src="picture/avtar-1.jpg" width="30"></span>
                                 </a>
                             </li>
-                        </ul> 
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -82,30 +85,28 @@
                     <ul class="metisMenu nav" id="menu">
                         <li class="nav-heading"><span>Navigation</span></li>
                         <li class="active">
-                            <a href="index.html"><i class="icon-home"></i> 主页 </a>
+                            <a href="driverindex.html"><i class="icon-home"></i> 主页 </a>
                         </li>
-                        <li >
-                            <a href="javascript: void(0);" aria-expanded="true"><i class="icon-user"></i> 基本资料 <span class="fa arrow"></span></a>
-                            <ul class="nav-second-level nav" aria-expanded="true">
-                                <li><a href="参与者个人信息完善.html">个人信息</a></li>
-                                <li><a href="参与者个人信息完善.html">酒店出行</a></li>
+                        <li>
+                            <a aria-expanded="true" href="javascript: void(0);"><i class="icon-user"></i> 基本资料 </a>
+
+                        </li>
+                        <li>
+                            <a aria-expanded="true" href="javascript: void(0);"><i class="icon-note"></i> 接送管理 <span
+                                    class="fa arrow"></span></a>
+                            <ul aria-expanded="true" class="nav-second-level nav">
+                                <li><a href="driverindex.html">待接送</a></li>
+                                <li><a href="driverindex.html">查询接送</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="javascript: void(0);" aria-expanded="true"><i class="icon-note"></i> 会议 <span class="fa arrow"></span></a>
-                            <ul class="nav-second-level nav" aria-expanded="true">
-                                <li><a href="index.html">选择会议</a></li>
-                                <li><a href="index.html">查看会议</a></li>
-                            </ul>
+                            <a href="driverindex.html"><i class="icon-envelope-letter"></i> 消息 </a>
                         </li>
                         <li>
-                            <a href="index.html"><i class="icon-envelope-letter"></i> 消息 </a>
-                        </li>
-                        <li>
-                            <a href="index.html"><i class="icon-settings"></i> 设置 </a>
+                            <a href="driverindex.html"><i class="icon-settings"></i> 设置 </a>
                         </li>
 
-                        <!--<li><a href="landing/index.html" target="_blank" class="bg-primary"><i class="icon-star"></i>Landing page</a></li>-->
+                        <!--<li><a href="landing/driverindex.html" target="_blank" class="bg-primary"><i class="icon-star"></i>Landing page</a></li>-->
                     </ul>
                 </div><!--nano content-->
             </div><!--nano scroll end-->
@@ -119,9 +120,9 @@
             <!--page header start-->
             <div class="page-header">
                 <div class="row">
-<!--                    <div class="col-sm-6">-->
-<!--                        <h4>Welcome!</h4>-->
-<!--                    </div>-->
+                    <!--                    <div class="col-sm-6">-->
+                    <!--                        <h4>Welcome!</h4>-->
+                    <!--                    </div>-->
                     <div class="col-sm-12 text-right">
                         <ol class="breadcrumb">
                             <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
@@ -130,28 +131,7 @@
                     </div>
                 </div>
             </div>
-            <!--page header end-->
 
-            <!--start page content-->
-
-
-<!--            <div class="container-fluid">-->
-<!--                <div class="row clearfix">-->
-<!--                    <div class="col-md-12 column">-->
-<!--                        <div class="jumbotron">-->
-<!--                            <h1>-->
-<!--                                欢迎!-->
-<!--                            </h1>-->
-<!--                            <p>-->
-<!--                                请先完善个人信息，然后再进行选择会议或查看会议操作。-->
-<!--                            </p>-->
-<!--&lt;!&ndash;                            <p>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="btn btn-primary btn-large" href="#">Learn more</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </p>&ndash;&gt;-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
 
             <div class="container">
                 <div class="row clearfix">
@@ -163,13 +143,13 @@
                             <p>
                                 请先完善个人信息，然后再进行选择会议或查看会议操作。
                             </p>
-<!--                            <p>-->
-<!--                                <a class="btn btn-primary btn-large" href="#">Learn more</a>-->
-<!--                            </p>-->
+                            <!--                            <p>-->
+                            <!--                                <a class="btn btn-primary btn-large" href="#">Learn more</a>-->
+                            <!--                            </p>-->
                         </div>
                     </div>
                     <div class="col-md-4 column">
-                        <img alt="140x140" src="picture/3.jpg" />
+                        <img alt="140x140" src="picture/3.jpg"/>
                     </div>
                 </div>
             </div>
@@ -185,9 +165,9 @@
         </section>
         <!--end main content-->
 
+        <script src="js/bundle.js"></script>
 
-
-        <!--Common plugins-->
+<!--        &lt;!&ndash;Common plugins&ndash;&gt;-->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/pace.min.js"></script>
