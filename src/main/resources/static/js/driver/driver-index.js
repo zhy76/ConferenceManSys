@@ -2,11 +2,9 @@
 // Object.defineProperty(exports, "__esModule", { value: true });
 // var jquery_1 = require("jquery");
 let driver;
-let pickUp;
-let token;
-let mes;
+var token;
+
 let $driverId;
-let $participantId;
 $(function () {
 
     let $driverPhone;
@@ -28,25 +26,8 @@ $(function () {
     $("#to-info a").click(function () {
 
             showDriverInfo();
-
         }
     )
-    /**
-     * 点击->待接送
-     */
-    $("to-wait-pick").click(function () {
-        getDriverAllPickUp();
-        showPickUpTable();
-    })
-
-    /*点击 退出登录 按钮*/
-    $("#login-out").click(function () {
-        clearDriverInfo();
-        //localStorage.clear();
-        localStorage.setItem("hcs", null);
-        alert("退出成功");
-        window.location.href = "popupsignin.html";
-    })
 })
 
 /**
@@ -89,298 +70,6 @@ function clearDriverInfo() {
 
 //# sourceMappingURL=1.js.map
 
-
-
-
-/*获取token里面的用户数据*/
-function parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-    return JSON.parse(jsonPayload);
-}
-
-/**
- *
- */
-
-function showDriverInfo() {
-    getDriverInfo($driverId);
-    console.log(driver);
-    let $html = "<div class=\"tab-pane\" role=\"tabpanel\">\n" +
-        "                                    <div class=\"card-body\">\n" +
-        "                                        <form  class=\"form-horizontal form-material\" id='driverInfo' >\n" +
-        "                                            <br>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">姓名</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" class=\"form-control form-control-line\"\n" +
-        "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        // "                                            <div class=\"form-group\">\n" +
-        // "                                                <label for=\"example-email\" class=\"col-md-12\">邮箱</label>\n" +
-        // "                                                <div class=\"col-md-12\">\n" +
-        // "                                                    <input type=\"email\" \n" +
-        // "                                                        class=\"form-control form-control-line\" name=\"example-email\"\n" +
-        // "                                                        id=\"example-email\">\n" +
-        // "                                                </div>\n" +
-        // "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='driverPass' class=\"form-control form-control-line\" id='driverPass'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">重复密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='repeatDriverPass' class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">电话</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.driverPhone + "\"\n" +
-        "                                                        name='driverPhone' class=\"form-control form-control-line\" id='driverPhone'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">车牌号</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.carNumber + "\"\n" +
-        "                                                        name='carNumber' class=\"form-control form-control-line\" id='carNumber'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">个人介绍</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <textarea rows=\"5\" class=\"form-control form-control-line\">\n" +
-        "                                                    啊哈！\n" +
-        "                                                </textarea>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <br />\n" +
-        "                                            <br />\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <div class=\"col-sm-12 text-center\">\n" +
-        "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                        </form>\n" +
-        "                                    </div>\n" +
-        "                                </div>"
-    // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($html);
-}
-
-
-/**
- * 司机信息表单前端验证
- */
-function validform() {
-    // alert()
-    // return $("#driverInfo");
-    /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
-    alert(1);
-    console.log($("#driverInfo"));
-    alert(1);
-    return $("#driverInfo").validate({
-        rules: {
-            driverName: {
-                minlength: 2,
-                maxlength: 13
-            },
-            driverPass: {
-                minlength: 5,
-                maxlength: 20
-            },
-            repeatDriverPass: {
-                minlength: 5,
-                maxlength: 20,
-                equalTo: "#repeatDriverPass"
-            },
-            driverPhone: {
-                minlength: 11,
-                maxlength: 11
-            },
-            carNumber: {
-                minlength: 2,
-                maxlength: 8
-            }
-        },
-        messages: {
-            driverName: {
-                minlength: "姓名名至少包含2个字符",
-                maxlength: "用户名长度不能超过13个字符"
-            },
-            driverPass: {
-                minlength: "密码长度不能少于6个字符",
-                maxlength: "密码长度不能多于20个字符"
-            },
-            repeatDriverPass: {
-                minlength: "密码长度不能少于6个字符",
-                maxlength: "密码长度不能多于20个字符",
-                equalTo: "两次密码输入不一致"
-            },
-            driverPhone: {
-                minlength: "请输入正确的电话号码",
-                maxlength: "请输入正确的电话号码"
-            },
-            carNumber: {
-                minlength: "请输入正确的车牌号码",
-                maxlength: "请输入正确的车牌号码"
-            }
-        }
-    });
-}
-
-/**
- * 更新司机信息
- */
-function submitChange() {
-    /**
-     * @TODO : 前端验证
-     * validform().form()
-     */
-    if (1) {
-        $.ajax({
-            // async: false,
-            type: "POST",
-            url: '/driver/updateDriver',
-            contentType: "application/json",
-            headers: {'token': localStorage.getItem("hcs")},
-            data: JSON.stringify({
-                "driverName": $("#driverName").val(),
-                "carNumber": $("#carNumber").val(),
-                "fleetId": Number($("#fleetId").val()),
-                "driverPass": $("#driverPass").val(),
-                "driverPhone": $("#driverPhone").val()
-            }),
-            success: function (jsonData, result) {
-                console.log(jsonData);
-                console.log(result);
-                if (jsonData['code'] === 200) {
-                    console.log('成功');
-                    alert("修改成功");
-                    // showDriverInfo(driver);
-                    location.reload();
-                } else {
-                    console.log('失败');
-                    alert("修改失败");
-                    location.reload();
-                }
-            },
-        });
-        for (let i = 0; i < 170000000; i++) {
-            /**
-             * 意义不明的代码，
-             * 不加会有bug
-             * 170000000
-             * 二分
-             */
-        }
-        // showDriverInfo();
-    } else {
-        alert("信息格式有误，请重新填写！");
-    }
-}
-
-
-function getDriverAllPickUp() {
-    $.ajax({
-        async: false,
-        headers: {
-            'token': token,
-        },
-        url: "/pickUp/getDriverAllPickUp",
-        type: "get",
-        dataType: "json",
-        data: {
-            'driverId': $driverId,
-        },
-        success: function (data) {
-            console.log(data);
-            if (data["code"] === 200) {
-                driver = data["data"]["getDriverInfo"];
-                console.log(driver);
-            } else {
-                alert("获取用户数据失败");
-            }
-        },
-        error: function () {
-            alert("获取用户数据失败!");
-        },
-    });
-}
-
-function getParticipantNameById($participantId) {
-
-}
-
-function showPickUpTable() {
-    let $html = "                            <div class=\"row\">\n" +
-        "                                <div class=\"col-md-12\">\n" +
-        "                                    <div class=\"panel panel-default collapsed\">\n" +
-        "                                        <div class=\"panel-heading\">\n" +
-        "                                            接送记录\n" +
-        "                                        </div>\n" +
-        "                                        <div class=\"panel-body\">\n" +
-        "                                            <table class=\"table table-striped dt-responsive nowrap\" id=\"datatable\">\n" +
-        "                                                <thead>\n" +
-        "                                                <tr>\n" +
-        "                                                    <th>接送单号</th>\n" +
-        "                                                    <th>姓名</th>\n" +
-        "                                                    <th>火车/航班号</th>\n" +
-        "                                                    <th>预计到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
-        "                                                    <th>是否完成</th>\n" +
-        "                                                </tr>\n" +
-        "                                                </thead>\n" +
-        "\n" +
-        "                                                <tbody>\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Tiger Nixon</td>\n" +
-        "                                                    <td>System Architect</td>\n" +
-        "                                                    <td>Edinburgh</td>\n" +
-        "                                                    <td>61</td>\n" +
-        "                                                    <td>2011/04/25</td>\n" +
-        "                                                    <td>$320,800</td>\n" +
-        "                                                </tr>\n" +
-        "                                                <!--g-->\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Garrett Winters</td>\n" +
-        "                                                    <td>Accountant</td>\n" +
-        "                                                    <td>Tokyo</td>\n" +
-        "                                                    <td>63</td>\n" +
-        "                                                    <td>2011/07/25</td>\n" +
-        "                                                    <td>$170,750</td>\n" +
-        "                                                </tr>\n" +
-        "                                                </tbody>\n" +
-        "                                            </table>\n" +
-        "\n" +
-        "                                        </div>\n" +
-        "                                    </div>\n" +
-        "                                </div>\n" +
-        "                            </div><!--end row-->";
-
-    // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($html);
-    for (i of pickUp) {
-
-    }
-}
-
-
-
-/**************************************/
 
 /*base 64 加密字符串*/
 function encodeStr(str) {
@@ -493,5 +182,186 @@ function Base64() {
             }
         }
         return string;
+    }
+}
+
+/*获取token里面的用户数据*/
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+}
+
+/**
+ *
+ */
+
+function showDriverInfo() {
+    getDriverInfo($driverId);
+    console.log(driver);
+    let $html = "<div class=\"tab-pane\" id=\"个人信息\" role=\"tabpanel\">\n" +
+        "                                    <div class=\"card-body\">\n" +
+        "                                        <form id='driverInfo' class=\"form-horizontal form-material\">\n" +
+        "                                            <br>\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">姓名</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <input type=\"text\" class=\"form-control form-control-line\"\n" +
+        "                                                        id='driverName' value=\"" + driver.driverName + "\">\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        // "                                            <div class=\"form-group\">\n" +
+        // "                                                <label for=\"example-email\" class=\"col-md-12\">邮箱</label>\n" +
+        // "                                                <div class=\"col-md-12\">\n" +
+        // "                                                    <input type=\"email\" \n" +
+        // "                                                        class=\"form-control form-control-line\" name=\"example-email\"\n" +
+        // "                                                        id=\"example-email\">\n" +
+        // "                                                </div>\n" +
+        // "                                            </div>\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">密码</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
+        "                                                        class=\"form-control form-control-line\" id='driverPass'>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">重复密码</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
+        "                                                        class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">电话</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <input type=\"text\" value=\"" + driver.driverPhone + "\"\n" +
+        "                                                        class=\"form-control form-control-line\" id='driverPhone'>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">车牌号</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <input type=\"text\" value=\"" + driver.carNumber + "\"\n" +
+        "                                                        class=\"form-control form-control-line\" id='carNumber'>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">个人介绍</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <textarea rows=\"5\" class=\"form-control form-control-line\">\n" +
+        "                                                    啊哈！\n" +
+        "                                                </textarea>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                            <br />\n" +
+        "                                            <br />\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <div class=\"col-sm-12 text-center\">\n" +
+        "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新'>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                        </form>\n" +
+        "                                    </div>\n" +
+        "                                </div>"
+    // 清空节点
+    $(".jumbotron").empty();
+    $(".jumbotron").append($html);
+}
+
+
+/**
+ * 司机信息表单前端验证
+ */
+function validform() {
+    // alert()
+    // return $("#driverInfo");
+    /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
+    return $(".self-form").validate({
+        rules: {
+            username: {
+                minlength: 5,
+                maxlength: 13
+            },
+            newpassword: {
+                minlength: 5,
+                maxlength: 20
+            },
+            renewpassword: {
+                minlength: 5,
+                maxlength: 20,
+                equalTo: "#repeatDriverPass"
+            },
+            telephone:{
+                minlength: 11,
+                maxlength: 11
+            },
+            location:{
+                minlength:2,
+                maxlength:8
+            }
+        },
+        messages: {
+            username: {
+                minlength: "用户名至少包含5个字符",
+                maxlength: "用户名长度不能超过13个字符"
+            },
+            newpassword: {
+                minlength: "密码长度不能少于5个字符",
+                maxlength: "密码长度不能多于20个字符"
+            },
+            renewpassword: {
+                minlength: "密码长度不能少于5个字符",
+                maxlength: "密码长度不能多于20个字符",
+                equalTo: "两次密码输入不一致"
+            },
+            telephone: {
+                minlength:"请输入正确的电话号码",
+                maxlength:"请输入正确的电话号码"
+            },
+            location: {
+                minlength: "居住地名称长度果断",
+                maxlength: "居住地长度过长"
+            }
+        }
+    });
+}
+
+/**
+ * 更新司机信息
+ */
+function submitChange() {
+    if (1) {
+        $.ajax({
+            // async: false,
+            type: "POST",
+            url: '/driver/updateDriver',
+            contentType: "application/json",
+            headers: {'token': localStorage.getItem("hcs")},
+            data: JSON.stringify({
+                "driverName": $("#driverName").val(),
+                "carNumber": $("#carNumber").val(),
+                "fleetId": Number($("#fleetId").val()),
+                "driverPass": $("#driverPass").val(),
+                "driverPhone": $("#driverPhone").val()
+            }),
+            success: function (jsonData, result) {
+                console.log(jsonData);
+                console.log(result);
+                if (jsonData['code'] === 200) {
+                    alert("修改成功");
+                    // showDriverInfo(driver)
+                    location.reload();
+                } else {
+                    alert("修改失败");
+                    location.reload();
+                }
+            },
+        });
+    } else {
+        alert("信息格式有误，请重新填写！");
     }
 }
