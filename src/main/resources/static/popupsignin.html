@@ -193,13 +193,13 @@
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result)
-                    if (jsonData["token"]) {
-                        localStorage.setItem("bbsNCU", jsonData["token"]);
-                        if (parseJwt(jsonData["token"]).type == 2) {
-                            window.location.href = "admin.html"
-                        } else {
+                    if (jsonData["data"]["token"]) {
+                        //localStorage.setItem("bbsNCU", jsonData["token"]);
+                        // if (parseJwt(jsonData["token"]).type == 2) {
                             window.location.href = "index.html";
-                        }
+                        //  else {
+                        //     window.location.href = "index.html";
+                        // }
                     } else {
                         alert("登录失败，请重试");
                     }

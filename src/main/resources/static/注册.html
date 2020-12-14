@@ -14,7 +14,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
         
         <!-- title of site -->
-        <title>Sign up</title>
+        <title>注册</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
@@ -58,52 +58,68 @@
 
 				<div class="sign-content popup-in-content">
 					<div class="popup-in-txt">
-						<h2>sign up</h2>
+						<h2>注 册</h2>
 
 						<div class="signin-form">
 							<div class=" ">
 								<div class=" ">
-									<form action="popupsignin.html">
+									<form action="注册.html">
 										<div class="form-group">
-										    <label for="signin_form"><span class="glyphicon glyphicon-user" style="color: rgb(140, 132, 251);"></span>  role</label>
+										    <label for="signin_form"><span class="glyphicon glyphicon-user" style="color: rgb(140, 132, 251);"></span>  角色</label>
 											<select  class="form-control" id="signin_form" required>
-												<option value="participant">meeting participant</option>
-												<option value="organizer">meeting organizer</option>
-												<option value="administrator">administrator</option>
-												<option value="driver">driver</option>
-												<option value="hotel">hotel</option>
+												<option value="participant">会议参加者</option>
+												<option value="organizer">会议组织者</option>
+												<option value="administrator">管理员</option>
+												<option value="driver">司机</option>
+												<option value="hotel">酒店</option>
 											</select>
 										</div>
 										<!--/.form-group -->
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  email</label>
-										    <input type="email" class="form-control" id="signin_form" placeholder="Enter your email adress">
+											<label for="signin_form"><span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  邮箱</label>
+										    <input type="email" class="form-control" id="signin_form" placeholder="请输入邮箱">
 										</div><!--/.form-group -->
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  phone number</label>
-											<input type="email" class="form-control" id="loginUserName" placeholder="Enter your phone number">
+											<label for="signin_form"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号</label>
+											<input type="email" class="form-control" id="loginUserName" placeholder="请输入手机号">
 										</div><!--/.form-group -->
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  password</label>
-										    <input type="password" class="form-control" id="signin_form" placeholder="Enter your password">
+											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
+										    <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
 										</div><!--/.form-group -->
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  repeat password</label>
-											<input type="password" class="form-control" id="loginUserPassword" placeholder="Repeat your password">
+											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  重复密码</label>
+											<input type="password" class="form-control" id="loginUserPassword" placeholder="请重复密码">
 										</div><!--/.form-group -->
 									</form><!--/form -->
 								</div><!--/.col -->
 							</div><!--/.row -->
 
 						</div><!--/.signin-form -->
+<!--						<div class="signin-password">-->
+<!--							<div class="password-circle">-->
+<!--								<div class="single-password-circle">-->
+<!--									<input type="radio" id="radio01" name="radio">-->
+<!--										<label for="radio01">-->
+<!--											<span class="round-boarder">-->
+<!--												<span class="round-boarder1"></span>-->
+<!--											</span>remember password-->
+<!--										</label>-->
+<!--								</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;-->
+<!--&lt;!&ndash;								<div class="single-forgot-password-circle text-right&ndash;&gt;-->
+<!--&lt;!&ndash;								">&ndash;&gt;-->
+<!--&lt;!&ndash;									<a href="signin.html">Forgot email or password</a>&ndash;&gt;-->
+<!--&lt;!&ndash;								</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.password-circle&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.signin-password &ndash;&gt;-->
 
 						<div class="signin-footer">
 							<button type="button" class="btn signin_btn signin_btn_two" id="submit">
-							sign up
+							注 册
 							</button>
 							<p>
-								already registered ?
-								<a href="popupsignin.html">Sign In</a>
+								已经拥有账号？
+								<a href="登录.html">登 录</a>
 							</p>
 						</div><!--/.signin-footer -->
 					</div><!-- .popup-in-txt -->
@@ -166,7 +182,7 @@
 					console.log("data is :" + result);
 					if (jsonData["data"]["token"]) {
 						alert("注册成功");
-						window.location.href = "index.html";
+						window.location.href = "酒店主页面.html";
 					}else {
 						alert(result.message)
 					}

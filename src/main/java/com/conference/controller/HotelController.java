@@ -60,24 +60,27 @@ public class HotelController {
         }
         Hotel hotelForBase = hotelService.getHotelByPhone(hotel.getHotelPhone());
         System.out.println(hotelForBase);
-//        User userForBase =userDao.findByUsername(loginUser.getUserName());
         if(hotelForBase == null){
+            System.out.println("账号不存在");
             return new Result(ResultCode.UnknownAccountException);
         }else {
             if (!hotelForBase.getHotelPass().equals(hotel.getHotelPass())){
                 return new Result(ResultCode.IncorrectCredentialsException);
             }else {
-                String token = tokenServiceImpl.getToken(hotelForBase);//?????????
+                String token = tokenServiceImpl.getToken(hotelForBase);
                 return Result.success("token", token);
             }
         }
     }
 
-//    @GetMapping("/getAllDriver")
-//    public Result getAllDriver() {
-//        List<Driver> getAllDriver = driverService.findAllDriver();
-//        return Result.success("getAllDriver", getAllDriver);
-//    }
+    @PostMapping("/getHotelInfo")
+    public Result getHotelInfo(HttpServletRequest request) {
+       // System.out.println(request.getHeader("token"));
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        Hotel getHotelInfo=hotelService.getHotelById((Integer) claims.get("hotelId"));
+        //System.out.println(getHotelInfo);
+        return Result.success("getHotelInfo", getHotelInfo);
+    }
     @GetMapping("/getAllHotel")
         public Result getAllHotel() {
         List<Hotel> getAllHotel = hotelService.findAllHotel();
