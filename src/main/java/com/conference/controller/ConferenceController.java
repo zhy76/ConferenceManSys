@@ -26,7 +26,6 @@ public class ConferenceController {
     @Autowired
     private ConferenceService conferenceService;
 
-
     @RequestMapping("/showConferences")
     @ResponseBody
     public List<Conference> showConferences(){

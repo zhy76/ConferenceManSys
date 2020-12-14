@@ -152,7 +152,7 @@
                         <div class="tab-content">
                             <div class="tab-pane" id="个人信息" role="tabpanel">
                                 <div class="card-body">
-                                    <form class="form-horizontal form-material" method="post">
+                                    <form class="form-horizontal form-material">
                                         <br>
                                         <div class="form-group">
                                             <label class="col-md-12">姓名</label>
@@ -437,6 +437,7 @@
         let participantIdCard = $("#idCard").val();
         $.ajax({
             type: "POST",
+            //type: "GET",
             dataType: "json",
             url: '/participant/updateParticipant',
             contentType: "application/json",

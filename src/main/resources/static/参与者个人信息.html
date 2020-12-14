@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>参与者个人信息</title>
+    <!-- Common plugins -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/simple-line-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/pace.css" rel="stylesheet">
+    <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/nanoscroller.css">
+    <link rel="stylesheet" href="assets/css/metismenu.min.css">
+    <link href="assets/css/c3.min.css" rel="stylesheet">
+    <link href="assets/css/blue.css" id="theme" rel="stylesheet">
+    <!--jquery steps-->
+    <link rel="stylesheet" href="assets/css/jquery-steps.css">
+    <!-- dataTables -->
+    <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+    <body>
+
+        <!--top bar start-->
+        <div class="top-bar light-top-bar"><!--by default top bar is dark, add .light-top-bar class to make it light-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <a href="参与者主页面.html" class="admin-logo">
+                            <h1><img src="assets/picture/meeting.jpg" alt=""></h1>
+                        </a>
+                        <div class="left-nav-toggle visible-xs visible-sm">
+                            <a href="">
+                                <i class="glyphicon glyphicon-menu-hamburger"></i>
+                            </a>
+                        </div><!--end nav toggle icon-->
+                    </div>
+                    <div class="col-xs-8">
+                        <ul class="list-inline top-right-nav">
+                            <li >
+                                <a href="参与者消息.html" >
+                                    <span class="glyphicon glyphicon-envelope"> 消息</span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="登录.html" >
+                                    <span class="glyphicon glyphicon-log-out"> 退出登录</span>
+                                </a>
+                            </li>
+                            <li >
+                                <a href="参与者主页面.html" >
+                                    <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--left navigation start-->
+        <aside class="float-navigation light-navigation">
+            <div class="nano">
+                <div class="nano-content">
+                    <ul class="metisMenu nav" id="menu">
+                        <li>
+                            <a href="参与者主页面.html"><i class="icon-home"></i> 主页 </a>
+                        </li>
+                        <li>
+                            <a href="参与者个人信息.html"><i class="icon-user"></i> 个人信息 </a>
+                        </li>
+                        <li>
+                            <a href="javascript: void(0);" aria-expanded="true"><i class="icon-note"></i> 会议 <span class="fa arrow"></span></a>
+                            <ul class="nav-second-level nav" aria-expanded="true">
+                                <li><a href="参与者选择会议.html">选择会议</a></li>
+                                <li><a href="参与者查看会议.html">查看会议</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="参与者消息.html"><i class="icon-envelope-letter"></i> 消息 </a>
+                        </li>
+
+                        <!--<li><a href="landing/index.html" target="_blank" class="bg-primary"><i class="icon-star"></i>Landing page</a></li>-->
+                    </ul>
+                </div><!--nano content-->
+            </div><!--nano scroll end-->
+        </aside>
+        <!--left navigation end-->
+
+
+        <!--main content start-->
+        <section class="main-content">
+
+            <!--page header start-->
+            <div class="page-header">
+                <div class="row">
+        <!--            <div class="col-sm-6 text-left">-->
+        <!--                <h5>个人信息</h5>-->
+        <!--            </div>-->
+                    <div class="col-sm-12 text-right">
+                        <ol class="breadcrumb">
+                            <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                            <li>个人信息</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!--page header end-->
+
+            <!--start page content-->
+            <div class="page-wrapper">
+                <div class="container-fluid">
+                    <!-- Row -->
+                    <div class="row">
+                        <!-- Column -->
+                        <div class="col-sm-11">
+                            <div class="card">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs profile-tab" role="tablist">
+                                    <li class="nav-item "> <a class="nav-link" data-toggle="tab" href="#个人信息" role="tab">个人信息</a> </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane" id="个人信息" role="tabpanel">
+                                        <div class="card-body">
+                                            <form class="form-horizontal form-material">
+                                                <br>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">姓名</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" class="form-control form-control-line" value="Jessie J">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="example-email" class="col-md-12">邮箱</label>
+                                                    <div class="col-md-12">
+                                                        <input type="email" value="123456@qq.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">密码</label>
+                                                    <div class="col-md-12">
+                                                        <input type="password" value="password" class="form-control form-control-line">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">电话</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" value="123 456 7890" class="form-control form-control-line">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">职位</label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" value="教授" class="form-control form-control-line">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-12">个人介绍</label>
+                                                    <div class="col-md-12">
+                                                        <textarea rows="5" class="form-control form-control-line">
+                                                            啊哈！
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <br/>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12 text-center" >
+                                                        <button class="btn btn-info">更新</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                    </div>
+                    <!-- Row -->
+
+                </div>
+            </div>
+
+            <!--end page content-->
+
+
+            <!--Start footer-->
+            <footer class="footer">
+                <span>Copyright &copy; 2020. 南昌大学</span>
+            </footer>
+            <!--end footer-->
+
+        </section>
+        <!--end main content-->
+
+
+
+        <!--Common plugins-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/pace.min.js"></script>
+        <script src="js/jasny-bootstrap.min.js"></script>
+        <script src="js/jquery.slimscroll.min.js"></script>
+        <script src="js/jquery.nanoscroller.min.js"></script>
+        <script src="js/metismenu.min.js"></script>
+        <script src="js/float-custom.js"></script>
+        <script src="js/waves.js"></script>
+        <script src="js/custom.min.js"></script>
+        <script src="js/sidebarmenu.js"></script>
+        <!--stickey kit -->
+        <script src="js/sticky-kit.min.js"></script>
+        <script src="js/jquery.sparkline.min.js"></script>
+        <!--jquery steps-->
+        <script src="js/jQuery.style.switcher.js"></script>
+        <script src="js/jquery.steps.min.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+
+        <script>
+
+            $("#example-basic").steps({
+                headerTag: "h3",
+                bodyTag: "section",
+
+                autoFocus: true
+            });
+            //steps with form
+            var form = $("#example-form");
+            form.validate({
+                errorPlacement: function errorPlacement(error, element) {
+                    element.before(error);
+                },
+                rules: {
+                    confirm: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+            form.children("div").steps({
+                headerTag: "h3",
+                bodyTag: "section",
+                transitionEffect: "slideLeft",
+                onStepChanging: function (event, currentIndex, newIndex)
+                {
+                    form.validate().settings.ignore = ":disabled,:hidden";
+                    return form.valid();
+                },
+                onFinishing: function (event, currentIndex)
+                {
+                    form.validate().settings.ignore = ":disabled";
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex)
+                {
+                    alert("Submitted!");
+                }
+            });
+        </script>
+
+
+    </body>
+</html>

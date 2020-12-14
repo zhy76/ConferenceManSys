@@ -8,6 +8,8 @@ import com.conference.entity.Participant;
 import com.conference.service.JoinConferenceService;
 import com.conference.service.ParticipantService;
 import com.conference.service.TokenService;
+import com.conference.util.result.Result;
+import com.conference.util.result.ResultCode;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,70 +43,58 @@ public class ParticipantController {
 
     //参加者注册
     @PostMapping("/register")
-    public Object register(@Valid @RequestBody Participant participant) {
-        JSONObject jsonObject = new JSONObject();
-        if (participant.getParticipantName() == null || participant.getParticipantPass() == null) {
-            jsonObject.put("message", "表单错误");
-            return jsonObject;
-        }
+    public Result register(@Valid @RequestBody Participant participant) {
         int addNumber = participantService.addAParticipant(participant);
         if (addNumber > 0) {
             String token = tokenService.getToken(addNumber);
-            jsonObject.put("token", token);
-            return jsonObject;
+            return Result.success("token", token);
         } else {
-            jsonObject.put("message", "注册失败");
-            return jsonObject;
+            return new Result(ResultCode.FAIL);
         }
-//        return jsonObject;
     }
 
     //参加者登录
     @PostMapping("/login")
-    public Object login(@RequestBody Participant participant) {
-        JSONObject jsonObject = new JSONObject();
-        if (participant.getParticipantPhone() == null || participant.getParticipantPass() == null) {
-            System.out.println("null");
-            jsonObject.put("message", "表单错误");
-            return jsonObject;
-        }
+    public Result login(@RequestBody Participant participant) {
         Participant participantForBase = participantDao.queryParticipantByParticipantPhone(participant.getParticipantPhone());
-        //   Driver driverForBase = driverDao.findDriverByPhone(driver.getDriverPhone());
         System.out.println(participantForBase);
-//        User userForBase =userDao.findByUsername(loginUser.getUserName());
         if (participantForBase == null) {
-            jsonObject.put("message", "登录失败,用户不存在");
-            return jsonObject;
+            return new Result(ResultCode.UnknownAccountException);
         } else {
             if (!participantForBase.getParticipantPass().equals(participant.getParticipantPass())) {
-                jsonObject.put("message", "登录失败,密码错误");
-                return jsonObject;
+                return new Result(ResultCode.IncorrectCredentialsException);
             } else {
                 String token = tokenService.getToken(participantForBase);
-                jsonObject.put("token", token);
-                return jsonObject;
+                return Result.success("token", token);
             }
         }
     }
 
     //参加者修改自己信息
+    //@ResponseBody
     @PostMapping("/updateParticipant")
-    public Object updateParticipant(@RequestBody Participant participant, HttpServletRequest request) {
-        JSONObject result=new JSONObject();
+    //@GetMapping("/updateParticipant")
+    public Result updateParticipant(@Valid @RequestBody  Participant participant, HttpServletRequest request) {
+//        JSONObject result=new JSONObject();
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
-
         participant.setParticipantId((Integer) claims.get("participantId"));
         System.out.println(participant.getParticipantId());
-        try {
-            participantService.updateParticipant(participant);
-        } catch (DataAccessException e) {
-            throw new RuntimeException("修改失败");
-        }
-        result.put("state",1);
-        return result.toJSONString();
+        participantService.updateParticipant(participant);
+        return Result.success();
     }
 
+    /*
+     * @Description 返回参会者已有的所有信息
+     * @return
+     **/
+
+    @GetMapping("/getParticipantInfo")
+    public Result getParticipantInfo(HttpServletRequest request){
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        Participant getParticipantInfo = participantService.queryParticipantByParticipantId((Integer) claims.get("participantId"));
+        return Result.success("getParticipantInfo",getParticipantInfo);
+    }
 
 
 }
