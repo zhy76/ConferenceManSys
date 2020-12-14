@@ -76,14 +76,14 @@ $(document).ready(function () {
         checkboxClass: 'icheckbox_square-blue',
         radioClass: 'iradio_square-blue'
     });
-    $.toast({
-        heading: 'Welcome back Emily',
-        text: 'A simple and easy to use bootstrap admin template',
-        position: 'top-right',
-        loaderBg: '#fff',
-        icon: 'success',
-        hideAfter: 3000,
-        stack: 1
-    });
+    // $.toast({
+    //     heading: 'Welcome back',
+    //     text: 'A simple and easy to use bootstrap admin template',
+    //     position: 'top-right',
+    //     loaderBg: '#fff',
+    //     icon: 'success',
+    //     hideAfter: 3000,
+    //     stack: 1
+    // });
 
 });
