@@ -1,0 +1,306 @@
+
+<!doctype html>
+<html  lang="en">
+
+    <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!--font-family-->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>登录</title>
+
+        <!-- For favicon png -->
+		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
+       
+        <!--font-awesome.min.css-->
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+		
+		<!--animate.css-->
+        <link rel="stylesheet" href="assets/css/animate.css">
+		
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		
+		<!-- bootsnav -->
+		<link rel="stylesheet" href="assets/css/bootsnav.css" >	
+        
+        <!--style.css-->
+        <link rel="stylesheet" href="assets/css/style.css">
+        
+        <!--responsive.css-->
+        <link rel="stylesheet" href="assets/css/responsive.css">
+
+		<!-- 刘涔宇验证码模块别删了！！！ -->
+		<!-- 最新版jquery -->
+		<script src ="会务管理系统样式1/js/jquery.min.js"></script>
+		<script src = "会务管理系统样式1/assets/js/verrifyCode.js"></script>
+		<!-- 刘涔宇验证码模块别删了！！！ -->
+		<style>
+			.single-forgot-password-circle a:hover {
+				text-decoration: underline;
+			}
+
+			.signin-footer a:hover{
+				text-decoration: underline;
+			}
+
+		</style>
+
+		<script>
+			$(function(){
+				$('#phone').focus(function(){
+					$("#account-icon").css({"display":"none"});
+				})
+
+				$('#psw').focus(function(){
+					$("#psw-icon").css({"display":"none"});
+				})
+
+				$("#verifyCode").on('focus',function(){
+					$("#code-icon").css({"display":"none"});
+					if ( $("#account-icon").hasClass("glyphicon-ok") && $("#psw-icon").hasClass("glyphicon-ok") && $("#code-icon").hasClass("glyphicon-ok"))
+					{
+						$("#login").removeAttr("disabled")
+					}
+					else $("#login").attr("disabled","disabled")
+					
+				})
+
+
+				$('#phone').blur(function(){
+					var val = $("#phone").val();
+					console.dir(val);
+					var account_icon = $("#account-icon");
+					 if( val == '13870864693' || val == '842654846@qq.com')//查找到邮箱或手机号 则显示正确
+					{
+						account_icon.removeClass();
+						account_icon.addClass('glyphicon glyphicon-ok');
+						account_icon.css({"color":"green","display":"block"});
+
+					}
+					else
+					{
+						account_icon.removeClass();
+						account_icon.addClass('glyphicon glyphicon-remove');
+						account_icon.css({"color":"red","display":"block"});
+
+					}
+				});
+
+				$('#psw').blur(function(){
+					var val = $("#psw").val();
+					var psw_icon = $("#psw-icon");
+					if( val == '1')//查找到对应密码 则显示正确
+					{
+						psw_icon.removeClass();
+						psw_icon.addClass('glyphicon glyphicon-ok');
+						psw_icon.css({"color":"green","display":"block"});
+
+					}
+					else
+					{
+						psw_icon.removeClass();
+						psw_icon.addClass('glyphicon glyphicon-remove');
+						psw_icon.css({"color":"red","display":"block"});
+					}
+				});
+
+				//当验证码框失去焦点的时候，进行登录按钮的判断
+				//如果三个选项都是绿色√，那么就释放禁用的登录按钮
+				$("#verifyCode").on('blur',function(){
+					if ( $("#account-icon").hasClass("glyphicon-ok") && $("#psw-icon").hasClass("glyphicon-ok") && $("#code-icon").hasClass("glyphicon-ok"))
+					{
+						$("#login").removeAttr("disabled")
+					}
+					else $("#login").attr("disabled","disabled")
+					
+				})
+			});
+
+			//整合页面需要提交表单信息
+			function submitForm(){
+				var role = $("#role").val();
+				var phone = $("#phone").val(); //手机号和电子邮箱
+				var password = $("#psw").val();
+				var rememberMe;
+				if( $("#rememberMe").prop("checked") == true)
+					rememberMe = "true";
+				else 
+					rememberMe = "false";
+				alert(role + phone + password + rememberMe);
+				// 你们发挥了！！！！
+				// 你们发挥了！！！！
+				// 你们发挥了！！！！
+				// 你们发挥了！！！！
+			}
+
+
+		</script>
+    </head>
+	
+	<body>
+
+		<section class="signin signup">
+			<div class="container">
+				<div class="sign-content popup-in-content">
+					<div class="popup-in-txt">
+						<h2>登 录</h2>
+
+						<div class="row">
+							<div class="col-sm-12">
+
+								<div class="signin-form">
+									
+										<!-- 角色选择 -->
+										<div class="form-group">
+											<label for="role"><span class="glyphicon glyphicon-user" style="color: rgb(140, 132, 251);"></span>  角色</label>
+											<select  class="form-control" id="role">
+												<option value="participant">会议参加者</option>
+												<option value="organizer">会议组织者</option>
+												<option value="administrator">管理员</option>
+												<option value="driver">司机</option>
+												<option value="hotel">酒店</option>
+											</select>
+										</div><!--/.form-group -->
+										
+										
+										<!-- 手机号/邮箱 -->
+										<div class="form-group">
+											<label for="phone"> <span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号/
+																<span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  电子邮箱</label>
+											<input type="text" class="form-control" id="phone" placeholder="请输入手机号/电子邮箱">
+											<span id = "account-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px;margin-top: -35px;display: none;" ></span>
+										</div><!--/.form-group -->
+										<!-- <script>
+											$(function() {
+												$('#phone').tooltip({
+													trigger: 'manual',
+													placement: 'bottom',
+													title: ''
+												})
+												.on('focus', function() {
+												// 获得焦点时隐藏
+												$(this).tooltip('hide');
+												})
+												.on('blur', function() {
+												// 失去焦点时显示
+													var phone_title = '';  //设置显示文字当为空时，即不显示	
+													var val = $('#phone').val();
+													var regPhone = /^1[3|4|5|7|8][0-9]{9}$/;
+													var regEmail = /[\w]+(\.[\w]+)*@[\w]+(\.[\w])+/;
+													if(val == '')
+														phone_title = '不能为空';
+													else if( regPhone.test(val) == false && regEmail.test(val) == false)
+														phone_title = '格式错误';
+													else if( val != '13870864693')  //根据实际去查账号，看是否是正确的
+														phone_title = '无此账号';
+													$('#phone').attr('data-original-title',phone_title).tooltip('show');
+												});
+											});	
+										</script> -->
+
+										<!-- 密码 -->
+										<div class="form-group">
+											<label for="psw"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
+											<input type="password" class="form-control" id="psw" placeholder="请输入密码" >
+											<span id = "psw-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px;display: none;" ></span>
+										</div><!--/.form-group -->
+									
+											
+									</form><!--/form -->
+
+									<style>
+										#canvas {
+											vertical-align: middle;
+											box-sizing: border-box;
+											border: 1px solid #ddd;
+											cursor: pointer;
+										}
+									</style>
+
+									<div class="form-group"> 
+										<label for="verifyCode"><span class="glyphicon glyphicon-check" style="color: rgb(140, 132, 251);"></span>  验证码</label>
+										<input type="text" value="" placeholder="请输入右侧验证码" class="form-control" id = "verifyCode" >
+										<span id = "code-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px; margin-right:150px ; display: none" ></span>
+										<canvas class = "pull-right" id="canvas" width="140" height="60" style="margin-top: -62px;"></canvas> 
+										<!-- <button class="btn-verfifyCode">提交</button> -->
+									</div>
+
+								</div><!--/.signin-form -->
+
+							</div>
+						</div>
+
+					
+							<div class="row">
+
+								<div class="col-sm-12" >
+									<div class="signin-password" style = "margin-top:0px;" >
+							
+											<div class="single-forgot-password-circle checkbox pull-left">
+												<label>
+													<!-- 记住我 -->
+													<input type="checkbox" id = "rememberMe"> 记住我
+												</label>
+											</div>
+													<!-- 忘记密码 -->
+								
+											<div class="single-forgot-password-circle pull-right" style = "margin-top: 10px;">
+												<a href="登录.html">忘记密码</a>
+											</div>
+									
+									</div>
+								</div>
+								
+								<div class="col-sm-12">
+									<div class="signin-footer">
+										<button type="button" id = "login" class="btn signin_btn signin_btn_two" disabled="disabled" onclick="submitForm(); return false;">
+											登 录
+										</button>
+										<p class = "text-center">
+											    还没有账号？
+											<a href="注册.html" style="font-weight:bold ; color:red">点击注册</a>
+										</p>
+									</div>
+								</div>
+
+							</div>
+						
+
+
+					</div><!-- .popup-in-txt -->
+				</div><!--/.sign-content -->
+			</div><!--/.container -->
+		</section><!--/.signin -->
+		
+		<!-- signin end -->
+
+		 <!-- Include all js compiled plugins (below), or include individual files as needed -->
+		<script src="assets/js/jquery.js"></script>
+        
+        <!--modernizr.min.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+		
+		<!--bootstrap.min.js-->
+        <script src="assets/js/bootstrap.min.js"></script>
+		
+		<!-- bootsnav js -->
+		<script src="assets/js/bootsnav.js"></script>
+		
+		<!-- jquery.sticky.js -->
+		<script src="assets/js/jquery.sticky.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+		
+        <!--Custom JS-->
+        <script src="assets/js/custom.js"></script>
+
+    </body>
+	
+</html>
