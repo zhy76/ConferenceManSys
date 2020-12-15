@@ -31,9 +31,21 @@ $(function () {
 
         }
     )
+    /**
+     * 点击->待接送
+     */
     $("to-wait-pick").click(function () {
         getDriverAllPickUp();
         showPickUpTable();
+    })
+
+    /*点击 退出登录 按钮*/
+    $("#login-out").click(function () {
+        clearDriverInfo();
+        //localStorage.clear();
+        localStorage.setItem("hcs", null);
+        alert("退出成功");
+        window.location.href = "popupsignin.html";
     })
 })
 
