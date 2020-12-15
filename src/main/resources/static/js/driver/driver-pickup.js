@@ -334,9 +334,8 @@ function showPickUpTable() {
         "                                                    <th>是否完成</th>\n" +
         "                                                </tr>\n" +
         "                                                </thead>\n" +
-
         "                                                <tbody>\n"
-    let $html;
+    let $html = "";
     // console.log(pickUp);
     for (let i of pickUp) {
         $html +=
