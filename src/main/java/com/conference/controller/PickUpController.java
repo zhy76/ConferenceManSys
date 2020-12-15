@@ -203,7 +203,7 @@ public class PickUpController {
     @GetMapping("/getAllFleetDonePickUp")
     public Result getAllFleetDonePickUp(@RequestParam("fleetId") Integer fleetId) {
         List<PickUp> getAllFleetPickUp = pickUpService.findAllFleetPickUp(fleetId);
-        List<PickUp> getAllFleetDonePickUp = new ArrayList<PickUp>();
+        List<PickUp> getAllFleetDonePickUp = new ArrayList<>();
         for (PickUp it : getAllFleetPickUp)
             if (it.isFinishPickup())
                 getAllFleetDonePickUp.add(it);

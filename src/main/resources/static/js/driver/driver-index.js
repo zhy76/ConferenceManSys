@@ -28,6 +28,7 @@ $(function () {
     $("#to-info a").click(function () {
 
             showDriverInfo();
+            getDriverAllPickUp()
         }
     )
 })
@@ -284,7 +285,8 @@ function validform() {
     // return $("#driverInfo");
     /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
     alert(1);
-    console.log($("#driverInfo"));    alert(1);
+    console.log($("#driverInfo"));
+    alert(1);
     return $("#driverInfo").validate({
         rules: {
             /**
@@ -308,13 +310,13 @@ function validform() {
                 maxlength: 20,
                 equalTo: "#repeatDriverPass"
             },
-            driverPhone:{
+            driverPhone: {
                 minlength: 11,
                 maxlength: 11
             },
-            carNumber:{
-                minlength:2,
-                maxlength:8
+            carNumber: {
+                minlength: 2,
+                maxlength: 8
             }
         },
         messages: {
@@ -332,8 +334,8 @@ function validform() {
                 equalTo: "两次密码输入不一致"
             },
             driverPhone: {
-                minlength:"请输入正确的电话号码",
-                maxlength:"请输入正确的电话号码"
+                minlength: "请输入正确的电话号码",
+                maxlength: "请输入正确的电话号码"
             },
             carNumber: {
                 minlength: "请输入正确的车牌号码",
@@ -395,14 +397,13 @@ function submitChange() {
 }
 
 
-
 function getDriverAllPickUp() {
     $.ajax({
         async: false,
         headers: {
             'token': token,
         },
-        url: "/driver/getDriverAllPickUp",
+        url: "/pickUp/getDriverAllPickUp",
         type: "get",
         dataType: "json",
         data: {
@@ -418,7 +419,7 @@ function getDriverAllPickUp() {
             }
         },
         error: function () {
-            alert("获取用户数据失败");
+            alert("获取用户数据失败!");
         },
     });
 }
@@ -426,9 +427,10 @@ function getDriverAllPickUp() {
 function getParticipantNameById($participantId) {
 
 }
+
 function showPickUpTable() {
     for (i of pickUp) {
-        
+
     }
 }
 
