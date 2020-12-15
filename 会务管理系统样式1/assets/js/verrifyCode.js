@@ -6,10 +6,17 @@ date: 12.11 !!!!!!!!!!!!!!!!!!
 $(function(){
     var show_num = [];
     draw(show_num);
+
     $("#canvas").on('click',function(){
      draw(show_num);
+     var code_icon = $("#code-icon");
+     code_icon.removeClass();
+     code_icon.addClass('glyphicon glyphicon-remove');
+     code_icon.css({"color":"red","display":"block"});
+     $("#verifyCode").keyup();
     })
-    $("#verifyCode").on('blur',function(){
+
+    $("#verifyCode").on('blur keyup',function(){
      var code_icon = $("#code-icon");
      var val = $("#verifyCode").val().toLowerCase();
      var num = show_num.join("");   //用于把数组中的所有元素放入一个字符串。
@@ -23,6 +30,7 @@ $(function(){
         code_icon.css({"color":"red","display":"block"});
      }
     })
+
    })
    //生成并渲染出验证码图形
    function draw(show_num) {

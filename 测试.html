@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>QQ注册</title>
+	<link rel="icon" type="image/x-icon" href="./image/logo.png">
+    <link rel="stylesheet" type="text/css" href="./css/login.css">
+    <style>
+        body{
+	padding: 0;
+	margin: 0;
+	overflow-x: hidden;
+}
+#logo_div{
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 43px;
+	margin-top: 30px;
+	margin-left: 30px;
+	z-index: 2;
+}
+#logo_div div{
+	float: left;
+	display: inline-block;
+	height: 43px;
+	line-height: 43px;
+	font-size: 36px;
+}
+ 
+#left_div{
+	position: fixed;
+	width: 480px;
+	height: 100%;
+}
+#left_div img{
+	width: 480px;
+	height: 100%;
+}
+ 
+/*--------------------------*/
+#right_center input{
+	padding-left: 10px;
+}
+#right_div{
+	margin-left: 480px;
+}
+ 
+#right_top{
+	width: 100%;
+}
+.iteam{
+	display: inline-block;
+	height: 34px;
+	float: right;
+	margin: 20px 40px 0 0;
+}
+.iteam div{
+	float: left;
+	height: 34px;
+	line-height: 34px;
+	cursor: pointer;
+	color: #888;
+}
+#allxiala_div{
+	position: relative;
+}
+#xiala_div{
+	width: 82px;
+	height: 70px;
+	clear:both;
+	display: absolute;
+	top:20px;
+}
+#xiala_div div{
+	width: 80px;
+	height: 34px;
+	text-align: center;
+	clear:both;
+	display: block;
+}
+#iteam1{
+	background-color: #f54444;
+	border-radius: 6px;
+	color: #fff;
+}
+.iteamText{
+	width: 80px;
+	text-align: center;
+	font-weight: 300;
+	color: #000;
+ 
+}
+ 
+/*------------------------------------*/
+ a:link{text-decoration:none; cursor:pointer;color: #359eff;}
+ a:visited{text-decoration:none; cursor:pointer;color: #359eff;}
+ a:active{text-decoration:none; cursor:pointer;color: #2b72ff;}
+ a:hover{text-decoration:none; cursor:pointer;color: #2b72ff;}
+#iteam_search{
+	position: relative;
+}
+#search{
+	position: absolute;
+	top: 34px;
+	left: -150px;
+	width: 250px;
+	height: 100px;
+	border: 1px solid #f0f0f0;
+	background-color:#fff;
+	z-index: 10;
+}
+#search div{
+	width: 100%;
+	height:49px;
+}
+#search_top{
+	border-bottom: 1px solid #eee;
+}
+#search_top input{
+	width: 200px;
+	height: 42px;
+	border:none;
+	outline:none;
+	font-size: 16px;
+	padding: 3px;
+	color: #aaa;
+	/*margin: 3px;*/
+}
+#search_image{
+	float: right;
+	display: inline-block;
+	width: 40px;
+	height: 47px;
+	border:1px solid #eee;
+	background: no-repeat center;
+	background-image: url(../image/search.png);
+}
+#search_image:hover{
+	background-color:#f54444;
+	background-image: url(../image/search-hover.png);
+}
+#search_bottom{
+	text-align: center;
+	text-decoration:none
+}
+/*----------------------------*/
+#right_center{
+	width: 100%;
+	padding-top: 120px;
+	padding-left: 180px;
+ 
+}
+ 
+#text1{
+	font-size: 44px;
+	margin-bottom: 30px;
+}
+#text2 div{
+	font-size: 28px;
+	display: inline-block;
+}
+ 
+#text_div2{
+	color: #359eff;
+	margin-left:200px;
+	margin-bottom: 30px;
+	cursor: pointer;	
+}
+input{
+	border: 1px #aaa solid;
+	border-radius: 4px;
+	font-size: 20px;
+	height: 50px;	
+}
+.input{
+	width: 500px;
+	
+}
+.input_div{
+	margin-top: 30px;
+}
+ 
+#areaCode{
+	width: 120px;
+	
+}
+#phone_div{
+	margin-top: 30px;
+}
+#phoneNum{
+	margin-left: 10px;
+	width: 354px;
+}
+#info{
+	font-size: 14px;
+	height: 14px;
+	color: #999;
+	margin-top: 7px;
+}
+#submit{
+	width: 510px;
+	border: 1px #3083ff solid;
+	background-color:#3487ff;
+	color: #fff;
+	margin-top: 40px;
+}
+ 
+#check{
+	margin-top: 30px;
+	height: 70px;
+	font-size: 13px;
+	color:#aaa;
+	margin-bottom: 60px;
+}
+#check div{
+	line-height: 30px;
+}
+#xieyi_div a{
+	display: block;
+	font-size: 14px;
+	line-height: 18px;
+}
+#footer{
+	text-align: center;
+	font-size: 14px;
+	color: #bbb;
+	font-weight: inherit;
+	margin-bottom: 40px;
+}
+    </style>
+    <script>
+        window.onload = change();
+//图片轮番显示
+function change(){
+	var i = 1;
+	setInterval(function(){
+			if(i>3){
+				i=1;
+			}
+			document.getElementById("change_image").src='./image/'+i+'.jpg';
+			i++;
+		},3000);
+}
+//QQ靓号下的搜索框
+var search = document.getElementById("search");
+search.style.display = "none";
+function liang_into(){
+	// alert(2)
+	search.style.display = "block";
+}
+function liang_leave(){
+	search.style.display = "none";
+}
+//简体中文下拉以及图标变换
+var xiala_div = document.getElementById("xiala_div");
+var xiala_img = document.getElementById("xiala_img");
+xiala_div.style.display = "none";
+function show_xiala(){
+	xiala_div.style.display = "block";
+	xiala_img.src="./image/up.png";
+}
+function hiden_xiala(){
+	xiala_div.style.display = "none";
+	xiala_img.src="./image/down.png";
+}
+//勾选框变换
+var temp1 = 1//勾选
+var temp2 = 1
+var gou_img1 = document.getElementById("gou_img1");
+var gou_img2 = document.getElementById("gou_img2");
+function gouxuan1(){
+	if(temp1 == 1 ){ //勾选了就不勾
+		gou_img1.src = "./image/checkbox_normal.png";
+		temp1 = 2;
+	}else if(temp1 == 2){//没有勾选就勾选
+		gou_img1.src = "./image/checkbox_check.png";
+		temp1 = 1;
+	}
+}
+function gouxuan2(){
+	if(temp2 == 1 ){ //勾选了就不勾
+		gou_img2.src = "./image/checkbox_normal.png";
+		temp2 = 2;
+	}else if(temp2 == 2){//没有勾选就勾选
+		gou_img2.src = "./image/checkbox_check.png";
+		temp2 = 1;
+	}
+}
+//协议下拉框以及箭头
+var jiantou_temp = 1;//向下
+var jiantou_img = document.getElementById('jiantou_img');
+var xieyi_div = document.getElementById("xieyi_div");
+xieyi_div.style.display = "none";
+function jiantou(){
+	if(jiantou_temp==1){
+		jiantou_img.src="./image/up.png";
+		xieyi_div.style.display = "block";
+		jiantou_temp=2;
+	}else if(jiantou_temp==2){
+		jiantou_img.src = "./image/down.png";
+		xieyi_div.style.display = "none";
+		jiantou_temp=1;
+	}
+}
+    </script>
+</head>
+<body>
+	<div id="logo_div">
+		<div><img src="./image/logo.png"></div>
+		<div>QQ</div>
+	</div>
+	<div id="left_div">
+		<img id="change_image" src="./image/1.jpg">
+	</div>
+	<div id="right_div">
+		<div id="right_top">
+			<div class="iteam">
+				<div class="iteamText">意见反馈</div>
+			</div>
+			<div id="allxiala_div" class="iteam" onmouseenter="show_xiala()"  onmouseleave="hiden_xiala()">
+				<div class="iteamText">简体中文</div>
+				<div><img id="xiala_img" src="./image/down.png"></div>
+				<div id="xiala_div">
+					<div>繁體中文</div>
+					<div>English</div>
+				</div>
+			</div>
+			<div class="iteam">
+				<div><img src="./image/mail-entry.png"></div>
+				<div class="iteamText">邮箱账号</div>
+			</div>
+			<div class="iteam" id="iteam_search">
+				<div><img src="./image/logo3.png"></div>
+				<div class="iteamText" id="iteam1" onmouseenter="liang_into()"  onmouseleave="liang_leave()">QQ靓号</div>
+				<div id="search" onmouseenter="liang_into()" onmouseleave="liang_leave()">
+					<div id="search_top">
+						<input type="" name="" placeholder="输入QQ靓号，如1992,520">
+						<a id="search_image"></a>
+					</div>
+					<div id="search_bottom">
+						<a href="">生日</a>
+						<a href="">星座</a>
+						<a href="">爱情</a>
+						<a href="">手机</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="right_center">
+			<div id="text1">欢迎注册QQ</div>
+			<div id="text2">
+				<div id="text_div1">每一天乐在沟通</div>
+				<div id="text_div2">免费靓号</div>
+			</div>
+			<div class="input_div">
+				<input class="input" type="text" placeholder="昵称" name="username" id="username">
+			</div>
+			<div class="input_div">
+				<input class="input" type="password" placeholder="密码" name="password" id="password">
+			</div>
+ 
+			<div id="phone_div">
+				<input type="text" name="areaCode" 
+				id="areaCode" 
+				value="+86">
+				<input type="text" name="phoneNum" id="phoneNum" placeholder="手机号码">
+			</div>
+			<div id="info">可通过该手机号找回密码
+			</div>
+			<div>
+				<input type="submit" name="submit" id="submit" value="立即注册">
+			</div>
+ 
+			<div id="check">
+				<div>
+					<img id="gou_img1" src="./image/checkbox_check.png" onclick="gouxuan1()"> 同时开通QQ空间
+				</div>
+				<div>
+					<img id="gou_img2" src="./image/checkbox_check.png" onclick="gouxuan2()">
+					我已阅读并同意相关服务条款和隐私政策
+					<img id="jiantou_img" src="./image/down.png" onclick="jiantou()">
+					<div id="xieyi_div">
+						<a href="">《QQ号码规则》</a>
+						<a href="">《隐私政策》</a>
+						<a href="">《QQ空间服务协议》</a>
+					</div>
+				</div>
+			</div>
+		</div>
+ 
+		<div id="footer">
+			Copyright © 1998-2018Tencent All Rights Reserved
+		</div>
+	</div>
+ 
+	<script type="text/javascript" src="./js/login.js"></script>
+</body>
+</html>

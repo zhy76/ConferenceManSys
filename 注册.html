@@ -36,23 +36,237 @@
         
         <!--responsive.css-->
         <link rel="stylesheet" href="assets/css/responsive.css">
-        
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		
-        <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+		<!-- 最新版jquery -->
+		<script src ="会务管理系统样式1/js/jquery.min.js"></script>
+		<script src = "会务管理系统样式1/assets/js/verrifyCode.js"></script>
 
+		<style>
+			 .signin-footer a:hover{
+				 text-decoration: underline;
+			 }
+			 strong {
+				 font-weight: normal;
+				 font-size:14px;
+				 font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei";
+				 transition: all .2s;
+			 }
+		</style>
+
+<script>
+	$(function(){
+	
+		$("#phone").on("blur keyup",function(){
+			var val = $("#phone").val();
+			
+			var reg_tel = /^(13[0-9]|14[01456879]|15[0-3,5-9]|16[2567]|17[0-8]|18[0-9]|19[0-3,5-9])\d{8}$/; //11位手机号码正则
+			if( val == '' )
+			{
+				$("#phone-icon").removeClass();
+				$("#phone-icon").addClass('glyphicon glyphicon-remove');
+				$("#phone-icon").css({"color":"red","display":"block"});
+				$("#phone-icon").css({"display":"block"});
+				$("#phoneInfo").css({"display":"block"});
+				$("#phoneInfo strong").text(" 手机号不可以为空");
+			}
+				
+			else if( reg_tel.test(val) == false)
+			{
+				$("#phone-icon").removeClass();
+				$("#phone-icon").addClass('glyphicon glyphicon-remove');
+				$("#phone-icon").css({"color":"red","display":"block"});
+				$("#phone-icon").css({"display":"block"});
+				$("#phoneInfo").css({"display":"block"});
+				$("#phoneInfo strong").text(" 手机号格式不正确");
+			}
+			
+			else
+			{
+				$("#phone-icon").removeClass();
+				$("#phone-icon").addClass('glyphicon glyphicon-ok');
+				$("#phoneInfo").css({"display":"none"});
+				$("#phone-icon").css({"color":"green","display":"block"});
+			}
+			
+		});
+
+		$("#email").on("blur keyup",function(){
+			var val = $("#email").val();
+		
+			var reg_tel = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/; //电子邮箱正则表达式
+			if( val == '' )
+			{
+				$("#email-icon").removeClass();
+				$("#email-icon").addClass('glyphicon glyphicon-remove');
+				$("#email-icon").css({"color":"red","display":"block"});
+				$("#email-icon").css({"display":"block"});
+				$("#emailInfo").css({"display":"block"});
+				$("#emailInfo strong").text(" 邮箱不可以为空");
+			}
+				
+			else if( reg_tel.test(val) == false)
+			{
+				$("#email-icon").removeClass();
+				$("#email-icon").addClass('glyphicon glyphicon-remove');
+				$("#email-icon").css({"color":"red","display":"block"});
+				$("#email-icon").css({"display":"block"});
+				$("#emailInfo").css({"display":"block"});
+				$("#emailInfo strong").text(" 邮箱格式不正确");
+			}
+			
+			else
+			{
+				$("#email-icon").removeClass();
+				$("#email-icon").addClass('glyphicon glyphicon-ok');
+				$("#emailInfo").css({"display":"none"});
+				$("#email-icon").css({"color":"green","display":"block"});
+			}
+			
+		});
+
+		$("#password").on("blur keyup",function(){
+			var val = $("#password").val();
+			var flag1 = true;
+			var flag2 = true;
+			var flag3 = true;
+		
+			if( val.indexOf(" ") != -1)
+			{
+				flag1 = false;
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-remove');
+				$("#password-icon").css({"color":"red","display":"block"});
+				$("#password-icon").css({"display":"block"});
+				$("#passwordInfo1").css({"display":"block"});
+				$("#passwordInfo1 strong").text(" 不能包括空格");
+			}
+			else
+			{
+				
+				$("#passwordInfo1").css({"display":"none"});
+				// $("#email-icon").css({"color":"green","display":"block"});
+			}
+				
+			if( val.length < 8 || val.length > 16)
+			{
+				flag2= false;
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-remove');
+				$("#password-icon").css({"color":"red","display":"block"});
+				$("#password-icon").css({"display":"block"});
+				$("#passwordInfo2").css({"display":"block"});
+				$("#passwordInfo2 strong").text(" 长度为8-16个字符");
+			}
+			else
+			{
+				$("#passwordInfo2").css({"display":"none"});
+
+			}
+		
+			
+			if( /(?!^(\d+|[a-zA-Z]+|[~!@#$%^&*?]+)$)^[\w~!@#$%^&*?]/.test(val) == false)
+			{
+				flag3 =false;
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-remove');
+				$("#password-icon").css({"color":"red","display":"block"});
+				$("#password-icon").css({"display":"block"});
+				$("#passwordInfo3").css({"display":"block"});
+				$("#passwordInfo3 strong").text(" 必须包含字母、数字、符号中至少2种");
+				
+			}
+			else
+			{
+				$("#passwordInfo3").css({"display":"none"});
+
+			}
+
+			if( flag1 == true && flag2 == true && flag3 == true)
+			{
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-ok');
+				$("#passwordInfo3").css({"display":"none"});
+				$("#password-icon").css({"color":"green","display":"block"});
+			}
+
+
+			
+		});
+
+		$("#repassword").on("blur keyup",function(){
+			var reval = $("#repassword").val();
+			var val = $("#password").val();
+			if( val != reval )
+			{
+				$("#repassword-icon").removeClass();
+				$("#repassword-icon").addClass('glyphicon glyphicon-remove');
+				$("#repassword-icon").css({"color":"red","display":"block"});
+				$("#repassword-icon").css({"display":"block"});
+				$("#repasswordInfo").css({"display":"block"});
+				$("#repasswordInfo strong").text(" 密码不一致");
+			}
+			else
+			{
+				$("#repassword-icon").removeClass();
+				$("#repassword-icon").addClass('glyphicon glyphicon-ok');
+				$("#repasswordInfo").css({"display":"none"});
+				$("#repassword-icon").css({"color":"green","display":"block"});
+			}
+			
+		});
+
+		var openCloseFlag = true;
+		$("#openClose").click(function(){
+			$("#openClose").removeClass();
+			if(openCloseFlag == true)
+			{
+				$("#openClose").addClass('glyphicon glyphicon-eye-open');
+				$("#password").attr("type","text");
+				openCloseFlag = false;
+			}
+			else
+			{
+				$("#openClose").addClass('glyphicon glyphicon-eye-close');
+				$("#password").attr("type","password");
+				openCloseFlag = true;
+			}
+			
+		});
+
+		var reOpenCloseFlag = true;
+		$("#reOpenClose").click(function(){
+			$("#reOpenClose").removeClass();
+			if(reOpenCloseFlag == true)
+			{
+				$("#reOpenClose").addClass('glyphicon glyphicon-eye-open');
+				$("#repassword").attr("type","text");
+				reOpenCloseFlag = false;
+			}
+			else
+			{
+				$("#reOpenClose").addClass('glyphicon glyphicon-eye-close');
+				$("#repassword").attr("type","password");
+				reOpenCloseFlag = true;
+			}
+			
+		});
+
+		//当验证码框失去焦点的时候，进行登录按钮的判断
+		//如果所有选项都是绿色√，那么就释放禁用的登录按钮
+		$("#verifyCode,#repassword,#password,#email,#phone").on('blur keyup',function(){
+			if ( $("#phone-icon").hasClass("glyphicon-ok") && $("#email-icon").hasClass("glyphicon-ok") && $("#password-icon").hasClass("glyphicon-ok") &&
+			 $("#repassword-icon").hasClass("glyphicon-ok") && $("#code-icon").hasClass("glyphicon-ok"))
+			{
+				$("#signin").removeAttr("disabled")
+			}
+			else $("#signin").attr("disabled","disabled")
+			
+		})
+		
+	})
+</script>
     </head>
 	
 	<body>
-		<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-		
-		<!-- signin end -->
 		<section class="signin signup ">
 			<div class="container">
 
@@ -69,57 +283,81 @@
 											<select  class="form-control" id="signin_form" required>
 												<option value="participant">会议参加者</option>
 												<option value="organizer">会议组织者</option>
-												<option value="administrator">管理员</option>
 												<option value="driver">司机</option>
 												<option value="hotel">酒店</option>
 											</select>
 										</div>
+										
 										<!--/.form-group -->
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  邮箱</label>
-										    <input type="email" class="form-control" id="signin_form" placeholder="请输入邮箱">
+											<label for="phone"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号</label>
+											<input type="text" class="form-control" id="phone" placeholder="请输入手机号">
+											<!-- <strong style="float:right ; font-size: 15px; color:red; margin-top: -30px; "><span id = "account-icon" class="glyphicon glyphicon-remove" style = "color: red;vertical-align:middle;margin-top: -3px;"></span>手机号不合法 </strong> -->
+											<span id = "phone-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: red; font-size: 20px;margin-top: -35px; display: none;" ></span>
+											<div id = "phoneInfo" style = "color:red; font-weight: bold; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
 										</div><!--/.form-group -->
+
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号</label>
-											<input type="email" class="form-control" id="signin_form" placeholder="请输入手机号">
+											<label for="email"><span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  邮箱</label>
+											<input type="text" class="form-control" id="email" placeholder="请输入邮箱">
+											<span id = "email-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: red; font-size: 20px;margin-top: -35px;display: none;" ></span>
+											<!-- <strong style="float:right ; font-size: 15px; color:red; margin-top: -30px; "><span id = "account-icon" class="glyphicon glyphicon-remove" style = "color: red;vertical-align:middle;margin-top: -3px;"></span>邮箱地址不合法 </strong> -->
+											<div id = "emailInfo" style = "color:red; font-weight: bold; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
 										</div><!--/.form-group -->
+
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
-										    <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
+											<label for="password"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码 </label>
+											<input type="password" class="form-control" id="password" placeholder="请输入密码">
+											<span id = "openClose" class="glyphicon glyphicon-eye-close" style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 30px;"></span>
+											<span id = "password-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: red; font-size: 20px;margin-top: -35px;display: none;" ></span>
+											<!-- <strong style="float:right ; font-size: 15px; color:red; margin-top: -30px; "><span id = "account-icon" class="glyphicon glyphicon-remove" style = "color: red;vertical-align:middle;margin-top: -3px;"></span>密码格式不正确</strong> -->
+											<div id = "passwordInfo1" style = "color:red; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong ></strong></div>
+											<div id = "passwordInfo2" style = "color:red; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong ></strong></div>
+											<div id = "passwordInfo3" style = "color:red; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong ></strong></div>
 										</div><!--/.form-group -->
+
+
 										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  重复密码</label>
-											<input type="password" class="form-control" id="signin_form" placeholder="请重复密码">
+											<label for="repassword"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  确认密码</label>
+											<input type="password" class="form-control" id="repassword" placeholder="请确认密码">
+											<span id = "reOpenClose" class="glyphicon glyphicon-eye-close" style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 30px;"></span>
+											<span id = "repassword-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: red; font-size: 20px;margin-top: -35px;display: none;" ></span>
+											<!-- <strong style="float:right ; font-size: 15px; color:red; margin-top: -30px; "><span id = "account-icon" class="glyphicon glyphicon-remove" style = "color: red;vertical-align:middle;margin-top: -3px;"></span>输入不一致 </strong> -->
+											<div id = "repasswordInfo" style = "color:red; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong ></strong></div>
+										
 										</div><!--/.form-group -->
 									</form><!--/form -->
+
+									<style>
+										#canvas {
+											vertical-align: middle;
+											box-sizing: border-box;
+											border: 1px solid #ddd;
+											cursor: pointer;
+										}
+									</style>
+
+									<div class="form-group"> 
+										<label for="verifyCode"><span class="glyphicon glyphicon-check" style="color: rgb(140, 132, 251);"></span>  验证码</label>
+										<input type="text" value="" placeholder="请输入右侧验证码" class="form-control" id = "verifyCode" >
+										<span id = "code-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px; margin-right:150px ; display: none" ></span>
+										<canvas class = "pull-right" id="canvas" width="140" height="60" style="margin-top: -62px;"></canvas> 
+										<!-- <button class="btn-verfifyCode">提交</button> -->
+									</div>
+
+
 								</div><!--/.col -->
 							</div><!--/.row -->
 
 						</div><!--/.signin-form -->
-<!--						<div class="signin-password">-->
-<!--							<div class="password-circle">-->
-<!--								<div class="single-password-circle">-->
-<!--									<input type="radio" id="radio01" name="radio">-->
-<!--										<label for="radio01">-->
-<!--											<span class="round-boarder">-->
-<!--												<span class="round-boarder1"></span>-->
-<!--											</span>remember password-->
-<!--										</label>-->
-<!--								</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;-->
-<!--&lt;!&ndash;								<div class="single-forgot-password-circle text-right&ndash;&gt;-->
-<!--&lt;!&ndash;								">&ndash;&gt;-->
-<!--&lt;!&ndash;									<a href="signin.html">Forgot email or password</a>&ndash;&gt;-->
-<!--&lt;!&ndash;								</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;&ndash;&gt;-->
-<!--							</div>&lt;!&ndash;/.password-circle&ndash;&gt;-->
-<!--						</div>&lt;!&ndash;/.signin-password &ndash;&gt;-->
 
-						<div class="signin-footer">
-							<button type="button" class="btn signin_btn signin_btn_two">
+						<div class="signin-footer text-center">
+							<button type="button" class="btn signin_btn signin_btn_two" id = "signin" disabled="disabled" onclick="submitForm();" return false;>
 							注 册
 							</button>
 							<p>
 								已经拥有账号？
-								<a href="登录.html">登 录</a>
+								<a href="登录.html" style="font-weight:bold ; color:red">点击登录</a>
 							</p>
 						</div><!--/.signin-footer -->
 					</div><!-- .popup-in-txt -->
@@ -129,16 +367,6 @@
 		</section><!--/.signin -->
 		
 		<!-- signin end -->
-
-		<!--footer copyright start -->
-		<footer class="footer-copyright">
-			<div id="scroll-Top">
-				<i class="fa fa-angle-double-up return-to-top" id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
-			</div><!--/.scroll-Top-->
-
-		</footer><!--/.hm-footer-copyright-->
-		<!--footer copyright  end -->
-
 
 		 <!-- Include all js compiled plugins (below), or include individual files as needed -->
 

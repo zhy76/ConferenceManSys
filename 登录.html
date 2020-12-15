@@ -114,7 +114,7 @@
 
 				//当验证码框失去焦点的时候，进行登录按钮的判断
 				//如果三个选项都是绿色√，那么就释放禁用的登录按钮
-				$("#verifyCode").on('blur',function(){
+				$("#verifyCode").on('blur keyup',function(){
 					if ( $("#account-icon").hasClass("glyphicon-ok") && $("#psw-icon").hasClass("glyphicon-ok") && $("#code-icon").hasClass("glyphicon-ok"))
 					{
 						$("#login").removeAttr("disabled")
