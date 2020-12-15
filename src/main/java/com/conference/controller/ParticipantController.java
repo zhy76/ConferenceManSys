@@ -45,8 +45,10 @@ public class ParticipantController {
     @PostMapping("/register")
     public Result register(@Valid @RequestBody Participant participant) {
         int addNumber = participantService.addAParticipant(participant);
+        //System.out.println(addNumber);
         if (addNumber > 0) {
             String token = tokenService.getToken(addNumber);
+           // System.out.println(token);
             return Result.success("token", token);
         } else {
             return new Result(ResultCode.FAIL);
@@ -92,6 +94,7 @@ public class ParticipantController {
     @GetMapping("/getParticipantInfo")
     public Result getParticipantInfo(HttpServletRequest request){
         Claims claims = tokenService.parseToken(request.getHeader("token"));
+        System.out.println("getParticipantInfo");
         Participant getParticipantInfo = participantService.queryParticipantByParticipantId((Integer) claims.get("participantId"));
         return Result.success("getParticipantInfo",getParticipantInfo);
     }

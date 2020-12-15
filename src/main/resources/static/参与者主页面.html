@@ -7,6 +7,10 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>参与者主页面</title>
     <!-- Common plugins -->
+<!--    <script src="js/jquery-3.1.1.min.js"></script>-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/participant/participant-index.js"></script>
+
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
@@ -27,7 +31,11 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+
+
     <![endif]-->
+
+
 </head>
     <body>
 
@@ -77,11 +85,11 @@
                 <div class="nano-content">
                     <ul class="metisMenu nav" id="menu">
 <!--                        <li class="nav-heading"><span>Navigation</span></li>-->
-                        <li class="active">
+                        <li class="active" id="to-index">
                             <a href="参与者主页面.html"><i class="icon-home"></i> 主页 </a>
                         </li>
-                        <li>
-                            <a href="参与者个人信息.html"><i class="icon-user"></i> 个人信息 </a>
+                        <li id="to-info">
+                            <a href="javascript:void(0)"><i class="icon-user"></i> 个人信息 </a>
                         </li>
 <!--                        <li >-->
 <!--                            <a href="javascript: void(0);" aria-expanded="true"><i class="icon-user"></i> 基本资料 <span class="fa arrow"></span></a>-->
@@ -93,8 +101,8 @@
                         <li>
                             <a href="javascript: void(0);" aria-expanded="true"><i class="icon-note"></i> 会议 <span class="fa arrow"></span></a>
                             <ul class="nav-second-level nav" aria-expanded="true">
-                                <li><a href="参与者选择会议.html">选择会议</a></li>
-                                <li><a href="参与者查看会议.html">查看会议</a></li>
+                                <li id="to-choose-conference"><a href="参与者选择会议.html">选择会议</a></li>
+                                <li id="to-look-conferences"><a href="参与者查看会议.html">查看会议</a></li>
                             </ul>
                         </li>
                         <li>

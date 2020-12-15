@@ -76,11 +76,11 @@
 										</div><!--/.form-group -->
 										<div class="form-group">
 										    <label for="signin_form"> <span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号</label>
-										    <input type="text" class="form-control" id="signin_form" placeholder="请输入手机号" required>
+										    <input type="text" class="form-control" id="username" placeholder="请输入手机号" required>
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label  for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
-										    <input type="password" class="form-control" id="signin_form" placeholder="请输入密码" required>
+										    <input type="password" class="form-control" id="password" placeholder="请输入密码" required>
 										</div><!--/.form-group -->
 									</form><!--/form -->
 								</div><!--/.signin-form -->
@@ -112,7 +112,7 @@
 								</div><!--/.col -->
 								<div class="col-sm-12">
 									<div class="signin-footer">
-										<button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal">
+										<button type="button" id="submit" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal">
 											登 录
 										</button>
 										<p>
@@ -165,6 +165,36 @@
         
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
+
+		<!-- 配置json解析，将登陆信息发送给/login -->
+		<script type="text/javascript">
+			$("#submit").click(function () {
+				var username = $("#username").val();
+				var password = $("#password").val();
+				console.log(username);
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: '/participant/login',
+					contentType: "application/json",
+					data: JSON.stringify({
+						"participantPhone": "" + username,
+						"participantPass": "" + password
+					}),
+					success: function (jsonData, result) {
+						console.log("data is :" + result);
+						if (jsonData["data"]["token"]) {
+							localStorage.setItem("xj", jsonData["data"]["token"]);
+							window.location.href = "参与者主页面.html";
+						} else {
+							console.log(jsonData["data"]["token"]);
+							alert("登录失败，请重试");
+						}
+					}
+				});
+			})
+		</script>
+
 
     </body>
 	
