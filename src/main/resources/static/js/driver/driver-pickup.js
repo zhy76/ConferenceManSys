@@ -21,7 +21,8 @@ $(function () {
         console.log($driverId);
     }
 
-
+    getDriverAllPickUp();
+    showPickUpTable();
     /**
      * 点击->个人信息
      */
@@ -31,7 +32,7 @@ $(function () {
 
         }
     )
-    $("to-wait-pick").click(function () {
+    $("#to-wait-pick a").click(function () {
         getDriverAllPickUp();
         showPickUpTable();
     })
@@ -76,8 +77,6 @@ function clearDriverInfo() {
 }
 
 //# sourceMappingURL=1.js.map
-
-
 
 
 /*获取token里面的用户数据*/
@@ -296,7 +295,7 @@ function getDriverAllPickUp() {
         success: function (data) {
             console.log(data);
             if (data["code"] === 200) {
-                driver = data["data"]["getDriverInfo"];
+                pickUp = data["data"]["getDriverAllPickUp"];
                 console.log(driver);
             } else {
                 alert("获取用户数据失败");
@@ -312,8 +311,12 @@ function getParticipantNameById($participantId) {
 
 }
 
+// $(document).ready(function () {
+//     $('#datatable').dataTable();
+// });
 function showPickUpTable() {
-    let $html = "                            <div class=\"row\">\n" +
+    let $htmlStart =
+        "                            <div class=\"row\">\n" +
         "                                <div class=\"col-md-12\">\n" +
         "                                    <div class=\"panel panel-default collapsed\">\n" +
         "                                        <div class=\"panel-heading\">\n" +
@@ -325,31 +328,48 @@ function showPickUpTable() {
         "                                                <tr>\n" +
         "                                                    <th>接送单号</th>\n" +
         "                                                    <th>姓名</th>\n" +
-        "                                                    <th>火车/航班号</th>\n" +
-        "                                                    <th>预计到达时间</th>\n" +
+        "                                                    <th>火车航班</th>\n" +
+        "                                                    <th>到达时间</th>\n" +
         "                                                    <th>离开时间</th>\n" +
         "                                                    <th>是否完成</th>\n" +
         "                                                </tr>\n" +
         "                                                </thead>\n" +
-        "\n" +
-        "                                                <tbody>\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Tiger Nixon</td>\n" +
-        "                                                    <td>System Architect</td>\n" +
-        "                                                    <td>Edinburgh</td>\n" +
-        "                                                    <td>61</td>\n" +
-        "                                                    <td>2011/04/25</td>\n" +
-        "                                                    <td>$320,800</td>\n" +
-        "                                                </tr>\n" +
-        "                                                <!--g-->\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Garrett Winters</td>\n" +
-        "                                                    <td>Accountant</td>\n" +
-        "                                                    <td>Tokyo</td>\n" +
-        "                                                    <td>63</td>\n" +
-        "                                                    <td>2011/07/25</td>\n" +
-        "                                                    <td>$170,750</td>\n" +
-        "                                                </tr>\n" +
+
+        "                                                <tbody>\n"
+    let $html;
+    // console.log(pickUp);
+    for (let i of pickUp) {
+        $html +=
+            "                                                <tr>\n" +
+            "                                                    <td>" + i.pickUpId + "</td>\n" +
+            "                                                    <td>" + i.participantId + "</td>\n" +
+            "                                                    <td>" + i.driverId + "</td>\n" +
+            "                                                    <td>" + i.conferenceId + "</td>\n" +
+            "                                                    <td>" + i.trainNumber + "</td>\n" +
+            "                                                    <td>" + i.toTime + "</td>\n" +
+            "                                                </tr>\n";
+    }
+    // let $html =
+    //     "                                                <tr>\n" +
+    //     "                                                    <td>Tiger Nixon</td>\n" +
+    //     "                                                    <td>System Architect</td>\n" +
+    //     "                                                    <td>Edinburgh</td>\n" +
+    //     "                                                    <td>61</td>\n" +
+    //     "                                                    <td>2011/04/25</td>\n" +
+    //     "                                                    <td>$320,800</td>\n" +
+    //     "                                                </tr>\n" +
+    //     "                                                <!--g-->\n" +
+    //     "                                                <tr>\n" +
+    //     "                                                    <td>Garrett Winters</td>\n" +
+    //     "                                                    <td>Accountant</td>\n" +
+    //     "                                                    <td>Tokyo</td>\n" +
+    //     "                                                    <td>63</td>\n" +
+    //     "                                                    <td>2011/07/25</td>\n" +
+    //     "                                                    <td>$170,750</td>\n" +
+    //     "                                                </tr>\n"
+
+
+    let $htmlEnd =
         "                                                </tbody>\n" +
         "                                            </table>\n" +
         "\n" +
@@ -360,15 +380,12 @@ function showPickUpTable() {
 
     // 清空节点
     $(".jumbotron").empty();
-    $(".jumbotron").append($html);
-    for (i of pickUp) {
-
-    }
+    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $('#datatable').dataTable();
 }
 
 
-
-/**************************************/
+/***********************************************************************************************************************/
 
 /*base 64 加密字符串*/
 function encodeStr(str) {
