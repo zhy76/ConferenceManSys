@@ -2,14 +2,15 @@
 // Object.defineProperty(exports, "__esModule", { value: true });
 // var jquery_1 = require("jquery");
 let driver;
+let fleet;
 let pickUp;
 let token;
 let mes;
 let $driverId;
+let $fleetId;
 let $participantId;
 $(function () {
-
-    let $driverPhone;
+    let $fleetPhone;
     /*获取token*/
     token = localStorage.getItem("hcs");
     console.log(typeof (token));
@@ -31,44 +32,32 @@ $(function () {
 
         }
     )
-    /**
-     * 点击->待接送
-     */
     $("to-wait-pick").click(function () {
         getDriverAllPickUp();
         showPickUpTable();
     })
-
-    /*点击 退出登录 按钮*/
-    $("#login-out").click(function () {
-        clearDriverInfo();
-        //localStorage.clear();
-        localStorage.setItem("hcs", null);
-        alert("退出成功");
-        window.location.href = "popupsignin.html";
-    })
 })
 
 /**
- * 得到登入司机的信息
+ * 得到登入车队的信息
  */
 
-function getDriverInfo($driverId) {
+function getDriverInfo($fleetId) {
     $.ajax({
         async: false,
         headers: {
             'token': token,
         },
-        url: "/driver/getDriverInfo",
+        url: "/fleetId/getFleetIdInfo",
         type: "get",
         dataType: "json",
         data: {
-            'driverId': $driverId,
+            'driverId': $fleetId,
         },
         success: function (data) {
             console.log(data);
             if (data["code"] === 200) {
-                driver = data["data"]["getDriverInfo"];
+                driver = data["data"]["getFleetIdInfo"];
                 console.log(driver);
             } else {
                 alert("获取用户数据失败");
@@ -83,7 +72,7 @@ function getDriverInfo($driverId) {
 /**
  * 清空登入时清空用户信息
  */
-function clearDriverInfo() {
+function clearFleetInfo() {
     driver = undefined;
 }
 

@@ -296,7 +296,7 @@ function getDriverAllPickUp() {
             console.log(data);
             if (data["code"] === 200) {
                 pickUp = data["data"]["getDriverAllPickUp"];
-                console.log(driver);
+                console.log(pickUp);
             } else {
                 alert("获取用户数据失败");
             }
