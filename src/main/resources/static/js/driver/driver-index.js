@@ -2,9 +2,11 @@
 // Object.defineProperty(exports, "__esModule", { value: true });
 // var jquery_1 = require("jquery");
 let driver;
-var token;
-
+let pickUp;
+let token;
+let mes;
 let $driverId;
+let $participantId;
 $(function () {
 
     let $driverPhone;
@@ -202,15 +204,15 @@ function parseJwt(token) {
 function showDriverInfo() {
     getDriverInfo($driverId);
     console.log(driver);
-    let $html = "<div class=\"tab-pane\" id=\"个人信息\" role=\"tabpanel\">\n" +
+    let $html = "<div class=\"tab-pane\" role=\"tabpanel\">\n" +
         "                                    <div class=\"card-body\">\n" +
-        "                                        <form id='driverInfo' class=\"form-horizontal form-material\">\n" +
+        "                                        <form  class=\"form-horizontal form-material\" id='driverInfo' >\n" +
         "                                            <br>\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">姓名</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
         "                                                    <input type=\"text\" class=\"form-control form-control-line\"\n" +
-        "                                                        id='driverName' value=\"" + driver.driverName + "\">\n" +
+        "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
         // "                                            <div class=\"form-group\">\n" +
@@ -225,30 +227,31 @@ function showDriverInfo() {
         "                                                <label class=\"col-md-12\">密码</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
         "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        class=\"form-control form-control-line\" id='driverPass'>\n" +
+        "                                                        name='driverPass' class=\"form-control form-control-line\" id='driverPass'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">重复密码</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
         "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
+        "                                                        name='repeatDriverPass' class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">电话</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
         "                                                    <input type=\"text\" value=\"" + driver.driverPhone + "\"\n" +
-        "                                                        class=\"form-control form-control-line\" id='driverPhone'>\n" +
+        "                                                        name='driverPhone' class=\"form-control form-control-line\" id='driverPhone'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">车牌号</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
         "                                                    <input type=\"text\" value=\"" + driver.carNumber + "\"\n" +
-        "                                                        class=\"form-control form-control-line\" id='carNumber'>\n" +
+        "                                                        name='carNumber' class=\"form-control form-control-line\" id='carNumber'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
+
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">个人介绍</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
@@ -280,51 +283,61 @@ function validform() {
     // alert()
     // return $("#driverInfo");
     /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
-    return $(".self-form").validate({
+    alert(1);
+    console.log($("#driverInfo"));    alert(1);
+    return $("#driverInfo").validate({
         rules: {
-            username: {
-                minlength: 5,
+            /**
+             driverName
+             driverPass
+             repeatDriverPass
+             driverPhone
+             carNumber
+             *
+             */
+            driverName: {
+                minlength: 2,
                 maxlength: 13
             },
-            newpassword: {
+            driverPass: {
                 minlength: 5,
                 maxlength: 20
             },
-            renewpassword: {
+            repeatDriverPass: {
                 minlength: 5,
                 maxlength: 20,
                 equalTo: "#repeatDriverPass"
             },
-            telephone:{
+            driverPhone:{
                 minlength: 11,
                 maxlength: 11
             },
-            location:{
+            carNumber:{
                 minlength:2,
                 maxlength:8
             }
         },
         messages: {
-            username: {
-                minlength: "用户名至少包含5个字符",
+            driverName: {
+                minlength: "姓名名至少包含2个字符",
                 maxlength: "用户名长度不能超过13个字符"
             },
-            newpassword: {
-                minlength: "密码长度不能少于5个字符",
+            driverPass: {
+                minlength: "密码长度不能少于6个字符",
                 maxlength: "密码长度不能多于20个字符"
             },
-            renewpassword: {
-                minlength: "密码长度不能少于5个字符",
+            repeatDriverPass: {
+                minlength: "密码长度不能少于6个字符",
                 maxlength: "密码长度不能多于20个字符",
                 equalTo: "两次密码输入不一致"
             },
-            telephone: {
+            driverPhone: {
                 minlength:"请输入正确的电话号码",
                 maxlength:"请输入正确的电话号码"
             },
-            location: {
-                minlength: "居住地名称长度果断",
-                maxlength: "居住地长度过长"
+            carNumber: {
+                minlength: "请输入正确的车牌号码",
+                maxlength: "请输入正确的车牌号码"
             }
         }
     });
@@ -334,6 +347,10 @@ function validform() {
  * 更新司机信息
  */
 function submitChange() {
+    /**
+     * @TODO : 前端验证
+     * validform().form()
+     */
     if (1) {
         $.ajax({
             // async: false,
@@ -352,16 +369,68 @@ function submitChange() {
                 console.log(jsonData);
                 console.log(result);
                 if (jsonData['code'] === 200) {
+                    console.log('成功');
                     alert("修改成功");
-                    // showDriverInfo(driver)
+                    // showDriverInfo(driver);
                     location.reload();
                 } else {
+                    console.log('失败');
                     alert("修改失败");
                     location.reload();
                 }
             },
         });
+        for (let i = 0; i < 170000000; i++) {
+            /**
+             * 意义不明的代码，
+             * 不加会有bug
+             * 170000000
+             * 二分
+             */
+        }
+        // showDriverInfo();
     } else {
         alert("信息格式有误，请重新填写！");
     }
 }
+
+
+
+function getDriverAllPickUp() {
+    $.ajax({
+        async: false,
+        headers: {
+            'token': token,
+        },
+        url: "/driver/getDriverAllPickUp",
+        type: "get",
+        dataType: "json",
+        data: {
+            'driverId': $driverId,
+        },
+        success: function (data) {
+            console.log(data);
+            if (data["code"] === 200) {
+                driver = data["data"]["getDriverInfo"];
+                console.log(driver);
+            } else {
+                alert("获取用户数据失败");
+            }
+        },
+        error: function () {
+            alert("获取用户数据失败");
+        },
+    });
+}
+
+function getParticipantNameById($participantId) {
+
+}
+function showPickUpTable() {
+    for (i of pickUp) {
+        
+    }
+}
+
+
+

@@ -85,8 +85,9 @@ public class PickUpController {
      * @return result{}
      */
     @GetMapping("/getAllPickUp")
-    public List<PickUp> getAllPickUp() {
-        return pickUpService.findAllPickUp();
+    public Result getAllPickUp() {
+        List<PickUp> getAllPickUp = pickUpService.findAllPickUp();
+        return Result.success("getAllPickUp", getAllPickUp);
     }
 
     /**

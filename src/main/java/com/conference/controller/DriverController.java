@@ -7,6 +7,7 @@ import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
 import com.conference.util.vaild.DriverLogin;
+import com.conference.util.vaild.DriverRegister;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -79,7 +80,7 @@ public class DriverController {
      * }
      */
     @PostMapping("/register")
-    public Result register(@Valid @RequestBody Driver driver) {
+    public Result register(@Validated({DriverRegister.class}) @RequestBody Driver driver) {
 //        if (driver.getDriverPhone() == null || driver.getDriverPass() == null) {
 //            return new Result(ResultCode.IllegalArgumentException);
 //        }
@@ -143,7 +144,7 @@ public class DriverController {
      * @return result {}
      */
     @PostMapping("/adminUpdateDriver")
-    public Result adminUpdateDriver(@Valid @RequestBody Driver driver) {
+    public Result adminUpdateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver) {
         driverService.updateDriver(driver);
         return Result.success();
     }
@@ -156,7 +157,7 @@ public class DriverController {
      * @return result {}
      */
     @RequestMapping("/updateDriver")
-    public Result updateDriver(@Valid @RequestBody Driver driver, HttpServletRequest request) {
+    public Result updateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver, HttpServletRequest request) {
         System.out.println("POST------------------------------------------------");
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
@@ -190,7 +191,8 @@ public class DriverController {
     @GetMapping("/getAllDriver")
     public Result getAllDriver() {
         List<Driver> getAllDriver = driverService.findAllDriver();
-        return Result.success("getAllDriver", getAllDriver);
+        return new Result(2, "时间冲突");
+//        return Result.success("getAllDriver", getAllDriver);
     }
 
     /**
