@@ -30,16 +30,16 @@ public class Driver {
 
     private Integer fleetId;
 
-    @NotNull(message = "电话号码不能为空", groups = {DriverRegister.class, DriverLogin.class})
-    @Pattern(regexp = "^1[3456789]\\d{9}$", message = "电话不能包含空白或电话格式不正确", groups = {DriverRegister.class, DriverLogin.class})
-    private String driverPhone;
+
 
     @NotNull(message = "密码不能为空", groups = {DriverRegister.class, DriverLogin.class})
     @Length(min = 6, max = 26, message = "密码长度应该在6至26之间", groups = {DriverRegister.class})
     @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符", groups = {DriverRegister.class, DriverLogin.class})
     private String driverPass;
 
-
+    @NotNull(message = "电话号码不能为空", groups = {DriverRegister.class, DriverLogin.class})
+    @Pattern(regexp = "^1[3456789]\\d{9}$", message = "电话不能包含空白或电话格式不正确", groups = {DriverRegister.class, DriverLogin.class})
+    private String driverPhone;
 
     private Boolean isAssign;
 
