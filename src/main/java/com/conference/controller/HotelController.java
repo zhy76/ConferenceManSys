@@ -94,7 +94,7 @@ public class HotelController {
       //  driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
 //        System.out.println(driver.getDriverId());
         hotelService.updateHotel(hotel);
-       // driverService.updateDriver(driver);
+        //System.out.println("修改成功");
         return Result.success();
     }
 //    @GetMapping("/updateHotel/{hotelName}/{hotelLocation}/{hotelPhone}/{hotelPass}/{hotelInfo}/{hotelId}")
