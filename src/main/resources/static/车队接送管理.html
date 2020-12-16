@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>司机个人信息</title>
+    <title>车队接送管理</title>
     <!-- Common plugins -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
@@ -36,7 +36,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4">
-                <a href="司机主页面.html" class="admin-logo">
+                <a href="车队主页面.html" class="admin-logo">
                     <h1><img src="assets/picture/meeting.jpg" alt=""></h1>
                 </a>
                 <!-- 以下div为页面缩小后出现左边导航栏的按钮  -->
@@ -50,7 +50,7 @@
             <div class="col-xs-8">
                 <ul class="list-inline top-right-nav">
                     <li >
-                        <a href="司机消息.html" >
+                        <a href="车队消息.html" >
                             <span class="glyphicon glyphicon-envelope"> 消息</span>
                         </a>
                     </li>
@@ -60,7 +60,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="司机主页面.html">
+                        <a href="车队主页面.html">
                             <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
                         </a>
                     </li>
@@ -78,20 +78,21 @@
             <ul class="metisMenu nav" id="menu">
                 <!--                        <li class="nav-heading"><span>Navigation</span></li>-->
                 <li>
-                    <a href="司机主页面.html"><i class="icon-home"></i> 主页 </a>
+                    <a href="车队主页面.html"><i class="icon-home"></i> 主页 </a>
                 </li>
                 <li>
-                    <a href="司机个人信息.html"><i class="icon-user"></i> 个人信息 </a>
+                    <a href="车队信息.html"><i class="icon-user"></i> 车队信息 </a>
                 </li>
-                <li>
-                    <a href="javascript: void(0);" aria-expanded="true"><i class="icon-map"></i> 接送管理 <span class="fa arrow"></span></a>
+                <li class="active">
+                    <a href="javascript: void(0);" aria-expanded="true"><i class="icon-list"></i> 车队管理 <span class="fa arrow"></span></a>
                     <ul class="nav-second-level nav" aria-expanded="true">
-                        <li><a href="司机待接送.html">待接送</a></li>
-                        <li><a href="司机查询接送.html">查询接送</a></li>
+                        <li><a href="车队接送管理.html">接送管理</a></li>
+                        <li><a href="车队司机管理.html">司机管理</a></li>
+                        <li><a href="车队参会人员管理.html">参会人员管理</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="司机消息.html"><i class="icon-envelope-letter"></i> 消息 </a>
+                    <a href="车队消息.html"><i class="icon-envelope-letter"></i> 消息 </a>
                 </li>
             </ul>
         </div><!--nano content-->
@@ -109,7 +110,8 @@
             <div class="col-sm-12 text-right">
                 <ol class="breadcrumb">
                     <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
-                    <li>个人信息</li>
+                    <li>车队管理</li>
+                    <li>接送管理</li>
                 </ol>
             </div>
         </div>
@@ -117,66 +119,7 @@
     <!--主体页面头部结束-->
 
     <!--页面主体内容部分开始-->
-    <div class="page-wrapper">
-        <div class="container-fluid">
-            <!-- Row -->
-            <div class="row">
-                <!-- Column -->
-                <div class="col-sm-11">
-                    <div class="card">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs profile-tab" role="tablist">
-                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#个人信息" role="tab">个人信息</a> </li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div class="tab-pane" id="个人信息" role="tabpanel">
-                                <div class="card-body">
-                                    <form class="form-horizontal form-material">
-                                        <br>
-                                        <div class="form-group">
-                                            <label class="col-md-12">姓名</label>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control form-control-line" value="Jessie J">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12">车牌号</label>
-                                            <div class="col-md-12">
-                                                <input type="text" class="form-control form-control-line" value="赣A88888">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12">密码</label>
-                                            <div class="col-md-12">
-                                                <input type="password" value="password" class="form-control form-control-line">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12">手机号</label>
-                                            <div class="col-md-12">
-                                                <input type="text" value="123 456 7890" class="form-control form-control-line">
-                                            </div>
-                                        </div>
-                                        <br/>
-                                        <br/>
-                                        <div class="form-group">
-                                            <div class="col-sm-12 text-center" >
-                                                <button class="btn btn-info">更新</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Column -->
-            </div>
-            <!-- Row -->
 
-        </div>
-    </div>
 
     <!--页面主体内容部分结束-->
 

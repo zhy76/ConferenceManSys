@@ -1,5 +1,6 @@
 package com.conference.controller;
 
+import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
 import com.conference.service.DriverService;
 import com.conference.service.FleetService;
@@ -131,6 +132,22 @@ public class FleetController {
         fleetService.deleteFleetById(fleetId);
         return Result.success();
     }
+
+
+    /**
+     * 查找登入车队的所有信息
+     * /fleet/getFleetInfo
+     *
+     * @param request
+     * @return {}
+     */
+    @GetMapping("/getFleetInfo")
+    public Result getFleetInfo(HttpServletRequest request) {
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        Fleet getFleetInfo = fleetService.findFleetById((Integer) claims.get("fleetId"));
+        return Result.success("getFleetInfo", getFleetInfo);
+    }
+
 
     /**
      * 车队自己改信息 Api
