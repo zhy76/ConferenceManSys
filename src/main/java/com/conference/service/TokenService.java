@@ -27,7 +27,8 @@ public class TokenService {
         String token = "";
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("participantId", participant.getParticipantId())
+                .claim("userName", participant.getParticipantName())
+                .claim("participantId",participant.getParticipantId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
         System.out.println(participant.getParticipantId());
@@ -46,7 +47,7 @@ public class TokenService {
         return token;
     }
 
-//        public List<String> getToken(List<Column> columns){
+    //    public List<String> getToken(List<Column> columns){
 //        List<String> tokenList=new ArrayList<>();
 //        for(int i=0;i<columns.size();i++){
 //            String token="";

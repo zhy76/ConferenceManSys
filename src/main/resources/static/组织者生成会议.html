@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>组织者生成会议</title>
+    <!-- Common plugins -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/simple-line-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/pace.css" rel="stylesheet">
+    <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/nanoscroller.css">
+    <link rel="stylesheet" href="css/metismenu.min.css">
+    <link href="css/c3.min.css" rel="stylesheet">
+    <link href="css/blue.css" rel="stylesheet">
+    <!-- dataTables -->
+    <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<!--top bar start-->
+<div class="top-bar light-top-bar">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4">
+                <a href="组织者主页面.html" class="admin-logo">
+                    <h1><img src="assets/picture/meeting.jpg" alt=""></h1>
+                </a>
+                <!-- 以下div为页面缩小后出现左边导航栏的按钮  -->
+                <div class="left-nav-toggle visible-xs visible-sm">
+                    <a href="">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                    </a>
+                </div><!--end nav toggle icon-->
+            </div>
+            <!--以下div为顶部导航栏-->
+            <div class="col-xs-8">
+                <ul class="list-inline top-right-nav">
+                    <li >
+                        <a href="组织者消息.html" >
+                            <span class="glyphicon glyphicon-envelope"> 消息</span>
+                        </a>
+                    </li>
+                    <li >
+                        <a href="登录.html" >
+                            <span class="glyphicon glyphicon-log-out"> 退出登录</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="组织者主页面.html">
+                            <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- top bar end-->
+
+<!--左侧导航栏开始-->
+<aside class="float-navigation light-navigation">
+    <div class="nano">
+        <div class="nano-content">
+            <ul class="metisMenu nav" id="menu">
+                <!--                        <li class="nav-heading"><span>Navigation</span></li>-->
+                <li>
+                    <a href="组织者主页面.html"><i class="icon-home"></i> 主页 </a>
+                </li>
+                <li>
+                    <a href="组织者单位信息.html"><i class="icon-user"></i> 单位信息 </a>
+                </li>
+                <li class="active">
+                    <a href="javascript: void(0);" aria-expanded="true"><i class="icon-note"></i> 会议 <span class="fa arrow"></span></a>
+                    <ul class="nav-second-level nav" aria-expanded="true">
+                        <li><a href="组织者生成会议.html">生成会议</a></li>
+                        <li><a href="组织者查看会议.html">查看会议</a></li>
+                        <li><a href="组织者审核会议.html">审核会议</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="组织者消息.html"><i class="icon-envelope-letter"></i> 消息 </a>
+                </li>
+            </ul>
+        </div><!--nano content-->
+    </div><!--nano scroll end-->
+</aside>
+<!--左侧导航栏结束-->
+
+
+<!--页面主体内容部分开始-->
+<section class="main-content">
+    <!--页面主体头部开始-->
+    <div class="page-header">
+        <div class="row">
+            <!--面包屑导航-->
+            <div class="col-sm-12 text-right">
+                <ol class="breadcrumb">
+                    <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                    <li>会议</li>
+                    <li>生成会议</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!--主体页面头部结束-->
+
+    <!--页面主体内容部分开始-->
+
+
+    <!--页面主体内容部分结束-->
+
+
+    <!--Start footer-->
+    <footer class="footer">
+        <span>Copyright &copy; 2020. 南昌大学</span>
+    </footer>
+    <!--end footer-->
+
+</section>
+<!--end main content-->
+
+
+
+<!--Common plugins-->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/pace.min.js"></script>
+<script src="js/jasny-bootstrap.min.js"></script>
+<script src="js/jquery.slimscroll.min.js"></script>
+<script src="js/jquery.nanoscroller.min.js"></script>
+<script src="js/metismenu.min.js"></script>
+<script src="js/float-custom.js"></script>
+<!--page script-->
+<script src="js/d3.min.js"></script>
+<script src="js/c3.min.js"></script>
+<!-- iCheck for radio and checkboxes -->
+<script src="js/icheck.min.js"></script>
+<!-- Datatables-->
+<script src="js/jquery.datatables.min.js"></script>
+<script src="js/datatables.responsive.min.js"></script>
+<script src="js/jquery.toast.min.js"></script>
+<script src="js/dashboard-alpha.js"></script>
+</body>
+</html>
