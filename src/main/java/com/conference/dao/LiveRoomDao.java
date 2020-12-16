@@ -20,7 +20,7 @@ public interface LiveRoomDao {
                  @Param("conferenceId")int conferenceId, @Param("roomId")String roomId);
     int deleteLiveRoom(@Param("participantId") int participantId,@Param("conferenceId") int conferenceId);
     int updateLiveRoom(@Param("roomId")String roomId, @Param("participantId")int participantId,
-                       @Param("conferenceId") int conferenceId);
+                       @Param("hotelId")int hotelId,@Param("conferenceId") int conferenceId);
     int deleteLiveRoomByAll(@Param("participantId") int participantId,@Param("conferenceId") int conferenceId
             ,@Param("hotelId")int hotelId);
 }

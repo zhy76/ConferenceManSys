@@ -50,7 +50,7 @@ public class LiveRoomImpl implements LiveRoomService {
 
     @Override
     public int updateLiveRoom(LiveRoom liveRoom) {
-        return liveRoomDao.updateLiveRoom(liveRoom.getRoomId(),liveRoom.getParticipantId(),liveRoom.getConferenceId());
+        return liveRoomDao.updateLiveRoom(liveRoom.getRoomId(),liveRoom.getParticipantId(),liveRoom.getHotelId(),liveRoom.getConferenceId());
     }
 
     @Override

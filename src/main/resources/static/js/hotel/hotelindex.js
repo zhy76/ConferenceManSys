@@ -6,7 +6,7 @@ var $participantId;
 var $conferenceId;
 $(function () {
 
-    /*获取token*/
+    //获取token
     token = localStorage.getItem("conNCU");
     console.log(typeof (token));
     console.log(token);
@@ -42,7 +42,7 @@ $(function () {
         findAllLiveRoomByHotelId();
         showLiveRoomTable();
     })
-    /*点击 退出登录 按钮*/
+    //点击 退出登录 按钮
     $(".login-out").click(function () {
         clearHotelInfo();
         //localStorage.clear();
@@ -52,6 +52,7 @@ $(function () {
     })
 
 });
+
 function  findAllLiveRoomByHotelId(){
     $.ajax({
         async: false,
@@ -94,6 +95,7 @@ function showLiveRoomTable(){
         "                                    <th>入住人电话(后面要获取,现在是参会人id）</th>\n" +
         "                                    <th>会议编号</th>\n" +
         "                                    <th>房间号</th>\n" +
+        "                                    <th>操作</th>\n" +
         "                                </tr>\n" +
         "                            </thead>\n" +
         "\n" +
@@ -106,6 +108,9 @@ function showLiveRoomTable(){
                 "                                                    <td>" + i.participantId + "</td>\n" +
                 "                                                    <td>" + i.conferenceId + "</td>\n" +
                 "                                                    <td>" + i.roomId + "</td>\n" +
+                "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"resetLiveRoom(this)\" >重置</button>" +
+                "                                        <button type='button' class=\"btn btn-info\" style=\"background-color:#ff4b00\"onclick=\"deleteLiveRoomByAll(this)\">删除</button>"+
+                "                                                   </td>\n" +
                 "                                                </tr>\n";
         }
 
@@ -155,7 +160,7 @@ function doLiveRoom(){
                 "                                                    <td>" + i.participantId + "</td>\n" +
                 "                                                    <td>" + i.conferenceId + "</td>\n" +
                 "                                    <td><input type=\"text\" size=\"5px\" id=\"roomId\"></td>\n" +
-                "                                    <td><button type='button' class=\"btn btn-info\">提交</button></td>\n" +
+                "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"updateLiveRoom(this)\">提交</button></td>\n" +
                 "                                                </tr>\n";
         }
     }
@@ -170,6 +175,40 @@ function doLiveRoom(){
     $(".jumbotron").empty();
     $(".jumbotron").append($html+$htmlEnd);
     $('#datatable').dataTable();
+}
+
+function updateLiveRoom(liveTable){
+    $participantId = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
+    $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
+    if (1) {
+        $.ajax({
+            // async: false,
+            type: "POST",
+            url: '/liveRoom/updateLiveRoom',
+            contentType: "application/json",
+           // headers: { 'token': localStorage.getItem("conNCU") },
+            data: JSON.stringify({
+                "participantId": $participantId,
+                "hotelId":$hotelId,
+                "conferenceId": $conferenceId,
+                "roomId": $("#roomId").val()
+            }),
+            success: function (jsonData, result) {
+                console.log(jsonData);
+                console.log(result);
+                if (jsonData['code'] === 200) {
+                    alert("修改成功");
+                    // showDriverInfo(driver)
+                    location.reload();
+                } else {
+                    alert("修改失败");
+                    location.reload();
+                }
+            },
+        });
+    } else {
+        alert("信息格式有误，请重新填写！");
+    }
 }
 
 function getHotelInfo($hotelId) {

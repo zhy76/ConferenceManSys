@@ -91,8 +91,6 @@ public class HotelController {
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         hotel.setHotelId((Integer) claims.get("hotelId"));
-      //  driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
-//        System.out.println(driver.getDriverId());
         hotelService.updateHotel(hotel);
         //System.out.println("修改成功");
         return Result.success();

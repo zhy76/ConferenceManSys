@@ -39,6 +39,6 @@
     </delete>
 <!--    更新房间-->
     <update id="updateLiveRoom">
-        UPDATE live_room SET room_id=#{roomId} WHERE participant_id=#{participantId} AND conference_id=#{conferenceId};
+        UPDATE live_room SET room_id=#{roomId} WHERE participant_id=#{participantId} AND hotel_id=#{hotelId} AND conference_id=#{conferenceId};
     </update>
 </mapper>
