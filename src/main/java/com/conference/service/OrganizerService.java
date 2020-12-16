@@ -12,9 +12,14 @@ import java.util.List;
  */
 public interface OrganizerService {
     List<Organizer> findAllOrganizer();
+
     Organizer findOrganizerById(Integer organizerId);
+
     int updateOrganizer(Organizer organizer);
+
     Organizer findOrganizerByPhone(String organizerPhone);
+
     int addOrganizer(Organizer organizer);
+
     int deleteOrganizerById(Integer organizerId);
 }

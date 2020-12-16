@@ -51,7 +51,7 @@ public class OrganizerServiceImpl implements OrganizerService {
 
     @Override
     public int deleteOrganizerById(Integer organizerId) {
-        return organizerDao.deleteDriverById(organizerId);
+        return organizerDao.deleteOrganizerById(organizerId);
     }
 
 }

@@ -50,6 +50,6 @@ public interface OrganizerDao {
     /**
      * 删除组织者
      */
-    int deleteDriverById(@Param("organizerId") Integer driverId);
+    int deleteOrganizerById(@Param("organizerId") Integer driverId);
 
 }
