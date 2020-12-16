@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--组织者接口对应的映射文件-->
+<!--namespace绑定一个Mapper接口-->
+<mapper namespace="com.conference.dao.OrganizerDao">
+    <!--    id对应方法名 resultType结果集类型-->
+    <update id = "updateOrganizer" parameterType="Organizer">
+        update organizer set organizer_pass=#{organizerPass},organizer_phone=#{organizerPhone},
+        organizer_unit=#{organizerUnit},organizer_email=#{organizerEmail} where organizer_id=#{organizerId};
+    </update>
+</mapper>
