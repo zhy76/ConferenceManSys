@@ -25,5 +25,6 @@ public class ConferenceDaoTest {
 //        System.out.println(conferenceDao.deleteConference(2));
         System.out.println(conferenceDao.updateConference(new Conference(5,1,1,1,"凌宸","2008-08-07 12:10:00","2008-08-11 12:10:00","信工e224","阿巴阿巴")));
         System.out.println(conferenceDao.queryConferenceByConferenceId(5));
+        System.out.println(conferenceDao.queryConferences());
     }
 }

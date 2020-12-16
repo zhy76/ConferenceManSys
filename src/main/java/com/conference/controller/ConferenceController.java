@@ -3,7 +3,6 @@ package com.conference.controller;
 import com.conference.entity.Conference;
 import com.conference.service.ConferenceService;
 import com.conference.util.result.Result;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ import java.util.List;
  * @sno 6109118015
  */
 
-@Controller
+@RestController
 @RequestMapping("/conference")
 public class ConferenceController {
 
@@ -37,23 +36,8 @@ public class ConferenceController {
 //        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
 //        return conference;
 //    }
-    /**
-     * 查找所有的司机 Api
-     * /driver/getAllDriver
-     *
-     * @return result {}
-     */
-//    @GetMapping("/getAllDriver")
-//    public Result getAllDriver() {
-//        List<Driver> getAllDriver = driverService.findAllDriver();
-////        return Result.success("getAllDriver", getAllDriver);
-//    }
-    /**
-     * 查找所有的司机 Api
-     * /driver/getAllDriver
-     *
-     * @return result {}
-     */
+
+
     @GetMapping("/showConferences")
     public Result showConferences(){
         List<Conference> conferencesList = conferenceService.queryConferences();
