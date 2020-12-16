@@ -8,7 +8,6 @@ package com.conference.entity;
  */
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.sql.Timestamp;
 public class Conference {
     private Integer conferenceId;
     private Integer organizerId;
@@ -16,13 +15,13 @@ public class Conference {
     private Integer hotelId;
     private String conferenceName;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp conferenceStart; //会议开始时间
+    private String conferenceStart; //会议开始时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Timestamp conferenceEnd; //会议结束时间
+    private String conferenceEnd; //会议结束时间
     private String conferenceLocation; //会议地址
     private String conferenceInfo; //会议相关信息
 
-    public Conference(Integer conferenceId, Integer organizerId, Integer fleetId, Integer hotelId, String conferenceName, Timestamp conferenceStart, Timestamp conferenceEnd, String conferenceLocation, String conferenceInfo) {
+    public Conference(Integer conferenceId, Integer organizerId, Integer fleetId, Integer hotelId, String conferenceName, String conferenceStart, String conferenceEnd, String conferenceLocation, String conferenceInfo) {
         this.conferenceId = conferenceId;
         this.organizerId = organizerId;
         this.fleetId = fleetId;
@@ -92,19 +91,19 @@ public class Conference {
         this.conferenceName = conferenceName;
     }
 
-    public Timestamp getConferenceStart() {
+    public String getConferenceStart() {
         return conferenceStart;
     }
 
-    public void setConferenceStart(Timestamp conferenceStart) {
+    public void setConferenceStart(String conferenceStart) {
         this.conferenceStart = conferenceStart;
     }
 
-    public Timestamp getConferenceEnd() {
+    public String getConferenceEnd() {
         return conferenceEnd;
     }
 
-    public void setConferenceEnd(Timestamp conferenceEnd) {
+    public void setConferenceEnd(String conferenceEnd) {
         this.conferenceEnd = conferenceEnd;
     }
 

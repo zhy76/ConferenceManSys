@@ -191,8 +191,8 @@ public class DriverController {
     @GetMapping("/getAllDriver")
     public Result getAllDriver() {
         List<Driver> getAllDriver = driverService.findAllDriver();
-        return new Result(2, "时间冲突");
-//        return Result.success("getAllDriver", getAllDriver);
+//        return new Result(2, "时间冲突");
+        return Result.success("getAllDriver", getAllDriver);
     }
 
     /**
