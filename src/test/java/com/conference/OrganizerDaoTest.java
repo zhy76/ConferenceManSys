@@ -23,6 +23,6 @@ public class OrganizerDaoTest {
 
     @Test
     public void contextLoads(){
-        System.out.println(organizerDao.updateOrganizer(new Organizer(1,"2222","信息工程学院","22222","22222")));
+        System.out.println(organizerDao.updateOrganizer(1,"132141","信工","22222","22222"));
     }
 }

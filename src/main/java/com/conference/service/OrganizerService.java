@@ -2,6 +2,8 @@ package com.conference.service;
 
 import com.conference.entity.Organizer;
 
+import java.util.List;
+
 /**
  * @author 左海余
  * @description
@@ -9,5 +11,10 @@ import com.conference.entity.Organizer;
  * @stuid 6109118041
  */
 public interface OrganizerService {
-    public int updateOrganizer(Organizer organizer);
+    List<Organizer> findAllOrganizer();
+    Organizer findOrganizerById(Integer organizerId);
+    int updateOrganizer(Organizer organizer);
+    Organizer findOrganizerByPhone(String organizerPhone);
+    int addOrganizer(Organizer organizer);
+    int deleteOrganizerById(Integer organizerId);
 }
