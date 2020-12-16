@@ -45,11 +45,6 @@ public class ConferenceServiceImpl implements ConferenceService {
         return conferenceDao.queryConferenceById(conferenceId);
     }
 
-
-
-
-
-
     @Override
     public Conference queryConferenceByConferenceId(Integer conferenceId) {
         return conferenceDao.queryConferenceByConferenceId(conferenceId);
