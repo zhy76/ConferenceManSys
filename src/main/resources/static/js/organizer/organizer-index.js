@@ -17,8 +17,8 @@ $(function () {
     if (token == null || token === "null" || token === "undefined") {
         console.log("no token");
     } else {
-        $organizerId = parseJwt(token).driverId/*获取用户信息*/
-        console.log($driverId);
+        $organizerId = parseJwt(token).organizerId/*获取用户信息*/
+        console.log($organizerId);
     }
 
 
@@ -27,49 +27,49 @@ $(function () {
      */
     $("#to-info a").click(function () {
 
-            showDriverInfo();
+            showOrganizerInfo();
 
         }
     )
-    /**
-     * 点击->待接送
-     */
-    $("to-wait-pick").click(function () {
-        getDriverAllPickUp();
-        showPickUpTable();
-    })
+    // /**
+    //  * 点击->待接送
+    //  */
+    // $("to-wait-pick").click(function () {
+    //     getDriverAllPickUp();
+    //     showPickUpTable();
+    // })
 
     /*点击 退出登录 按钮*/
     $("#login-out").click(function () {
-        clearDriverInfo();
+        clearOrganizerInfo();
         //localStorage.clear();
-        localStorage.setItem("hcs", null);
+        localStorage.setItem("zhy", null);
         alert("退出成功");
-        window.location.href = "popupsignin.html";
+        window.location.href = "登录.html";
     })
 })
 
 /**
- * 得到登入司机的信息
+ * 得到登入组织者的信息
  */
 
-function getDriverInfo($driverId) {
+function getOrganizerInfo($organizerId) {
     $.ajax({
         async: false,
         headers: {
             'token': token,
         },
-        url: "/driver/getDriverInfo",
+        url: "/organizer/getOrganizerInfo",
         type: "get",
         dataType: "json",
         data: {
-            'driverId': $driverId,
+            'organizerId': $organizerId,
         },
         success: function (data) {
             console.log(data);
             if (data["code"] === 200) {
-                driver = data["data"]["getDriverInfo"];
-                console.log(driver);
+                organizer = data["data"]["getOrganizerInfo"];
+                console.log(organizer);
             } else {
                 alert("获取用户数据失败");
             }
@@ -83,7 +83,7 @@ function getDriverInfo($driverId) {
 /**
  * 清空登入时清空用户信息
  */
-function clearDriverInfo() {
+function clearOrganizerInfo() {
     driver = undefined;
 }
 
@@ -106,18 +106,18 @@ function parseJwt(token) {
  *
  */
 
-function showDriverInfo() {
-    getDriverInfo($driverId);
-    console.log(driver);
+function showOrganizerInfo() {
+    getOrganizerInfo($organizerId);
+    console.log(organizer);
     let $html = "<div class=\"tab-pane\" role=\"tabpanel\">\n" +
         "                                    <div class=\"card-body\">\n" +
-        "                                        <form  class=\"form-horizontal form-material\" id='driverInfo' >\n" +
+        "                                        <form  class=\"form-horizontal form-material\" id='organizerInfo' >\n" +
         "                                            <br>\n" +
         "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">姓名</label>\n" +
+        "                                                <label class=\"col-md-12\">单位名称</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
         "                                                    <input type=\"text\" class=\"form-control form-control-line\"\n" +
-        "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
+        "                                                        name='organizerUnit' id='organizerUnit' value=\"" + organizer.organizerUnit + "\">\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
         // "                                            <div class=\"form-group\">\n" +
@@ -129,42 +129,25 @@ function showDriverInfo() {
         // "                                                </div>\n" +
         // "                                            </div>\n" +
         "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">联系邮箱</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <input type=\"text\" value=\"" + organizer.organizerEmail + "\"\n" +
+        "                                                        name='organizerEmail' class=\"form-control form-control-line\" id='organizerEmail'>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                            <div class=\"form-group\">\n" +
+        "                                                <label class=\"col-md-12\">联系电话</label>\n" +
+        "                                                <div class=\"col-md-12\">\n" +
+        "                                                    <input type=\"text\" value=\"" + driver.organizerPhone + "\"\n" +
+        "                                                        name='organizerPhone' class=\"form-control form-control-line\" id='organizerPhone'>\n" +
+        "                                                </div>\n" +
+        "                                            </div>\n" +
+        "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">密码</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='driverPass' class=\"form-control form-control-line\" id='driverPass'>\n" +
+        "                                                    <input type=\"password\" value=\"" + organizer.organizerPass + "\"\n" +
+        "                                                        name='organizerPass' class=\"form-control form-control-line\" id='organizerPass'>\n" +
         "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">重复密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='repeatDriverPass' class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">电话</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.driverPhone + "\"\n" +
-        "                                                        name='driverPhone' class=\"form-control form-control-line\" id='driverPhone'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">车牌号</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.carNumber + "\"\n" +
-        "                                                        name='carNumber' class=\"form-control form-control-line\" id='carNumber'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">个人介绍</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <textarea rows=\"5\" class=\"form-control form-control-line\">\n" +
-        "                                                    啊哈！\n" +
-        "                                                </textarea>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
         "                                            <br />\n" +
         "                                            <br />\n" +
         "                                            <div class=\"form-group\">\n" +
@@ -182,67 +165,71 @@ function showDriverInfo() {
 
 
 /**
- * 司机信息表单前端验证
+ * 组织者信息表单前端验证
  */
 function validform() {
     // alert()
     // return $("#driverInfo");
     /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
     alert(1);
-    console.log($("#driverInfo"));
+    console.log($("#organizerInfo"));
     alert(1);
-    return $("#driverInfo").validate({
+    return $("#organizerInfo").validate({
         rules: {
-            driverName: {
+            organizerUnit: {
                 minlength: 2,
                 maxlength: 13
             },
-            driverPass: {
+            organizerPass: {
                 minlength: 5,
                 maxlength: 20
             },
-            repeatDriverPass: {
+            organizerEmail: {
                 minlength: 5,
-                maxlength: 20,
-                equalTo: "#repeatDriverPass"
+                maxlength: 20
             },
+            // repeatDriverPass: {
+            //     minlength: 5,
+            //     maxlength: 20,
+            //     equalTo: "#repeatDriverPass"
+            // },
             driverPhone: {
                 minlength: 11,
                 maxlength: 11
             },
-            carNumber: {
-                minlength: 2,
-                maxlength: 8
-            }
-        },
+            // carNumber: {
+            //     minlength: 2,
+            //     maxlength: 8
+            // }
+        // },
         messages: {
-            driverName: {
-                minlength: "姓名名至少包含2个字符",
-                maxlength: "用户名长度不能超过13个字符"
+            organizerUnit: {
+                minlength: "单位名称至少包含2个字符",
+                maxlength: "单位名称长度不能超过13个字符"
             },
-            driverPass: {
+            organizerPass: {
                 minlength: "密码长度不能少于6个字符",
                 maxlength: "密码长度不能多于20个字符"
             },
-            repeatDriverPass: {
-                minlength: "密码长度不能少于6个字符",
-                maxlength: "密码长度不能多于20个字符",
-                equalTo: "两次密码输入不一致"
-            },
+            // repeatDriverPass: {
+            //     minlength: "密码长度不能少于6个字符",
+            //     maxlength: "密码长度不能多于20个字符",
+            //     equalTo: "两次密码输入不一致"
+            // },
             driverPhone: {
                 minlength: "请输入正确的电话号码",
                 maxlength: "请输入正确的电话号码"
-            },
-            carNumber: {
-                minlength: "请输入正确的车牌号码",
-                maxlength: "请输入正确的车牌号码"
             }
+            // carNumber: {
+            //     minlength: "请输入正确的车牌号码",
+            //     maxlength: "请输入正确的车牌号码"
+            // }
         }
-    });
+    }});
 }
 
 /**
- * 更新司机信息
+ * 更新组织者信息
  */
 function submitChange() {
     /**
@@ -253,15 +240,15 @@ function submitChange() {
         $.ajax({
             // async: false,
             type: "POST",
-            url: '/driver/updateDriver',
+            url: '/organizer/updateOrganizer',
             contentType: "application/json",
-            headers: {'token': localStorage.getItem("hcs")},
+            headers: {'token': localStorage.getItem("zhy")},
             data: JSON.stringify({
-                "driverName": $("#driverName").val(),
-                "carNumber": $("#carNumber").val(),
-                "fleetId": Number($("#fleetId").val()),
-                "driverPass": $("#driverPass").val(),
-                "driverPhone": $("#driverPhone").val()
+                "organizerUnit": $("#organizerUnit").val(),
+                "organizerEmail": $("#organizerEmail").val(),
+                // "fleetId": Number($("#fleetId").val()),
+                "organizerPass": $("#organizerPass").val(),
+                "organizerPhone": $("#organizerPhone").val()
             }),
             success: function (jsonData, result) {
                 console.log(jsonData);
@@ -293,90 +280,90 @@ function submitChange() {
 }
 
 
-function getDriverAllPickUp() {
-    $.ajax({
-        async: false,
-        headers: {
-            'token': token,
-        },
-        url: "/pickUp/getDriverAllPickUp",
-        type: "get",
-        dataType: "json",
-        data: {
-            'driverId': $driverId,
-        },
-        success: function (data) {
-            console.log(data);
-            if (data["code"] === 200) {
-                driver = data["data"]["getDriverInfo"];
-                console.log(driver);
-            } else {
-                alert("获取用户数据失败");
-            }
-        },
-        error: function () {
-            alert("获取用户数据失败!");
-        },
-    });
-}
-
-function getParticipantNameById($participantId) {
-
-}
-
-function showPickUpTable() {
-    let $html = "                            <div class=\"row\">\n" +
-        "                                <div class=\"col-md-12\">\n" +
-        "                                    <div class=\"panel panel-default collapsed\">\n" +
-        "                                        <div class=\"panel-heading\">\n" +
-        "                                            接送记录\n" +
-        "                                        </div>\n" +
-        "                                        <div class=\"panel-body\">\n" +
-        "                                            <table class=\"table table-striped dt-responsive nowrap\" id=\"datatable\">\n" +
-        "                                                <thead>\n" +
-        "                                                <tr>\n" +
-        "                                                    <th>接送单号</th>\n" +
-        "                                                    <th>姓名</th>\n" +
-        "                                                    <th>火车/航班号</th>\n" +
-        "                                                    <th>预计到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
-        "                                                    <th>是否完成</th>\n" +
-        "                                                </tr>\n" +
-        "                                                </thead>\n" +
-        "\n" +
-        "                                                <tbody>\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Tiger Nixon</td>\n" +
-        "                                                    <td>System Architect</td>\n" +
-        "                                                    <td>Edinburgh</td>\n" +
-        "                                                    <td>61</td>\n" +
-        "                                                    <td>2011/04/25</td>\n" +
-        "                                                    <td>$320,800</td>\n" +
-        "                                                </tr>\n" +
-        "                                                <!--g-->\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Garrett Winters</td>\n" +
-        "                                                    <td>Accountant</td>\n" +
-        "                                                    <td>Tokyo</td>\n" +
-        "                                                    <td>63</td>\n" +
-        "                                                    <td>2011/07/25</td>\n" +
-        "                                                    <td>$170,750</td>\n" +
-        "                                                </tr>\n" +
-        "                                                </tbody>\n" +
-        "                                            </table>\n" +
-        "\n" +
-        "                                        </div>\n" +
-        "                                    </div>\n" +
-        "                                </div>\n" +
-        "                            </div><!--end row-->";
-
-    // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($html);
-    for (i of pickUp) {
-
-    }
-}
+// function getDriverAllPickUp() {
+//     $.ajax({
+//         async: false,
+//         headers: {
+//             'token': token,
+//         },
+//         url: "/pickUp/getDriverAllPickUp",
+//         type: "get",
+//         dataType: "json",
+//         data: {
+//             'driverId': $driverId,
+//         },
+//         success: function (data) {
+//             console.log(data);
+//             if (data["code"] === 200) {
+//                 driver = data["data"]["getDriverInfo"];
+//                 console.log(driver);
+//             } else {
+//                 alert("获取用户数据失败");
+//             }
+//         },
+//         error: function () {
+//             alert("获取用户数据失败!");
+//         },
+//     });
+// }
+//
+// function getParticipantNameById($participantId) {
+//
+// }
+//
+// function showPickUpTable() {
+//     let $html = "                            <div class=\"row\">\n" +
+//         "                                <div class=\"col-md-12\">\n" +
+//         "                                    <div class=\"panel panel-default collapsed\">\n" +
+//         "                                        <div class=\"panel-heading\">\n" +
+//         "                                            接送记录\n" +
+//         "                                        </div>\n" +
+//         "                                        <div class=\"panel-body\">\n" +
+//         "                                            <table class=\"table table-striped dt-responsive nowrap\" id=\"datatable\">\n" +
+//         "                                                <thead>\n" +
+//         "                                                <tr>\n" +
+//         "                                                    <th>接送单号</th>\n" +
+//         "                                                    <th>姓名</th>\n" +
+//         "                                                    <th>火车/航班号</th>\n" +
+//         "                                                    <th>预计到达时间</th>\n" +
+//         "                                                    <th>离开时间</th>\n" +
+//         "                                                    <th>是否完成</th>\n" +
+//         "                                                </tr>\n" +
+//         "                                                </thead>\n" +
+//         "\n" +
+//         "                                                <tbody>\n" +
+//         "                                                <tr>\n" +
+//         "                                                    <td>Tiger Nixon</td>\n" +
+//         "                                                    <td>System Architect</td>\n" +
+//         "                                                    <td>Edinburgh</td>\n" +
+//         "                                                    <td>61</td>\n" +
+//         "                                                    <td>2011/04/25</td>\n" +
+//         "                                                    <td>$320,800</td>\n" +
+//         "                                                </tr>\n" +
+//         "                                                <!--g-->\n" +
+//         "                                                <tr>\n" +
+//         "                                                    <td>Garrett Winters</td>\n" +
+//         "                                                    <td>Accountant</td>\n" +
+//         "                                                    <td>Tokyo</td>\n" +
+//         "                                                    <td>63</td>\n" +
+//         "                                                    <td>2011/07/25</td>\n" +
+//         "                                                    <td>$170,750</td>\n" +
+//         "                                                </tr>\n" +
+//         "                                                </tbody>\n" +
+//         "                                            </table>\n" +
+//         "\n" +
+//         "                                        </div>\n" +
+//         "                                    </div>\n" +
+//         "                                </div>\n" +
+//         "                            </div><!--end row-->";
+//
+//     // 清空节点
+//     $(".jumbotron").empty();
+//     $(".jumbotron").append($html);
+//     for (i of pickUp) {
+//
+//     }
+// }
 
 
 
