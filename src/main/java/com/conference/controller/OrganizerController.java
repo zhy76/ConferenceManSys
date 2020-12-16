@@ -1,15 +1,10 @@
 package com.conference.controller;
 
-import com.conference.entity.Driver;
 import com.conference.entity.Organizer;
-import com.conference.service.DriverService;
 import com.conference.service.OrganizerService;
-import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
-import com.conference.util.vaild.DriverLogin;
-import com.conference.util.vaild.DriverRegister;
 import com.conference.util.vaild.OrganizerLogin;
 import com.conference.util.vaild.OrganizerRegister;
 import io.jsonwebtoken.Claims;
@@ -18,10 +13,8 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 /**
  * @author 左海余
  * @description

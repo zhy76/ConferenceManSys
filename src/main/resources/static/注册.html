@@ -17,25 +17,25 @@
         <title>注册</title>
 
         <!-- For favicon png -->
-		<link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png"/>
+		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
        
         <!--font-awesome.min.css-->
-        <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
 		
 		<!--animate.css-->
-        <link rel="stylesheet" href="../assets/css/animate.css">
+        <link rel="stylesheet" href="assets/css/animate.css">
 		
         <!--bootstrap.min.css-->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 		
 		<!-- bootsnav -->
-		<link rel="stylesheet" href="../assets/css/bootsnav.css" >
+		<link rel="stylesheet" href="assets/css/bootsnav.css" >	
         
         <!--style.css-->
-        <link rel="stylesheet" href="../assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/style.css">
         
         <!--responsive.css-->
-        <link rel="stylesheet" href="../assets/css/responsive.css">
+        <link rel="stylesheet" href="assets/css/responsive.css">
         
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -63,7 +63,7 @@
 						<div class="signin-form">
 							<div class=" ">
 								<div class=" ">
-									<form action="register.html">
+									<form action="注册.html">
 										<div class="form-group">
 										    <label for="signin_form"><span class="glyphicon glyphicon-user" style="color: rgb(140, 132, 251);"></span>  角色</label>
 											<select  class="form-control" id="signin_form" required>
@@ -77,19 +77,19 @@
 										<!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  邮箱</label>
-										    <input type="email" class="form-control" id="signin_form" placeholder="请输入邮箱">
+										    <input type="email" class="form-control" id="organizerEmail" placeholder="请输入邮箱">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号</label>
-											<input type="email" class="form-control" id="signin_form" placeholder="请输入手机号">
+											<input type="email" class="form-control" id="organizerPhone" placeholder="请输入手机号">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
-										    <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
+										    <input type="password" class="form-control" id="organizerPass" placeholder="请输入密码">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  重复密码</label>
-											<input type="password" class="form-control" id="signin_form" placeholder="请重复密码">
+											<input type="password" class="form-control" id="rePass" placeholder="请重复密码">
 										</div><!--/.form-group -->
 									</form><!--/form -->
 								</div><!--/.col -->
@@ -114,12 +114,12 @@
 <!--						</div>&lt;!&ndash;/.signin-password &ndash;&gt;-->
 
 						<div class="signin-footer">
-							<button type="button" class="btn signin_btn signin_btn_two">
+							<button type="button" id="submit" class="btn signin_btn signin_btn_two">
 							注 册
 							</button>
 							<p>
 								已经拥有账号？
-								<a href="login.html">登 录</a>
+								<a href="登录.html">登 录</a>
 							</p>
 						</div><!--/.signin-footer -->
 					</div><!-- .popup-in-txt -->
@@ -142,24 +142,54 @@
 
 		 <!-- Include all js compiled plugins (below), or include individual files as needed -->
 
-		<script src="../assets/js/jquery.js"></script>
+		<script src="assets/js/jquery.js"></script>
         
         <!--modernizr.min.js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 		
 		<!--bootstrap.min.js-->
-        <script src="../assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
 		
 		<!-- bootsnav js -->
-		<script src="../assets/js/bootsnav.js"></script>
+		<script src="assets/js/bootsnav.js"></script>
 		
 		<!-- jquery.sticky.js -->
-		<script src="../assets/js/jquery.sticky.js"></script>
+		<script src="assets/js/jquery.sticky.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 		
         
         <!--Custom JS-->
-        <script src="../assets/js/custom.js"></script>
+        <script src="assets/js/custom.js"></script>
+		<script type="text/javascript">
+			$("#submit").click(function(){
+				let organizerPhone=$("#organizerPhone").val();
+				let organizerPass = $("#organizerPass").val();
+				let organizerEmail = $("#organizerEmail").val();
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: '/organizer/register',
+					contentType: "application/json",
+					data:JSON.stringify({
+						//"participantId":5,
+						"organizerUnit":"",
+						"organizerEmail": organizerEmail,
+						"organizerPass": ""+organizerPass,
+						"organizerPhone": ""+organizerPhone,
+					}),
+					success: function (jsonData, result) {
+						console.log("data is :" + result);
+						if (jsonData["data"]["token"]) {
+							alert("注册成功！");
+							window.location.href = "组织者单位信息.html";
+						} else {
+							console.log(jsonData["data"]["token"]);
+							alert(result.message);
+						}
+					}
+				});
+			})
+		</script>
 
     </body>
 	
