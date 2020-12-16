@@ -2,6 +2,7 @@ package com.conference.service;
 
 import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
+import com.conference.entity.Organizer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
@@ -20,4 +21,6 @@ public interface TokenService {
     public String getToken(int i);
 
     public Claims parseToken(String token);
+
+    String getToken(Organizer organizerForBase);
 }
