@@ -2,6 +2,7 @@ package com.conference.service.impl;
 
 import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
+import com.conference.entity.Hotel;
 import com.conference.entity.Participant;
 import com.conference.service.TokenService;
 import io.jsonwebtoken.Claims;
@@ -60,6 +61,17 @@ public class TokenServiceImpl implements TokenService {
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
         System.out.println(participant.getParticipantId());
+        System.out.println(token);
+        return token;
+    }
+    public String getToken(Hotel hotel){
+        String token = "";
+        token = Jwts.builder()
+                .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
+                .claim("hotelId", hotel.getHotelId())
+                .signWith(signatureAlgorithm, SECRET)
+                .compact();
+        System.out.println(hotel.getHotelId());
         System.out.println(token);
         return token;
     }
