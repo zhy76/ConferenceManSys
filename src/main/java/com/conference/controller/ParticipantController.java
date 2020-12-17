@@ -98,6 +98,13 @@ public class ParticipantController {
         Participant getParticipantInfo = participantService.queryParticipantByParticipantId((Integer) claims.get("participantId"));
         return Result.success("getParticipantInfo",getParticipantInfo);
     }
+    @GetMapping("/queryParticipantByParticipantId")
+    public Result queryParticipantByParticipantId(@RequestParam int participantId){
 
+        //System.out.println("getParticipantInfo");
+        Participant queryParticipantByParticipantId = participantService.queryParticipantByParticipantId(participantId);
+        System.out.println(queryParticipantByParticipantId);
+        return Result.success("queryParticipantByParticipantId",queryParticipantByParticipantId);
+    }
 
 }

@@ -1,11 +1,11 @@
+
 function getBothId(liveTable){
     $participantId = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
     $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
 }
 //重新设置房间号
 function resetLiveRoom(liveTable){
-    $participantId = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
-    $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
+    getBothId(liveTable);
     if (1) {
         $.ajax({
             // async: false,
@@ -68,4 +68,30 @@ function deleteLiveRoomByAll(liveTable){
         });
     }
 
+}
+function queryParticipantByParticipantId($participantId) {
+    $.ajax({
+        async: false,
+        // headers: {
+        //     'token': token,
+        // },
+        url: "/participant/queryParticipantByParticipantId",
+        type: "get",
+        dataType: "json",
+        data: {
+            'participantId': $participantId,
+        },
+        success: function (data) {
+            console.log(data);
+            if (data["code"] === 200) {
+                participant = data["data"]["queryParticipantByParticipantId"];
+                console.log(participant);
+            } else {
+                alert("获取用户数据失败");
+            }
+        },
+        error: function () {
+            alert("获取用户数据失败");
+        },
+    });
 }
