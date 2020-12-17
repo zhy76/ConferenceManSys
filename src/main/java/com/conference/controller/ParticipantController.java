@@ -106,5 +106,13 @@ public class ParticipantController {
         System.out.println(queryParticipantByParticipantId);
         return Result.success("queryParticipantByParticipantId",queryParticipantByParticipantId);
     }
+    @GetMapping("/queryParticipantByParticipantPhone")
+    public Result queryParticipantByParticipantPhone(@RequestParam String participantPhone){
+
+        //System.out.println("getParticipantInfo");
+        Participant queryParticipantByParticipantPhone = participantService.queryParticipantByParticipantPhone(participantPhone);
+        System.out.println(queryParticipantByParticipantPhone);
+        return Result.success("queryParticipantByParticipantPhone",queryParticipantByParticipantPhone);
+    }
 
 }

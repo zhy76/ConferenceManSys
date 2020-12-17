@@ -1,7 +1,9 @@
 
 function getBothId(liveTable){
-    $participantId = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
+    $participantPhone = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
     $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
+    queryParticipantByParticipantPhone($participantPhone);
+    $participantId=participant.participantId;
 }
 //重新设置房间号
 function resetLiveRoom(liveTable){
@@ -85,6 +87,32 @@ function queryParticipantByParticipantId($participantId) {
             console.log(data);
             if (data["code"] === 200) {
                 participant = data["data"]["queryParticipantByParticipantId"];
+                console.log(participant);
+            } else {
+                alert("获取用户数据失败");
+            }
+        },
+        error: function () {
+            alert("获取用户数据失败");
+        },
+    });
+}
+function queryParticipantByParticipantPhone($participantPhone) {
+    $.ajax({
+        async: false,
+        // headers: {
+        //     'token': token,
+        // },
+        url: "/participant/queryParticipantByParticipantPhone",
+        type: "get",
+        dataType: "json",
+        data: {
+            'participantPhone': $participantPhone,
+        },
+        success: function (data) {
+            console.log(data);
+            if (data["code"] === 200) {
+                participant = data["data"]["queryParticipantByParticipantPhone"];
                 console.log(participant);
             } else {
                 alert("获取用户数据失败");

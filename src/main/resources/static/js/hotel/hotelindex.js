@@ -3,8 +3,10 @@ var liveRoom={};
 var token;
 var $hotelId;
 var $participantId;
-var $conferenceId;
 var participant={};
+var $participantPhone;
+var $conferenceId;
+
 $(function () {
 
     //获取token
