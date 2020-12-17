@@ -156,7 +156,7 @@ public class OrganizerController {
 //
     /**
      * 查找登入组织者的所有信息
-     * /organizer/getOrganzierInfo
+     * /organizer/getOrganizerInfo
      * @param request
      * @return
      */
