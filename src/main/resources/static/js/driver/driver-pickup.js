@@ -1,12 +1,16 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// var jquery_1 = require("jquery");
 let driver;
 let pickUp;
 let token;
 let mes;
+let participant = {};
 let $driverId;
 let $participantId;
+/**
+ * 接送id, 参会姓名,电话号码,火车航班
+ * 到达时间, 离开时间, 是否完成
+ * @type {{}}
+ */
+let pickUpTable = {};
 $(function () {
 
     let $driverPhone;
@@ -27,13 +31,15 @@ $(function () {
      * 点击->个人信息
      */
     $("#to-info a").click(function () {
-
             showDriverInfo();
-
         }
     )
+
     $("#to-wait-pick a").click(function () {
         getDriverAllPickUp();
+        for (let it of pickUp) {
+            console.log(it);
+        }
         showPickUpTable();
     })
 })
@@ -307,14 +313,39 @@ function getDriverAllPickUp() {
     });
 }
 
-function getParticipantNameById($participantId) {
-
+function queryParticipantByParticipantId($participantId) {
+    $.ajax({
+        async: false,
+        // headers: {
+        //     'token': token,
+        // },
+        url: "/participant/queryParticipantByParticipantId",
+        type: "get",
+        dataType: "json",
+        data: {
+            'participantId': $participantId,
+        },
+        success: function (data) {
+            console.log(data);
+            if (data["code"] === 200) {
+                participant = data["data"]["queryParticipantByParticipantId"];
+                console.log(participant);
+            } else {
+                alert("获取用户数据失败");
+            }
+        },
+        error: function () {
+            alert("获取用户数据失败");
+        },
+    });
 }
 
 // $(document).ready(function () {
 //     $('#datatable').dataTable();
 // });
 function showPickUpTable() {
+
+
     let $htmlStart =
         "                            <div class=\"row\">\n" +
         "                                <div class=\"col-md-12\">\n" +
@@ -328,6 +359,7 @@ function showPickUpTable() {
         "                                                <tr>\n" +
         "                                                    <th>接送单号</th>\n" +
         "                                                    <th>姓名</th>\n" +
+        "                                                    <th>电话号码</th>\n" +
         "                                                    <th>火车航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
         "                                                    <th>离开时间</th>\n" +
@@ -336,38 +368,23 @@ function showPickUpTable() {
         "                                                </thead>\n" +
         "                                                <tbody>\n"
     let $html = "";
-    // console.log(pickUp);
+
+    console.log(pickUp);
     for (let i of pickUp) {
+        console.log(i.participantId);
+        queryParticipantByParticipantId(i.participantId);
+        console.log(participant);
         $html +=
             "                                                <tr>\n" +
             "                                                    <td>" + i.pickUpId + "</td>\n" +
-            "                                                    <td>" + i.participantId + "</td>\n" +
-            "                                                    <td>" + i.driverId + "</td>\n" +
-            "                                                    <td>" + i.conferenceId + "</td>\n" +
+            "                                                    <td>" + participant.participantName + "</td>\n" +
+            "                                                    <td>" + participant.participantPhone + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
+            "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                                    <td>" + (i.finishPickup?"是":"否") + "</td>\n" +
             "                                                </tr>\n";
     }
-    // let $html =
-    //     "                                                <tr>\n" +
-    //     "                                                    <td>Tiger Nixon</td>\n" +
-    //     "                                                    <td>System Architect</td>\n" +
-    //     "                                                    <td>Edinburgh</td>\n" +
-    //     "                                                    <td>61</td>\n" +
-    //     "                                                    <td>2011/04/25</td>\n" +
-    //     "                                                    <td>$320,800</td>\n" +
-    //     "                                                </tr>\n" +
-    //     "                                                <!--g-->\n" +
-    //     "                                                <tr>\n" +
-    //     "                                                    <td>Garrett Winters</td>\n" +
-    //     "                                                    <td>Accountant</td>\n" +
-    //     "                                                    <td>Tokyo</td>\n" +
-    //     "                                                    <td>63</td>\n" +
-    //     "                                                    <td>2011/07/25</td>\n" +
-    //     "                                                    <td>$170,750</td>\n" +
-    //     "                                                </tr>\n"
-
-
     let $htmlEnd =
         "                                                </tbody>\n" +
         "                                            </table>\n" +
@@ -381,121 +398,4 @@ function showPickUpTable() {
     $(".jumbotron").empty();
     $(".jumbotron").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
-}
-
-
-/***********************************************************************************************************************/
-
-/*base 64 加密字符串*/
-function encodeStr(str) {
-    // console.log(str);
-    return new Base64().encode(str);
-}
-
-/*base 64 加密*/
-function Base64() {
-    // private property
-    _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-
-    // public method for encoding
-    this.encode = function (input) {
-        var output = "";
-        var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
-        var i = 0;
-        input = _utf8_encode(input);
-        while (i < input.length) {
-            chr1 = input.charCodeAt(i++);
-            chr2 = input.charCodeAt(i++);
-            chr3 = input.charCodeAt(i++);
-            enc1 = chr1 >> 2;
-            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-            enc4 = chr3 & 63;
-            if (isNaN(chr2)) {
-                enc3 = enc4 = 64;
-            } else if (isNaN(chr3)) {
-                enc4 = 64;
-            }
-            output = output +
-                _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
-                _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
-        }
-        return output;
-    }
-
-    // public method for decoding
-    this.decode = function (input) {
-        var output = "";
-        var chr1, chr2, chr3;
-        var enc1, enc2, enc3, enc4;
-        var i = 0;
-        if (input === "undefined" || typeof (input) == "undefined") {
-            input = " ";
-        } else {
-            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");/*修改过*/
-        }
-        while (i < input.length) {
-            enc1 = _keyStr.indexOf(input.charAt(i++));
-            enc2 = _keyStr.indexOf(input.charAt(i++));
-            enc3 = _keyStr.indexOf(input.charAt(i++));
-            enc4 = _keyStr.indexOf(input.charAt(i++));
-            chr1 = (enc1 << 2) | (enc2 >> 4);
-            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-            chr3 = ((enc3 & 3) << 6) | enc4;
-            output = output + String.fromCharCode(chr1);
-            if (enc3 != 64) {
-                output = output + String.fromCharCode(chr2);
-            }
-            if (enc4 != 64) {
-                output = output + String.fromCharCode(chr3);
-            }
-        }
-        output = _utf8_decode(output);
-        return output;
-    }
-
-    // private method for UTF-8 encoding
-    _utf8_encode = function (string) {
-        string = string.replace(/\r\n/g, "\n");
-        var utftext = "";
-        for (var n = 0; n < string.length; n++) {
-            var c = string.charCodeAt(n);
-            if (c < 128) {
-                utftext += String.fromCharCode(c);
-            } else if ((c > 127) && (c < 2048)) {
-                utftext += String.fromCharCode((c >> 6) | 192);
-                utftext += String.fromCharCode((c & 63) | 128);
-            } else {
-                utftext += String.fromCharCode((c >> 12) | 224);
-                utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                utftext += String.fromCharCode((c & 63) | 128);
-            }
-
-        }
-        return utftext;
-    }
-
-    // private method for UTF-8 decoding
-    _utf8_decode = function (utftext) {
-        var string = "";
-        var i = 0;
-        var c = c1 = c2 = 0;
-        while (i < utftext.length) {
-            c = utftext.charCodeAt(i);
-            if (c < 128) {
-                string += String.fromCharCode(c);
-                i++;
-            } else if ((c > 191) && (c < 224)) {
-                c2 = utftext.charCodeAt(i + 1);
-                string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-                i += 2;
-            } else {
-                c2 = utftext.charCodeAt(i + 1);
-                c3 = utftext.charCodeAt(i + 2);
-                string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-                i += 3;
-            }
-        }
-        return string;
-    }
 }

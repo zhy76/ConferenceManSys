@@ -1,16 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta content="IE=edge" http-equiv="X-UA-Compatible">
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <title>司机主页</title>
-        <!--        <script src="js/bundle.js"></script>-->
-        <script src="js/jquery-3.1.1.min.js"></script>
-        <script src="js/jquery.validate.min.js"></script>
-        <script src="js/messages_zh.js"></script>
-        <script src="js/driver/driver-index.js"></script>
+        <title>fleet-index</title>
         <!-- Common plugins -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/simple-line-icons.css" rel="stylesheet">
@@ -32,7 +27,6 @@
         <!--[if lt IE 9]>
         <script src="js/html5shiv.min.js"></script>
         <script src="js/respond.min.js"></script>
-
         <![endif]-->
     </head>
     <body>
@@ -42,7 +36,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-4">
-                        <a class="admin-logo" href="driver-index.html">
+                        <a class="admin-logo" href="fleet-index.html">
                             <h1><img alt="" src="assets/picture/meeting.jpg"></h1>
                         </a>
                         <!-- 以下div为页面缩小后出现左边导航栏的按钮  -->
@@ -56,17 +50,17 @@
                     <div class="col-xs-8">
                         <ul class="list-inline top-right-nav">
                             <li>
-                                <a href="司机消息.html">
+                                <a href="fleet-info.html">
                                     <span class="glyphicon glyphicon-envelope"> 消息</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" id="login-out">
+                                <a href="popupsignin.html">
                                     <span class="glyphicon glyphicon-log-out"> 退出登录</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="driver-index.html">
+                                <a href="fleet-index.html">
                                     <span><img alt="" class="img-circle" src="assets/picture/avtar-1.jpg"
                                                width="30"></span>
                                 </a>
@@ -84,22 +78,23 @@
                 <div class="nano-content">
                     <ul class="metisMenu nav" id="menu">
                         <!--                        <li class="nav-heading"><span>Navigation</span></li>-->
-                        <li id="to-index">
-                            <a href="driver-index.html"><i class="icon-home"></i> 主页 </a>
-                        </li>
-                        <li id="to-info">
-                            <a href="javascript:void(0)"><i class="icon-user"></i> 个人信息 </a>
+                        <li>
+                            <a href="fleet-index.html"><i class="icon-home"></i> 主页 </a>
                         </li>
                         <li>
-                            <a aria-expanded="true" href="javascript: void(0);"><i class="icon-map"></i> 接送管理 <span
+                            <a href="fleet-info.html"><i class="icon-user"></i> 车队信息 </a>
+                        </li>
+                        <li>
+                            <a aria-expanded="true" href="javascript: void(0);"><i class="icon-list"></i> 车队管理 <span
                                     class="fa arrow"></span></a>
                             <ul aria-expanded="true" class="nav-second-level nav">
-                                <li id="to-wait-pick"><a href="driver-pick-up.html">待接送</a></li>
-                                <li id="to-all-pick"><a href="driver-index.html">查询接送</a></li>
+                                <li><a href="车队接送管理.html">接送管理</a></li>
+                                <li><a href="车队司机管理.html">司机管理</a></li>
+                                <li><a href="车队参会人员管理.html">参会人员管理</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="driver-index.html"><i class="icon-envelope-letter"></i> 消息 </a>
+                            <a href="fleet-info.html"><i class="icon-envelope-letter"></i> 消息 </a>
                         </li>
                     </ul>
                 </div><!--nano content-->
@@ -125,23 +120,7 @@
             <!--主体页面头部结束-->
 
             <!--页面主体内容部分开始-->
-            <div class="container">
-                <div class="row clearfix">
-                    <div class="col-md-8 column">
-                        <div class="jumbotron">
-                            <h1>
-                                欢迎!
-                            </h1>
-                            <!--                            <p>-->
-                            <!--                                <a class="btn btn-primary btn-large" href="#">Learn more</a>-->
-                            <!--                            </p>-->
-                        </div>
-                    </div>
-                    <div class="col-md-4 column">
-                        <img alt="140x140" src="picture/3.jpg"/>
-                    </div>
-                </div>
-            </div>
+
 
             <!--页面主体内容部分结束-->
 

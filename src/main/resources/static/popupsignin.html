@@ -185,21 +185,28 @@
                 alert(role);
                 var driverPhone = $("#driverPhone").val();
                 var driverPass = $("#driverPass").val();
+                var phoneKey = role + "Phone";
+                var passKey = role + "Pass";
+                var json = {
+                    // phoneKey: "" + driverPhone,
+                    // passKey: "" + driverPass
+                };
+                json[phoneKey] = driverPhone;
+                json[passKey] = driverPass;
+                console.log(json);
+
                 console.log(driverPhone);
                 $.ajax({
                     type: "POST",
                     dataType: "json",
                     url: role +  '/login',
                     contentType: "application/json",
-                    data: JSON.stringify({
-                        "driverPhone": "" + driverPhone, // 方法将一个 JavaScript 对象或值转换为 JSON 字符串
-                        "driverPass": "" + driverPass
-                    }),
+                    data: JSON.stringify(json),// 方法将一个 JavaScript 对象或值转换为 JSON 字符串
                     success: function (jsonData, result) {
                         console.log("data is :" + result);
                         if (jsonData["data"]["token"]) {
                             localStorage.setItem("hcs", jsonData["data"]["token"]);
-                            window.location.href = "driver-index.html";
+                            window.location.href = role + "-index.html";
                         } else {
                             console.log(jsonData["data"]["token"]);
                             alert("登录失败，请重试");
