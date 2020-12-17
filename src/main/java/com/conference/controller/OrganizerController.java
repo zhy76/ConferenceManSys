@@ -154,16 +154,16 @@ public class OrganizerController {
 ////        return Result.success("getAllDriver", getAllDriver);
 //    }
 //
-//    /**
-//     * 查找登入司机的所有信息
-//     * /driver/getDriverInfo
-//     * @param request
-//     * @return
-//     */
-//    @GetMapping("/getDriverInfo")
-//    public Result getDriverInfo(HttpServletRequest request) {
-//        Claims claims = tokenService.parseToken(request.getHeader("token"));
-//        Driver getDriverInfo = driverService.findDriverById((Integer) claims.get("driverId"));
-//        return Result.success("getDriverInfo", getDriverInfo);
-//    }
+    /**
+     * 查找登入组织者的所有信息
+     * /organizer/getOrganzierInfo
+     * @param request
+     * @return
+     */
+    @GetMapping("/getOrganizerInfo")
+    public Result getOrganizerInfo(HttpServletRequest request) {
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        Organizer getOrganizerInfo = organizerService.findOrganizerById((Integer) claims.get("organizerId"));
+        return Result.success("getOrganizerInfo", getOrganizerInfo);
+    }
 }
