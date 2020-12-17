@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>司机主页</title>
+
+    <!--  图文卡片式样式开始  -->
+    <link rel="stylesheet" href="css/style01.css">
+    <!--图文卡片式样式结束 -->
     <!-- Common plugins -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
@@ -117,7 +121,41 @@
     <!--主体页面头部结束-->
 
     <!--页面主体内容部分开始-->
-
+    <div class="page-content">
+        <!--   卡片式展示开始 -->
+        <div class="card">
+            <div class="content">
+                <h2 class="title">欢迎</h2>
+                <p class="copy">欢迎来到本系统，很高兴与你相遇！</p>
+                <!--                <button class="btn">查看详情</button>-->
+            </div>
+        </div>
+        <div class="card">
+            <div class="content">
+                <h2 class="title">引导</h2>
+                <p class="copy">请先完善个人信息，然后进行相关操作</p>
+                <button class="btn" onclick="window.location.href='司机个人信息.html'">完善信息</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="content">
+                <h2 class="title">联系我们</h2>
+                <p class="copy">这是我们的联系方式：</p>
+                <p class="copy">邮箱：63147@qq.com<br>电话：3647843</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="content">
+                <h2 class="title">关于我们</h2>
+                <p class="copy">六个小伙伴：</p>
+                <p class="copy">
+                    组长：左海余<br>组员：陈洁<br>组员：谢娇<br>组员：黄昌盛<br>
+                    组员：刘涔宇<br>组员：高凌志
+                </p>
+            </div>
+        </div>
+        <!-- 卡片式展示结束 -->
+    </div>
 
     <!--页面主体内容部分结束-->
 
