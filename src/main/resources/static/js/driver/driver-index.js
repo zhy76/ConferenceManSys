@@ -8,7 +8,6 @@ let mes;
 let $driverId;
 let $participantId;
 $(function () {
-
     let $driverPhone;
     /*获取token*/
     token = localStorage.getItem("hcs");
