@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Description
- * @Author 谢 娇
- * @Date 2020/12/6 23:09
- * @sno 6109118015
- */
-
+ * @Author: liuCenYu
+ * @Date: 2020/12/6 10:43
+ **/
 @Service("participantService")
 public class ParticipantServiceImpl implements ParticipantService {
 
@@ -48,11 +45,11 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public int addAParticipant(Participant participant) {
-        return participantDao.addAParticipant(participant);
+        return 0;
     }
 
     @Override
     public Participant queryParticipantByParticipantPhone(String participantPhone) {
-        return participantDao.queryParticipantByParticipantPhone(participantPhone);
+        return null;
     }
 }

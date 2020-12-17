@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改参加者信息</title>
+    <script type="text/javascript" th:src="@{/script/jquery-3.3.1.js}"></script>
+    <script>
+        $(function () {
+
+            /**
+             *回显修改资料界面的性别属性
+             * @type {*|jQuery|HTMLElement}
+             */
+            var mansex = $(":radio[mansex]");
+            if( mansex.attr("mansex") == "男" ){
+                mansex.prop("checked",true);
+            }
+            else {
+                mansex.prop("checked",false);
+            }
+
+            var womansex = $(":radio[womansex]");
+            if( womansex.attr("womansex") == "女") {
+                womansex.prop("checked",true);
+            }
+            else {
+                womansex.prop("checked", false);
+            }
+
+
+
+        })
+
+        function submitUpdate(){
+            var form = new FormData(document.getElementById("updateParticipantForm"));//把表单的对象作为一个参数
+            $.ajax({
+                type:"post",
+                url: "/participant/updateParticipant",
+                data: form,
+                dataType:"text",
+                processData:false,
+                contentType:false,
+                success:function (data) {
+                    if(data=="success"){
+                        alert("修改成功");
+                    }else
+                        alert("修改失败");
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <form  th:action = "@{/participant/updateParticipant}" method = "post" id = "updateParticipantForm">
+        <input type="hidden" name = participantId th:value = "${participant.getParticipantId()}" >
+        <table>
+            <tr>
+                <td>ID:<input type="text" name = participantId disabled = "disabled" th:value="${participant.getParticipantId()}"></td>
+            </tr>
+            <tr>
+                <td>姓名:<input type="text" name = participantName th:value="${participant.getParticipantName()}"></td>
+            </tr>
+            <tr>
+                <td>职业:<input type="text" name = participantJob th:value="${participant.getParticipantJob()}"></td>
+            </tr>
+            <tr>
+                <td>工作单位:<input type="text" name = participantWorkUnit th:value="${participant.getParticipantWorkUnit()}"></td>
+            </tr>
+            <tr>
+                <td>电子邮箱:<input type="text" name = participantEmail th:value="${participant.getParticipantEmail()}"></td>
+            </tr>
+            <tr>
+                <td>账户密码:<input type="text" name = participantPass th:value="${participant.getParticipantPass()}"></td>
+            </tr>
+            <tr>
+                <td>手机号码:<input type="text" name = participantPhone th:value="${participant.getParticipantPhone()}"></td>
+            </tr>
+            <tr>
+                <td>性别:
+                    <input type="radio" name = participantSex th:value="男" th:mansex = "${participant.getParticipantSex()}"> 男
+                    <input type="radio" name = participantSex th:value="女" th:womansex = "${participant.getParticipantSex()}"> 女
+                </td>
+            </tr>
+            <tr>
+                <td>身份证:<input type="text" name = participantIdCard th:value="${participant.getParticipantIdCard()}"></td>
+            </tr>
+            <tr style = " text-align: center ">
+                <td><input type="button" value = "提交修改" onclick="submitUpdate()"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 package com.conference.service.impl;
 
-import com.conference.dao.ConferenceDao;
 import com.conference.entity.Conference;
+import com.conference.dao.ConferenceDao;
 import com.conference.service.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,23 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Description
- * @Author 谢 娇
- * @Date 2020/12/5 22:31
- * @sno 6109118015
- */
+ * @Author: liuCenYu
+ * @Date: 2020/12/4 23:30
+ **/
 @Service("conferenceService")
 public class ConferenceServiceImpl implements ConferenceService {
 
-    @Override
-    public int addConference(Conference conference) {
-        return conferenceDao.addConference(conference);
-    }
-
-    @Override
-    public Conference queryConferenceById(Integer conferenceId) {
-        return conferenceDao.queryConferenceById(conferenceId);
-    }
     @Autowired
     private ConferenceDao conferenceDao;
 
@@ -46,6 +35,16 @@ public class ConferenceServiceImpl implements ConferenceService {
 
     @Override
     public Conference queryConferenceByConferenceId(Integer conferenceId) {
-        return conferenceDao.queryConferenceByConferenceId(conferenceId);
+        return null;
+    }
+
+    @Override
+    public int addConference(Conference conference) {
+        return 0;
+    }
+
+    @Override
+    public Conference queryConferenceById(Integer conferenceId) {
+        return conferenceDao.queryConferenceById(conferenceId);
     }
 }
