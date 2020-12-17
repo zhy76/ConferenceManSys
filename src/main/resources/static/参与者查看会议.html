@@ -116,6 +116,7 @@
             let $participantId;
             let $conferenceId
             let conference;
+            let listConference = "";
             $(function (){
             $(window).scroll(function() {
                 if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
@@ -139,7 +140,7 @@
                     'participantId':""+$participantId
                 },
                 success: function (data) {
-                    var listConference = "";
+                    // var listConference = "";
                     console.log(data);
                     console.log(typeof data)
                     data = JSON.parse(data)
@@ -152,6 +153,7 @@
                         console.log($conferenceId)
                         getConferenceInfo($conferenceId);
                     }
+                    $('#mainContent').html(listConference);
                     // console.log(conferences);
                     // for(var i = 0 ; i < joinConferenceList.length ; i ++ )
                     // {
@@ -207,7 +209,7 @@
                         'conferenceId':""+$conferenceId
                     },
                     success: function (data) {
-                        var listConference = "";
+
                         console.log(data);
                         console.log(typeof data)
                         data = JSON.parse(data)
@@ -232,7 +234,7 @@
                                 '                            </div>' +
                                 '                        </a>' +
                                 '                    </div>'
-                        $('#mainContent').html(listConference);
+                        // $('#mainContent').html(listConference);
                         if (data["code"] === 200) {
                             alert("获取用户数据成功2");
                         } else {
