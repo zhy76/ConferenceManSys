@@ -84,7 +84,7 @@ function getOrganizerInfo($organizerId) {
  * 清空登入时清空用户信息
  */
 function clearOrganizerInfo() {
-    driver = undefined;
+     organizer = undefined;
 }
 
 //# sourceMappingURL=1.js.map
@@ -138,7 +138,7 @@ function showOrganizerInfo() {
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">联系电话</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.organizerPhone + "\"\n" +
+        "                                                    <input type=\"text\" value=\"" + organizer.organizerPhone + "\"\n" +
         "                                                        name='organizerPhone' class=\"form-control form-control-line\" id='organizerPhone'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
@@ -193,7 +193,7 @@ function validform() {
             //     maxlength: 20,
             //     equalTo: "#repeatDriverPass"
             // },
-            driverPhone: {
+            organizerPhone: {
                 minlength: 11,
                 maxlength: 11
             },
@@ -216,7 +216,7 @@ function validform() {
             //     maxlength: "密码长度不能多于20个字符",
             //     equalTo: "两次密码输入不一致"
             // },
-            driverPhone: {
+            organizerPhone: {
                 minlength: "请输入正确的电话号码",
                 maxlength: "请输入正确的电话号码"
             }
