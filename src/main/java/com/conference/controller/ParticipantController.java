@@ -103,7 +103,7 @@ public class ParticipantController {
 
         //System.out.println("getParticipantInfo");
         Participant queryParticipantByParticipantId = participantService.queryParticipantByParticipantId(participantId);
-        System.out.println(queryParticipantByParticipantId);
+        //System.out.println(queryParticipantByParticipantId);
         return Result.success("queryParticipantByParticipantId",queryParticipantByParticipantId);
     }
     @GetMapping("/queryParticipantByParticipantPhone")
@@ -111,7 +111,7 @@ public class ParticipantController {
 
         //System.out.println("getParticipantInfo");
         Participant queryParticipantByParticipantPhone = participantService.queryParticipantByParticipantPhone(participantPhone);
-        System.out.println(queryParticipantByParticipantPhone);
+        //System.out.println(queryParticipantByParticipantPhone);
         return Result.success("queryParticipantByParticipantPhone",queryParticipantByParticipantPhone);
     }
 
