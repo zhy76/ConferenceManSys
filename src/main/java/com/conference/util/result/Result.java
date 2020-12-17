@@ -1,19 +1,16 @@
 package com.conference.util.result;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @ClassName: Result
- * @Description: That's enough.
- * @Author: Lance
- * @Date: 2020/12/6 18:51
+ * @Description
+ * @Author 谢 娇
+ * @Date 2020/12/14 21:58
+ * @sno 6109118015
  */
-public class Result implements Serializable {
 
+public class Result {
     private int code;
     private String message;
     private Object data;
@@ -102,5 +99,4 @@ public class Result implements Serializable {
                 ", data=" + data +
                 '}';
     }
-
 }

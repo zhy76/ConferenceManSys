@@ -1,8 +1,6 @@
 package com.conference.entity;
 
 
-import java.util.Date;
-
 /**
  * @ClassName: pickUp
  * @Description: TODO

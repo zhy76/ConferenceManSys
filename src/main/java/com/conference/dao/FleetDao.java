@@ -26,9 +26,11 @@ public interface FleetDao {
     /**删*/
     int deleteFleetById(@Param("fleetId") int fleetId);
     /**增*/
-    int addFleet(@Param("fleetName")String fleetName, @Param("fleetPass")String fleetPass, @Param("fleetPhone")String fleetPhone);
+    int addFleet(@Param("fleetName")String fleetName, @Param("fleetPass")String fleetPass,
+                 @Param("fleetPhone")String fleetPhone);
 
 
     /**改*/
-    int updateFleet(@Param("fleetId")int fleetId, @Param("fleetName")String fleetName, @Param("fleetPass")String fleetPass, @Param("fleetPhone")String fleetPhone);
+    int updateFleet(@Param("fleetId")int fleetId, @Param("fleetName")String fleetName,
+                    @Param("fleetPass")String fleetPass, @Param("fleetPhone")String fleetPhone);
 }

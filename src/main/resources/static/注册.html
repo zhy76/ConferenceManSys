@@ -77,19 +77,19 @@
 										<!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  邮箱</label>
-										    <input type="email" class="form-control" id="signin_form" placeholder="请输入邮箱">
+										    <input type="email" class="form-control" id="email" placeholder="请输入邮箱">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号</label>
-											<input type="email" class="form-control" id="loginUserName" placeholder="请输入手机号">
+											<input type="email" class="form-control" id="phoneNumber" placeholder="请输入手机号">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
-										    <input type="password" class="form-control" id="signin_form" placeholder="请输入密码">
+										    <input type="password" class="form-control" id="password" placeholder="请输入密码">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  重复密码</label>
-											<input type="password" class="form-control" id="loginUserPassword" placeholder="请重复密码">
+											<input type="password" class="form-control" id="rePassword" placeholder="请重复密码">
 										</div><!--/.form-group -->
 									</form><!--/form -->
 								</div><!--/.col -->
@@ -114,7 +114,7 @@
 <!--						</div>&lt;!&ndash;/.signin-password &ndash;&gt;-->
 
 						<div class="signin-footer">
-							<button type="button" class="btn signin_btn signin_btn_two" id="submit">
+							<button type="button" id="submit" class="btn signin_btn signin_btn_two">
 							注 册
 							</button>
 							<p>
@@ -160,34 +160,41 @@
         
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
+		<script type="text/javascript">
+			$("#submit").click(function(){
+				let participantPhone=$("#phoneNumber").val();
+				let participantPass = $("#password").val();
+				let participantEmail = $("#email").val();
+				$.ajax({
+					type: "POST",
+					dataType: "json",
+					url: '/participant/register',
+					contentType: "application/json",
+					data:JSON.stringify({
+						//"participantId":5,
+						"participantName":"",
+						"participantJob":"",
+						"participantWorkUnit":"",
+						"participantEmail": participantEmail,
+						"participantPass": ""+participantPass,
+						"participantPhone": ""+participantPhone,
+						"participantSex":"",
+						"participantIdCard": ""
+					}),
+					success: function (jsonData, result) {
+						console.log("data is :" + result);
+						if (jsonData["data"]["token"]) {
+							alert("注册成功！");
+							window.location.href = "参与者个人信息.html";
+						} else {
+							console.log(jsonData["data"]["token"]);
+							alert(result.message);
+						}
+					}
+				});
+			})
+		</script>
 
     </body>
-	<script type="text/javascript">
-		$("#submit").click(function(){
-			let hotelPhone = $("#loginUserName").val();
-			let hotelPass = $("#loginUserPassword").val();
-			$.ajax({
-				type: "POST",
-				dataType: "json",
-				url: '/hotel/register',
-				contentType: "application/json",
-				data:JSON.stringify({
-					"hotelPhone": ""+hotelPhone,
-					"hotelPass": ""+hotelPass,
-					"hotelName": "前湖大宾馆",
-					"hotelLocation": "前湖",
-					"hotelInfo": "干就完了！"
-				}),
-				success: function (jsonData,result) {
-					console.log("data is :" + result);
-					if (jsonData["data"]["token"]) {
-						alert("注册成功");
-						window.location.href = "酒店主页面.html";
-					}else {
-						alert(result.message)
-					}
-				}
-			});
-		})
-	</script>
+	
 </html>

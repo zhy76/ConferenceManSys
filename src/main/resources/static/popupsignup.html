@@ -77,25 +77,41 @@
 										<!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  email</label>
-										    <input type="email" class="form-control" id="signin_form" placeholder="Enter your email adress">
+										    <input type="email" class="form-control" id="email" placeholder="Enter your email address">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  phone number</label>
-											<input type="email" class="form-control" id="loginUserName" placeholder="Enter your phone number">
+											<input type="email" class="form-control" id="phoneNumber" placeholder="Enter your phone number">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  password</label>
-										    <input type="password" class="form-control" id="signin_form" placeholder="Enter your password">
+										    <input type="password" class="form-control" id="password" placeholder="Enter your password">
 										</div><!--/.form-group -->
 										<div class="form-group">
 											<label for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  repeat password</label>
-											<input type="password" class="form-control" id="loginUserPassword" placeholder="Repeat your password">
+											<input type="password" class="form-control"  placeholder="Repeat your password">
 										</div><!--/.form-group -->
 									</form><!--/form -->
 								</div><!--/.col -->
 							</div><!--/.row -->
 
 						</div><!--/.signin-form -->
+<!--						<div class="signin-password">-->
+<!--							<div class="password-circle">-->
+<!--								<div class="single-password-circle">-->
+<!--									<input type="radio" id="radio01" name="radio">-->
+<!--										<label for="radio01">-->
+<!--											<span class="round-boarder">-->
+<!--												<span class="round-boarder1"></span>-->
+<!--											</span>remember password-->
+<!--										</label>-->
+<!--								</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;-->
+<!--&lt;!&ndash;								<div class="single-forgot-password-circle text-right&ndash;&gt;-->
+<!--&lt;!&ndash;								">&ndash;&gt;-->
+<!--&lt;!&ndash;									<a href="signin.html">Forgot email or password</a>&ndash;&gt;-->
+<!--&lt;!&ndash;								</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;&ndash;&gt;-->
+<!--							</div>&lt;!&ndash;/.password-circle&ndash;&gt;-->
+<!--						</div>&lt;!&ndash;/.signin-password &ndash;&gt;-->
 
 						<div class="signin-footer">
 							<button type="button" class="btn signin_btn signin_btn_two" id="submit">
@@ -116,8 +132,8 @@
 
 		<!--footer copyright start -->
 		<footer class="footer-copyright">
-			<div id="scroll-Top">
-				<i class="fa fa-angle-double-up return-to-top" id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+			<div >
+				<i class="fa fa-angle-double-up return-to-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
 			</div><!--/.scroll-Top-->
 
 		</footer><!--/.hm-footer-copyright-->
@@ -148,23 +164,28 @@
     </body>
 	<script type="text/javascript">
 		$("#submit").click(function(){
-			let hotelPhone = $("#loginUserName").val();
-			let hotelPass = $("#loginUserPassword").val();
+			let participantPhone=$("#phoneNumber").val();
+			let participantPass = $("#password").val();
+			let participantEmail = $("#email").val();
 			$.ajax({
 				type: "POST",
 				dataType: "json",
-				url: '/hotel/register',
+				url: '/participant/register',
 				contentType: "application/json",
 				data:JSON.stringify({
-					"hotelPhone": ""+hotelPhone,
-					"hotelPass": ""+hotelPass,
-					"hotelName": "前湖大宾馆",
-					"hotelLocation": "前湖",
-					"hotelInfo": "干就完了！"
+					//"participantId":5,
+					"participantName":"",
+					"participantJob":"",
+					"participantWorkUnit":"",
+					"participantEmail": participantEmail,
+					"participantPass": ""+participantPass,
+					"participantPhone": ""+participantPhone,
+					"participantSex":"",
+					"participantIdCard": ""
 				}),
 				success: function (jsonData,result) {
 					console.log("data is :" + result);
-					if (jsonData["data"]["token"]) {
+					if (jsonData["token"]) {
 						alert("注册成功");
 						window.location.href = "index.html";
 					}else {
@@ -174,4 +195,5 @@
 			});
 		})
 	</script>
+
 </html>

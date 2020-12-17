@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--组织者接口对应的映射文件-->
+<!--namespace绑定一个Mapper接口-->
+<mapper namespace="com.conference.dao.ConferenceDao">
+
+    <!--    id对应方法名 resultType结果集类型-->
+    <select id = "queryConferences" resultType="Conference">
+       select * from conference;
+    </select>
+
+    <update id = "updateConference" parameterType="Conference">
+        update conference set organizer_id=#{organizerId},fleet_id=#{fleetId},hotel_id=#{hotelId},
+        conference_name=#{conferenceName},conference_start=#{conferenceStart},
+        conference_end=#{conferenceEnd},conference_location=#{conferenceLocation},
+        conference_info=#{conferenceInfo} where conference_id=#{conferenceId};
+    </update>
+
+    <delete id = "deleteConference">
+        delete from conference where conference_id = #{conferenceId};
+    </delete>
+
+    <insert id="addConference">
+        INSERT INTO conference
+        VALUES(null,#{organizerId}, #{fleetId}, #{hotelId}, #{conferenceName}, #{conferenceStart}, #{conferenceEnd},#{conferenceLocation},#{conferenceInfo})
+    </insert>
+
+    <select id = "queryConferenceById" resultType="Conference">
+       select * from conference where conference_id = #{conferenceId};
+    </select>
+
+    <select id="queryConferenceByConferenceId" resultType="Conference">
+        select * from conference where conference_id = #{conferenceId};
+    </select>
+</mapper>

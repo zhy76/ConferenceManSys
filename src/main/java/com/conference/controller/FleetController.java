@@ -1,13 +1,16 @@
 package com.conference.controller;
 
-import com.alibaba.fastjson.JSONObject;
+import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
 import com.conference.service.DriverService;
 import com.conference.service.FleetService;
 import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
+import com.conference.util.result.Result;
+import com.conference.util.result.ResultCode;
 import io.jsonwebtoken.Claims;
-import org.apache.shiro.dao.DataAccessException;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,100 +36,132 @@ public class FleetController {
     @Autowired
     private PickUpService pickUpService;
 
+
     /**
+     * 车队注册 Api
      * /fleet/register
-     * @param fleet
-     * @return
+     *
+     * @param fleet {
+     *              "fleetId": Integer
+     *              "fleetName": String
+     *              "fleetPass": String
+     *              "fleetPhone": String
+     *              }
+     * @return result {
+     * "status":
+     * "message":
+     * "data": {}
+     * }
      */
     @PostMapping("/register")
-    public Object register(@Valid @RequestBody Fleet fleet) {
-        JSONObject jsonObject = new JSONObject();
-        if (fleet.getFleetPhone() == null || fleet.getFleetPass() == null) {
-            jsonObject.put("message", "表单错误");
-            return jsonObject;
-        }
+    public Result register(@Valid @RequestBody Fleet fleet) {
         int addNumber = fleetService.addFleet(fleet);
         if (addNumber > 0) {
             String token = tokenService.getToken(addNumber);
-            jsonObject.put("token", token);
-            return jsonObject;
+            return Result.success("token", token);
         } else {
-            jsonObject.put("message", "注册失败");
-            return jsonObject;
+            return new Result(ResultCode.FAIL);
         }
     }
 
     /**
+     * 车队登入 Api
      * /fleet/login
-     * @param fleet
-     * @return
+     *
+     * @param fleet {
+     *              "fleetPass": String
+     *              "fleetPhone": String
+     *              }
+     * @return result {
+     * "status":
+     * "message":
+     * "data": {}
+     * }
      */
     @PostMapping("/login")
-    public Object login(@RequestBody Fleet fleet) {
-        JSONObject jsonObject = new JSONObject();
-        if (fleet.getFleetPhone() == null || fleet.getFleetPass() == null) {
-//            System.out.println("null");
-            jsonObject.put("message", "表单错误");
-            return jsonObject;
-        }
+    public Result login(@RequestBody Fleet fleet) {
         Fleet fleetForBase = fleetService.findFleetByPhone(fleet.getFleetPhone());
-        System.out.println(fleetForBase);
-//        User userForBase =userDao.findByUsername(loginUser.getUserName());
         if (fleetForBase == null) {
-            jsonObject.put("message", "登录失败,用户不存在");
-            return jsonObject;
+            return new Result(ResultCode.UnknownAccountException);
         } else {
             if (!fleetForBase.getFleetPass().equals(fleet.getFleetPass())) {
-                jsonObject.put("message", "登录失败,密码错误");
-                return jsonObject;
+                return new Result(ResultCode.IncorrectCredentialsException);
             } else {
                 String token = tokenService.getToken(fleetForBase);
-                jsonObject.put("token", token);
-                return jsonObject;
+                return Result.success("token", token);
             }
         }
     }
-    @GetMapping("/getAllFleet")
-    public List<Fleet> getAllDriver() {
-        return fleetService.findAllFleet();
+
+    /**
+     * 车队登出 Api
+     * /fleet/logout
+     *
+     * @return
+     * @TODO 登出
+     */
+    @PostMapping("/logout")
+    public Result logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return Result.success();
     }
 
     /**
-     * http://localhost:8081/fleet/deleteFleet
-     * 按照id删除车队
-     * @param fleetId
+     * 查找所有车队 Api
+     * /fleet/getAllFleet
+     *
+     * @return result {}
+     */
+    @GetMapping("/getAllFleet")
+    public Result getAllFleet() {
+        List<Fleet> getAllFleet = fleetService.findAllFleet();
+        return Result.success("getALLFleet", getAllFleet);
+    }
+
+
+    /**
+     * 按照id删除车队 Api
+     * /fleet/deleteFleet
+     *
+     * @param fleetId Integer
+     * @return result {}
      */
     @GetMapping("/deleteFleet")
-    public int deleteFleet(@RequestParam("fleetId")Integer fleetId) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("message", "删除成功");
-        return fleetService.deleteFleetById(fleetId);
+    public Result deleteFleet(@RequestParam("fleetId") Integer fleetId) {
+        fleetService.deleteFleetById(fleetId);
+        return Result.success();
     }
 
+
     /**
-     * 车队自己改信息
-     * /fleet/updateFleet
-     * @param fleet
+     * 查找登入车队的所有信息
+     * /fleet/getFleetInfo
+     *
      * @param request
-     * @return
+     * @return {}
+     */
+    @GetMapping("/getFleetInfo")
+    public Result getFleetInfo(HttpServletRequest request) {
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        Fleet getFleetInfo = fleetService.findFleetById((Integer) claims.get("fleetId"));
+        return Result.success("getFleetInfo", getFleetInfo);
+    }
+
+
+    /**
+     * 车队自己改信息 Api
+     * /fleet/updateFleet
+     *
+     * @param fleet   {}
+     * @param request
+     * @return result {}
      */
     @PostMapping("/updateFleet")
-    public Object updateDriver(@RequestBody Fleet fleet, HttpServletRequest request) {
-
-        JSONObject result=new JSONObject();
-//        System.out.println(request.getHeader("token"));
-//        Claims claims = tokenService.parseToken(login(fleet).toString());
+    public Result updateDriver(@RequestBody Fleet fleet, HttpServletRequest request) {
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         fleet.setFleetId((Integer) claims.get("fleetId"));
-        try {
-            /**
-             * @TODO debug
-             */
-            fleetService.updateFleet(fleet);
-        } catch (DataAccessException e) {
-            throw new RuntimeException("修改失败");
-        }
-        result.put("state",1);
-        return result.toJSONString();
+        fleetService.updateFleet(fleet);
+        return Result.success();
     }
 }
