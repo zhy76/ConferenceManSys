@@ -44,9 +44,10 @@ public class ConferenceController {
         return Result.success("conferencesList",conferencesList);
     }
 
-    @GetMapping("/showConference/{conferenceId}")
-    public Result showConference(@PathVariable Integer conferenceId){
+    @GetMapping("/showConferenceById")
+    public Result showConference(@RequestParam Integer conferenceId){
         Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        System.out.println(conference);
         return Result.success("conference",conference);
     }
 

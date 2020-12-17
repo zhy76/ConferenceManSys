@@ -5,17 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>参与者选择会议</title>
+    <title>参与者查看会议</title>
     <!-- Common plugins -->
+    <script src="js/jquery.min.js"></script>
+    <link href="会务管理系统样式1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/simple-line-icons.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/pace.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="会务管理系统样式1/stylesheet" href="css/nanoscroller.css">
+    <link rel="会务管理系统样式1/stylesheet" href="css/metismenu.min.css">
+    <link href="会务管理系统样式1/css/c3.min.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/blue.css" rel="stylesheet">
+    <!-- dataTables -->
+    <link href="会务管理系统样式1/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="会务管理系统样式1/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="会务管理系统样式1/css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="会务管理系统样式1/css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <script src="会务管理系统样式1/js/html5shiv.min.js"></script>
+    <script src="会务管理系统样式1/js/respond.min.js"></script>
+
+    <link rel="stylesheet" href="会务管理系统样式1/fonts/iconfont.css">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
     <link href="assets/css/pace.css" rel="stylesheet">
     <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/nanoscroller.css">
-    <link rel="stylesheet" href="css/metismenu.min.css">
-    <link href="css/c3.min.css" rel="stylesheet">
-    <link href="css/blue.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/nanoscroller.css">
+    <link rel="stylesheet" href="assets/css/metismenu.min.css">
+    <link href="assets/css/c3.min.css" rel="stylesheet">
+    <link href="assets/css/blue.css" rel="stylesheet">
     <!-- dataTables -->
     <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
     <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -27,7 +50,124 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .container a .items{
+            border: 1px solid#eeeeee;
+            /* padding: 5px; */
+            margin-bottom: 50px;
+            background-color: #ffffff;
+            box-shadow: 0px 0 16px rgba(0, 0, 0, 0.2);
+        }
+        .container a .items p {
+            color: #6f6f6f;
+            padding :0px 10px;
+            margin: 0px;
+        }
+        .container a .items h4{
+            padding :0px 10px;
+            margin-top:10px;
+            color: #666666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .container a:hover div{
+            transform: scale(1.15);
+            transition: all .65s;
+            overflow: hidden;
+        }
+
+        .container a:hover h4{
+            color: #00a0e9;
+        }
+
+        .container a p span{
+            color :#d7d7d7;
+        }
+
+        .back-to-top {
+            position: fixed;
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 3px;
+            right: 15px;
+            bottom: 15px;
+            background: #428bca;
+            color: #ffffff;
+            text-align: center;
+            line-height: 40px;
+            transition: display 0.5s ease-in-out;
+            z-index: 99999;
+        }
+
+    </style>
+
     <![endif]-->
+
+    <script>
+        $(function (){
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
+                else $('.back-to-top').fadeOut('slow');
+            });
+            $.ajax({
+                async: false,
+                url: "/conference/showConferences",
+                type: "get",
+                dataType: "text",
+                data: {
+                },
+                success: function (data) {
+                    var listConference = "";
+                    // console.log(data);
+                    // console.log(typeof data)
+                    data = JSON.parse(data)
+                    // console.log(typeof data)
+                    // console.log(data['data']['conferencesList'])
+                    var conferences = data['data']['conferencesList'];
+
+                    // console.log(conferences);
+                    for(var i = 0 ; i < conferences.length ; i ++ )
+                    {
+                        // console.log(conferences[i]);
+                        var conferenceName = conferences[i].conferenceName;
+                        var conferenceLocation = conferences[i].conferenceLocation;
+                        var conferenceStart = conferences[i].conferenceStart;
+                        var conferenceEnd = conferences[i].conferenceEnd;
+
+                        var organizerId = conferences[i].organizerId;
+
+                        listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
+                            '                        <a href = "#">' +
+                            '                            <div class="items">' +
+                            '                                <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
+                            '                                <h4>'+ conferenceName +'</h4>' +
+                            '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
+                            '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
+                            '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerId+'</p>' +
+                            '                            </div>' +
+                            '                        </a>' +
+                            '                    </div>'
+                    }
+                    $('#mainContent').html(listConference);
+                    if (data["code"] === 200) {
+                        alert("获取用户数据成功");
+                    } else {
+                        alert("获取用户数据失败1");
+                    }
+                },
+                error: function () {
+                    alert("获取用户数据失败2");
+                },
+            });
+        })
+    </script>
 </head>
 <body>
 
@@ -113,7 +253,7 @@
                 <ol class="breadcrumb">
                     <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
                     <li>会议</li>
-                    <li>选择会议</li>
+                    <li>查看会议</li>
                 </ol>
             </div>
         </div>
@@ -121,8 +261,8 @@
     <!--主体页面头部结束-->
 
     <!--页面主体内容部分开始-->
-
-
+    <div class="container" id = "mainContent">
+    </div>
     <!--页面主体内容部分结束-->
 
 

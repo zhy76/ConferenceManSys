@@ -159,9 +159,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="example-email" class="col-md-12">邮箱</label>
+                                                    <label for="participantEmail" class="col-md-12">邮箱</label>
                                                     <div class="col-md-12">
-                                                        <input type="email" value="123456@qq.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                                        <input type="email" value="123456@qq.com" class="form-control form-control-line" name="participantEmail" id="participantEmail">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -285,11 +285,11 @@
         </script>
 <script type="text/javascript">
     let participant;
-    let token;
+    let token = localStorage.getItem("xj");
     let $participantId;
     $(function (){
 
-        token = localStorage.getItem("xj");
+        //token = localStorage.getItem("xj");
         console.log(typeof (token));
         console.log(token);
         if (token == null || token === "null" || token === "undefined") {
@@ -309,7 +309,10 @@
             $("#participantName").val(participant.participantName);
             $("#participantJob").val(participant.participantJob);
             $("#participantWorkUnit").val(participant.participantWorkUnit);
+            console.log(participant)
+            console.log(participant.participantEmail)
             $("#participantEmail").val(participant.participantEmail);
+
             $("#participantPass").val(participant.participantPass);
             $("#participantIdCard").val(participant.participantIdCard);
             //$(name="participantSex").val(participant.participantSex);
@@ -329,46 +332,76 @@
             })
 
         $("#update").click(function (){
-            let participantName = $("#participantName").val();
-            let participantJob = $("#participantJob").val();
-            let participantWorkUnit = $("#participantWorkUnit").val();
-            let participantEmail = $("#participantEmail").val();
-            let participantPass = $("#participantPass").val();
-            let participantPhone =$("#participantPhone").val();
-            let participantSex = $("input:radio:checked").val()
-            let participantIdCard = $("#participantIdCard").val();
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: '/participant/updateParticipant',
-                contentType: "application/json",
-                data:JSON.stringify({
-                    //"participantId":5,
-                    "participantName":participantName,
-                    "participantJob":participantJob,
-                    "participantWorkUnit":participantWorkUnit,
-                    "participantEmail": participantEmail,
-                    "participantPass": participantPass,
-                    "participantPhone": participantPhone,
-                    "participantSex":participantSex,
-                    "participantIdCard": participantIdCard
-                }),
-                success: function (jsonData,result) {
-                    console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
-
-                        window.location.href = "参与者主页面.html";
-                    } else {
-                        console.log(jsonData["data"]["token"]);
-                        alert("登录失败，请重试");
-                    }
-                }
-            });
-            // return false;
+            console.log(token);
+            updateParticipantInfo();
         })
 
     })
+    function updateParticipantInfo(){
+        console.log(token);
+        let participantName = $("#participantName").val();
+        let participantJob = $("#participantJob").val();
+        let participantWorkUnit = $("#participantWorkUnit").val();
+        let participantEmail = $("#participantEmail").val();
+        let participantPass = $("#participantPass").val();
+        let participantPhone = $("#participantPhone").val();
+        let participantSex = $("input:radio:checked").val();
+        let participantIdCard = $("#participantIdCard").val();
 
+        $.ajax({
+
+            //async: false,
+            // headers: {
+            //     "token": token,
+            // },
+            beforeSend: function(request) {      //使用beforeSend
+                request.setRequestHeader("token", token);
+                request.setRequestHeader("Content-Type","application/json");
+            },
+            url: "/participant/updateParticipant",
+            type: "post",
+            //dataType: "application/json",
+            async: false,
+            dataType:"text",
+            data: JSON.stringify({
+                "participantName":""+participantName,
+                "participantJob":""+participantJob,
+                "participantWorkUnit":""+participantWorkUnit,
+                "participantEmail":""+participantEmail,
+                "participantPass":""+participantPass,
+                "participantPhone":""+participantPhone,
+                "participantSex":""+participantSex,
+                "participantIdCard":""+participantIdCard
+            }),
+            success: function (jsonData, result) {
+
+                console.log("data is :" + result);
+                console.log(jsonData);
+                console.log(typeof (jsonData));
+                jsonData = JSON.parse(jsonData)
+                console.log(typeof (jsonData));
+
+                 console.log(jsonData['code']);
+                // alert("修改成功！");
+                // window.location.href = "参与者个人信息.html";
+                if (jsonData['code'] === 200) {
+                    alert("修改成功！")
+                    window.location.href = "参与者个人信息.html";
+                } else {
+
+                    alert("登录失败，请重试");
+                }
+            },
+
+            // error: function () {
+            //     alert("获取用户数据失败2");
+            // },
+        });
+        // for (let i = 0; i < 570000000; i++) {
+        //
+        // }
+        console.log(1111111111)
+    }
 
     function getParticipantInfo($participantId) {
         $.ajax({
@@ -395,6 +428,9 @@
                 alert("获取用户数据失败");
             },
         });
+
+
+
     }
     // function updateParticipantInfo(){
     //
