@@ -265,7 +265,7 @@ function submitChange() {
                 }
             },
         });
-        for (let i = 0; i < 170000000; i++) {
+        for (let i = 0; i < 570000000; i++) {
             /**
              * 意义不明的代码，
              * 不加会有bug
