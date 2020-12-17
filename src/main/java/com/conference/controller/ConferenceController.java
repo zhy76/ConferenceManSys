@@ -8,11 +8,16 @@ package com.conference.controller;
  */
 
 import com.conference.entity.Conference;
+import com.conference.entity.Driver;
+import com.conference.entity.Organizer;
 import com.conference.service.ConferenceService;
 import com.conference.util.result.Result;
+import com.conference.util.vaild.DriverRegister;
+import com.conference.util.vaild.OrganizerRegister;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,27 +52,52 @@ public class ConferenceController {
         return conference;
     }
 
-    /**
-     * 修改对应会议信息
-     * @param
-     * @return
-     */
-    @RequestMapping("/updateConference")
-    @ResponseBody
-    public Result updateConference(@PathVariable Conference conference){
-        conferenceService.updateConference(conference);
-        return Result.success();
-    }
+//    /**
+//     * 修改对应会议信息
+//     * @param
+//     * @return
+//     */
+//    @RequestMapping("/updateConference/{conferenceId}")
+//    @ResponseBody
+//    public Result updateConference(@PathVariable("conferenceId") Integer conferenceId){
+//        conferenceService.updateConference(conference);
+//        return Result.success();
+//    }
 
     /**
      * 删除指定会议
      * @param conferenceId
      * @return
      */
-    @GetMapping("/deleteConference")
-    public Result deleteConference(@RequestParam Integer conferenceId) {
-        int conferenceNum = conferenceService.deleteConference(conferenceId);
+    @GetMapping("/deleteConference/{conferenceId}")
+    @ResponseBody
+    public Result deleteConference(@PathVariable("conferenceId") Integer conferenceId) {
+        conferenceService.deleteConference(conferenceId);
 //        if (driverNum < 1) return new Result(ResultCode.FAIL);
+        return Result.success();
+    }
+
+    /**
+     * 生成会议
+     * @param
+     * @return
+     */
+    @GetMapping("/addConference")
+    @ResponseBody
+    public Result addConference(@Validated({OrganizerRegister.class}) @RequestBody Conference conference) {
+        conferenceService.addConference(conference);
+//        if (driverNum < 1) return new Result(ResultCode.FAIL);
+        return Result.success();
+    }
+
+    /**
+     * 修改会议
+     * @param conference
+     * @return
+     */
+    @PostMapping("/updateConference")
+    public Result updateConference(@Validated({OrganizerRegister.class}) @RequestBody Conference conference) {
+        conferenceService.updateConference(conference);
         return Result.success();
     }
 }
