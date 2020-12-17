@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/conference")
 public class ConferenceController {
 
@@ -70,7 +70,6 @@ public class ConferenceController {
      * @return
      */
     @GetMapping("/deleteConference/{conferenceId}")
-    @ResponseBody
     public Result deleteConference(@PathVariable("conferenceId") Integer conferenceId) {
         conferenceService.deleteConference(conferenceId);
 //        if (driverNum < 1) return new Result(ResultCode.FAIL);
@@ -82,8 +81,7 @@ public class ConferenceController {
      * @param
      * @return
      */
-    @GetMapping("/addConference")
-    @ResponseBody
+    @PostMapping("/addConference")
     public Result addConference(@Validated({OrganizerRegister.class}) @RequestBody Conference conference) {
         conferenceService.addConference(conference);
 //        if (driverNum < 1) return new Result(ResultCode.FAIL);
