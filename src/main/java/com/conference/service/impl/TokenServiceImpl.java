@@ -22,7 +22,7 @@ public class TokenServiceImpl implements TokenService {
 
     /**
      * 登录成功后，将用户的用户id写入,
-     * driver
+     * organizer
      */
     public String getToken(Organizer organizer){
         String token = "";
