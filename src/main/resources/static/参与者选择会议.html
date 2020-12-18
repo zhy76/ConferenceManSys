@@ -111,6 +111,7 @@
     <![endif]-->
 
     <script>
+        let organizer;
         $(function (){
             $(window).scroll(function() {
                 if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
@@ -143,6 +144,10 @@
 
                         var organizerId = conferences[i].organizerId;
 
+                        getOrganizerInfo(organizerId);
+
+                        var organizerUnit = organizer.organizerUnit;
+
                         listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
                             '                        <a href = "#">' +
                             '                            <div class="items">' +
@@ -150,23 +155,55 @@
                             '                                <h4>'+ conferenceName +'</h4>' +
                             '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
                             '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
-                            '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerId+'</p>' +
+                            '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
                             '                            </div>' +
                             '                        </a>' +
                             '                    </div>'
                     }
                     $('#mainContent').html(listConference);
                     if (data["code"] === 200) {
-                        alert("获取用户数据成功");
+                        alert("获取会议数据成功");
                     } else {
-                        alert("获取用户数据失败1");
+                        alert("获取数据失败1");
                     }
+                },
+                error: function () {
+                    alert("获取会议数据失败");
+                },
+            });
+        })
+
+
+        function getOrganizerInfo(organizerId) {
+
+            $.ajax({
+                async: false,
+                url: "/organizer/getOrganizerInfo",
+                type: "get",
+                dataType: "text",
+                data: {
+                    'organizerId': organizerId,
+                },
+                success: function (data) {
+                    data = JSON.parse(data)
+
+                    console.log(data['data']['getOrganizerInfo'])
+                    organizer = data['data']['getOrganizerInfo'];
+
+
+                    // if (data["code"] === 200) {
+                    //     alert("获取组织者数据成功");
+                    // } else {
+                    //     alert("获取组织者数据失败");
+                    // }
+
+
                 },
                 error: function () {
                     alert("获取用户数据失败2");
                 },
             });
-        })
+        }
     </script>
 </head>
 <body>
