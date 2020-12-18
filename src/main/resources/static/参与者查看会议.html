@@ -7,6 +7,29 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>参与者查看会议</title>
     <!-- Common plugins -->
+    <script src="js/jquery.min.js"></script>
+    <link href="会务管理系统样式1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/simple-line-icons.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/pace.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="会务管理系统样式1/stylesheet" href="css/nanoscroller.css">
+    <link rel="会务管理系统样式1/stylesheet" href="css/metismenu.min.css">
+    <link href="会务管理系统样式1/css/c3.min.css" rel="stylesheet">
+    <link href="会务管理系统样式1/css/blue.css" rel="stylesheet">
+    <!-- dataTables -->
+    <link href="会务管理系统样式1/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="会务管理系统样式1/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="会务管理系统样式1/css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="会务管理系统样式1/css/style.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <script src="会务管理系统样式1/js/html5shiv.min.js"></script>
+    <script src="会务管理系统样式1/js/respond.min.js"></script>
+
+    <link rel="stylesheet" href="会务管理系统样式1/fonts/iconfont.css">
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
@@ -27,7 +50,247 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+    <style type="text/css">
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .container a .items{
+            border: 1px solid#eeeeee;
+            /* padding: 5px; */
+            margin-bottom: 50px;
+            background-color: #ffffff;
+            box-shadow: 0px 0 16px rgba(0, 0, 0, 0.2);
+        }
+        .container a .items p {
+            color: #6f6f6f;
+            padding :0px 10px;
+            margin: 0px;
+        }
+        .container a .items h4{
+            padding :0px 10px;
+            margin-top:10px;
+            color: #666666;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .container a:hover div{
+            transform: scale(1.15);
+            transition: all .65s;
+            overflow: hidden;
+        }
+
+        .container a:hover h4{
+            color: #00a0e9;
+        }
+
+        .container a p span{
+            color :#d7d7d7;
+        }
+
+        .back-to-top {
+            position: fixed;
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 3px;
+            right: 15px;
+            bottom: 15px;
+            background: #428bca;
+            color: #ffffff;
+            text-align: center;
+            line-height: 40px;
+            transition: display 0.5s ease-in-out;
+            z-index: 99999;
+        }
+
+    </style>
+
     <![endif]-->
+
+    <script>
+            let participant ;
+            let token
+            let $participantId;
+            let $conferenceId
+            let conference;
+            let listConference = "";
+            let organizer;
+            $(function (){
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
+                else $('.back-to-top').fadeOut('slow');
+            })
+            token = localStorage.getItem("xj");
+            console.log(typeof (token));
+            console.log(token);
+            if (token == null || token === "null" || token === "undefined") {
+                console.log("no token");
+            } else {
+                $participantId = parseJwt(token).participantId;/*获取用户信息*/
+                console.log($participantId);
+                }
+            $.ajax({
+                async: false,
+                url: "/joinConference/queryJoinedConference",
+                type: "get",
+                dataType: "text",
+                data: {
+                    'participantId':""+$participantId
+                },
+                success: function (data) {
+                    // var listConference = "";
+                    console.log(data);
+                    console.log(typeof data)
+                    data = JSON.parse(data)
+                    console.log(typeof data)
+                    console.log(data['data']['joinConferenceList'])
+
+                    var joinConferenceList = data['data']['joinConferenceList'];
+                    for (let i = 0; i < joinConferenceList.length; i++) {
+                        $conferenceId = joinConferenceList[i].conferenceId;
+                        console.log($conferenceId)
+                        getConferenceInfo($conferenceId);
+                    }
+                    $('#mainContent').html(listConference);
+
+                    if (data["code"] === 200) {
+                        alert("获取用户数据成功");
+                    } else {
+                        alert("获取用户数据失败1");
+                    }
+                },
+                error: function () {
+                    alert("获取用户数据失败2");
+                },
+            });
+        })
+        /*获取token里面的用户数据*/
+        function parseJwt(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+        function getConferenceInfo($conferenceId){
+            var conferenceId = $conferenceId;
+            $.ajax({
+                async: false,
+                url: "/conference/showConferenceById",
+                type: "get",
+                dataType: "text",
+                data: {
+                    'conferenceId':""+$conferenceId
+                },
+                success: function (data) {
+
+                    console.log(data);
+                    console.log(typeof data)
+                    data = JSON.parse(data)
+                    console.log(typeof data)
+                    console.log(data['data']['conference'])
+                    conference = data['data']['conference'];
+                    var conferenceName = conference.conferenceName;
+                    var conferenceLocation = conference.conferenceLocation;
+                    var conferenceStart = conference.conferenceStart;
+                    var conferenceEnd = conference.conferenceEnd;
+
+                    var organizerId = conference.organizerId;
+
+                    getOrganizerInfo(organizerId);
+
+                    var organizerUnit = organizer.organizerUnit;
+
+                    listConference += '   <div id= "' + $conferenceId +' " class="col-lg-3" style = "margin: 0px 10px;">' +
+                                '                        <a href = "#">' +
+                                '                            <div class="items">' +
+                                '                                <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
+                                '                                <h4>'+ conferenceName +'</h4>' +
+                                '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
+                                '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
+                                '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
+                                '                            </div>' +
+                                '                        </a>' +
+                                '                        <div class="form-group">' +
+                                '                            <div class="col-sm-12 text-center" > ' +
+                                '                                  <a  onclick=\"exitConference('+ conferenceId +')"  class="btn btn-danger">退出会议</a> ' +
+                                '                            </div>' +
+                                '                        </div>'+
+                                '            </div>'
+
+                        // if (data["code"] === 200) {
+                        //     alert("获取用户数据成功2");
+                        // } else {
+                        //     alert("获取用户数据失败1");
+                        // }
+                    },
+                    error: function () {
+                        alert("获取用户数据失败2");
+                    },
+                });
+            }
+            function exitConference(conferenceId){
+                alert(conferenceId);
+                $.ajax({
+                    async: false,
+                    url: "/joinConference/cancelAConference",
+                    type: "get",
+                    dataType: "text",
+                    data: {
+                        'participantId':""+$participantId,
+                        'conferenceId':""+conferenceId
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        console.log(typeof data)
+                        data = JSON.parse(data)
+                        console.log(typeof data)
+                        //console.log(data['data']['joinConferenceList'])
+
+                        if (data["code"] === 200) {
+                            alert("取消会议成功！");
+                            window.location.href = "参与者查看会议.html"
+                        } else {
+                            alert("获取用户数据失败1");
+                        }
+                    },
+                    error: function () {
+                        alert("获取用户数据失败2");
+                    },
+                });
+            }
+
+            function getOrganizerInfo(organizerId) {
+
+                $.ajax({
+                    async: false,
+                    url: "/organizer/getOrganizerInfo",
+                    type: "get",
+                    dataType: "text",
+                    data: {
+                        'organizerId': organizerId,
+                    },
+                    success: function (data) {
+                        data = JSON.parse(data)
+                        console.log(data['data']['getOrganizerInfo'])
+                        organizer = data['data']['getOrganizerInfo'];
+
+                        // if (data["code"] === 200) {
+                        //     alert("获取组织者数据成功");
+                        // } else {
+                        //     alert("获取组织者数据失败");
+                        // }
+                    },
+                    error: function () {
+                        alert("获取用户数据失败2");
+                    },
+                });
+            }
+    </script>
 </head>
 <body>
 
@@ -121,8 +384,8 @@
     <!--主体页面头部结束-->
 
     <!--页面主体内容部分开始-->
-
-
+    <div class="container" id = "mainContent">
+    </div>
     <!--页面主体内容部分结束-->
 
 
