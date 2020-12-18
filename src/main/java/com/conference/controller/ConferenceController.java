@@ -47,22 +47,10 @@ public class ConferenceController {
      */
     @RequestMapping("/showConference/{conferenceId}")
     @ResponseBody
-    public Conference showConference(@PathVariable Integer conferenceId){
+    public Result showConference(@PathVariable Integer conferenceId){
         Conference conference = conferenceService.queryConferenceById(conferenceId);
-        return conference;
+        return Result.success("conference",conference);
     }
-
-//    /**
-//     * 修改对应会议信息
-//     * @param
-//     * @return
-//     */
-//    @RequestMapping("/updateConference/{conferenceId}")
-//    @ResponseBody
-//    public Result updateConference(@PathVariable("conferenceId") Integer conferenceId){
-//        conferenceService.updateConference(conference);
-//        return Result.success();
-//    }
 
     /**
      * 删除指定会议
