@@ -1,18 +1,12 @@
-
-function getBothId(liveTable){
-    /**
-     * $(liveTable).parent()一列
-     *
-     * @type {jQuery}
-     */
-    console.log();
+function getBothId(liveTable) {
     $participantPhone = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
     $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
     queryParticipantByParticipantPhone($participantPhone);
-    $participantId=participant.participantId;
+    $participantId = participant.participantId;
 }
+
 //重新设置房间号
-function resetLiveRoom(liveTable){
+function resetLiveRoom(liveTable) {
     getBothId(liveTable);
     if (1) {
         $.ajax({
@@ -23,9 +17,9 @@ function resetLiveRoom(liveTable){
             // headers: { 'token': localStorage.getItem("conNCU") },
             data: JSON.stringify({
                 "participantId": $participantId,
-                "hotelId":$hotelId,
+                "hotelId": $hotelId,
                 "conferenceId": $conferenceId,
-                "roomId":null
+                "roomId": null
             }),
             success: function (jsonData, result) {
                 console.log(jsonData);
@@ -46,8 +40,8 @@ function resetLiveRoom(liveTable){
 }
 
 //删除住宿记录
-function deleteLiveRoomByAll(liveTable){
-    if(confirm("确定删除吗？")){
+function deleteLiveRoomByAll(liveTable) {
+    if (confirm("确定删除吗？")) {
         getBothId(liveTable);
         $.ajax({
             async: false,
@@ -59,7 +53,7 @@ function deleteLiveRoomByAll(liveTable){
             dataType: "json",
             data: {
                 "participantId": $participantId,
-                "hotelId":$hotelId,
+                "hotelId": $hotelId,
                 "conferenceId": $conferenceId
             },
             success: function (jsonData, result) {
@@ -77,6 +71,7 @@ function deleteLiveRoomByAll(liveTable){
     }
 
 }
+
 function queryParticipantByParticipantId($participantId) {
     $.ajax({
         async: false,
@@ -103,6 +98,7 @@ function queryParticipantByParticipantId($participantId) {
         },
     });
 }
+
 function queryParticipantByParticipantPhone($participantPhone) {
     $.ajax({
         async: false,

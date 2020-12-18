@@ -87,6 +87,7 @@ public class FleetController {
             return new Result(ResultCode.UnknownAccountException);
         } else {
             if (!fleetForBase.getFleetPass().equals(fleet.getFleetPass())) {
+                System.out.println("error");
                 return new Result(ResultCode.IncorrectCredentialsException);
             } else {
                 String token = tokenService.getToken(fleetForBase);

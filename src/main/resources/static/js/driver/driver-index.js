@@ -20,32 +20,43 @@ $(function () {
         console.log($driverId);
     }
 
-
+    if (token == null || token == "null" || typeof ($driverId) == "undefined" || $driverId == undefined) {//未登录
+        console.log("未登录");
+        localStorage.setItem("hcs", null);
+        alert("请先登录！");
+        window.location.href = "popupsignin.html";
+    }
     /**
      * 点击->个人信息
      */
     $("#to-info a").click(function () {
-
+            console.log("信息获取");
             showDriverInfo();
-
         }
     )
-    /**
-     * 点击->待接送
-     */
-    $("to-wait-pick").click(function () {
+    $("#to-wait-pick a").click(function () {
         getDriverAllPickUp();
-        showPickUpTable();
+        // for (let it of pickUp) {
+        //     console.log(it);
+        // }
+        showPickUpTable(1);
     })
-
+    $("#to-all-pick a").click(function () {
+        getDriverAllPickUp();
+        for (let it of pickUp) {
+            console.log(it);
+        }
+        showPickUpTable(0);
+    })
     /*点击 退出登录 按钮*/
-    $("#login-out").click(function () {
+    $(".login-out").click(function () {
         clearDriverInfo();
         //localStorage.clear();
         localStorage.setItem("hcs", null);
         alert("退出成功");
         window.location.href = "popupsignin.html";
     })
+
 })
 
 /**
@@ -87,8 +98,6 @@ function clearDriverInfo() {
 }
 
 //# sourceMappingURL=1.js.map
-
-
 
 
 /*获取token里面的用户数据*/
@@ -292,94 +301,6 @@ function submitChange() {
         alert("信息格式有误，请重新填写！");
     }
 }
-
-
-function getDriverAllPickUp() {
-    $.ajax({
-        async: false,
-        headers: {
-            'token': token,
-        },
-        url: "/pickUp/getDriverAllPickUp",
-        type: "get",
-        dataType: "json",
-        data: {
-            'driverId': $driverId,
-        },
-        success: function (data) {
-            console.log(data);
-            if (data["code"] === 200) {
-                driver = data["data"]["getDriverInfo"];
-                console.log(driver);
-            } else {
-                alert("获取用户数据失败");
-            }
-        },
-        error: function () {
-            alert("获取用户数据失败!");
-        },
-    });
-}
-
-function getParticipantNameById($participantId) {
-
-}
-
-function showPickUpTable() {
-    let $html =
-        "                            <div class=\"row\">\n" +
-        "                                <div class=\"col-md-12\">\n" +
-        "                                    <div class=\"panel panel-default collapsed\">\n" +
-        "                                        <div class=\"panel-heading\">\n" +
-        "                                            接送记录\n" +
-        "                                        </div>\n" +
-        "                                        <div class=\"panel-body\">\n" +
-        "                                            <table class=\"table table-striped dt-responsive nowrap\" id=\"datatable\">\n" +
-        "                                                <thead>\n" +
-        "                                                <tr>\n" +
-        "                                                    <th>接送单号</th>\n" +
-        "                                                    <th>姓名</th>\n" +
-        "                                                    <th>火车/航班号</th>\n" +
-        "                                                    <th>预计到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
-        "                                                    <th>是否完成</th>\n" +
-        "                                                </tr>\n" +
-        "                                                </thead>\n" +
-        "\n" +
-        "                                                <tbody>\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Tiger Nixon</td>\n" +
-        "                                                    <td>System Architect</td>\n" +
-        "                                                    <td>Edinburgh</td>\n" +
-        "                                                    <td>61</td>\n" +
-        "                                                    <td>2011/04/25</td>\n" +
-        "                                                    <td>$320,800</td>\n" +
-        "                                                </tr>\n" +
-        "                                                <!--g-->\n" +
-        "                                                <tr>\n" +
-        "                                                    <td>Garrett Winters</td>\n" +
-        "                                                    <td>Accountant</td>\n" +
-        "                                                    <td>Tokyo</td>\n" +
-        "                                                    <td>63</td>\n" +
-        "                                                    <td>2011/07/25</td>\n" +
-        "                                                    <td>$170,750</td>\n" +
-        "                                                </tr>\n" +
-        "                                                </tbody>\n" +
-        "                                            </table>\n" +
-        "\n" +
-        "                                        </div>\n" +
-        "                                    </div>\n" +
-        "                                </div>\n" +
-        "                            </div><!--end row-->";
-
-    // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($html);
-    for (i of pickUp) {
-
-    }
-}
-
 
 
 /**************************************/

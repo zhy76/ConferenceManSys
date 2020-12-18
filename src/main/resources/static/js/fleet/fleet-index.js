@@ -25,9 +25,24 @@ $(function () {
     // showFleetInfo();
     console.log($('#btn').val);
     $('#btn').click();
-    showFleetInfo();
 
-
+//showFleetInfo();
+    $("#to-info a").click(function () {
+        console.log("success");
+        showFleetInfo();
+    })
+//安排住宿
+    $("#to-wait-live a").click(function () {
+        //console.log("success");
+        findAllLiveRoomByHotelId();
+        doLiveRoom();
+    })
+//住宿情况查询
+    $("#to-all-live a").click(function () {
+        //console.log("success");
+        findAllLiveRoomByHotelId();
+        showLiveRoomTable();
+    })
     /*点击 退出登录 按钮*/
     $("#login-out").click(function () {
         clearDriverInfo();
@@ -104,28 +119,28 @@ function showFleetInfo() {
         "                                                    <label class=\"col-md-12\">车队名</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
-        "                                                               value=\"" + fleet.fleetName + "\">\n" +
+        "                                                               value=\"" + fleet.fleetName + "\" id='fleetName'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">电话号码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
-        "                                                               value=\"" + fleet.fleetPhone + "\">\n" +
+        "                                                               value=\"" + fleet.fleetPhone + "\" id='fleetPhone'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">密码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
-        "                                                               value=\""+ fleet.fleetPass +"\">\n" +
+        "                                                               value=\"" + fleet.fleetPass + "\" id='fleetPass'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">重复密码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
-        "                                                               value=\""+ fleet.fleetPass +"\">\n" +
+        "                                                               value=\"" + fleet.fleetPass + "\" id='repeatFleetPass'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <br/>\n" +
@@ -137,8 +152,8 @@ function showFleetInfo() {
         "                                                </div>\n" +
         "                                            </form>"
     // 清空节点
-    $(".card-body").empty();
-    $(".card-body").append($html);
+    $(".jumbotron").empty();
+    $(".jumbotron").append($html);
 }
 
 
@@ -218,9 +233,9 @@ function submitChange() {
             contentType: "application/json",
             headers: {'token': localStorage.getItem("hcs")},
             data: JSON.stringify({
-                "fleetName":$("#fleetName").val(),
-                "fleetPass":$("#driverPass").val(),
-                "fleetPhone":$("#carNumber").val()
+                "fleetName": $("#fleetName").val(),
+                "fleetPass": $("#fleetPass").val(),
+                "fleetPhone": $("#fleetPhone").val()
             }),
             success: function (jsonData, result) {
                 console.log(jsonData);

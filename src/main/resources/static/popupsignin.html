@@ -120,8 +120,9 @@
                                 </div><!--/.col -->
                                 <div class="col-sm-12">
                                     <div class="signin-footer">
-                                        <button class="btn signin_btn signin_btn_two" data-target=".signin_modal" data-toggle="modal"
-                                                type="button" id="submit">
+                                        <button class="btn signin_btn signin_btn_two" data-target=".signin_modal"
+                                                data-toggle="modal"
+                                                id="submit" type="button">
                                             登 录
                                         </button>
                                         <p>
@@ -196,24 +197,26 @@
                 console.log(json);
 
                 console.log(driverPhone);
-                console.log(role +  '/login');
+                console.log(role + '/login');
                 $.ajax({
                     type: "POST",
                     dataType: "json",
-                    url: role +  '/login',
+                    url: role + '/login',
                     contentType: "application/json",
                     data: JSON.stringify(json),// 方法将一个 JavaScript 对象或值转换为 JSON 字符串
                     success: function (jsonData, result) {
-                        console.log("data is :" + result);
-                        if (jsonData["data"]["token"]) {
+                        console.log(jsonData);
+                        if (jsonData["code"] !== 200) {
+                            alert(jsonData["message"]);
+                        } else if (jsonData["data"]["token"] !== null) {
                             localStorage.setItem("hcs", jsonData["data"]["token"]);
+
                             window.location.href = role + "-index.html";
                         } else {
-                            console.log(jsonData["data"]["token"]);
                             alert("登录失败，请重试");
                         }
                     },
-                    error:function () {
+                    error: function () {
                         alert(1);
                     }
                 });

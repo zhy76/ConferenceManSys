@@ -10,7 +10,8 @@
         <script src="js/jquery-3.1.1.min.js"></script>
         <script src="js/jquery.validate.min.js"></script>
         <script src="js/messages_zh.js"></script>
-        <script src="js/driver/driver-index.js"></script>
+
+
         <!-- Common plugins -->
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/simple-line-icons.css" rel="stylesheet">
@@ -61,7 +62,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" id="login-out">
+                                <a class="login-out" href="javascript: void(0);">
                                     <span class="glyphicon glyphicon-log-out"> 退出登录</span>
                                 </a>
                             </li>
@@ -88,7 +89,7 @@
                             <a href="driver-index.html"><i class="icon-home"></i> 主页 </a>
                         </li>
                         <li id="to-info">
-                            <a href="javascript:void(0)"><i class="icon-user"></i> 个人信息 </a>
+                            <a href="javascript: void(0);"><i class="icon-user"></i> 个人信息 </a>
                         </li>
                         <li>
                             <a aria-expanded="true" href="driver-pick-up.html"><i class="icon-map"></i> 接送管理 <span
@@ -127,7 +128,7 @@
             <!--页面主体内容部分开始-->
             <div class="container">
                 <div class="row clearfix">
-                    <div class="col-md-8 column">
+                    <div class="col-md-10 column">
                         <div class="jumbotron">
                             <h1>
                                 欢迎!
@@ -137,9 +138,9 @@
                             <!--                            </p>-->
                         </div>
                     </div>
-                    <div class="col-md-4 column">
-                        <img alt="140x140" src="picture/3.jpg"/>
-                    </div>
+                    <!--                    <div class="col-md-4 column">-->
+                    <!--                        <img alt="140x140" src="picture/3.jpg"/>-->
+                    <!--                    </div>-->
                 </div>
             </div>
 
@@ -175,5 +176,8 @@
         <script src="js/datatables.responsive.min.js"></script>
         <script src="js/jquery.toast.min.js"></script>
         <script src="js/dashboard-alpha.js"></script>
+        <script src="js/driver/driver-pickup.js"></script>
+        <script src="js/driver/driver-index.js"></script>
+
     </body>
 </html>
