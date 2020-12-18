@@ -35,9 +35,9 @@ public class ConferenceController {
      */
     @RequestMapping("/showConferences")
     @ResponseBody
-    public List<Conference> showConferences(){
+    public Result showConferences(){
         List<Conference> conferencesList = conferenceService.queryConferences();
-        return conferencesList;
+        return Result.success("conferencesList",conferencesList);
     }
 
     /**
