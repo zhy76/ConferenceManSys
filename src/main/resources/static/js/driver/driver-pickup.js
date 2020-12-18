@@ -175,13 +175,23 @@ function finish(btn) {
                 if (jsonData['code'] === 200) {
                     alert("接送成功");
                     // showDriverInfo(driver)
-                    location.reload();
+                    // location.reload();
                 } else {
                     alert("完成失败");
-                    location.reload();
+                    // location.reload();
                 }
             },
         });
+        for (let i = 0; i < 500000000; i++) {
+            /**
+             * 意义不明的代码，
+             * 不加会有bug
+             * 170000000
+             * 二分
+             */
+        }
+        showPickUpTable(1);
+
     } else {
         alert("信息格式有误，请重新填写！");
     }
