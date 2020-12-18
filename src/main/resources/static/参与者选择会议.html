@@ -158,7 +158,13 @@
                             '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
                             '                            </div>' +
                             '                        </a>' +
-                            '                    </div>'
+                            '                            <div class="form-group">' +
+                            '                                 <div class="col-sm-12 text-center" >' +
+                            '                                       <a type="submit" id="update"  class="btn btn-success">加入</a>' +
+                            '                                 </div>' +
+                            '                            </div>'+
+                            //'                        </a>' +
+                            '                   </div>'
                     }
                     $('#mainContent').html(listConference);
                     if (data["code"] === 200) {
@@ -187,7 +193,7 @@
                 success: function (data) {
                     data = JSON.parse(data)
 
-                    console.log(data['data']['getOrganizerInfo'])
+                    // console.log(data['data']['getOrganizerInfo'])
                     organizer = data['data']['getOrganizerInfo'];
 
 

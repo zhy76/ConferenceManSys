@@ -298,9 +298,12 @@
             $participantId = parseJwt(token).participantId;/*获取用户信息*/
             console.log($participantId);
         }
+
+
         /**
          * 点击->个人信息
          */
+        // onclickToInfo();
         $("#to-info a").click(function () {
 
             getParticipantInfo($participantId);
@@ -337,6 +340,36 @@
         })
 
     })
+    // function onclickToInfo(){
+    //         console.log("onclickToInfo");
+    //         getParticipantInfo($participantId);
+    //         console.log(participant.participantPhone)
+    //         console.log($("#participantPhone").val())
+    //         $("#participantName").val(participant.participantName);
+    //         $("#participantJob").val(participant.participantJob);
+    //         $("#participantWorkUnit").val(participant.participantWorkUnit);
+    //         console.log(participant)
+    //         console.log(participant.participantEmail)
+    //         $("#participantEmail").val(participant.participantEmail);
+    //
+    //         $("#participantPass").val(participant.participantPass);
+    //         $("#participantIdCard").val(participant.participantIdCard);
+    //         //$(name="participantSex").val(participant.participantSex);
+    //         $("#participantPhone").val(participant.participantPhone);
+    //
+    //         $("participantSex").val(participant.participantSex);
+    //         console.log($("#participantPhone").val())
+    //         if(participant.participantSex == "男"){
+    //             $("#male").prop("checked",true)
+    //             $("#female").prop("checked",false)
+    //         }
+    //         if(participant.participantSex == "女"){
+    //             $("#male").prop("checked",false)
+    //             $("#female").prop("checked",true)
+    //         }
+    //         console.log(participant.participantSex)
+    //
+    // }
     function updateParticipantInfo(){
         console.log(token);
         let participantName = $("#participantName").val();
