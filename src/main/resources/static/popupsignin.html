@@ -188,14 +188,15 @@
                 var phoneKey = role + "Phone";
                 var passKey = role + "Pass";
                 var json = {
-                    // phoneKey: "" + driverPhone,
-                    // passKey: "" + driverPass
+                    // "fleetPhone": "19914665734",
+                    // "fleetPass": "123456"
                 };
                 json[phoneKey] = driverPhone;
                 json[passKey] = driverPass;
                 console.log(json);
 
                 console.log(driverPhone);
+                console.log(role +  '/login');
                 $.ajax({
                     type: "POST",
                     dataType: "json",
@@ -211,6 +212,9 @@
                             console.log(jsonData["data"]["token"]);
                             alert("登录失败，请重试");
                         }
+                    },
+                    error:function () {
+                        alert(1);
                     }
                 });
             })

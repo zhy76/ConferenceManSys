@@ -40,7 +40,14 @@ $(function () {
         for (let it of pickUp) {
             console.log(it);
         }
-        showPickUpTable();
+        showPickUpTable(1);
+    })
+    $("#to-all-pick a").click(function () {
+        getDriverAllPickUp();
+        for (let it of pickUp) {
+            console.log(it);
+        }
+        showPickUpTable(0);
     })
 })
 
@@ -293,6 +300,7 @@ function getDriverAllPickUp() {
             'token': token,
         },
         url: "/pickUp/getDriverAllPickUp",
+        // url: "/pickUp/getDriverWaitPickUp",
         type: "get",
         dataType: "json",
         data: {
@@ -329,7 +337,7 @@ function queryParticipantByParticipantId($participantId) {
             console.log(data);
             if (data["code"] === 200) {
                 participant = data["data"]["queryParticipantByParticipantId"];
-                console.log(participant);
+                // console.log(participant);
             } else {
                 alert("获取用户数据失败");
             }
@@ -343,7 +351,13 @@ function queryParticipantByParticipantId($participantId) {
 // $(document).ready(function () {
 //     $('#datatable').dataTable();
 // });
-function showPickUpTable() {
+/**
+ * 0 -> all
+ * 1 -> wait
+ * 2 -> down
+ * @param flag
+ */
+function showPickUpTable(flag) {
 
 
     let $htmlStart =
@@ -371,6 +385,11 @@ function showPickUpTable() {
 
     console.log(pickUp);
     for (let i of pickUp) {
+        if (i.finishPickup === true && flag === 1) {
+            continue;
+        } else if (i.finishPickup === false && flag === 2){
+
+        }
         console.log(i.participantId);
         queryParticipantByParticipantId(i.participantId);
         console.log(participant);

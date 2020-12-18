@@ -267,6 +267,7 @@ function submitChange() {
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     console.log('成功');
+
                     alert("修改成功");
                     // showDriverInfo(driver);
                     location.reload();
@@ -277,7 +278,8 @@ function submitChange() {
                 }
             },
         });
-        for (let i = 0; i < 170000000; i++) {
+        for (let i = 0; i < 1000000000; i++) {
+
             /**
              * 意义不明的代码，
              * 不加会有bug
@@ -324,7 +326,8 @@ function getParticipantNameById($participantId) {
 }
 
 function showPickUpTable() {
-    let $html = "                            <div class=\"row\">\n" +
+    let $html =
+        "                            <div class=\"row\">\n" +
         "                                <div class=\"col-md-12\">\n" +
         "                                    <div class=\"panel panel-default collapsed\">\n" +
         "                                        <div class=\"panel-heading\">\n" +

@@ -21,44 +21,45 @@ $(function () {
         $driverId = parseJwt(token).driverId;/*获取用户信息*/
         console.log($driverId);
     }
+    getFleetInfo($fleetId);
+    // showFleetInfo();
+    console.log($('#btn').val);
+    $('#btn').click();
+    showFleetInfo();
 
 
-    /**
-     * 点击->个人信息
-     */
-    $("#to-info a").click(function () {
-
-            showDriverInfo();
-
-        }
-    )
-    $("to-wait-pick").click(function () {
-        getDriverAllPickUp();
-        showPickUpTable();
+    /*点击 退出登录 按钮*/
+    $("#login-out").click(function () {
+        clearDriverInfo();
+        //localStorage.clear();
+        localStorage.setItem("hcs", null);
+        alert("退出成功");
+        window.location.href = "popupsignin.html";
     })
+    // submitChange();
 })
 
 /**
  * 得到登入车队的信息
  */
 
-function getDriverInfo($fleetId) {
+function getFleetInfo($fleetId) {
     $.ajax({
         async: false,
         headers: {
             'token': token,
         },
-        url: "/fleetId/getFleetIdInfo",
+        url: "/fleet/getFleetInfo",
         type: "get",
         dataType: "json",
         data: {
-            'driverId': $fleetId,
+            'fleetId': $fleetId,
         },
         success: function (data) {
             console.log(data);
             if (data["code"] === 200) {
-                driver = data["data"]["getFleetIdInfo"];
-                console.log(driver);
+                fleet = data["data"]["getFleetInfo"];
+                console.log(fleet);
             } else {
                 alert("获取用户数据失败");
             }
@@ -79,8 +80,6 @@ function clearFleetInfo() {
 //# sourceMappingURL=1.js.map
 
 
-
-
 /*获取token里面的用户数据*/
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
@@ -92,81 +91,54 @@ function parseJwt(token) {
 }
 
 /**
- *
+ * 车队信息
  */
 
-function showDriverInfo() {
-    getDriverInfo($driverId);
-    console.log(driver);
-    let $html = "<div class=\"tab-pane\" role=\"tabpanel\">\n" +
-        "                                    <div class=\"card-body\">\n" +
-        "                                        <form  class=\"form-horizontal form-material\" id='driverInfo' >\n" +
-        "                                            <br>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">姓名</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" class=\"form-control form-control-line\"\n" +
-        "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
+function showFleetInfo() {
+    getFleetInfo($fleetId);
+    console.log(fleet);
+    let $html =
+        "<form class=\"form-horizontal form-material\">\n" +
+        "                                                <br>\n" +
+        "                                                <div class=\"form-group\">\n" +
+        "                                                    <label class=\"col-md-12\">车队名</label>\n" +
+        "                                                    <div class=\"col-md-12\">\n" +
+        "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
+        "                                                               value=\"" + fleet.fleetName + "\">\n" +
+        "                                                    </div>\n" +
         "                                                </div>\n" +
-        "                                            </div>\n" +
-        // "                                            <div class=\"form-group\">\n" +
-        // "                                                <label for=\"example-email\" class=\"col-md-12\">邮箱</label>\n" +
-        // "                                                <div class=\"col-md-12\">\n" +
-        // "                                                    <input type=\"email\" \n" +
-        // "                                                        class=\"form-control form-control-line\" name=\"example-email\"\n" +
-        // "                                                        id=\"example-email\">\n" +
-        // "                                                </div>\n" +
-        // "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='driverPass' class=\"form-control form-control-line\" id='driverPass'>\n" +
+        "                                                <div class=\"form-group\">\n" +
+        "                                                    <label class=\"col-md-12\">电话号码</label>\n" +
+        "                                                    <div class=\"col-md-12\">\n" +
+        "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
+        "                                                               value=\"" + fleet.fleetPhone + "\">\n" +
+        "                                                    </div>\n" +
         "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">重复密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='repeatDriverPass' class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
+        "                                                <div class=\"form-group\">\n" +
+        "                                                    <label class=\"col-md-12\">密码</label>\n" +
+        "                                                    <div class=\"col-md-12\">\n" +
+        "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
+        "                                                               value=\""+ fleet.fleetPass +"\">\n" +
+        "                                                    </div>\n" +
         "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">电话</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.driverPhone + "\"\n" +
-        "                                                        name='driverPhone' class=\"form-control form-control-line\" id='driverPhone'>\n" +
+        "                                                <div class=\"form-group\">\n" +
+        "                                                    <label class=\"col-md-12\">重复密码</label>\n" +
+        "                                                    <div class=\"col-md-12\">\n" +
+        "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
+        "                                                               value=\""+ fleet.fleetPass +"\">\n" +
+        "                                                    </div>\n" +
         "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">车牌号</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.carNumber + "\"\n" +
-        "                                                        name='carNumber' class=\"form-control form-control-line\" id='carNumber'>\n" +
+        "                                                <br/>\n" +
+        "                                                <br/>\n" +
+        "                                                <div class=\"form-group\">\n" +
+        "                                                    <div class=\"col-sm-12 text-center\">\n" +
+        "                                                        <button class=\"btn btn-info\" onclick='submitChange()'>更新</button>\n" +
+        "                                                    </div>\n" +
         "                                                </div>\n" +
-        "                                            </div>\n" +
-
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">个人介绍</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <textarea rows=\"5\" class=\"form-control form-control-line\">\n" +
-        "                                                    啊哈！\n" +
-        "                                                </textarea>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <br />\n" +
-        "                                            <br />\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <div class=\"col-sm-12 text-center\">\n" +
-        "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                        </form>\n" +
-        "                                    </div>\n" +
-        "                                </div>"
+        "                                            </form>"
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($html);
+    $(".card-body").empty();
+    $(".card-body").append($html);
 }
 
 
@@ -231,7 +203,7 @@ function validform() {
 }
 
 /**
- * 更新司机信息
+ * 更新车队信息
  */
 function submitChange() {
     /**
@@ -242,21 +214,20 @@ function submitChange() {
         $.ajax({
             // async: false,
             type: "POST",
-            url: '/driver/updateDriver',
+            url: '/fleet/updateFleet',
             contentType: "application/json",
             headers: {'token': localStorage.getItem("hcs")},
             data: JSON.stringify({
-                "driverName": $("#driverName").val(),
-                "carNumber": $("#carNumber").val(),
-                "fleetId": Number($("#fleetId").val()),
-                "driverPass": $("#driverPass").val(),
-                "driverPhone": $("#driverPhone").val()
+                "fleetName":$("#fleetName").val(),
+                "fleetPass":$("#driverPass").val(),
+                "fleetPhone":$("#carNumber").val()
             }),
             success: function (jsonData, result) {
                 console.log(jsonData);
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     console.log('成功');
+
                     alert("修改成功");
                     // showDriverInfo(driver);
                     location.reload();
@@ -267,7 +238,8 @@ function submitChange() {
                 }
             },
         });
-        for (let i = 0; i < 170000000; i++) {
+        for (let i = 0; i < 1000000000; i++) {
+
             /**
              * 意义不明的代码，
              * 不加会有bug
@@ -280,7 +252,6 @@ function submitChange() {
         alert("信息格式有误，请重新填写！");
     }
 }
-
 
 function getDriverAllPickUp() {
     $.ajax({
@@ -314,7 +285,8 @@ function getParticipantNameById($participantId) {
 }
 
 function showPickUpTable() {
-    let $html = "                            <div class=\"row\">\n" +
+    let $html =
+        "                            <div class=\"row\">\n" +
         "                                <div class=\"col-md-12\">\n" +
         "                                    <div class=\"panel panel-default collapsed\">\n" +
         "                                        <div class=\"panel-heading\">\n" +
@@ -362,11 +334,7 @@ function showPickUpTable() {
     // 清空节点
     $(".jumbotron").empty();
     $(".jumbotron").append($html);
-    for (i of pickUp) {
-
-    }
 }
-
 
 
 /**************************************/
