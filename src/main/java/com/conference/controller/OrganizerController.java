@@ -31,23 +31,6 @@ public class OrganizerController {
     @Autowired
     private OrganizerService organizerService;
 
-//    /**
-//     * 删除司机 Api
-//     * /driver/deleteDriver
-//     *
-//     * @param driverId (the driver id),
-//     * @return {
-//     * "code": 200,
-//     * "message": "成功"
-//     * }
-//     */
-//    @GetMapping("/deleteDriver")
-//    public Result deleteDriver(@RequestParam Integer driverId) {
-//        int driverNum = driverService.deleteDriverById(driverId);
-////        if (driverNum < 1) return new Result(ResultCode.FAIL);
-//        return Result.success();
-//    }
-
     /**
      * 组织者注册 Api
      * /organizer/register
@@ -99,19 +82,6 @@ public class OrganizerController {
     }
 
 
-//    /**
-//     * 管理员修改司机的信息 Api
-//     * /driver/adminUpdateDriver
-//     *
-//     * @param driver {}
-//     * @return result {}
-//     */
-//    @PostMapping("/adminUpdateDriver")
-//    public Result adminUpdateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver) {
-//        driverService.updateDriver(driver);
-//        return Result.success();
-//    }
-
     /**
      * 组织者自己修改自己的信息 Api
      * /organizer/updateOrganizer
@@ -126,34 +96,7 @@ public class OrganizerController {
         return Result.success();
     }
 
-//    /**
-//     * 根据id查找车队所有的司机 Api
-//     * /driver/getAllFleetDriver
-//     *
-//     * @param fleetId
-//     * @return result {}
-//     */
-//    @GetMapping("/getAllFleetDriver")
-//    public Result getAllFleetDriver(@RequestParam("fleetId") Integer fleetId) {
-//        List<Driver> getAllFleetDriver = driverService.findFleetAllDriver(fleetId);
-//        if (fleetId == null)
-//            return new Result(ResultCode.IllegalArgumentException);
-//        return Result.success("getAllFleetDriver", getAllFleetDriver);
-//    }
-//
-//    /**
-//     * 查找所有的司机 Api
-//     * /driver/getAllDriver
-//     *
-//     * @return result {}
-//     */
-//    @GetMapping("/getAllDriver")
-//    public Result getAllDriver() {
-//        List<Driver> getAllDriver = driverService.findAllDriver();
-//        return new Result(2, "时间冲突");
-////        return Result.success("getAllDriver", getAllDriver);
-//    }
-//
+
     /**
      * 查找登入组织者的所有信息
      * /organizer/getOrganizerInfo
