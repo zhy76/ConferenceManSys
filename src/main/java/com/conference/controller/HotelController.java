@@ -32,7 +32,7 @@ public class HotelController {
 
     @GetMapping("/deleteHotel")
     public Result deleteHotel(@RequestParam int id){
-        int driverNum = hotelService.deleteHotelById(id);
+        int HotelNum = hotelService.deleteHotelById(id);
 //        if (driverNum < 1) return new Result(ResultCode.FAIL);
         return Result.success();
     }
@@ -45,8 +45,9 @@ public class HotelController {
             return new Result(ResultCode.IllegalArgumentException);
         }
         int addNumber = hotelService.addHotel(hotel);
+        Hotel hotelForBase = hotelService.getHotelByPhone(hotel.getHotelPhone());
         if(addNumber>0){
-            String token= tokenService.getToken(addNumber); //???????????
+            String token = tokenServiceImpl.getToken(hotelForBase);
             return Result.success("token", token);
         }else{
             return new Result(ResultCode.FAIL);
