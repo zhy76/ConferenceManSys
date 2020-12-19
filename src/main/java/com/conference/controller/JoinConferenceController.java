@@ -76,6 +76,7 @@ public class JoinConferenceController {
 
     @PostMapping("/joinAConference")
     public Result joinAConference(@RequestBody JoinConference joinConference){
+        System.out.println(joinConference);
         if(joinConference.getParticipantId()==null||joinConference.getConferenceId()==null){
             return new Result(ResultCode.BindException);
         }
