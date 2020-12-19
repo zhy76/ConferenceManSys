@@ -78,12 +78,9 @@ function queryParticipantByParticipantId($participantId) {
 //     $('#datatable').dataTable();
 // });
 /**
- * 0 -> all
- * 1 -> wait
- * 2 -> down
- * @param flag
+ *
  */
-function showPickUpTable(flag) {
+function showWaitPickUpTable() {
 
     getDriverAllPickUp();
 
@@ -92,7 +89,79 @@ function showPickUpTable(flag) {
         "                                <div class=\"col-md-12\">\n" +
         "                                    <div class=\"panel panel-default collapsed\">\n" +
         "                                        <div class=\"panel-heading\">\n" +
-        "                                            接送记录\n" +
+        "                                            待接送记录\n" +
+        "                                        </div>\n" +
+        "                                        <div class=\"panel-body\">\n" +
+        "                                            <table class=\"table table-striped dt-responsive nowrap\" id=\"datatable\">\n" +
+        "                                                <thead>\n" +
+        "                                                <tr>\n" +
+        "                                                    <th>接送单号</th>\n" +
+        "                                                    <th>姓名</th>\n" +
+        "                                                    <th>电话号码</th>\n" +
+        "                                                    <th>航班</th>\n" +
+        "                                                    <th>到达时间</th>\n" +
+        "                                                    <th>离开时间</th>\n" +
+        "                                                    <th>是否完成</th>\n" +
+        "                                                    <th>操作</th>\n" +
+        "                                                </tr>\n" +
+        "                                                </thead>\n" +
+        "                                                <tbody>\n"
+    let $html = "";
+
+    console.log(pickUp);
+    for (let i of pickUp) {
+        if (i.finishPickup === true) {
+            continue;
+        }
+        // if (i.finishPickup === true && flag === 1) {
+        //     continue;
+        // } else if (i.finishPickup === false && flag === 2) {
+        //
+        // }
+        // console.log(i.participantId);
+        queryParticipantByParticipantId(i.participantId);
+        console.log(participant);
+        $html +=
+            "                                                <tr>\n" +
+            "                                                    <td>" + fix(i.pickUpId, 4) + "</td>\n" +
+            "                                                    <td>" + participant.participantName + "</td>\n" +
+            "                                                    <td>" + participant.participantPhone + "</td>\n" +
+            "                                                    <td>" + i.trainNumber + "</td>\n" +
+            "                                                    <td>" + i.toTime + "</td>\n" +
+            "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
+            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button>" +
+            "                                                </tr>\n";
+    }
+    let $htmlEnd =
+        "                                                </tbody>\n" +
+        "                                            </table>\n" +
+        "\n" +
+        "                                        </div>\n" +
+        "                                    </div>\n" +
+        "                                </div>\n" +
+        "                            </div><!--end row-->";
+
+    // 清空节点
+    $(".jumbotron").empty();
+    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $('#datatable').dataTable();
+}
+
+/**
+ *
+ *
+ */
+function showAllPickUpTable() {
+
+    getDriverAllPickUp();
+
+    let $htmlStart =
+        "                            <div class=\"row\">\n" +
+        "                                <div class=\"col-md-12\">\n" +
+        "                                    <div class=\"panel panel-default collapsed\">\n" +
+        "                                        <div class=\"panel-heading\">\n" +
+        "                                            所有接送记录\n" +
         "                                        </div>\n" +
         "                                        <div class=\"panel-body\">\n" +
         "                                            <table class=\"table table-striped dt-responsive nowrap\" id=\"datatable\">\n" +
@@ -105,7 +174,6 @@ function showPickUpTable(flag) {
         "                                                    <th>到达时间</th>\n" +
         "                                                    <th>离开时间</th>\n" +
         "                                                    <th>是否完成</th>\n" +
-        "                                                    <th>操作</th>\n" +
         "                                                </tr>\n" +
         "                                                </thead>\n" +
         "                                                <tbody>\n"
@@ -113,24 +181,23 @@ function showPickUpTable(flag) {
 
     console.log(pickUp);
     for (let i of pickUp) {
-        if (i.finishPickup === true && flag === 1) {
-            continue;
-        } else if (i.finishPickup === false && flag === 2) {
-
-        }
+        // if (i.finishPickup === true && flag === 1) {
+        //     continue;
+        // } else if (i.finishPickup === false && flag === 2) {
+        //
+        // }
         console.log(i.participantId);
         queryParticipantByParticipantId(i.participantId);
         console.log(participant);
         $html +=
             "                                                <tr>\n" +
-            "                                                    <td>" + i.pickUpId + "</td>\n" +
+            "                                                    <td>" + fix(i.pickUpId, 4) + "</td>\n" +
             "                                                    <td>" + participant.participantName + "</td>\n" +
             "                                                    <td>" + participant.participantPhone + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
             "                                                    <td>" + i.returnTime + "</td>\n" +
             "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
-            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button>" +
             "                                                </tr>\n";
     }
     let $htmlEnd =
@@ -174,7 +241,7 @@ function finish(btn) {
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("接送成功");
-                    // showDriverInfo(driver)
+                    showWaitPickUpTable(1);
                     // location.reload();
                 } else {
                     alert("完成失败");
@@ -182,15 +249,15 @@ function finish(btn) {
                 }
             },
         });
-        for (let i = 0; i < 500000000; i++) {
-            /**
-             * 意义不明的代码，
-             * 不加会有bug
-             * 170000000
-             * 二分
-             */
-        }
-        showPickUpTable(1);
+        // for (let i = 0; i < 500000000; i++) {
+        //     /**
+        //      * 意义不明的代码，
+        //      * 不加会有bug
+        //      * 170000000
+        //      * 二分
+        //      */
+        // }
+        // showWaitPickUpTable(1);
 
     } else {
         alert("信息格式有误，请重新填写！");

@@ -119,7 +119,7 @@ public class FleetController {
     @GetMapping("/getAllFleet")
     public Result getAllFleet() {
         List<Fleet> getAllFleet = fleetService.findAllFleet();
-        return Result.success("getALLFleet", getAllFleet);
+        return Result.success("getAllFleet", getAllFleet);
     }
 
 
