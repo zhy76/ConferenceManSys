@@ -204,6 +204,7 @@ function updateLiveRoom(liveTable){
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("修改成功");
+
                     // showDriverInfo(driver)
                     location.reload();
                 } else {

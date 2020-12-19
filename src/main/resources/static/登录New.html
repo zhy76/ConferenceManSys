@@ -60,9 +60,9 @@
 				// 	$("#account-icon").css({"display":"none"});
 				// })
 				//
-				// $('#psw').focus(function(){
-				// 	$("#psw-icon").css({"display":"none"});
-				// })
+				$('#accountPass').focus(function(){
+					$("#accountPass-icon").css({"display":"none"});
+				})
 
 				$("#verifyCode").on('focus',function(){
 					$("#code-icon").css({"display":"none"});
@@ -137,13 +137,13 @@
 					if(openCloseFlag == true)
 					{
 						$("#openClose").addClass('glyphicon glyphicon-eye-open');
-						$("#psw").attr("type","text");
+						$("#accountPass").attr("type","text");
 						openCloseFlag = false;
 					}
 					else
 					{
 						$("#openClose").addClass('glyphicon glyphicon-eye-close');
-						$("#psw").attr("type","password");
+						$("#accountPass").attr("type","password");
 						openCloseFlag = true;
 					}
 					
@@ -251,8 +251,8 @@
 											<label for="accountPass"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
 											<input type="password" class="form-control" id="accountPass" placeholder="请输入密码" >
 											<span id = "openClose" class="glyphicon glyphicon-eye-close" style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 30px;"></span>
-											<span id = "psw-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px;display: none;" ></span>
-											<div id = "pswInfo" style = "color:red; font-weight: bold; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
+											<span id = "accountPass-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px;display: none;" ></span>
+											<div id = "accountPassInfo" style = "color:red; font-weight: bold; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
 											
 										</div><!--/.form-group -->
 									

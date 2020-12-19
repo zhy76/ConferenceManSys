@@ -85,8 +85,9 @@ public class DriverController {
 //            return new Result(ResultCode.IllegalArgumentException);
 //        }
         int addNumber = driverService.addDriver(driver);
+        Driver driverForBase = driverService.findDriverByPhone(driver.getDriverPhone());
         if (addNumber > 0) {
-            String token = tokenService.getToken(addNumber);
+            String token = tokenService.getToken(driverForBase);
             return Result.success("token", token);
         } else {
             return new Result(ResultCode.FAIL);

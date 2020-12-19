@@ -26,14 +26,19 @@ function resetLiveRoom(liveTable){
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("重置成功");
-                    // showDriverInfo(driver)
-                    location.reload();
+
+                    //$(".container").load(location.href + ".container");
+                    //location.reload();
                 } else {
                     alert("重置失败");
-                    location.reload();
+                    //location.reload();
                 }
             },
         });
+        for (let i=0;i<170000000;i++){
+
+        }
+        showLiveRoomTable();
     } else {
         alert("信息格式有误，请重新填写！");
     }
@@ -64,7 +69,7 @@ function deleteLiveRoomByAll(liveTable){
                     location.reload();
                 } else {
                     alert("删除失败");
-                    location.reload();
+                    //location.reload();
                 }
             },
         });
