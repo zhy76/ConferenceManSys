@@ -3,7 +3,10 @@ var liveRoom={};
 var token;
 var $hotelId;
 var $participantId;
+var participant={};
+var $participantPhone;
 var $conferenceId;
+
 $(function () {
 
     //获取token
@@ -23,7 +26,7 @@ $(function () {
         console.log("未登录");
         localStorage.setItem("conNCU", null);
         alert("请先登录！");
-        window.location.href = "登录.html";
+        window.location.href = "登录New.html";
     }
 //获取酒店信息
     $("#get-hotel a").click(function () {
@@ -48,7 +51,7 @@ $(function () {
         //localStorage.clear();
         localStorage.setItem("conNCU", null);
         alert("退出成功");
-        window.location.href = "登录.html";
+        window.location.href = "登录New.html";
     })
 
 });
@@ -91,8 +94,8 @@ function showLiveRoomTable(){
         "                        <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\">\n" +
         "                            <thead>\n" +
         "                                <tr>\n" +
-        "                                    <th>姓名(现在是参会人id)</th>\n" +
-        "                                    <th>入住人电话(后面要获取,现在是参会人id）</th>\n" +
+        "                                    <th>入住人姓名</th>\n" +
+        "                                    <th>入住人电话</th>\n" +
         "                                    <th>会议编号</th>\n" +
         "                                    <th>房间号</th>\n" +
         "                                    <th>操作</th>\n" +
@@ -102,10 +105,12 @@ function showLiveRoomTable(){
         "                            <tbody>\n"
     for (let i of liveRoom) {
         if (i.roomId!=null){
+            $participantId=i.participantId;
+            queryParticipantByParticipantId($participantId);
             $html +=
                 "                                                <tr>\n" +
-                "                                                    <td>" + i.participantId + "</td>\n" +
-                "                                                    <td>" + i.participantId + "</td>\n" +
+                "                                                    <td>" + participant.participantName + "</td>\n" +
+                "                                                    <td>" + participant.participantPhone + "</td>\n" +
                 "                                                    <td>" + i.conferenceId + "</td>\n" +
                 "                                                    <td>" + i.roomId + "</td>\n" +
                 "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"resetLiveRoom(this)\" >重置</button>" +
@@ -143,8 +148,8 @@ function doLiveRoom(){
         "                        <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\">\n" +
         "                            <thead>\n" +
         "                                <tr>\n" +
-        "                                    <th>姓名(现在是参会人id)</th>\n" +
-        "                                    <th>入住人电话(后面要获取）</th>\n" +
+        "                                    <th>入住人姓名</th>\n" +
+        "                                    <th>入住人电话</th>\n" +
         "                                    <th>会议编号</th>\n" +
         "                                    <th>房间号</th>\n" +
         "                                    <th>操作</th>\n" +
@@ -154,10 +159,12 @@ function doLiveRoom(){
         "                            <tbody>\n"
     for (let i of liveRoom) {
         if (i.roomId==null){
+            $participantId=i.participantId;
+            queryParticipantByParticipantId($participantId);
             $html +=
                 "                                                <tr>\n" +
-                "                                                    <td>" + i.participantId + "</td>\n" +
-                "                                                    <td>" + i.participantId + "</td>\n" +
+                "                                                    <td>" + participant.participantName + "</td>\n" +
+                "                                                    <td>" + participant.participantPhone + "</td>\n" +
                 "                                                    <td>" + i.conferenceId + "</td>\n" +
                 "                                    <td><input type=\"text\" size=\"5px\" id=\"roomId\"></td>\n" +
                 "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"updateLiveRoom(this)\">提交</button></td>\n" +
@@ -178,8 +185,7 @@ function doLiveRoom(){
 }
 
 function updateLiveRoom(liveTable){
-    $participantId = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
-    $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
+    getBothId(liveTable);
     if (1) {
         $.ajax({
             // async: false,

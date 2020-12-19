@@ -1,0 +1,385 @@
+
+<!doctype html>
+<html  lang="en">
+
+    <head>
+        <!-- meta data -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+        <!--font-family-->
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
+        
+        <!-- title of site -->
+        <title>注册</title>
+
+        <!-- For favicon png -->
+		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
+       
+        <!--font-awesome.min.css-->
+        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+		
+		<!--animate.css-->
+        <link rel="stylesheet" href="assets/css/animate.css">
+		
+        <!--bootstrap.min.css-->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+		
+		<!-- bootsnav -->
+		<link rel="stylesheet" href="assets/css/bootsnav.css" >	
+        
+        <!--style.css-->
+        <link rel="stylesheet" href="assets/css/style.css">
+        
+        <!--responsive.css-->
+        <link rel="stylesheet" href="assets/css/responsive.css">
+		<!-- 最新版jquery -->
+		<script src ="js/jquery.min.js"></script>
+		<script src = "assets/js/verrifyCode.js"></script>
+
+		<style>
+		
+			 .signin-footer a:hover{
+				 text-decoration: underline;
+			 }
+			 strong {
+				 font-weight: normal;
+				 font-size:14px;
+				 font-family: -apple-system,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei";
+				 transition: all .2s;
+			 }
+		</style>
+
+<script>
+	$(function(){
+
+		$("#phone").on("blur keyup",function(){
+			var val = $("#phone").val();
+
+			var reg_tel = /^(13[0-9]|14[01456879]|15[0-3,5-9]|16[2567]|17[0-8]|18[0-9]|19[0-3,5-9])\d{8}$/; //11位手机号码正则
+			if( val == '' )
+			{
+				$("#phone-icon").removeClass();
+				$("#phone-icon").addClass('glyphicon glyphicon-remove');
+				$("#phone-icon").css({"color":"red","display":"block"});
+				$("#phone-icon").css({"display":"block"});
+				// $("#phone-icon").fadeToggle('.2s',"linear");
+				// $("#phoneInfo").css({"display":"block"});
+				$("#phoneInfo").show('.2s');
+				$("#phoneInfo strong").text(" 手机号不可以为空");
+			}
+
+			else if( reg_tel.test(val) == false)
+			{
+				$("#phone-icon").removeClass();
+				$("#phone-icon").addClass('glyphicon glyphicon-remove');
+				$("#phone-icon").css({"color":"red","display":"block"});
+				$("#phone-icon").css({"display":"block"});
+				// $("#phoneInfo").css({"display":"block"});
+				$("#phoneInfo").show('.2s');
+				$("#phoneInfo strong").text(" 手机号格式不正确");
+			}
+
+			else
+			{
+				$("#phone-icon").removeClass();
+				$("#phone-icon").addClass('glyphicon glyphicon-ok');
+				$("#phoneInfo").hide('.2s');
+				// $("#phoneInfo").css({"display":"none"});
+				$("#phone-icon").css({"color":"green","display":"block"});
+			}
+
+		});
+
+
+
+		$("#password").on("blur keyup",function(){
+			var val = $("#password").val();
+			var flag1 = true;
+			var flag2 = true;
+			var flag3 = true;
+
+			if( val.indexOf(" ") != -1)
+			{
+				flag1 = false;
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-remove');
+				$("#password-icon").css({"color":"red","display":"block"});
+				$("#password-icon").css({"display":"block"});
+				$("#passwordInfo1").css({"display":"block"});
+				$("#passwordInfo1 strong").text(" 不能包括空格");
+			}
+			else
+			{
+				$("#passwordInfo1").css({"display":"none"});
+				// $("#email-icon").css({"color":"green","display":"block"});
+			}
+
+			if( val.length < 6 || val.length > 16)
+			{
+				flag2= false;
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-remove');
+				$("#password-icon").css({"color":"red","display":"block"});
+				$("#password-icon").css({"display":"block"});
+				$("#passwordInfo2").css({"display":"block"});
+				$("#passwordInfo2 strong").text(" 长度为6-16个字符");
+			}
+			else
+			{
+				$("#passwordInfo2").css({"display":"none"});
+			}
+
+
+			if( /(?!^(\d+|[a-zA-Z]+|[~!@#$%^&*?]+)$)^[\w~!@#$%^&*?]/.test(val) == false)
+			{
+				flag3 =false;
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-remove');
+				$("#password-icon").css({"color":"red","display":"block"});
+				$("#password-icon").css({"display":"block"});
+				$("#passwordInfo3").css({"display":"block"});
+				$("#passwordInfo3 strong").text(" 必须包含字母、数字、符号中至少2种");
+
+			}
+			else
+			{
+				$("#passwordInfo3").css({"display":"none"});
+			}
+			if( flag1 == true && flag2 == true && flag3 == true)
+			{
+				$("#password-icon").removeClass();
+				$("#password-icon").addClass('glyphicon glyphicon-ok');
+				$("#passwordInfo3").css({"display":"none"});
+				$("#password-icon").css({"color":"green","display":"block"});
+			}
+
+
+			$("#password").on("click keyup",function(){
+				if($("#password").val().length == 0)
+				{
+					$("#passwordInfo1 strong").text(" 不能包括空格");
+					$("#passwordInfo2 strong").text(" 长度为6-16个字符");
+					$("#passwordInfo3 strong").text(" 必须包含字母、数字、符号中至少2种");
+					$("#passwordInfo1,#passwordInfo2,#passwordInfo3").show();
+				}
+			});
+
+		});
+
+		$("#repassword").on("blur keyup",function(){
+			var reval = $("#repassword").val();
+			var val = $("#password").val();
+			if( val != reval||val=='' )
+			{
+				$("#repassword-icon").removeClass();
+				$("#repassword-icon").addClass('glyphicon glyphicon-remove');
+				$("#repassword-icon").css({"color":"red","display":"block"});
+				$("#repassword-icon").css({"display":"block"});
+				// $("#repasswordInfo").css({"display":"block"});
+				$("#repasswordInfo").show('.2s');
+
+				$("#repasswordInfo strong").text(" 密码不一致");
+			}
+			else
+			{
+				$("#repassword-icon").removeClass();
+				$("#repassword-icon").addClass('glyphicon glyphicon-ok');
+				// $("#repasswordInfo").css({"display":"none"});
+				$("#repasswordInfo").hide('.2s');
+				$("#repassword-icon").css({"color":"green","display":"block"});
+			}
+
+		});
+
+		var openCloseFlag = true;
+		$("#openClose").click(function(){
+			$("#openClose").removeClass();
+			if(openCloseFlag == true)
+			{
+				$("#openClose").addClass('glyphicon glyphicon-eye-open');
+				$("#password").attr("type","text");
+				openCloseFlag = false;
+			}
+			else
+			{
+				$("#openClose").addClass('glyphicon glyphicon-eye-close');
+				$("#password").attr("type","password");
+				openCloseFlag = true;
+			}
+
+		});
+
+		var reOpenCloseFlag = true;
+		$("#reOpenClose").click(function(){
+			$("#reOpenClose").removeClass();
+			if(reOpenCloseFlag == true)
+			{
+				$("#reOpenClose").addClass('glyphicon glyphicon-eye-open');
+				$("#repassword").attr("type","text");
+				reOpenCloseFlag = false;
+			}
+			else
+			{
+				$("#reOpenClose").addClass('glyphicon glyphicon-eye-close');
+				$("#repassword").attr("type","password");
+				reOpenCloseFlag = true;
+			}
+
+		});
+
+		//当验证码框、重复密码框、密码框、邮箱、电话、失去焦点的时候，进行登录按钮的判断
+		//如果所有选项都是绿色√，那么就释放禁用的登录按钮
+		$("#verifyCode,#repassword,#password,#phone").on('blur keyup',function(){
+			if ( $("#phone-icon").hasClass("glyphicon-ok")  && $("#password-icon").hasClass("glyphicon-ok") &&
+					$("#repassword-icon").hasClass("glyphicon-ok") && $("#code-icon").hasClass("glyphicon-ok"))
+			{
+				$("#signin").removeAttr("disabled")
+			}
+			else $("#signin").attr("disabled","disabled")
+
+		})
+
+	})
+</script>
+    </head>
+	
+	<body>
+		<section class="signin signup ">
+			<div class="container">
+
+				<div class="sign-content popup-in-content">
+					<div class="popup-in-txt">
+						<h2>注 册</h2>
+
+						<div class="signin-form">
+							<div class=" ">
+								<div class=" ">
+									<form action="注册New.html">
+										<div class="form-group">
+										    <label for="signin_form"><span class="glyphicon glyphicon-user" style="color: rgb(140, 132, 251);"></span>  角色</label>
+											<select  class="form-control" id="signin_form" onclick="getRole(this)"><!--onclick="getRole(this)"-->
+												<option value="participant">会议参加者</option>
+												<option value="organizer">会议组织者</option>
+												<option value="fleet">车队</option>
+												<option value="driver">司机</option>
+												<option value="hotel">酒店</option>
+											</select>
+										</div>
+
+											<!--/.form-group -->
+											<div class="form-group">
+												<label for="phone"><span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span> 手机号</label>
+												<input type="text" class="form-control" id="phone" placeholder="请输入手机号">
+												<!-- <strong style="float:right ; font-size: 15px; color:red; margin-top: -30px; "><span id = "account-icon" class="glyphicon glyphicon-remove" style = "color: red;vertical-align:middle;margin-top: -3px;"></span>手机号不合法 </strong> -->
+												<span id="phone-icon" class="glyphicon glyphicon-remove"
+													  style="float:right ; color: red; font-size: 20px;margin-top: -35px; display: none;"></span>
+												<div id="phoneInfo" style="color:red; font-weight: bold; display: none;"><span
+														class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
+											</div>
+
+											<div class="form-group">
+												<label for="password"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span> 密码 </label>
+												<input type="password" class="form-control" id="password" placeholder="请输入密码">
+												<span id="openClose" class="glyphicon glyphicon-eye-close"
+													  style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 30px;"></span>
+												<span id="password-icon" class="glyphicon glyphicon-remove"
+													  style="float:right ; color: red; font-size: 20px;margin-top: -35px;display: none;"></span>
+												<!-- <strong style="float:right ; font-size: 15px; color:red; margin-top: -30px; "><span id = "account-icon" class="glyphicon glyphicon-remove" style = "color: red;vertical-align:middle;margin-top: -3px;"></span>密码格式不正确</strong> -->
+												<div id="passwordInfo1" style="color:red; transition: all 5s; display: none;"><span
+														class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
+												<div id="passwordInfo2" style="color:red; transition: all 5s; display: none;"><span
+														class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
+												<div id="passwordInfo3" style="color:red; transition: all 5s; display: none;"><span
+														class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
+											</div>
+											<!--/.form-group -->
+											<div class="form-group">
+												<label for="repassword"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>
+													确认密码</label>
+												<input type="password" class="form-control" id="repassword" placeholder="请确认密码">
+												<span id="reOpenClose" class="glyphicon glyphicon-eye-close"
+													  style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 30px;"></span>
+												<span id="repassword-icon" class="glyphicon glyphicon-remove"
+													  style="float:right ; color: red; font-size: 20px;margin-top: -35px;display: none;"></span>
+												<!-- <strong style="float:right ; font-size: 15px; color:red; margin-top: -30px; "><span id = "account-icon" class="glyphicon glyphicon-remove" style = "color: red;vertical-align:middle;margin-top: -3px;"></span>输入不一致 </strong> -->
+												<div id="repasswordInfo" style="color:red; display: none;"><span
+														class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
+
+											</div>
+											<!--/.form-group -->
+										<div id="signForm">
+
+
+										</div>
+
+									</form><!--/form -->
+
+									<style>
+										#canvas {
+											vertical-align: middle;
+											box-sizing: border-box;
+											border: 1px solid #ddd;
+											cursor: pointer;
+										}
+									</style>
+
+									<div class="form-group"> 
+										<label for="verifyCode"><span class="glyphicon glyphicon-check" style="color: rgb(140, 132, 251);"></span>  验证码</label>
+										<input type="text" value="" placeholder="请输入右侧验证码" class="form-control" id = "verifyCode" >
+										<span id = "code-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px; margin-right:150px ; display: none" ></span>
+										<canvas class = "pull-right" id="canvas" width="140" height="60" style="margin-top: -62px;"></canvas> 
+										<!-- <button class="btn-verfifyCode">提交</button> -->
+									</div>
+
+
+								</div><!--/.col -->
+							</div><!--/.row -->
+
+						</div><!--/.signin-form -->
+
+						<div class="signin-footer text-center">
+							<button type="button" class="btn signin_btn signin_btn_two" id = "signin" disabled="disabled" return false;>
+							注 册
+							</button>
+							<p>
+								已经拥有账号？
+								<a href="登录New.html" style="font-weight:bold ; color:red">点击登录</a>
+							</p>
+						</div><!--/.signin-footer -->
+					</div><!-- .popup-in-txt -->
+				</div><!--/.sign-content -->
+			</div><!--/.container -->
+
+		</section><!--/.signin -->
+		
+		<!-- signin end -->
+
+		 <!-- Include all js compiled plugins (below), or include individual files as needed -->
+
+		<script src="assets/js/jquery.js"></script>
+        
+        <!--modernizr.min.js-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+		
+		<!--bootstrap.min.js-->
+        <script src="assets/js/bootstrap.min.js"></script>
+		
+		<!-- bootsnav js -->
+		<script src="assets/js/bootsnav.js"></script>
+		
+		<!-- jquery.sticky.js -->
+		<script src="assets/js/jquery.sticky.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+		
+        
+        <!--Custom JS-->
+        <script src="assets/js/custom.js"></script>
+
+		<script src="signup.js"></script>
+    </body>
+	
+</html>
