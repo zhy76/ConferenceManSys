@@ -290,13 +290,13 @@
     $(function (){
 
         //token = localStorage.getItem("xj");
-        console.log(typeof (token));
-        console.log(token);
+        // console.log(typeof (token));
+        // console.log(token);
         if (token == null || token === "null" || token === "undefined") {
-            console.log("no token");
+            // console.log("no token");
         } else {
             $participantId = parseJwt(token).participantId;/*获取用户信息*/
-            console.log($participantId);
+            // console.log($participantId);
         }
 
 
@@ -305,15 +305,14 @@
          */
         // onclickToInfo();
         $("#to-info a").click(function () {
-
             getParticipantInfo($participantId);
-            console.log(participant.participantPhone)
-            console.log($("#participantPhone").val())
+            // console.log(participant.participantPhone)
+            // console.log($("#participantPhone").val())
             $("#participantName").val(participant.participantName);
             $("#participantJob").val(participant.participantJob);
             $("#participantWorkUnit").val(participant.participantWorkUnit);
-            console.log(participant)
-            console.log(participant.participantEmail)
+            // console.log(participant)
+            // console.log(participant.participantEmail)
             $("#participantEmail").val(participant.participantEmail);
 
             $("#participantPass").val(participant.participantPass);
@@ -322,7 +321,7 @@
             $("#participantPhone").val(participant.participantPhone);
 
             $("participantSex").val(participant.participantSex);
-            console.log($("#participantPhone").val())
+            // console.log($("#participantPhone").val())
             if(participant.participantSex == "男"){
                 $("#male").prop("checked",true)
                 $("#female").prop("checked",false)
@@ -331,47 +330,18 @@
                 $("#male").prop("checked",false)
                 $("#female").prop("checked",true)
             }
-            console.log(participant.participantSex)
-            })
+            // console.log(participant.participantSex)
+        })
 
         $("#update").click(function (){
-            console.log(token);
+            // console.log(token);
             updateParticipantInfo();
         })
 
     })
-    // function onclickToInfo(){
-    //         console.log("onclickToInfo");
-    //         getParticipantInfo($participantId);
-    //         console.log(participant.participantPhone)
-    //         console.log($("#participantPhone").val())
-    //         $("#participantName").val(participant.participantName);
-    //         $("#participantJob").val(participant.participantJob);
-    //         $("#participantWorkUnit").val(participant.participantWorkUnit);
-    //         console.log(participant)
-    //         console.log(participant.participantEmail)
-    //         $("#participantEmail").val(participant.participantEmail);
-    //
-    //         $("#participantPass").val(participant.participantPass);
-    //         $("#participantIdCard").val(participant.participantIdCard);
-    //         //$(name="participantSex").val(participant.participantSex);
-    //         $("#participantPhone").val(participant.participantPhone);
-    //
-    //         $("participantSex").val(participant.participantSex);
-    //         console.log($("#participantPhone").val())
-    //         if(participant.participantSex == "男"){
-    //             $("#male").prop("checked",true)
-    //             $("#female").prop("checked",false)
-    //         }
-    //         if(participant.participantSex == "女"){
-    //             $("#male").prop("checked",false)
-    //             $("#female").prop("checked",true)
-    //         }
-    //         console.log(participant.participantSex)
-    //
-    // }
+
     function updateParticipantInfo(){
-        console.log(token);
+        // console.log(token);
         let participantName = $("#participantName").val();
         let participantJob = $("#participantJob").val();
         let participantWorkUnit = $("#participantWorkUnit").val();
@@ -380,28 +350,22 @@
         let participantPhone = $("#participantPhone").val();
         let participantSex = $("input:radio:checked").val();
         let participantIdCard = $("#participantIdCard").val();
-        alert(participantName)
-        alert(participantJob)
-        alert(participantWorkUnit)
-        alert(participantEmail)
-        alert(participantPass)
-        alert(participantPhone)
-        alert(participantSex)
-        alert(participantIdCard)
+        // alert(participantName)
+        // alert(participantJob)
+        // alert(participantWorkUnit)
+        // alert(participantEmail)
+        // alert(participantPass)
+        // alert(participantPhone)
+        // alert(participantSex)
+        // alert(participantIdCard)
 
         $.ajax({
-
-            //async: false,
-            // headers: {
-            //     "token": token,
-            // },
             beforeSend: function(request) {      //使用beforeSend
                 request.setRequestHeader("token", token);
                 request.setRequestHeader("Content-Type","application/json");
             },
             url: "/participant/updateParticipant",
             type: "post",
-            //dataType: "application/json",
             async: false,
             dataType:"text",
             data: JSON.stringify({
@@ -416,13 +380,12 @@
             }),
             success: function (jsonData, result) {
 
-                console.log("data is :" + result);
-                console.log(jsonData);
-                console.log(typeof (jsonData));
+                // console.log("data is :" + result);
+                // console.log(jsonData);
+                // console.log(typeof (jsonData));
                 jsonData = JSON.parse(jsonData)
-                console.log(typeof (jsonData));
-
-                 console.log(jsonData['code']);
+                // console.log(typeof (jsonData));
+                // console.log(jsonData['code']);
                 // alert("修改成功！");
                 // window.location.href = "参与者个人信息.html";
                 if (jsonData['code'] === 200) {
@@ -432,15 +395,8 @@
                     alert("登录失败，请重试");
                 }
             },
-
-            // error: function () {
-            //     alert("获取用户数据失败2");
-            // },
         });
-        // for (let i = 0; i < 570000000; i++) {
-        //
-        // }
-        console.log(1111111111)
+        // console.log(1111111111)
     }
 
     function getParticipantInfo($participantId) {
@@ -456,10 +412,10 @@
                 'participantId': $participantId,
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data["code"] === 200) {
                     participant = data["data"]["getParticipantInfo"];
-                    console.log(participant);
+                    // console.log(participant);
                 } else {
                     alert("获取用户数据失败");
                 }
@@ -468,13 +424,7 @@
                 alert("获取用户数据失败");
             },
         });
-
-
-
     }
-    // function updateParticipantInfo(){
-    //
-    // }
     /*获取token里面的用户数据*/
     function parseJwt(token) {
         var base64Url = token.split('.')[1];
@@ -484,8 +434,6 @@
         }).join(''));
         return JSON.parse(jsonPayload);
     }
-
-
 </script>
 
     </body>
