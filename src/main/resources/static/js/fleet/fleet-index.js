@@ -34,9 +34,7 @@ $(function () {
     })
 //接送管理
     $("#to-pick-up a").click(function () {
-        /**
-         * 找到车队的所有司机
-         */
+
 
         //console.log("success");
 
@@ -48,7 +46,7 @@ $(function () {
         //console.log("success");
 
         getAllFleetDriver($fleetId);
-        alert(2);
+        // alert(2);
     })
     //会议订单管理
     $("#to-conference a").click(function () {
@@ -67,6 +65,45 @@ $(function () {
     // submitChange();
 })
 
+/**
+ * 所有司机的接送记录
+ */
+function getAllFleetDriverPickUp($fleetId) {
+    $.ajax({
+        // async: false,
+        headers: {
+            'token': token,
+        },
+        url: "/pickUp/getAllFleetPickUp",
+        type: "get",
+        dataType: "json",
+        data: {
+            'fleetId': $fleetId,
+        },
+        success: function (data) {
+            console.log(data);
+            if (data["code"] === 200) {
+                fleet = data["data"]["getAllFleetPickUp"];
+                console.log(fleet);
+            } else {
+                alert("获取用户数据失败");
+            }
+        },
+        error: function () {
+            alert("获取用户数据失败");
+        },
+    });
+}
+
+/**
+ * 数字+位数
+ * @param num
+ * @param length
+ * @returns {string}
+ */
+function fix(num, length) {
+    return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+}
 /**
  * 得到登入车队的信息
  */

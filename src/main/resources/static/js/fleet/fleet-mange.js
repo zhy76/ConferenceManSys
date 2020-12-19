@@ -57,15 +57,14 @@ function showFleetDriver() {
         // queryParticipantByParticipantId(i.participantId);
         // console.log(participant);
         $html +=
-            "                                                <tr>\n" +
+            "                                                <tr>\n"+
             "                                                    <td>" + fix(i.driverId, 4) + "</td>\n" +
-            "                                                    <td>" + i.fleetName + "</td>\n" +
-            "                                                    <td>" + i.fleetPhone + "</td>\n" +
-            "                                                    <td>" + i.trainNumber + "</td>\n" +
-            "                                                    <td>" + i.toTime + "</td>\n" +
-            "                                                    <td>" + i.returnTime + "</td>\n" +
-            "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
-            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button>" +
+            "                                                    <td>" + i.driverName + "</td>\n" +
+            "                                                    <td>" + i.driverPhone + "</td>\n" +
+            "                                                    <td>" + i.carNumber + "</td>\n" +
+            "                                                    <td>" + (i.assign?"是":"否") + "</td>\n" +
+            // "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button>" +
+            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >删除</button>" +
             "                                                </tr>\n";
     }
     let $htmlEnd =
@@ -160,7 +159,6 @@ function deleteLiveRoomByAll(liveTable) {
             },
         });
     }
-
 }
 
 function queryParticipantByParticipantId($participantId) {
