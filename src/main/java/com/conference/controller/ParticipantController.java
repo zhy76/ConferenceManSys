@@ -47,7 +47,8 @@ public class ParticipantController {
         int addNumber = participantService.addAParticipant(participant);
         //System.out.println(addNumber);
         if (addNumber > 0) {
-            String token = tokenService.getToken(addNumber);
+            //String token = tokenService.getToken(addNumber);
+            String token = tokenService.getToken(participant);
            // System.out.println(token);
             return Result.success("token", token);
         } else {
