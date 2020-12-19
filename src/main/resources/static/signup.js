@@ -35,7 +35,10 @@ $(function() {
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
@@ -62,7 +65,10 @@ $(function() {
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
@@ -86,12 +92,14 @@ $(function() {
                     "driverPhone": "" + phone,
                     "driverPass": "" + password,
                     "driverName": "" + driverName,
-                    "carNumber": "" + carNumber,
-                    "isAssign":1
+                    "carNumber": "" + carNumber
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]!=null) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]!=null) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
@@ -117,7 +125,10 @@ $(function() {
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
@@ -146,7 +157,10 @@ $(function() {
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]!=null) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]!=null) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
