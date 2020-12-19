@@ -39,7 +39,7 @@ public interface ParticipantDao {
      *
      **/
 
-     public int addAParticipant(Participant participant);
+    public int addAParticipant(Participant participant);
 
     public Participant queryParticipantByParticipantPhone(String participantPhone);
 

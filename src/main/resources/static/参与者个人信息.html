@@ -380,6 +380,14 @@
         let participantPhone = $("#participantPhone").val();
         let participantSex = $("input:radio:checked").val();
         let participantIdCard = $("#participantIdCard").val();
+        alert(participantName)
+        alert(participantJob)
+        alert(participantWorkUnit)
+        alert(participantEmail)
+        alert(participantPass)
+        alert(participantPhone)
+        alert(participantSex)
+        alert(participantIdCard)
 
         $.ajax({
 
@@ -421,7 +429,6 @@
                     alert("修改成功！")
                     window.location.href = "参与者个人信息.html";
                 } else {
-
                     alert("登录失败，请重试");
                 }
             },
