@@ -382,7 +382,7 @@ function submitChange() {
              * 二分
              */
         }
-        showDriverInfo(driver);
+        showDriverInfo();
         // showDriverInfo();
     } else {
         alert("信息格式有误，请重新填写！");
