@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html  lang="en">
 
@@ -76,11 +75,11 @@
 						</div><!--/.form-group -->
 						<div class="form-group">
 							<label for="signin_form"> <span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号</label>
-							<input type="text" class="form-control" id="phoneNumber" placeholder="请输入手机号" required>
+							<input type="text" class="form-control" id="organizerPhone" placeholder="请输入手机号" required>
 						</div><!--/.form-group -->
 						<div class="form-group">
 							<label  for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
-							<input type="password" class="form-control" id="password" placeholder="请输入密码" required>
+							<input type="password" class="form-control" id="organizerPass" placeholder="请输入密码" required>
 						</div><!--/.form-group -->
 					</form><!--/form -->
 				</div><!--/.signin-form -->
@@ -112,7 +111,7 @@
 						</div><!--/.col -->
 						<div class="col-sm-12">
 							<div class="signin-footer">
-								<button type="button" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal" id="submit">
+								<button type="button" id="submit" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal">
 									登 录
 								</button>
 								<p>
@@ -165,47 +164,37 @@
 
 <!--Custom JS-->
 <script src="assets/js/custom.js"></script>
-<!-- 配置json解析，将登陆信息发送给/login -->
-<script>
-	function parseJwt(token) {
-		var base64Url = token.split('.')[1];
-		var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-		var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-		}).join(''));
 
-		return JSON.parse(jsonPayload);
-	}
-</script>
+<!-- 配置json解析，将登陆信息发送给/login -->
 <script type="text/javascript">
 	$("#submit").click(function () {
-		var username = $("#phoneNumber").val();
-		var password = $("#password").val();
+		var organizerPhone = $("#organizerPhone").val();
+		var organizerPass= $("#organizerPass").val();
+		console.log(organizerPhone);
 		$.ajax({
 			type: "POST",
 			dataType: "json",
-			url: '/hotel/login',
+			url: '/organizer/login',
 			contentType: "application/json",
 			data: JSON.stringify({
-				"hotelPhone": ""+username,
-				"hotelPass": ""+password,
+				"organizerPhone": "" + organizerPhone,
+				"organizerPass": "" + organizerPass
 			}),
 			success: function (jsonData, result) {
-				console.log("data is :" + result)
-				if (jsonData["data"]["token"]!=null) {
-					localStorage.setItem("conNCU", jsonData["data"]["token"]);
-					// if (parseJwt(jsonData["token"]).type == 2) {
-					window.location.href = "hotel-index.html";
-					//  else {
-					//     window.location.href = "index.html";
-					// }
+				console.log("data is :" + result);
+				if (jsonData["data"]["token"]) {
+					localStorage.setItem("zhy", jsonData["data"]["token"]);
+					window.location.href = "组织者主页面.html";
 				} else {
+					console.log(jsonData["data"]["token"]);
 					alert("登录失败，请重试");
 				}
 			}
 		});
 	})
 </script>
+
+
 </body>
 
 </html>

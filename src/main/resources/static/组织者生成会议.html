@@ -119,6 +119,93 @@
     <!--主体页面头部结束-->
 
     <!--页面主体内容部分开始-->
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!-- Row -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-sm-11">
+                    <div class="card">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs profile-tab" role="tablist">
+                            <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#生成会议" role="tab" onclick="showMethod()">
+                                生成会议</a> </li>
+                            <li class="nav-item active"> <a class="nav-link" data-toggle="tab" href="#修改会议"
+                                                            role="tab">修改会议</a> </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane" id="生成会议" role="tabpanel">
+                                <div class="card-body">
+                                    <form class="form-horizontal form-material">
+                                        <br>
+                                        <div class="form-group">
+                                            <label class="col-md-12">会议名称</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line"
+                                                       id="conferenceName">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">会议开始时间</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line"
+                                                       id="conferenceStart" value="2020-12-20 15:00:00">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">会议结束时间</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line"
+                                                       id="conferenceEnd" value="2020-12-25 15:00:00">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">会议地点</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line"
+                                                       id="conferenceLocation">
+                                            </div>
+                                        </div>
+                                        <div id="choose-method">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">会议相关信息</label>
+                                            <div class="col-md-12">
+                                                    <textarea rows="5" class="form-control form-control-line"
+                                                              id="conferenceInfo">
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <div class="form-group">
+                                            <div class="col-sm-12 text-center">
+                                                <button  type="button" class="btn btn-info" onclick="addConference()">生成会议</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="修改会议" role="tabpanel">
+                                <div class="container">
+                                    <div class="col-lg-3" style="margin: 0px 10px;">
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+            <!-- Row -->
+
+        </div>
+    </div>
 
 
     <!--页面主体内容部分结束-->
@@ -154,5 +241,9 @@
 <script src="js/datatables.responsive.min.js"></script>
 <script src="js/jquery.toast.min.js"></script>
 <script src="js/dashboard-alpha.js"></script>
+
+
+<script src="js/organizer/organizer-index.js"></script>
+<script src="makeConference.js"></script>
 </body>
 </html>
