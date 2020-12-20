@@ -51,16 +51,13 @@ public class TokenServiceImpl implements TokenService {
         System.out.println(token);
         return token;
     }
-
-    //登录成功后，将用户的用户名和用户类型写入token
     public String getToken(Participant participant){
         String token = "";
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("participantId", participant.getParticipantId())
+                .claim("hotelId", participant.getParticipantId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
-        System.out.println(participant.getParticipantId());
         System.out.println(token);
         return token;
     }
@@ -71,7 +68,6 @@ public class TokenServiceImpl implements TokenService {
                 .claim("hotelId", hotel.getHotelId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
-        System.out.println(hotel.getHotelId());
         System.out.println(token);
         return token;
     }
