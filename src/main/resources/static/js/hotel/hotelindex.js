@@ -114,7 +114,7 @@ function showLiveRoomTable(){
                 "                                                    <td>" + i.conferenceId + "</td>\n" +
                 "                                                    <td>" + i.roomId + "</td>\n" +
                 "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"resetLiveRoom(this)\" >重置</button>" +
-                "                                        <button type='button' class=\"btn btn-info\" style=\"background-color:#ff4b00\"onclick=\"deleteLiveRoomByAll(this)\">删除</button>"+
+                "                                        <button type='button' class=\"btn btn-info\" style=\"background-color:#ff4b00\" onclick=\"deleteLiveRoomByAll(this)\">删除</button>"+
                 "                                                   </td>\n" +
                 "                                                </tr>\n";
         }

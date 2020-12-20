@@ -3,6 +3,7 @@ let fleet;
 let pickUp;
 let token;
 let mes;
+let conference;
 let participant;
 let allFleetDriver;
 let $driverId;
@@ -32,14 +33,15 @@ $(function () {
     })
 //接送管理
     $("#to-pick-up a").click(function () {
-
-
-        //console.log("success");
-
-
-        alert(11);
-        showAllFleetDriverPickUp();
+        showAllFleetWaitPickUp()
+        $('#datatable').dataTable();
     })
+    //接送查询
+    $("#to-query-pick-up a").click(function () {
+        showAllFleetAssignPickUp();
+        $('#datatable').dataTable();
+    })
+
 //司机管理
     $("#to-driver a").click(function () {
         //console.log("success");
@@ -47,6 +49,9 @@ $(function () {
         getAllFleetDriver($fleetId);
         // alert(2);
     })
+    //查看所有记录
+
+
     //会议订单管理
     $("#to-conference a").click(function () {
         //console.log("success");

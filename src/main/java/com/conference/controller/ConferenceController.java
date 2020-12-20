@@ -29,27 +29,17 @@ public class ConferenceController {
     @Autowired
     private ConferenceService conferenceService;
 
-    /**
-     * 查询所有会议
-     * @return
-     */
-    @RequestMapping("/showConferences")
-    @ResponseBody
-    public List<Conference> showConferences(){
+    @GetMapping("/showConferences")
+    public Result showConferences(){
         List<Conference> conferencesList = conferenceService.queryConferences();
-        return conferencesList;
+        return Result.success("conferencesList",conferencesList);
     }
 
-    /**
-     * 查询指定id会议
-     * @param conferenceId
-     * @return
-     */
-    @RequestMapping("/showConference/{conferenceId}")
-    @ResponseBody
-    public Conference showConference(@PathVariable Integer conferenceId){
-        Conference conference = conferenceService.queryConferenceById(conferenceId);
-        return conference;
+    @GetMapping("/showConferenceById")
+    public Result showConference(@RequestParam Integer conferenceId){
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        System.out.println(conference);
+        return Result.success("conference",conference);
     }
 
 //    /**
@@ -99,5 +89,3 @@ public class ConferenceController {
         return Result.success();
     }
 }
-
-
