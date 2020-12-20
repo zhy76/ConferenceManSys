@@ -11,19 +11,18 @@ import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/6 10:41
- **/
-@Controller
+ * @author 左海余
+ * @description
+ * @date 2020/12/16 21:10
+ * @stuid 6109118041
+ */
+@RestController
+@RequestMapping("/organizer")
 public class OrganizerController {
 
     @Autowired
@@ -166,13 +165,5 @@ public class OrganizerController {
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         Organizer getOrganizerInfo = organizerService.findOrganizerById((Integer) claims.get("organizerId"));
         return Result.success("getOrganizerInfo", getOrganizerInfo);
-    }
-
-
-    @GetMapping("/getOrganizerInfoById")
-    public Result getOrganizerInfo(@RequestParam Integer organizerId) {
-        Organizer getOrganizerInfoById = organizerService.findOrganizerById(organizerId);
-        System.out.println(getOrganizerInfoById);
-        return Result.success("getOrganizerInfoById", getOrganizerInfoById);
     }
 }
