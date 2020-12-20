@@ -1,4 +1,4 @@
-package com.conference.service.impl;
+package com.conference.service.Impl;
 
 import com.conference.dao.ParticipantDao;
 import com.conference.entity.Participant;
