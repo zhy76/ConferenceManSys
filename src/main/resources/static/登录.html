@@ -171,7 +171,7 @@
 			$("#submit").click(function () {
 				var username = $("#username").val();
 				var password = $("#password").val();
-				console.log(username);
+				// console.log(username);
 				$.ajax({
 					type: "POST",
 					dataType: "json",
@@ -182,12 +182,12 @@
 						"participantPass": "" + password
 					}),
 					success: function (jsonData, result) {
-						console.log("data is :" + result);
+						// console.log("data is :" + result);
 						if (jsonData["data"]["token"]) {
 							localStorage.setItem("xj", jsonData["data"]["token"]);
 							window.location.href = "参与者主页面.html";
 						} else {
-							console.log(jsonData["data"]["token"]);
+							// console.log(jsonData["data"]["token"]);
 							alert("登录失败，请重试");
 						}
 					}

@@ -124,13 +124,13 @@
                 else $('.back-to-top').fadeOut('slow');
             })
             token = localStorage.getItem("xj");
-            console.log(typeof (token));
-            console.log(token);
+            // console.log(typeof (token));
+            // console.log(token);
             if (token == null || token === "null" || token === "undefined") {
-                console.log("no token");
+                // console.log("no token");
             } else {
                 $participantId = parseJwt(token).participantId;/*获取用户信息*/
-                console.log($participantId);
+                // console.log($participantId);
                 }
             $.ajax({
                 async: false,
@@ -142,16 +142,16 @@
                 },
                 success: function (data) {
                     // var listConference = "";
-                    console.log(data);
-                    console.log(typeof data)
+                    // console.log(data);
+                    // console.log(typeof data)
                     data = JSON.parse(data)
-                    console.log(typeof data)
-                    console.log(data['data']['joinConferenceList'])
+                    // console.log(typeof data)
+                    // console.log(data['data']['joinConferenceList'])
 
                     var joinConferenceList = data['data']['joinConferenceList'];
                     for (let i = 0; i < joinConferenceList.length; i++) {
                         $conferenceId = joinConferenceList[i].conferenceId;
-                        console.log($conferenceId)
+                        // console.log($conferenceId)
                         getConferenceInfo($conferenceId);
                     }
                     $('#mainContent').html(listConference);
@@ -188,11 +188,11 @@
                 },
                 success: function (data) {
 
-                    console.log(data);
-                    console.log(typeof data)
+                    // console.log(data);
+                    // console.log(typeof data)
                     data = JSON.parse(data)
-                    console.log(typeof data)
-                    console.log(data['data']['conference'])
+                    // console.log(typeof data)
+                    // console.log(data['data']['conference'])
                     conference = data['data']['conference'];
                     var conferenceName = conference.conferenceName;
                     var conferenceLocation = conference.conferenceLocation;
@@ -221,12 +221,6 @@
                                 '                            </div>' +
                                 '                        </div>'+
                                 '            </div>'
-
-                        // if (data["code"] === 200) {
-                        //     alert("获取用户数据成功2");
-                        // } else {
-                        //     alert("获取用户数据失败1");
-                        // }
                     },
                     error: function () {
                         alert("获取用户数据失败2");
@@ -245,10 +239,10 @@
                         'conferenceId':""+conferenceId
                     },
                     success: function (data) {
-                        console.log(data);
-                        console.log(typeof data)
+                        // console.log(data);
+                        // console.log(typeof data)
                         data = JSON.parse(data)
-                        console.log(typeof data)
+                        // console.log(typeof data)
                         //console.log(data['data']['joinConferenceList'])
 
                         if (data["code"] === 200) {
@@ -276,14 +270,8 @@
                     },
                     success: function (data) {
                         data = JSON.parse(data)
-                        console.log(data['data']['getOrganizerInfo'])
+                        // console.log(data['data']['getOrganizerInfo'])
                         organizer = data['data']['getOrganizerInfo'];
-
-                        // if (data["code"] === 200) {
-                        //     alert("获取组织者数据成功");
-                        // } else {
-                        //     alert("获取组织者数据失败");
-                        // }
                     },
                     error: function () {
                         alert("获取用户数据失败2");
@@ -374,7 +362,7 @@
             <!--面包屑导航-->
             <div class="col-sm-12 text-right">
                 <ol class="breadcrumb">
-                    <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                    <li><a href="参与者主页面.html"><i class="fa fa-home"></i></a></li>
                     <li>会议</li>
                     <li>查看会议</li>
                 </ol>
