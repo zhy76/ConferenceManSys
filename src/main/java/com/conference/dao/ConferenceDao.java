@@ -21,26 +21,13 @@ public interface ConferenceDao {
      * 3、更改会议信息
      * 4、根据id查询会议
      */
-    /**
-     * 1、展示所有会议---- 查询所有会议
-     * 2、删除会议
-     * 3、更改会议信息
-     */
+
     public List<Conference> queryConferences();
-
-
-
-    /**
-     * 4、通过会议id查询会议（显示会议详情）
-     *
-     * @return
-     **/
-    public Conference queryConferenceByConferenceId(Integer conferenceId);
-
 
     public int updateConference(Conference conference);
 
     public int deleteConference(Integer conferenceId);
     public int addConference(Conference conference);
-    public Conference queryConferenceById(Integer conferenceId);
+    public Conference queryConferenceByConferenceId(Integer conferenceId);//统一
+    public List<Conference> queryConferenceByOrganizerId(Integer organizerId);
 }

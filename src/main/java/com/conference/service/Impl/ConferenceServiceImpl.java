@@ -17,15 +17,6 @@ import java.util.List;
 @Service("conferenceService")
 public class ConferenceServiceImpl implements ConferenceService {
 
-    @Override
-    public int addConference(Conference conference) {
-        return conferenceDao.addConference(conference);
-    }
-
-    @Override
-    public Conference queryConferenceById(Integer conferenceId) {
-        return conferenceDao.queryConferenceById(conferenceId);
-    }
     @Autowired
     private ConferenceDao conferenceDao;
 
@@ -45,7 +36,17 @@ public class ConferenceServiceImpl implements ConferenceService {
     }
 
     @Override
-    public Conference queryConferenceByConferenceId(Integer conferenceId) {
+    public int addConference(Conference conference) {
+        return conferenceDao.addConference(conference);
+    }
+
+    @Override
+    public Conference queryConferenceByConferenceId(Integer conferenceId) { //统一
         return conferenceDao.queryConferenceByConferenceId(conferenceId);
+    }
+
+    @Override
+    public List<Conference> queryConferenceByOrganizerId(Integer organizerId) { //用于修改
+        return conferenceDao.queryConferenceByOrganizerId(organizerId);
     }
 }

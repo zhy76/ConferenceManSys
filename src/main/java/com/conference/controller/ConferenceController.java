@@ -9,6 +9,7 @@ package com.conference.controller;
 
 import com.conference.entity.Conference;
 import com.conference.entity.Driver;
+import com.conference.entity.Hotel;
 import com.conference.entity.Organizer;
 import com.conference.service.ConferenceService;
 import com.conference.util.result.Result;
@@ -48,7 +49,7 @@ public class ConferenceController {
     @RequestMapping("/showConference/{conferenceId}")
     @ResponseBody
     public Conference showConference(@PathVariable Integer conferenceId){
-        Conference conference = conferenceService.queryConferenceById(conferenceId);
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
         return conference;
     }
 
@@ -97,6 +98,12 @@ public class ConferenceController {
     public Result updateConference(@Validated({OrganizerRegister.class}) @RequestBody Conference conference) {
         conferenceService.updateConference(conference);
         return Result.success();
+    }
+
+    @GetMapping("/queryConferenceByOrganizerId")
+    public Result queryConferenceByOrganizerId(@RequestParam int OrganizerId) {
+        List<Conference> queryConferenceByOrganizerId = conferenceService.queryConferenceByOrganizerId(OrganizerId);
+        return Result.success("queryConferenceByOrganizerId", queryConferenceByOrganizerId);
     }
 }
 
