@@ -182,6 +182,37 @@ function getDriverInfo($driverId) {
 }
 
 /**
+ *
+ */
+
+function getConferenceName($conferenceId) {
+    $.ajax({
+        async: false,
+        headers: {
+            'token': token,
+        },
+        url: "/driver/getDriverInfoById",
+        type: "get",
+        dataType: "json",
+        data: {
+            'driverId': $driverId,
+        },
+        success: function (data) {
+            console.log(data);
+            if (data["code"] === 200) {
+                driver = data["data"]["getDriverInfoById"];
+                console.log(driver);
+            } else {
+                alert("获取用户数据失败");
+            }
+        },
+        error: function () {
+            alert("获取用户数据失败");
+        },
+    });
+}
+
+/**
  * 展示所有车队的接送
  */
 function showAllFleetDriverPickUp() {
