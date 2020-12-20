@@ -33,7 +33,7 @@
     <!--    VALUES(null,"glz", "111111", null, "123456", "19914665732", 0);-->
 
     <delete id="deleteDriverById">
-        DELETE FROM driver WHERE pick_up_id=#{pickUpId};
+        DELETE FROM driver WHERE driver_id=#{driverId};
     </delete>
 
 

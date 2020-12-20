@@ -1,5 +1,11 @@
 
 function getBothId(liveTable){
+    /**
+     * $(liveTable).parent()一列
+     *
+     * @type {jQuery}
+     */
+    console.log();
     $participantPhone = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
     $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
     queryParticipantByParticipantPhone($participantPhone);
