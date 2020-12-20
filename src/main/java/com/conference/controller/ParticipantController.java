@@ -86,11 +86,27 @@ public class ParticipantController {
         return Result.success();
     }
 
+//    //管理员修改参加者信息页面
+//    @GetMapping("/participant/updateParticipant/{participantId}")
+//    public String getUpdateParticipant(@PathVariable("participantId") Integer participantId, Model model){
+//        Participant participant = participantService.queryParticipantByParticipantId(participantId);
+//        model.addAttribute("participant",participant);
+//        return "participant/updateParticipant";
+//    }
+
+
+    //管理员查看所有的参加者
+    @RequestMapping("/showParticipants")
+    @ResponseBody
+    public Result showParticipants(){
+        List<Participant> participantsList = participantService.queryParticipants();
+        return Result.success(participantsList);
+    }
+
     /*
      * @Description 返回参会者已有的所有信息
      * @return
      **/
-
     @GetMapping("/getParticipantInfo")
     public Result getParticipantInfo(HttpServletRequest request){
         Claims claims = tokenService.parseToken(request.getHeader("token"));
@@ -98,14 +114,15 @@ public class ParticipantController {
         Participant getParticipantInfo = participantService.queryParticipantByParticipantId((Integer) claims.get("participantId"));
         return Result.success("getParticipantInfo",getParticipantInfo);
     }
+
     @GetMapping("/queryParticipantByParticipantId")
     public Result queryParticipantByParticipantId(@RequestParam int participantId){
-
         //System.out.println("getParticipantInfo");
         Participant queryParticipantByParticipantId = participantService.queryParticipantByParticipantId(participantId);
         //System.out.println(queryParticipantByParticipantId);
         return Result.success("queryParticipantByParticipantId",queryParticipantByParticipantId);
     }
+
     @GetMapping("/queryParticipantByParticipantPhone")
     public Result queryParticipantByParticipantPhone(@RequestParam String participantPhone){
 
