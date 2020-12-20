@@ -1,11 +1,9 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// var jquery_1 = require("jquery");
 let driver;
 let fleet;
 let pickUp;
 let token;
 let mes;
+let participant;
 let allFleetDriver;
 let $driverId;
 let $fleetId;
@@ -40,6 +38,7 @@ $(function () {
 
 
         alert(11);
+        showAllFleetDriverPickUp();
     })
 //司机管理
     $("#to-driver a").click(function () {
@@ -134,6 +133,8 @@ function getFleetInfo($fleetId) {
         },
     });
 }
+
+
 
 /**
  * 清空登入时清空用户信息
