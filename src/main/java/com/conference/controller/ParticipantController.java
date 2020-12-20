@@ -86,13 +86,23 @@ public class ParticipantController {
         return Result.success();
     }
 
-//    //管理员修改参加者信息页面
-//    @GetMapping("/participant/updateParticipant/{participantId}")
-//    public String getUpdateParticipant(@PathVariable("participantId") Integer participantId, Model model){
-//        Participant participant = participantService.queryParticipantByParticipantId(participantId);
-//        model.addAttribute("participant",participant);
-//        return "participant/updateParticipant";
-//    }
+    //管理员修改参加者信息页面
+    //修改参加者信息
+    @PostMapping("/updateParticipantByAdmin")
+    public Result postUpdateParticipant(Participant participant){
+//        System.out.println(participant);
+        int status = participantService.updateParticipant(participant);
+//        System.out.println(status);
+        return Result.success();
+    }
+
+    //管理员删除某参加者
+    @PostMapping("/deleteParticipantByAdmin/{participantId}")
+    @ResponseBody
+    public Result getDeleteParticipant(@PathVariable("participantId") Integer participantId){
+        participantService.deleteParticipant(participantId);
+        return Result.success();
+    }
 
 
     //管理员查看所有的参加者
@@ -115,7 +125,7 @@ public class ParticipantController {
         return Result.success("getParticipantInfo",getParticipantInfo);
     }
 
-    @GetMapping("/queryParticipantByParticipantId")
+    @PostMapping("/queryParticipantByParticipantId")
     public Result queryParticipantByParticipantId(@RequestParam int participantId){
         //System.out.println("getParticipantInfo");
         Participant queryParticipantByParticipantId = participantService.queryParticipantByParticipantId(participantId);

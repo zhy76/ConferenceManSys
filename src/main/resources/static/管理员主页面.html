@@ -6,18 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>管理员主页面</title>
     <!-- Common plugins -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link href="admin/bootstrap.min.css" rel="stylesheet">
+    <script src="admin/jquery.min.js"></script>
+    <script src="admin/bootstrap.min.js"></script>
 <!--    刘涔宇管理员界面所需iconfont-->
-    <link rel="stylesheet" href="fonts/font_byLCY/iconfont.css">
+    <link rel="stylesheet" href="admin/font_byLCY/iconfont.css">
+
+<!--    去除掉alert、confirm显示的URL-->
+    <script src="admin/deleteURL.js"></script>
+    <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+    <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 
     <script>
-        $('#updateParticipant').on('show.bs.modal', function () {
-            // 执行一些动作... 通过ajax，将要修改的参加者的信息获得到
-            // $('')
-        })
+        // 修改参加者
+        function updateParticipant(participantId){
+            $.ajax({
+                type:"post",
+                url: "/participant/queryParticipantByParticipantId?participantId=" + participantId,
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到指定参加者信息
+                    var participantObj = result["data"]["queryParticipantByParticipantId"];
+                    // var participantId = participantObj.participantId;
+                    // var participantName = participantObj.participantName;
+                    // var participantJob = participantObj.participantJob;
+                    // var participantWorkUnit = participantObj.participantWorkUnit;
+                    // var participantEmail = participantObj.participantEmail;
+                    // var participantPass = participantObj.participantPass;
+                    // var participantPhone = participantObj.participantPhone;
+                    // var participantSex = participantObj.participantSex;
+                    // var participantIdCard = participantObj.participantIdCard;
+                    $("#participantId").val(participantObj.participantId);
+                    $("#participantName").val(participantObj.participantName);
+                    $("#participantJob").val(participantObj.participantJob);
+                    $("#participantWorkUnit").val(participantObj.participantWorkUnit);
+                    $("#participantEmail").val(participantObj.participantEmail);
+                    $("#participantPass").val(participantObj.participantPass);
+                    $("#participantPhone").val(participantObj.participantPhone);
+                    $("#participantSex").val(participantObj.participantSex);
+                    $("#participantIdCard").val(participantObj.participantIdCard);
 
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+        // 删除参加者
+        function deleteParticipant(participantId){
+            $.confirm({
+                title: '提示信息',
+                content: '确认要删除吗?',
+                buttons: {
+                    "确认": function () {
+                        $.ajax({
+                            type:"post",
+                            url: "/participant/deleteParticipantByAdmin/" + participantId,
+                            data: {},
+                            dataType:"json",
+                            processData:false,
+                            contentType:false,
+                            success:function (result) {
+                                console.dir(result);
+                                console.dir(result["message"]);
+                                // if(){
+                                //     participants();
+                                //     setTimeout(function () {
+                                //         alert("删除成功");
+                                //     } , 50);
+                                //
+                                // }else
+                                //     alert("删除失败");
+                            },
+                            error:function () {
+                                alert("请求异常");
+                            }
+                        })
+                    },
+                    "取消": function () {
+
+                    },
+                }
+            });
+
+        }
+        // 展示所有的参加者信息
         function participants() {
             $.ajax({
                 type:"post",
@@ -55,8 +131,8 @@
                             '                                        <td>'+participantSex+'</td>\n' +
                             '                                        <td>'+participantIdCard+'</td>\n' +
                             '                                        <td>\n' +
-                            '                                            <a  class="btn btn-info btn-xs active" data-toggle="modal" data-target="#updateParticipant">修改</a>&nbsp;&nbsp;\n' +
-                            '                                            <a  class="btn btn-danger btn-xs">删除</a>\n' +
+                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateParticipant" data-backdrop="false" onclick = "javascript:updateParticipant('+ participantId +')"> 修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteParticipant('+ participantId +')">删除</button>\n' +
                             '                                        </td>\n' +
                             '                                    </tr>'
                     }
@@ -68,7 +144,29 @@
                 }
             })
         }
+        // 提交模态框修改表单
+        function submitUpdate(){
+            var form = new FormData(document.getElementById("updateParticipantForm"));//把表单的对象作为一个参数
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/participant/updateParticipantByAdmin",
+                data: form,
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
 
+                    // if(result["message"] == "成功"){
+                    //     console.dir("修改成功");
+                    // }else
+                    //     console.dir("修改失败");
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
     </script>
 </head>
 
@@ -338,52 +436,54 @@
                     <h4 class="modal-title">参加者信息修改</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id = "updateParticipantForm">
                         <div class="form-group" hidden>
                             <label for="participantId">ID</label>
-                            <input type="hidden" class="form-control" id="participantId" placeholder="id">
+                            <input type="hidden" class="form-control" name="participantId" id="participantId" placeholder="id" value="">
                         </div>
                         <div class="form-group">
                             <label for="participantName">姓名</label>
-                            <input type="email" class="form-control" id="participantName" placeholder="姓名">
+                            <input type="email" class="form-control"  name="participantName" id="participantName" placeholder="姓名"  value="">
                         </div>
                         <div class="form-group">
                             <label for="participantJob">职业</label>
-                            <input type="text" class="form-control" id="participantJob" placeholder="职业">
+                            <input type="text" class="form-control" name="participantJob" id="participantJob" placeholder="职业" value="">
                         </div>
                         <div class="form-group">
                             <label for="participantWorkUnit">工作单位</label>
-                            <input type="text" class="form-control" id="participantWorkUnit" placeholder="工作单位">
+                            <input type="text" class="form-control" name = "participantWorkUnit" id="participantWorkUnit" placeholder="工作单位" value="">
                         </div>
                         <div class="form-group">
                             <label for="participantPhone">手机号码</label>
-                            <input type="text" class="form-control" id="participantPhone" placeholder="手机号码">
+                            <input type="text" class="form-control" name = "participantPhone" id="participantPhone" placeholder="手机号码" value="">
                         </div>
                         <div class="form-group">
                             <label for="participantEmail">电子邮箱</label>
-                            <input type="text" class="form-control" id="participantEmail" placeholder="电子邮箱">
+                            <input type="text" class="form-control" name = "participantEmail" id="participantEmail" placeholder="电子邮箱" value="">
                         </div>
                         <div class="form-group">
                             <label for="participantPass">密码</label>
-                            <input type="text" class="form-control" id="participantPass" placeholder="密码">
+                            <input type="text" class="form-control" name = " participantPass" id="participantPass" placeholder="密码" value="">
                         </div>
                         <div class="form-group">
                             <label for="participantSex">性别</label>
-                            <input type="text" class="form-control" id="participantSex" placeholder="性别">
+                            <input type="text" class="form-control" name = "participantSex" id="participantSex" placeholder="性别" value="">
                         </div>
                         <div class="form-group">
                             <label for="participantIdCard">身份证</label>
-                            <input type="text" class="form-control" id="participantIdCard" placeholder="身份证">
+                            <input type="text" class="form-control"  name = "participantIdCard" id="participantIdCard" placeholder="身份证" value="">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
-                    <button type="button" class="btn btn-primary btn-danger" onclick="">保存修改</button>
+                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdate(); $('#updateParticipant').modal('hide'); participants();
+">保存修改</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
 
 </body>
 </html>
