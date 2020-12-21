@@ -12,6 +12,7 @@ public class PickUp {
 
     private Integer pickUpId;
     private Integer participantId;
+    private Integer fleetId;
     private Integer driverId;
     private Integer conferenceId;
     private String trainNumber;
@@ -24,6 +25,7 @@ public class PickUp {
         return "PickUp{" +
                 "pickUpId=" + pickUpId +
                 ", participantId=" + participantId +
+                ", fleetId=" + fleetId +
                 ", driverId=" + driverId +
                 ", conferenceId=" + conferenceId +
                 ", trainNumber='" + trainNumber + '\'' +
@@ -47,6 +49,14 @@ public class PickUp {
 
     public void setParticipantId(Integer participantId) {
         this.participantId = participantId;
+    }
+
+    public Integer getFleetId() {
+        return fleetId;
+    }
+
+    public void setFleetId(Integer fleetId) {
+        this.fleetId = fleetId;
     }
 
     public Integer getDriverId() {

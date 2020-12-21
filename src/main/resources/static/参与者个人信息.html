@@ -8,6 +8,10 @@
     <title>参与者个人信息</title>
     <!-- Common plugins -->
     <script src="js/jquery.min.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
@@ -28,9 +32,23 @@
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
+
+    <![endif]-->
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
-    <![endif]-->
+<!--    <link href="jquery-confirm-v3.3.4/dist/jquery-confirm.min.css" rel="stylesheet">-->
+<!--    <script src="jquery-confirm-v3.3.4/dist/jquery-confirm.min.js"></script>-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>-->
+    <script>
+
+    </script>
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
+
 </head>
 
     <body>
@@ -136,12 +154,13 @@
                                 <div class="tab-content">
                                     <div class="tab-pane" id="个人信息" role="tabpanel">
                                         <div class="card-body">
-                                            <form class="form-horizontal form-material">
+                                            <form class="form-horizontal form-material cmxform" id="updateForm" onsubmit="return false;">
                                                 <br>
                                                 <div class="form-group">
                                                     <label class="col-md-12">姓名</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantName" class="form-control form-control-line" value="Jessie J">
+                                                        <input type="text" id="participantName" name="participantName" class="form-control form-control-line" value="Jessie J">
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -155,7 +174,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-12">身份证号</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantIdCard" value="2342xxx" class="form-control form-control-line">
+                                                        <input type="text" id="participantIdCard" name="participantIdCard" value="2342xxx" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -167,32 +186,32 @@
                                                 <div class="form-group">
                                                     <label class="col-md-12">密码</label>
                                                     <div class="col-md-12">
-                                                        <input type="password" id="participantPass" value="password" class="form-control form-control-line">
+                                                        <input type="password" id="participantPass" name="participantPass" value="password" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-12">手机号</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantPhone" value="123 456 7890" class="form-control form-control-line">
+                                                        <input type="text" id="participantPhone" name="participantPhone" value="" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-12">职位</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantJob" value="教授" class="form-control form-control-line">
+                                                        <input type="text" id="participantJob" name="participantJob" value="教授" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-12">工作单位</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantWorkUnit" value="南昌大学" class="form-control form-control-line">
+                                                        <input type="text" id="participantWorkUnit" name="participantWorkUnit" value="南昌大学" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <br/>
                                                 <br/>
                                                 <div class="form-group">
                                                     <div class="col-sm-12 text-center" >
-                                                        <a type="submit" id="update"  class="btn btn-info">更新</a>
+                                                        <button type="submit" id="update"  class="btn btn-info">更新</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -290,13 +309,13 @@
     $(function (){
 
         //token = localStorage.getItem("xj");
-        console.log(typeof (token));
-        console.log(token);
+        // console.log(typeof (token));
+        // console.log(token);
         if (token == null || token === "null" || token === "undefined") {
-            console.log("no token");
+            // console.log("no token");
         } else {
             $participantId = parseJwt(token).participantId;/*获取用户信息*/
-            console.log($participantId);
+            // console.log($participantId);
         }
 
 
@@ -305,15 +324,14 @@
          */
         // onclickToInfo();
         $("#to-info a").click(function () {
-
             getParticipantInfo($participantId);
-            console.log(participant.participantPhone)
-            console.log($("#participantPhone").val())
+            // console.log(participant.participantPhone)
+            // console.log($("#participantPhone").val())
             $("#participantName").val(participant.participantName);
             $("#participantJob").val(participant.participantJob);
             $("#participantWorkUnit").val(participant.participantWorkUnit);
-            console.log(participant)
-            console.log(participant.participantEmail)
+            // console.log(participant)
+            // console.log(participant.participantEmail)
             $("#participantEmail").val(participant.participantEmail);
 
             $("#participantPass").val(participant.participantPass);
@@ -322,7 +340,7 @@
             $("#participantPhone").val(participant.participantPhone);
 
             $("participantSex").val(participant.participantSex);
-            console.log($("#participantPhone").val())
+            // console.log($("#participantPhone").val())
             if(participant.participantSex == "男"){
                 $("#male").prop("checked",true)
                 $("#female").prop("checked",false)
@@ -331,47 +349,21 @@
                 $("#male").prop("checked",false)
                 $("#female").prop("checked",true)
             }
-            console.log(participant.participantSex)
-            })
+            // console.log(participant.participantSex)
+        })
 
         $("#update").click(function (){
-            console.log(token);
-            updateParticipantInfo();
+            if(valiForm().form()){
+                updateParticipantInfo();
+            }
+            // console.log(token);
+
         })
 
     })
-    // function onclickToInfo(){
-    //         console.log("onclickToInfo");
-    //         getParticipantInfo($participantId);
-    //         console.log(participant.participantPhone)
-    //         console.log($("#participantPhone").val())
-    //         $("#participantName").val(participant.participantName);
-    //         $("#participantJob").val(participant.participantJob);
-    //         $("#participantWorkUnit").val(participant.participantWorkUnit);
-    //         console.log(participant)
-    //         console.log(participant.participantEmail)
-    //         $("#participantEmail").val(participant.participantEmail);
-    //
-    //         $("#participantPass").val(participant.participantPass);
-    //         $("#participantIdCard").val(participant.participantIdCard);
-    //         //$(name="participantSex").val(participant.participantSex);
-    //         $("#participantPhone").val(participant.participantPhone);
-    //
-    //         $("participantSex").val(participant.participantSex);
-    //         console.log($("#participantPhone").val())
-    //         if(participant.participantSex == "男"){
-    //             $("#male").prop("checked",true)
-    //             $("#female").prop("checked",false)
-    //         }
-    //         if(participant.participantSex == "女"){
-    //             $("#male").prop("checked",false)
-    //             $("#female").prop("checked",true)
-    //         }
-    //         console.log(participant.participantSex)
-    //
-    // }
+
     function updateParticipantInfo(){
-        console.log(token);
+        // console.log(token);
         let participantName = $("#participantName").val();
         let participantJob = $("#participantJob").val();
         let participantWorkUnit = $("#participantWorkUnit").val();
@@ -380,20 +372,22 @@
         let participantPhone = $("#participantPhone").val();
         let participantSex = $("input:radio:checked").val();
         let participantIdCard = $("#participantIdCard").val();
+        // alert(participantName)
+        // alert(participantJob)
+        // alert(participantWorkUnit)
+        // alert(participantEmail)
+        // alert(participantPass)
+        // alert(participantPhone)
+        // alert(participantSex)
+        // alert(participantIdCard)
 
         $.ajax({
-
-            //async: false,
-            // headers: {
-            //     "token": token,
-            // },
             beforeSend: function(request) {      //使用beforeSend
                 request.setRequestHeader("token", token);
                 request.setRequestHeader("Content-Type","application/json");
             },
             url: "/participant/updateParticipant",
             type: "post",
-            //dataType: "application/json",
             async: false,
             dataType:"text",
             data: JSON.stringify({
@@ -408,32 +402,25 @@
             }),
             success: function (jsonData, result) {
 
-                console.log("data is :" + result);
-                console.log(jsonData);
-                console.log(typeof (jsonData));
+                // console.log("data is :" + result);
+                // console.log(jsonData);
+                // console.log(typeof (jsonData));
                 jsonData = JSON.parse(jsonData)
-                console.log(typeof (jsonData));
-
-                 console.log(jsonData['code']);
+                // console.log(typeof (jsonData));
+                // console.log(jsonData['code']);
                 // alert("修改成功！");
                 // window.location.href = "参与者个人信息.html";
                 if (jsonData['code'] === 200) {
-                    alert("修改成功！")
-                    window.location.href = "参与者个人信息.html";
+
+                   alert("修改成功！")
+                    // window.location.href = "参与者个人信息.html";
                 } else {
 
                     alert("登录失败，请重试");
                 }
             },
-
-            // error: function () {
-            //     alert("获取用户数据失败2");
-            // },
         });
-        // for (let i = 0; i < 570000000; i++) {
-        //
-        // }
-        console.log(1111111111)
+        // console.log(1111111111)
     }
 
     function getParticipantInfo($participantId) {
@@ -443,31 +430,26 @@
                 'token': token,
             },
             url: "/participant/getParticipantInfo",
-            type: "get",
+            type: "post",
             dataType: "json",
             data: {
                 'participantId': $participantId,
             },
             success: function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data["code"] === 200) {
                     participant = data["data"]["getParticipantInfo"];
-                    console.log(participant);
+                    // console.log(participant);
                 } else {
                     alert("获取用户数据失败");
                 }
             },
             error: function () {
+
                 alert("获取用户数据失败");
             },
         });
-
-
-
     }
-    // function updateParticipantInfo(){
-    //
-    // }
     /*获取token里面的用户数据*/
     function parseJwt(token) {
         var base64Url = token.split('.')[1];
@@ -478,7 +460,65 @@
         return JSON.parse(jsonPayload);
     }
 
+    function valiForm(){
+        return $("#updateForm").validate({
 
+            rules: {
+                // participantName: "required",
+                // lastname: "required",
+                participantName: {
+                    required: true,
+                    minlength: 2
+                },
+                participantIdCard:{
+                    required: true,
+                    minlength: 18,
+                    maxlength:18
+                },
+                participantEmail: {
+                    required: true,
+                    email: true
+                },
+                participantPass: {
+                    required: true,
+                    minlength: 6,
+                    maxlength:18
+                    //  equalTo: "#password"
+                },
+                participantPhone: {
+                    required: true,
+                    minlength: 11,
+                    maxlength:11
+                },
+                participantJob: "required",
+                participantWorkUnit: "required"
+            },
+            messages: {
+                participantName: {
+                    required: "请输入用户名",
+                    minlength: "用户名必需由两个字母组成"
+                },
+                participantIdCard: {
+                    required: "请输入18位身份证号",
+                    minlength:"身份证号位18位",
+                    maxlength:"身份证号位18位"
+                },
+                participantPass: {
+                    required: "请输入密码",
+                    minlength: "密码长度不能小于 6 个字母",
+                    maxlength: "密码长度不能大于 18 个字母"
+                },
+                participantPhone: {
+                    required: "请输入11位手机号",
+                    minlength:"手机号位11位",
+                    maxlength:"手机号位11位"
+                },
+                participantEmail: "请输入一个正确的邮箱",
+                participantJob: "请输入工作职位",
+                participantWorkUnit: "请输入工作单位"
+            }
+        });
+    }
 </script>
 
     </body>

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -76,6 +77,7 @@ public class JoinConferenceController {
 
     @PostMapping("/joinAConference")
     public Result joinAConference(@RequestBody JoinConference joinConference){
+        System.out.println(joinConference);
         if(joinConference.getParticipantId()==null||joinConference.getConferenceId()==null){
             return new Result(ResultCode.BindException);
         }
@@ -136,5 +138,15 @@ public class JoinConferenceController {
         return Result.success("joinConferenceList",joinConferenceList);
     }
 
-
+    @GetMapping("/queryJoinConferenceByConferenceId")
+    public Result queryJoinConferenceByConferenceId(@RequestParam Integer conferenceId) {
+        List<JoinConference> joinConferences = joinConferenceService.queryJoinConferenceByConferenceId(conferenceId);
+        List<JoinConference> joinConference = new ArrayList<>();
+        for (JoinConference it : joinConferences) {
+            if (it.getPickup()) {
+                joinConference.add(it);
+            }
+        }
+        return Result.success("joinConference", joinConference);
+    }
 }

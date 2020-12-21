@@ -36,4 +36,9 @@
     <select id="queryConferenceByConferenceId" resultType="Conference">
         select * from conference where conference_id = #{conferenceId};
     </select>
+
+
+    <select id="queryConferenceByFleetId" resultType="Conference">
+        select * from conference where fleet_id = #{fleetId};
+    </select>
 </mapper>

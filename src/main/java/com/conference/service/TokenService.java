@@ -20,6 +20,7 @@ public interface TokenService {
     String getToken(Participant participant);
     String getToken(Organizer organizerForBase);
     //将增加用户的人数写入token
+
     String getToken(int i);
 
     Claims parseToken(String token);

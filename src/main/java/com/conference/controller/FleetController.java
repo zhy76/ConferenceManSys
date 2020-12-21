@@ -167,4 +167,15 @@ public class FleetController {
         fleetService.updateFleet(fleet);
         return Result.success();
     }
+
+    /**
+     *
+     * @param fleetId
+     * @return
+     */
+    @GetMapping("/findFleetById")
+    public Result findFleetById(@RequestParam int fleetId){
+        Fleet findFleetById =fleetService.findFleetById(fleetId);
+        return Result.success("findFleetById", findFleetById);
+    }
 }

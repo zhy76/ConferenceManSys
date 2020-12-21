@@ -72,9 +72,10 @@ public class TokenServiceImpl implements TokenService {
         System.out.println(token);
         return token;
     }
+
     /**
      * 登录成功后，将用户的用户id写入,
-     * driver
+     * organizer
      */
     public String getToken(Organizer organizer){
         String token = "";
@@ -86,6 +87,7 @@ public class TokenServiceImpl implements TokenService {
         System.out.println(token);
         return token;
     }
+
     //将增加用户的人数写入token
     public String getToken(int i){
         String token="";

@@ -30,4 +30,6 @@ public interface JoinConferenceService {
      * @return  JoinConference 的列表
      **/
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
+
+    List<JoinConference> queryJoinConferenceByConferenceId(Integer conferenceId);
 }

@@ -2,6 +2,7 @@ package com.conference;
 
 import com.conference.dao.DriverDao;
 import com.conference.dao.FleetDao;
+import com.conference.dao.JoinConferenceDao;
 import com.conference.dao.PickUpDao;
 import com.conference.entity.Driver;
 import com.conference.service.PickUpService;
@@ -27,6 +28,8 @@ public class ServiceTest {
     private FleetServiceImpl fleetServiceImpl;
     @Autowired
     private DriverServiceImpl driverServiceImpl;
+    @Autowired
+    private JoinConferenceDao joinConferenceDao;
 
     @Autowired
     DriverDao driverDao;
@@ -39,10 +42,11 @@ public class ServiceTest {
     private PickUpDao pickUpDao;
     @Test
     void contextLoads() {
-
-
+        System.out.println(joinConferenceDao.queryJoinConferenceByConferenceId(1));
+//        System.out.println(pickUpDao.updatePickUp());
+//
 //        System.out.println(fleetDao.findAllFleet());
-        System.out.println(fleetServiceImpl.findAllFleet());
+//        System.out.println(fleetServiceImpl.findAllFleet());
     }
     @Test
     void fleetTest() {

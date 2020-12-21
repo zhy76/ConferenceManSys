@@ -69,7 +69,8 @@ public interface PickUpDao {
     PickUp findPickUpById(@Param("pickUpId")int pickUpId);
 
     // 精确修改
-    int updatePickUp(@Param("pickUpId")int pickUpId, @Param("participantId")int participantId, @Param("driverId")int driverId,
+    int updatePickUp(@Param("pickUpId")int pickUpId, @Param("participantId")int participantId,
+                     @Param("fleetId")int fleetId, @Param("driverId")int driverId,
                      @Param("conferenceId")int conferenceId, @Param("trainNumber")String trainNumber,
                      @Param("toTime")String toTime, @Param("returnTime")String returnTime,
                      @Param("isFinishPickup")boolean isFinishPickup);

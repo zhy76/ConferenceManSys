@@ -27,16 +27,19 @@ public class JoinConference {
         this.conferenceId = conferenceId;
     }
 
-    public Integer getIsPutup() {
+    public Boolean getIsPutup() {
         return isPutup;
     }
 
-    public void setIsPutup(Integer isPutup) {
+    public void setIsPutup(Boolean isPutup) {
         this.isPutup = isPutup;
     }
 
     public Boolean getPickup() {
         return isPickup;
+    }
+
+    public JoinConference() {
     }
 
     @Override
@@ -82,7 +85,8 @@ public class JoinConference {
 
     private Integer participantId;
     private Integer conferenceId;
-    private Integer isPutup; //是否需要住宿
+//    private Integer isPutup; //是否需要住宿
+    private Boolean isPutup;
     private Boolean isPickup; //是否需要接送
     private String toTime; //参会往时间
     private String returnTime; //参会返时间
