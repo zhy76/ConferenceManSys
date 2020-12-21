@@ -82,7 +82,8 @@ public class JoinConference {
 
     private Integer participantId;
     private Integer conferenceId;
-    private Integer isPutup; //是否需要住宿
+//    private Integer isPutup; //是否需要住宿
+    private Boolean isPutup;
     private Boolean isPickup; //是否需要接送
     private String toTime; //参会往时间
     private String returnTime; //参会返时间

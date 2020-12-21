@@ -76,6 +76,7 @@ public class JoinConferenceController {
 
     @PostMapping("/joinAConference")
     public Result joinAConference(@RequestBody JoinConference joinConference){
+        System.out.println(joinConference);
         if(joinConference.getParticipantId()==null||joinConference.getConferenceId()==null){
             return new Result(ResultCode.BindException);
         }
@@ -128,4 +129,13 @@ public class JoinConferenceController {
             return new Result(ResultCode.FAIL);
         }
     }
+
+
+    @GetMapping("/queryJoinedConference")
+    public Result queryJoinedConferenceByParticipantId(@RequestParam Integer participantId){
+        List<JoinConference> joinConferenceList = joinConferenceService.queryConferenceByParticipantId(participantId);
+        return Result.success("joinConferenceList",joinConferenceList);
+    }
+
+
 }
