@@ -1,246 +1,227 @@
-
 <!doctype html>
-<html  lang="en">
+<html lang="en">
 
     <head>
         <!-- meta data -->
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
         <!--font-family-->
-		<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext" rel="stylesheet">
-        
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&amp;subset=devanagari,latin-ext"
+              rel="stylesheet">
+
         <!-- title of site -->
-        <title>Sign in</title>
+        <title>登录</title>
 
         <!-- For favicon png -->
-		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
-       
+        <link href="assets/logo/favicon.png" rel="shortcut icon" type="image/icon"/>
+
         <!--font-awesome.min.css-->
-        <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-		
-		<!--animate.css-->
-        <link rel="stylesheet" href="assets/css/animate.css">
-		
+        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+
+        <!--animate.css-->
+        <link href="assets/css/animate.css" rel="stylesheet">
+
         <!--bootstrap.min.css-->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-		
-		<!-- bootsnav -->
-		<link rel="stylesheet" href="assets/css/bootsnav.css" >	
-        
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- bootsnav -->
+        <link href="assets/css/bootsnav.css" rel="stylesheet">
+
         <!--style.css-->
-        <link rel="stylesheet" href="assets/css/style.css">
-        
+        <link href="assets/css/style.css" rel="stylesheet">
+
         <!--responsive.css-->
-        <link rel="stylesheet" href="assets/css/responsive.css">
-        
+        <link href="assets/css/responsive.css" rel="stylesheet">
+
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		
+
         <!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
     </head>
-	
-	<body>
-		<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+
+    <body>
+        <!--[if lte IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+                href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-		
-		<!-- signin end -->
-		<section class="signin signup">
-			<div class="container">
-				<div class="sign-content popup-in-content">
-					<div class="popup-in-txt">
-						<h2>sign in</h2>
 
-<!--						<div class="row">-->
-<!--							<div class="col-sm-6">-->
-								<div class="signin-form">
-									<form action="popupsignin.html" role="form">
-										<div class="form-group">
-											<label for="signin_form"><span class="glyphicon glyphicon-user" style="color: rgb(140, 132, 251);"></span>  role</label>
-											<!--										    <input type="text" class="form-control" id="signin_form" placeholder="Role">-->
-											<select  class="form-control" id="signin_form" required>
-												<option value="participant">meeting participant</option>
-												<option value="organizer">meeting organizer</option>
-												<option value="administrator">administrator</option>
-												<option value="driver">driver</option>
-												<option value="hotel">hotel</option>
-											</select>
-										</div><!--/.form-group -->
-										<div class="form-group">
-										    <label for="signin_form"> <span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  phone number</label>
-										    <input type="text" class="form-control" id="username" placeholder="Enter your phone number" required>
-										</div><!--/.form-group -->
-										<div class="form-group">
-											<label  for="signin_form"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  passward</label>
-										    <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
-										</div><!--/.form-group -->
-									</form><!--/form -->
-								</div><!--/.signin-form -->
-<!--							</div>&lt;!&ndash;/.col &ndash;&gt;-->
-<!--						</div>&lt;!&ndash;/.row &ndash;&gt;-->
-						<form role="form">
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="signin-password">
-<!--										<div class="password-circle">-->
-											<div class="checkbox pull-left">
-												<label>
-													<input type="checkbox"> remember me
-												</label>
-											</div>
-											<!--										<div class="single-password-circle">-->
-											<!--											<input type="checkbox" id="checkbox01" name="remember">-->
-											<!--												<label for="checkbox01">-->
-											<!--													<span class="round-boarder">-->
-											<!--														<span class="round-boarder1"></span>-->
-											<!--													</span>remember me-->
-											<!--												</label>-->
-											<!--										</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;-->
-											<div class="single-forgot-password-circle pull-right">
-												<a href="popupsignin.html">Forgot password</a>
-											</div><!--/.single-password-circle-->
-<!--										</div>&lt;!&ndash;/.password-circle&ndash;&gt;-->
-									</div><!--/.signin-password -->
-								</div><!--/.col -->
-								<div class="col-sm-12">
-									<div class="signin-footer">
-										<button type="button" id="submit" class="btn signin_btn signin_btn_two" data-toggle="modal" data-target=".signin_modal">
-											sign in
-										</button>
-										<p>
-											Don’t have an Account ?
-											<a href="popupsignup.html">Sign up</a>
-										</p>
-									</div><!--/.signin-footer -->
-								</div><!--/.col -->
-							</div><!--/.row -->
-<!--							</div>&lt;!&ndash;/.row &ndash;&gt;-->
+        <!-- signin end -->
+        <section class="signin signup">
+            <div class="container">
+                <div class="sign-content popup-in-content">
+                    <div class="popup-in-txt">
+                        <h2>登 录</h2>
 
-<!--							<div class="row">-->
+                        <!--						<div class="row">-->
+                        <!--							<div class="col-sm-6">-->
+                        <div class="signin-form">
+                            <form action="popupsignin.html" role="form">
+                                <div class="form-group">
+                                    <label for="signin_form"><span class="glyphicon glyphicon-user"
+                                                                   style="color: rgb(140, 132, 251);"></span> 角色</label>
 
-						</form>
+                                    <select class="form-control" id="role" required>
+                                        <option value="participant">会议参加者</option>
+                                        <option value="organizer">会议组织者</option>
+                                        <option value="administrator">管理员</option>
+                                        <option value="driver">司机</option>
+                                        <option value="hotel">酒店</option>
+                                        <option value="fleet">车队</option>
+                                    </select>
+                                </div><!--/.form-group -->
+                                <div class="form-group">
+                                    <label for="signin_form"> <span class="glyphicon glyphicon-phone"
+                                                                    style="color: rgb(140, 132, 251);"></span>
+                                        手机号</label>
+                                    <input class="form-control" id="driverPhone" placeholder="请输入手机号" required
+                                           type="text">
+                                </div><!--/.form-group -->
+                                <div class="form-group">
+                                    <label for="signin_form"><span class="glyphicon glyphicon-lock"
+                                                                   style="color: rgb(140, 132, 251);"></span> 密码</label>
+                                    <input class="form-control" id="driverPass" placeholder="请输入密码" required
+                                           type="password">
+                                </div><!--/.form-group -->
+                            </form><!--/form -->
+                        </div><!--/.signin-form -->
+                        <!--							</div>&lt;!&ndash;/.col &ndash;&gt;-->
+                        <!--						</div>&lt;!&ndash;/.row &ndash;&gt;-->
+                        <form role="form">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="signin-password">
+                                        <!--										<div class="password-circle">-->
+                                        <div class="checkbox pull-left">
+                                            <label>
+                                                <input type="checkbox"> 记住我
+                                            </label>
+                                        </div>
+                                        <!--										<div class="single-password-circle">-->
+                                        <!--											<input type="checkbox" id="checkbox01" name="remember">-->
+                                        <!--												<label for="checkbox01">-->
+                                        <!--													<span class="round-boarder">-->
+                                        <!--														<span class="round-boarder1"></span>-->
+                                        <!--													</span>remember me-->
+                                        <!--												</label>-->
+                                        <!--										</div>&lt;!&ndash;/.single-password-circle&ndash;&gt;-->
+                                        <div class="single-forgot-password-circle pull-right">
+                                            <a href="popupsignin.html">忘记密码</a>
+                                        </div><!--/.single-password-circle-->
+                                        <!--										</div>&lt;!&ndash;/.password-circle&ndash;&gt;-->
+                                    </div><!--/.signin-password -->
+                                </div><!--/.col -->
+                                <div class="col-sm-12">
+                                    <div class="signin-footer">
+                                        <button class="btn signin_btn signin_btn_two" data-target=".signin_modal"
+                                                data-toggle="modal"
+                                                id="submit" type="button">
+                                            登 录
+                                        </button>
+                                        <p>
+                                            还没有账号？
+                                            <a href="popupsignup.html">注 册</a>
+                                        </p>
+                                    </div><!--/.signin-footer -->
+                                </div><!--/.col -->
+                            </div><!--/.row -->
+                            <!--							</div>&lt;!&ndash;/.row &ndash;&gt;-->
 
-					</div><!-- .popup-in-txt -->
-				</div><!--/.sign-content -->
-			</div><!--/.container -->
-		</section><!--/.signin -->
-		
-		<!-- signin end -->
+                            <!--							<div class="row">-->
 
-		<!--footer copyright start -->
-		<footer class="footer-copyright">
-			<div >
-				<i class="fa fa-angle-double-up return-to-top"  data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
-			</div><!--/.scroll-Top-->
+                        </form>
 
-		</footer><!--/.hm-footer-copyright-->
-		<!--footer copyright  end -->
+                    </div><!-- .popup-in-txt -->
+                </div><!--/.sign-content -->
+            </div><!--/.container -->
+        </section><!--/.signin -->
+
+        <!-- signin end -->
+
+        <!--footer copyright start -->
+        <footer class="footer-copyright">
+            <div id="scroll-Top">
+                <i aria-hidden="true" class="fa fa-angle-double-up return-to-top" data-original-title="Back to Top"
+                   data-placement="top" data-toggle="tooltip" id="scroll-top" title=""></i>
+            </div><!--/.scroll-Top-->
+
+        </footer><!--/.hm-footer-copyright-->
+        <!--footer copyright  end -->
 
 
-		 <!-- Include all js compiled plugins (below), or include individual files as needed -->
+        <!-- Include all js compiled plugins (below), or include individual files as needed -->
 
-		<script src="assets/js/jquery.js"></script>
-        
+        <script src="assets/js/jquery.js"></script>
+
         <!--modernizr.min.js-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-		
-		<!--bootstrap.min.js-->
+
+        <!--bootstrap.min.js-->
         <script src="assets/js/bootstrap.min.js"></script>
-		
-		<!-- bootsnav js -->
-		<script src="assets/js/bootsnav.js"></script>
-		
-		<!-- jquery.sticky.js -->
-		<script src="assets/js/jquery.sticky.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-		
-        
+
+        <!-- bootsnav js -->
+        <script src="assets/js/bootsnav.js"></script>
+
+        <!-- jquery.sticky.js -->
+        <script src="assets/js/jquery.sticky.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
 
+        <!-- 配置json解析，将登陆信息发送给/login -->
+        <script type="text/javascript">
 
-		<!-- 配置json解析，将登陆信息发送给/login -->
-<!--		<script src="js/jquery-3.1.1.min.js"></script>-->
-<!--		<script>-->
-<!--			function parseJwt(token) {-->
-<!--				var base64Url = token.split('.')[1];-->
-<!--				var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');-->
-<!--				var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {-->
-<!--					return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);-->
-<!--				}).join(''));-->
+            $("#submit").click(function () {
+                let role = $("#role").val();
+                // console.log($("#role").val());
+                alert(role);
+                var driverPhone = $("#driverPhone").val();
+                var driverPass = $("#driverPass").val();
+                var phoneKey = role + "Phone";
+                var passKey = role + "Pass";
+                var json = {
+                    // "fleetPhone": "19914665734",
+                    // "fleetPass": "123456"
+                };
+                json[phoneKey] = driverPhone;
+                json[passKey] = driverPass;
+                console.log(json);
 
-<!--				return JSON.parse(jsonPayload);-->
-<!--			}-->
-<!--		</script>-->
-<!--		<script type="text/javascript">-->
-<!--			$("#submit").click(function () {-->
-<!--				var username = $("#phoneNumber").val();-->
-<!--				var password = $("#password").val();-->
-<!--				$.ajax({-->
-<!--					type: "POST",-->
-<!--					dataType: "json",-->
-<!--					url: '/participant/login',-->
-<!--					contentType: "application/json",-->
-<!--					data: JSON.stringify({-->
-<!--						"participantPhone": "" + username,-->
-<!--						"participantPass": "" + password-->
-<!--					}),-->
-<!--					success: function (jsonData, result) {-->
-<!--						console.log("data is :" + result)-->
-<!--						if (jsonData["token"]) {-->
-<!--							localStorage.setItem("bbsNCU", jsonData["token"]);-->
-<!--							if (parseJwt(jsonData["token"]).type == 2) {-->
-<!--								window.location.href = "admin.html"-->
-<!--							} else {-->
-<!--								window.location.href = "index.html";-->
-<!--							}-->
+                console.log(driverPhone);
+                console.log(role + '/login');
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: role + '/login',
+                    contentType: "application/json",
+                    data: JSON.stringify(json),// 方法将一个 JavaScript 对象或值转换为 JSON 字符串
+                    success: function (jsonData, result) {
+                        console.log(jsonData);
+                        if (jsonData["code"] !== 200) {
+                            alert(jsonData["message"]);
+                        } else if (jsonData["data"]["token"] !== null) {
+                            localStorage.setItem("hcs", jsonData["data"]["token"]);
 
-<!--						} else {-->
-<!--							alert("登录失败，请重试");-->
-<!--						}-->
-<!--					}-->
-<!--				});-->
-<!--			})-->
-
-<!--		</script>-->
-
-		<!-- 配置json解析，将登陆信息发送给/login -->
-		<script type="text/javascript">
-			$("#submit").click(function () {
-				var username = $("#username").val();
-				var password = $("#password").val();
-				console.log(username);
-				$.ajax({
-					type: "POST",
-					dataType: "json",
-					url: '/participant/login',
-					contentType: "application/json",
-					data: JSON.stringify({
-						"participantPhone": "" + username,
-						"participantPass": "" + password
-					}),
-					success: function (jsonData, result) {
-						console.log("data is :" + result);
-						if (jsonData["data"]["token"]) {
-							localStorage.setItem("xj", jsonData["data"]["token"]);
-							window.location.href = "参与者主页面.html";
-						} else {
-							console.log(jsonData["data"]["token"]);
-							alert("登录失败，请重试");
-						}
-					}
-				});
-			})
-		</script>
-
+                            window.location.href = role + "-index.html";
+                        } else {
+                            alert("登录失败，请重试");
+                        }
+                    },
+                    error: function () {
+                        alert(1);
+                    }
+                });
+            })
+        </script>
     </body>
-	
+
 </html>

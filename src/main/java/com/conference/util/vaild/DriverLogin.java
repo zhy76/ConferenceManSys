@@ -6,5 +6,5 @@ package com.conference.util.vaild;
  * @Author: Lance
  * @Date: 2020/12/12 4:18
  */
-public interface DriverLogin {
+public interface  DriverLogin {
 }

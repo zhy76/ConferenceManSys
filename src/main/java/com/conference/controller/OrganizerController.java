@@ -12,18 +12,18 @@ import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/6 10:41
- **/
+
+ * @author 左海余 / 刘涔宇
+ * @description
+ * @date 2020/12/16 21:10   2020/12/20 16:23
+ * @stuid 6109118041
+ */
+
 @RestController
 @RequestMapping("/organizer")
 public class OrganizerController {

@@ -79,11 +79,16 @@ public class ParticipantController {
     public Result updateParticipant(@Valid @RequestBody  Participant participant, HttpServletRequest request) {
 //        JSONObject result=new JSONObject();
         System.out.println(request.getHeader("token"));
+        System.out.println(participant);
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         participant.setParticipantId((Integer) claims.get("participantId"));
         System.out.println(participant.getParticipantId());
-        participantService.updateParticipant(participant);
-        return Result.success();
+        int updateParticipant = participantService.updateParticipant(participant);
+        System.out.println(updateParticipant);
+        if(updateParticipant > 0)
+            return Result.success("updateParticipant",updateParticipant);
+        else
+            return  new Result(ResultCode.FAIL);
     }
 
     //管理员修改参加者信息页面

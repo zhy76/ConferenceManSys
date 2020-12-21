@@ -86,7 +86,7 @@ public class PickUpServiceImpl implements PickUpService {
 
     @Override
     public int updatePickUp(PickUp pickUp) {
-        return pickUpDao.updatePickUp(pickUp.getParticipantId(), pickUp.getDriverId(), pickUp.getConferenceId(),
+        return pickUpDao.updatePickUp(pickUp.getPickUpId(),pickUp.getParticipantId(), pickUp.getDriverId(), pickUp.getConferenceId(),
                 pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
     }
 }

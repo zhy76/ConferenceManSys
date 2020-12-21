@@ -137,17 +137,22 @@
 					if(openCloseFlag == true)
 					{
 						$("#openClose").addClass('glyphicon glyphicon-eye-open');
+
 						$("#accountPass").attr("type","text");
+
 						openCloseFlag = false;
 					}
 					else
 					{
 						$("#openClose").addClass('glyphicon glyphicon-eye-close');
+
 						$("#accountPass").attr("type","password");
+
 						openCloseFlag = true;
 					}
 					
 				});
+
 
 				$("#login").click(function () {
 					let role = $("#role").val();
@@ -216,6 +221,7 @@
 						});
 					}
 
+
 				})
 			});
 
@@ -261,6 +267,7 @@
 												<option value="participant">会议参加者</option>
 												<option value="organizer">会议组织者</option>
 												<option value="admin">管理员</option>
+
 												<option value="driver">司机</option>
 												<option value="fleet">车队</option>
 												<option value="hotel">酒店</option>
@@ -281,7 +288,9 @@
 										<div class="form-group">
 											<label for="accountPass"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
 											<input type="password" class="form-control" id="accountPass" placeholder="请输入密码" >
+
 											<span id = "openClose" class="glyphicon glyphicon-eye-close" style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 0px;"></span>
+
 											<span id = "psw-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px;display: none;" ></span>
 											<div id = "pswInfo" style = "color:red; font-weight: bold; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
 											
@@ -340,7 +349,9 @@
 										</button>
 										<p class = "text-center">
 											    还没有账号？
+
 											<a href="注册New.html" style="font-weight:bold ; color:red">点击注册</a>
+
 										</p>
 									</div>
 								</div>

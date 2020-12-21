@@ -196,7 +196,7 @@ public class DriverController {
     }
 
     /**
-     * 查找登入司机的所有信息
+     * 司机自己查找登入司机的所有信息
      * /driver/getDriverInfo
      * @param request
      * @return
@@ -205,6 +205,19 @@ public class DriverController {
     public Result getDriverInfo(HttpServletRequest request) {
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         Driver getDriverInfo = driverService.findDriverById((Integer) claims.get("driverId"));
+        System.out.println("/getDriverInfo");
         return Result.success("getDriverInfo", getDriverInfo);
+    }
+    /**
+     * 司机自己查找登入司机的所有信息
+     * /driver/getDriverInfo
+     * @param driverId
+     * @return
+     */
+    @GetMapping("/getDriverInfoById")
+    public Result getDriverInfoById(@RequestParam("driverId") Integer driverId) {
+        Driver getDriverInfo = driverService.findDriverById(driverId);
+        System.out.println("/getDriverInfoById");
+        return Result.success("getDriverInfoById", getDriverInfo);
     }
 }
