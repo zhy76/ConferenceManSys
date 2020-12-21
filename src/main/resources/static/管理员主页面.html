@@ -18,6 +18,8 @@
     <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
 
     <script>
+
+        // 参加者模块
         // 修改参加者
         function updateParticipant(participantId){
             $.ajax({
@@ -63,6 +65,7 @@
                 buttons: {
                     "确认": function () {
                         $.ajax({
+                            async: false,
                             type:"post",
                             url: "/participant/deleteParticipantByAdmin/" + participantId,
                             data: {},
@@ -72,14 +75,17 @@
                             success:function (result) {
                                 console.dir(result);
                                 console.dir(result["message"]);
-                                // if(){
-                                //     participants();
-                                //     setTimeout(function () {
-                                //         alert("删除成功");
-                                //     } , 50);
-                                //
-                                // }else
-                                //     alert("删除失败");
+                                if( result["message"] == "成功" )
+                                {
+                                    participants();
+                                }
+                                else
+                                {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除失败',
+                                    });
+                                }
                             },
                             error:function () {
                                 alert("请求异常");
@@ -145,7 +151,7 @@
             })
         }
         // 提交模态框修改表单
-        function submitUpdate(){
+        function submitUpdateParticipant(){
             var form = new FormData(document.getElementById("updateParticipantForm"));//把表单的对象作为一个参数
             $.ajax({
                 async: false,
@@ -167,6 +173,140 @@
                 }
             })
         }
+        // 参加者模块
+
+        //组织者模块
+        function organizers(){
+            $.ajax({
+                type:"post",
+                url: "/organizer/showOrganizers",
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到所有组织者
+                    // console.log(result);
+                    // console.log(result["code"]);
+                    // console.log(result["message"]);
+                    // console.log(result["data"])
+                    var listOrganizers = "";
+                    for(var i = 0 ; i < result["data"].length ; i ++)
+                    {
+                        var organizerId = result["data"][i].organizerId;
+                        var organizerUnit = result["data"][i].organizerUnit;
+                        var organizerPhone = result["data"][i].organizerPhone;
+                        var organizerEmail = result["data"][i].organizerEmail;
+                        var organizerPass = result["data"][i].organizerPass;
+                        listOrganizers += '  <tr>\n' +
+                            '                                        <td hidden></td>\n' +
+                            '                                        <td>' + organizerUnit + '</td>\n' +
+                            '                                        <td>'+ organizerPhone+'</td>\n' +
+                            '                                        <td>'+organizerEmail+'</td>\n' +
+                            '                                        <td>'+organizerPass+'</td>\n' +
+                            '                                        <td>\n' +
+                            '                                            <button  class="btn btn-info btn-xs active" data-toggle="modal" data-target="#updateOrganizer" data-backdrop="false" onclick = "javascript:updateOrganizer('+ organizerId +')">修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteOrganizer('+ organizerId +')" >删除</button>\n' +
+                            '                                        </td>\n' +
+                            '                                    </tr>'
+                    }
+                    $("#organizer table tbody").html(listOrganizers);
+
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function deleteOrganizer(organizerId){
+            $.confirm({
+                title: '提示信息',
+                content: '确认要删除吗?',
+                buttons: {
+                    "确认": function () {
+                        $.ajax({
+                            async: false,
+                            type:"post",
+                            url: "/organizer/deleteOrganizerByAdmin/" + organizerId,
+                            data: {},
+                            dataType:"json",
+                            processData:false,
+                            contentType:false,
+                            success:function (result) {
+                                console.dir(result);
+                                console.dir(result["message"]);
+                                if( result["message"] == "成功" )
+                                {
+                                    organizers();
+                                }
+                                else
+                                {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除失败',
+                                    });
+                                }
+                            },
+                            error:function () {
+                                alert("请求异常");
+                            }
+                        })
+                    },
+                    "取消": function () {
+
+                    },
+                }
+            });
+        }
+
+        function updateOrganizer(organizerId){
+            // console.dir("dsadsadasda");
+            $.ajax({
+                type:"post",
+                url: "/organizer/queryOrganizerByOrganizerId?organizerId=" + organizerId,
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到指定参加者信息
+                    var organizerObj = result["data"]["queryOrganizerByOrganizerId"];
+                    $("#organizerId").val(organizerObj.organizerId);
+                    $("#organizerUnit").val(organizerObj.organizerUnit);
+                    $("#organizerPhone").val(organizerObj.organizerPhone);
+                    $("#organizerEmail").val(organizerObj.organizerEmail);
+                    $("#organizerPass").val(organizerObj.organizerPass);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function submitUpdateOrganizer(){
+            var form = new FormData(document.getElementById("updateOrganizerForm"));//把表单的对象作为一个参数
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/organizer/updateOrganizerByAdmin",
+                data: form,
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+        //组织者模块
+
+        //会议模块
+
+        //会议模块
     </script>
 </head>
 
@@ -257,7 +397,7 @@
                                     <div class="panel-body">
                                         <ul class="nav list-group  nav-tap">
                                             <li style="border: 1px solid #dddddd;border-radius: 2px;"><a href="#participant" data-toggle="tab" onclick="(function(){$('#participantLi').addClass('active');$('#organizerLi').removeClass('active'); participants();})()" >参加者</a></li>
-                                            <li style="border: 1px solid #dddddd; border-top: 0px;border-radius: 2px; "><a href="#organizer" data-toggle="tab"  onclick="(function(){$('#organizerLi').addClass('active'); $('#participantLi').removeClass('active');participants();})()">组织者</a></li>
+                                            <li style="border: 1px solid #dddddd; border-top: 0px;border-radius: 2px; "><a href="#organizer" data-toggle="tab"  onclick="(function(){$('#organizerLi').addClass('active'); $('#participantLi').removeClass('active');organizers();})()">组织者</a></li>
                                         </ul>
                                     </div>
 
@@ -291,7 +431,7 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs">
                     <li id = "participantLi"><a href="#participant" data-toggle="tab" onclick="participants();" >参加者</a></li>
-                    <li id = "organizerLi"><a href="#organizer" data-toggle="tab"  >组织者</a></li>
+                    <li id = "organizerLi"><a href="#organizer" data-toggle="tab"  onclick="organizers();">组织者</a></li>
                 </ul>
 <!--                对应面板-->
                 <div class="panel panel-default">
@@ -341,7 +481,7 @@
                                 <form class="form-inline text-center" >
                                     <div class="form-group">
                                         <label for="searchOrganizerUnit">组织单位</label>
-                                        <input type="text" class="form-control" id="searchOrganizerUnit" placeholder="组织单位">
+                                            <input type="text" class="form-control" id="searchOrganizerUnit" placeholder="组织单位">
                                     </div>
                                     <div class="form-group">
                                         <label for="searchOrganizerPhone">联系电话</label>
@@ -351,47 +491,19 @@
                                 </form>
                             </div>
                             <table class="table table-striped table-bordered table-hover">
-                                <tr>
-                                    <th hidden>ID</th>
-                                    <th>组织单位</th>
-                                    <th>联系电话</th>
-                                    <th>电子邮箱</th>
-                                    <th>密码</th>
-                                    <th>操作</th>
-                                </tr>
-                                <tr>
-                                    <td hidden></td>
-                                    <td>信息工程学院</td>
-                                    <td>177708351651</td>
-                                    <td>958474674@qq.com</td>
-                                    <td>123456</td>
-                                    <td>
-                                        <a href="" class="btn btn-info btn-xs active">修改</a>&nbsp;&nbsp;
-                                        <a href="" class="btn btn-danger btn-xs">删除</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td hidden></td>
-                                    <td>信息工程学院</td>
-                                    <td>177708351651</td>
-                                    <td>958474674@qq.com</td>
-                                    <td>123456</td>
-                                    <td>
-                                        <a href="" class="btn btn-info btn-xs active">修改</a>&nbsp;&nbsp;
-                                        <a href="" class="btn btn-danger btn-xs">删除</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td hidden></td>
-                                    <td>信息工程学院</td>
-                                    <td>177708351651</td>
-                                    <td>958474674@qq.com</td>
-                                    <td>123456</td>
-                                    <td>
-                                        <a href="" class="btn btn-info btn-xs active">修改</a>&nbsp;&nbsp;
-                                        <a href="" class="btn btn-danger btn-xs">删除</a>
-                                    </td>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th hidden>ID</th>
+                                        <th>组织单位</th>
+                                        <th>联系电话</th>
+                                        <th>电子邮箱</th>
+                                        <th>密码</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -477,13 +589,53 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
-                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdate(); $('#updateParticipant').modal('hide'); participants();
+                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdateParticipant(); $('#updateParticipant').modal('hide'); participants();
 ">保存修改</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+<!--        修改组织者信息的模态框-->
+    <div class="modal fade" id = "updateOrganizer" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">组织者信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form id = "updateOrganizerForm">
+                        <div class="form-group" hidden>
+                            <label for="organizerId">ID</label>
+                            <input type="hidden" class="form-control" name="organizerId" id="organizerId" placeholder="id" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="organizerUnit">组织单位</label>
+                            <input type="email" class="form-control"  name="organizerUnit" id="organizerUnit" placeholder="组织单位"  value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="organizerPhone">联系电话</label>
+                            <input type="text" class="form-control" name="organizerPhone" id="organizerPhone" placeholder="联系电话" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="organizerEmail">电子邮箱</label>
+                            <input type="text" class="form-control" name = "organizerEmail" id="organizerEmail" placeholder="电子邮箱" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="organizerPass">密码</label>
+                            <input type="text" class="form-control" name = "organizerPass" id="organizerPass" placeholder="密码" value="">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
+                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdateOrganizer(); $('#updateOrganizer').modal('hide'); organizers();
+">保存修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 </body>
 </html>

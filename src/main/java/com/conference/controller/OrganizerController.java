@@ -1,6 +1,7 @@
 package com.conference.controller;
 
 import com.conference.entity.Organizer;
+import com.conference.entity.Organizer;
 import com.conference.service.OrganizerService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
@@ -23,7 +24,8 @@ import java.util.List;
  * @Author: liuCenYu
  * @Date: 2020/12/6 10:41
  **/
-@Controller
+@RestController
+@RequestMapping("/organizer")
 public class OrganizerController {
 
     @Autowired
@@ -166,5 +168,50 @@ public class OrganizerController {
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         Organizer getOrganizerInfo = organizerService.findOrganizerById((Integer) claims.get("organizerId"));
         return Result.success("getOrganizerInfo", getOrganizerInfo);
+    }
+
+
+    /**
+     * 管理员管理组织者模块
+     */
+
+    /**
+     * 管理员查看所有组织者信息
+     * @return
+     */
+    @PostMapping("/showOrganizers")
+    @ResponseBody
+    public Result showOrganizers(){
+        List<Organizer> organizersList = organizerService.findAllOrganizer();
+        return  Result.success(organizersList);
+    }
+
+    /**
+     * 管理员根据ID查看组织者信息
+     * @param organizerId
+     * @return
+     */
+    @RequestMapping("/queryOrganizerByOrganizerId")
+    public Result queryOrganizerByOrganizerId(@RequestParam int organizerId){
+        Organizer queryOrganizerByOrganizerId = organizerService.findOrganizerById(organizerId);
+        return Result.success("queryOrganizerByOrganizerId",queryOrganizerByOrganizerId);
+    }
+
+    //管理员修改组织者信息页面
+    //修改组织者信息
+    @PostMapping("/updateOrganizerByAdmin")
+    public Result postUpdateOrganizer(Organizer organizer){
+//        System.out.println(organizer);
+        int status = organizerService.updateOrganizer(organizer);
+//        System.out.println(status);
+        return Result.success();
+    }
+
+    //管理员删除某组织者
+    @PostMapping("/deleteOrganizerByAdmin/{organizerId}")
+    @ResponseBody
+    public Result getDeleteOrganizer(@PathVariable("organizerId") Integer organizerId){
+        organizerService.deleteOrganizerById(organizerId);
+        return Result.success();
     }
 }
