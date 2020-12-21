@@ -27,11 +27,11 @@ public class JoinConference {
         this.conferenceId = conferenceId;
     }
 
-    public Integer getIsPutup() {
+    public Boolean getIsPutup() {
         return isPutup;
     }
 
-    public void setIsPutup(Integer isPutup) {
+    public void setIsPutup(Boolean isPutup) {
         this.isPutup = isPutup;
     }
 

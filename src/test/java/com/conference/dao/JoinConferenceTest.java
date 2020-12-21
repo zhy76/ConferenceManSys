@@ -22,8 +22,6 @@ public class JoinConferenceTest {
 
     @Test
     void contextLoads(){
-        System.out.println(joinConferenceDao.joinAConference(new JoinConference(4,13,true,false,
-                "2008-08-07 10:10:00","2008-08-10 13:10:00","G1234")));
 //        System.out.println(joinConferenceDao.joinAConference(new JoinConference(4,6,1,false,
 //                "2008-08-17 10:10:00","2008-08-18 13:10:00","G1642")));
 //

@@ -15,14 +15,14 @@ import java.util.Date;
 
 @Service("TokenService")
 public interface TokenService {
-    public String getToken(Driver driver);
-    public String getToken(Fleet fleet);
-    public String getToken(Participant participant);
+    String getToken(Driver driver);
+    String getToken(Fleet fleet);
+    String getToken(Participant participant);
     String getToken(Organizer organizerForBase);
     //将增加用户的人数写入token
 
-    public String getToken(int i);
+    String getToken(int i);
 
-    public Claims parseToken(String token);
+    Claims parseToken(String token);
 
 }

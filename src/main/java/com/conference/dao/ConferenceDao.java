@@ -46,5 +46,5 @@ public interface ConferenceDao {
 
 
 
-    public Conference queryConferenceByFleetId(Integer fleetId);
+    public List<Conference> queryConferenceByFleetId(Integer fleetId);
 }

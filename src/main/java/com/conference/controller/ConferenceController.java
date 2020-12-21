@@ -94,7 +94,7 @@ public class ConferenceController {
      */
     @GetMapping("/queryConferenceByFleetId")
     public Result queryConferenceByFleetId(@RequestParam Integer fleetId) {
-        Conference conference = conferenceService.queryConferenceByFleetId(fleetId);
+        List<Conference> conference = conferenceService.queryConferenceByFleetId(fleetId);
         return Result.success("conference", conference);
     }
 }

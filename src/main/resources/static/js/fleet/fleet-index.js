@@ -54,17 +54,17 @@ $(function () {
 
     //会议订单管理
     $("#to-conference a").click(function () {
-        //console.log("success");
         alert(3);
+        localStorage.setItem("hcs", token);
+        window.location.href = "../../fleet-conference.html";
     })
 
     /*点击 退出登录 按钮*/
     $("#login-out").click(function () {
         clearDriverInfo();
-        //localStorage.clear();
         localStorage.setItem("hcs", null);
         alert("退出成功");
-        window.location.href = "popupsignin.html";
+        window.location.href = "../../popupsignin.html";
     })
     // submitChange();
 })

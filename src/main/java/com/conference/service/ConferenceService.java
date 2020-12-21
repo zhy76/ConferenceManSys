@@ -44,5 +44,5 @@ public interface ConferenceService {
     public int addConference(Conference conference);
 
     public Conference queryConferenceById(Integer conferenceId);
-    public Conference queryConferenceByFleetId(Integer fleetId);
+    public List<Conference> queryConferenceByFleetId(Integer fleetId);
 }

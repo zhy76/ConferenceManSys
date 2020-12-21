@@ -28,7 +28,7 @@ public class ConferenceServiceImpl implements ConferenceService {
     }
 
     @Override
-    public Conference queryConferenceByFleetId(Integer fleetId) {
+    public List<Conference> queryConferenceByFleetId(Integer fleetId) {
         return conferenceDao.queryConferenceByFleetId(fleetId);
     }
 
