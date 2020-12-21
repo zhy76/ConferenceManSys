@@ -22,4 +22,5 @@ public interface OrganizerService {
     int addOrganizer(Organizer organizer);
 
     int deleteOrganizerById(Integer organizerId);
+
 }

@@ -10,7 +10,7 @@ let $participantId;
 $(function () {
     let $driverPhone;
     /*获取token*/
-    token = localStorage.getItem("hcs");
+    token = localStorage.getItem("conNCU");
     console.log(typeof (token));
     console.log(token);
     if (token == null || token === "null" || token === "undefined") {

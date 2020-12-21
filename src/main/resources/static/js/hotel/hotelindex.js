@@ -26,7 +26,7 @@ $(function () {
         console.log("未登录");
         localStorage.setItem("conNCU", null);
         alert("请先登录！");
-        window.location.href = "登录.html";
+        window.location.href = "登录New.html";
     }
 //获取酒店信息
     $("#get-hotel a").click(function () {
@@ -51,7 +51,7 @@ $(function () {
         //localStorage.clear();
         localStorage.setItem("conNCU", null);
         alert("退出成功");
-        window.location.href = "登录.html";
+        window.location.href = "登录New.html";
     })
 
 });

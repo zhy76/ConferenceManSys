@@ -1,6 +1,7 @@
 package com.conference.controller;
 
 import com.conference.entity.Organizer;
+import com.conference.entity.Organizer;
 import com.conference.service.OrganizerService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 /**
- * @author 左海余
+
+ * @author 左海余 / 刘涔宇
  * @description
- * @date 2020/12/16 21:10
+ * @date 2020/12/16 21:10   2020/12/20 16:23
  * @stuid 6109118041
  */
+
 @RestController
 @RequestMapping("/organizer")
 public class OrganizerController {
@@ -165,5 +168,50 @@ public class OrganizerController {
         Organizer getOrganizerInfo = organizerService.findOrganizerById(organizerId);
         System.out.println(getOrganizerInfo);
         return Result.success("getOrganizerInfo", getOrganizerInfo);
+    }
+
+
+    /**
+     * 管理员管理组织者模块
+     */
+
+    /**
+     * 管理员查看所有组织者信息
+     * @return
+     */
+    @PostMapping("/showOrganizers")
+    @ResponseBody
+    public Result showOrganizers(){
+        List<Organizer> organizersList = organizerService.findAllOrganizer();
+        return  Result.success(organizersList);
+    }
+
+    /**
+     * 管理员根据ID查看组织者信息
+     * @param organizerId
+     * @return
+     */
+    @RequestMapping("/queryOrganizerByOrganizerId")
+    public Result queryOrganizerByOrganizerId(@RequestParam int organizerId){
+        Organizer queryOrganizerByOrganizerId = organizerService.findOrganizerById(organizerId);
+        return Result.success("queryOrganizerByOrganizerId",queryOrganizerByOrganizerId);
+    }
+
+    //管理员修改组织者信息页面
+    //修改组织者信息
+    @PostMapping("/updateOrganizerByAdmin")
+    public Result postUpdateOrganizer(Organizer organizer){
+//        System.out.println(organizer);
+        int status = organizerService.updateOrganizer(organizer);
+//        System.out.println(status);
+        return Result.success();
+    }
+
+    //管理员删除某组织者
+    @PostMapping("/deleteOrganizerByAdmin/{organizerId}")
+    @ResponseBody
+    public Result getDeleteOrganizer(@PathVariable("organizerId") Integer organizerId){
+        organizerService.deleteOrganizerById(organizerId);
+        return Result.success();
     }
 }

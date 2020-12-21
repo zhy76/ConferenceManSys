@@ -10,7 +10,6 @@ import java.util.List;
  * @Date 2020/12/5 21:04
  * @sno 6109118015
  */
-
 public interface ParticipantService {
     /**
      * @Description 查看所有参会者Participant
