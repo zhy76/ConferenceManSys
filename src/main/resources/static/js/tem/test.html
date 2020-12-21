@@ -3,19 +3,19 @@
     <head>
         <meta charset="utf-8">
         <title>菜鸟教程(runoob.com)</title>
-        <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
-        <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
-        <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+        <script src="../jquery-3.1.1.min.js"></script>
+        <script src="../jquery.validate.min.js"></script>
+
+<!--        <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>-->
+<!--        <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>-->
+        <!--        <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>-->
         <script>
-            $.validator.setDefaults({
-                submitHandler: function() {
-                    alert("提交事件!");
-                }
-            });
-            $().ready(function() {
+            $(function () {
 // 在键盘按下并释放及提交后验证提交表单\
-                console.log($("#signupForm"));
-                $("#signupForm").validate({
+                alert(1);
+                console.log($("#signup"));
+
+                $("#signup").validate({
                     rules: {
                         firstname: "required",
                         lastname: "required",
@@ -63,67 +63,67 @@
                         topic: "请选择两个主题"
                     }
                 });
-            });
+            })
+            // $().ready();
         </script>
         <style>
-            .error{
-                color:red;
+            .error {
+                color: red;
             }
         </style>
     </head>
     <body>
-        <form class="cmxform" id="signupForm" method="get" action="">
-            <fieldset>
-                <legend>验证完整的表单</legend>
-                <p>
-                    <label for="firstname">名字</label>
-                    <input id="firstname" name="firstname" type="text">
-                </p>
-                <p>
-                    <label for="lastname">姓氏</label>
-                    <input id="lastname" name="lastname" type="text">
-                </p>
-                <p>
-                    <label for="username">用户名</label>
-                    <input id="username" name="username" type="text">
-                </p>
-                <p>
-                    <label for="password">密码</label>
-                    <input id="password" name="password" type="password">
-                </p>
-                <p>
-                    <label for="confirm_password">验证密码</label>
-                    <input id="confirm_password" name="confirm_password" type="password">
-                </p>
-                <p>
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email">
-                </p>
-                <p>
-                    <label for="agree">请同意我们的声明</label>
-                    <input type="checkbox" class="checkbox" id="agree" name="agree">
-                </p>
-                <p>
-                    <label for="newsletter">我乐意接收新信息</label>
-                    <input type="checkbox" class="checkbox" id="newsletter" name="newsletter">
-                </p>
-                <fieldset id="newsletter_topics">
-                    <legend>主题 (至少选择两个) - 注意：如果没有勾选“我乐意接收新信息”以下选项会隐藏，但我们这里作为演示让它可见</legend>
-                    <label for="topic_marketflash">
-                        <input type="checkbox" id="topic_marketflash" value="marketflash" name="topic[]">Marketflash
-                    </label>
-                    <label for="topic_fuzz">
-                        <input type="checkbox" id="topic_fuzz" value="fuzz" name="topic[]">Latest fuzz
-                    </label>
-                    <label for="topic_digester">
-                        <input type="checkbox" id="topic_digester" value="digester" name="topic[]">Mailing list digester
-                    </label>
-                    <label for="topic" class="error" style="display:none">至少选择两个</label>
-                </fieldset>
-                <p>
-                    <input class="submit" type="submit" value="提交">
-                </p>
+        <form id="signup">
+
+            <legend>验证完整的表单</legend>
+            <div>
+                <div><input id="firstname" name="firstname" type="text"></div>
+            </div>
+            <p>
+                <label for="lastname">姓氏</label>
+                <input id="lastname" name="lastname" type="text">
+            </p>
+            <p>
+                <label for="username">用户名</label>
+                <input id="username" name="username" type="text">
+            </p>
+            <p>
+                <label for="password">密码</label>
+                <input id="password" name="password" type="password">
+            </p>
+            <p>
+                <label for="confirm_password">验证密码</label>
+                <input id="confirm_password" name="confirm_password" type="password">
+            </p>
+            <p>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email">
+            </p>
+            <p>
+                <label for="agree">请同意我们的声明</label>
+                <input class="checkbox" id="agree" name="agree" type="checkbox">
+            </p>
+            <p>
+                <label for="newsletter">我乐意接收新信息</label>
+                <input class="checkbox" id="newsletter" name="newsletter" type="checkbox">
+            </p>
+            <fieldset id="newsletter_topics">
+                <legend>主题 (至少选择两个) - 注意：如果没有勾选“我乐意接收新信息”以下选项会隐藏，但我们这里作为演示让它可见</legend>
+                <label for="topic_marketflash">
+                    <input id="topic_marketflash" name="topic[]" type="checkbox" value="marketflash">Marketflash
+                </label>
+                <label for="topic_fuzz">
+                    <input id="topic_fuzz" name="topic[]" type="checkbox" value="fuzz">Latest fuzz
+                </label>
+                <label for="topic_digester">
+                    <input id="topic_digester" name="topic[]" type="checkbox" value="digester">Mailing list digester
+                </label>
+                <label class="error" for="topic" style="display:none">至少选择两个</label>
             </fieldset>
+            <div>
+                <button class="btn btn-info" id="update" type="submit">更新</button>
+                <!--                    <input class="submit" type="submit" value="提交">-->
+            </div>
         </form>
     </body>
 </html>

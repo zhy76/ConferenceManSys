@@ -88,4 +88,13 @@ public class ConferenceController {
         conferenceService.updateConference(conference);
         return Result.success();
     }
+
+    /**
+     * 通过车队id查会议
+     */
+    @GetMapping("/queryConferenceByFleetId")
+    public Result queryConferenceByFleetId(@RequestParam Integer fleetId) {
+        Conference conference = conferenceService.queryConferenceByFleetId(fleetId);
+        return Result.success("conference", conference);
+    }
 }

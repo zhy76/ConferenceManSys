@@ -26,6 +26,12 @@ public class ConferenceServiceImpl implements ConferenceService {
     public Conference queryConferenceById(Integer conferenceId) {
         return conferenceDao.queryConferenceById(conferenceId);
     }
+
+    @Override
+    public Conference queryConferenceByFleetId(Integer fleetId) {
+        return conferenceDao.queryConferenceByFleetId(fleetId);
+    }
+
     @Autowired
     private ConferenceDao conferenceDao;
 
@@ -48,4 +54,6 @@ public class ConferenceServiceImpl implements ConferenceService {
     public Conference queryConferenceByConferenceId(Integer conferenceId) {
         return conferenceDao.queryConferenceByConferenceId(conferenceId);
     }
+
+
 }

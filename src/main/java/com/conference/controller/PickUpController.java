@@ -209,4 +209,19 @@ public class PickUpController {
                 getAllFleetDonePickUp.add(it);
         return Result.success("getAllFleetDonePickUp", getAllFleetDonePickUp);
     }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/updatePickUp")
+    public Result updatePickUp(@RequestParam("pickUpId") Integer pickUpId,
+                               @RequestParam("driverId") Integer driverId,
+                               @RequestParam("fleetId") Integer fleetId) {
+        PickUp pickUp = pickUpService.findPickUpById(pickUpId);
+        pickUp.setDriverId(driverId);
+        pickUp.setFleetId(fleetId);
+        pickUpService.updatePickUp(pickUp);
+        return Result.success();
+    }
 }

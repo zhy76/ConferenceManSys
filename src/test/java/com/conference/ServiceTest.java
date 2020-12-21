@@ -39,8 +39,8 @@ public class ServiceTest {
     private PickUpDao pickUpDao;
     @Test
     void contextLoads() {
-
-
+//        System.out.println(pickUpDao.updatePickUp());
+//
 //        System.out.println(fleetDao.findAllFleet());
         System.out.println(fleetServiceImpl.findAllFleet());
     }

@@ -114,7 +114,7 @@ function fix(num, length) {
 
 function getFleetInfo($fleetId) {
     $.ajax({
-        // async: false,
+        async: false,
         headers: {
             'token': token,
         },
@@ -169,33 +169,33 @@ function showFleetInfo() {
     getFleetInfo($fleetId);
     console.log(fleet);
     let $html =
-        "<form class=\"form-horizontal form-material\">\n" +
+        "<form class=\"form-horizontal form-material\" id='fleetInfo' onsubmit='return false;'>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">车队名</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
-        "                                                               value=\"" + fleet.fleetName + "\" id='fleetName'>\n" +
+        "                                                               value=\"" + fleet.fleetName + "\" id='fleetName' name='fleetName'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">电话号码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
-        "                                                               value=\"" + fleet.fleetPhone + "\" id='fleetPhone'>\n" +
+        "                                                               value=\"" + fleet.fleetPhone + "\" id='fleetPhone' name='fleetPhone'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">密码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
-        "                                                               value=\"" + fleet.fleetPass + "\" id='fleetPass'>\n" +
+        "                                                               value=\"" + fleet.fleetPass + "\" id='fleetPass' name='fleetPass'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">重复密码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
-        "                                                               value=\"" + fleet.fleetPass + "\" id='repeatFleetPass'>\n" +
+        "                                                               value=\"" + fleet.fleetPass + "\" id='repeatFleetPass' name='repeatFleetPass'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <br/>\n" +
@@ -213,60 +213,53 @@ function showFleetInfo() {
 
 
 /**
- * 司机信息表单前端验证
+ * 车队信息表单前端验证
  */
-function validform() {
+function validForm() {
     // alert()
     // return $("#driverInfo");
     /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
-    alert(1);
-    console.log($("#driverInfo"));
-    alert(1);
-    return $("#driverInfo").validate({
+    // alert(1);
+    // console.log($("#driverInfo"));
+    // alert(1);
+    return $("#fleetInfo").validate({
         rules: {
-            driverName: {
+            fleetName: {
+                required: true,
                 minlength: 2,
                 maxlength: 13
             },
-            driverPass: {
+            fleetPass: {
                 minlength: 5,
                 maxlength: 20
             },
-            repeatDriverPass: {
+            repeatFleetPass: {
                 minlength: 5,
                 maxlength: 20,
-                equalTo: "#repeatDriverPass"
+                equalTo: "#fleetPass"
             },
-            driverPhone: {
+            fleetPhone: {
                 minlength: 11,
                 maxlength: 11
-            },
-            carNumber: {
-                minlength: 2,
-                maxlength: 8
             }
         },
         messages: {
-            driverName: {
+            fleetName: {
                 minlength: "姓名名至少包含2个字符",
                 maxlength: "用户名长度不能超过13个字符"
             },
-            driverPass: {
+            fleetPass: {
                 minlength: "密码长度不能少于6个字符",
                 maxlength: "密码长度不能多于20个字符"
             },
-            repeatDriverPass: {
+            repeatFleetPass: {
                 minlength: "密码长度不能少于6个字符",
                 maxlength: "密码长度不能多于20个字符",
                 equalTo: "两次密码输入不一致"
             },
-            driverPhone: {
+            fleetPhone: {
                 minlength: "请输入正确的电话号码",
                 maxlength: "请输入正确的电话号码"
-            },
-            carNumber: {
-                minlength: "请输入正确的车牌号码",
-                maxlength: "请输入正确的车牌号码"
             }
         }
     });
@@ -278,11 +271,12 @@ function validform() {
 function submitChange() {
     /**
      * @TODO : 前端验证
-     * validform().form()
+     *
      */
-    if (1) {
+    if (validForm().form()) {
+        alert(1);
         $.ajax({
-            // async: false,
+            async: false,
             type: "POST",
             url: '/fleet/updateFleet',
             contentType: "application/json",
@@ -310,7 +304,6 @@ function submitChange() {
             },
         });
         for (let i = 0; i < 500000000; i++) {
-
             /**
              * 意义不明的代码，
              * 不加会有bug
@@ -318,8 +311,8 @@ function submitChange() {
              * 二分
              */
         }
-        // showDriverInfo();
         showFleetInfo();
+
     } else {
         alert("信息格式有误，请重新填写！");
     }

@@ -128,9 +128,11 @@ function showWaitPickUpTable() {
             "                                                    <td>" + participant.participantPhone + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
-            "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                                    <td><input  class=\"form_date\" id=\"demo\"/></td>\n" +
+            // "                                                    <td><input type='datetime-local' value=\"2020-12-20T13:59:59\" min=\"2020-09-24T13:59:59\" max=\"2029-09-24T13:59:59\"/></td>\n" +
+            // "                                                    <td>" + i.returnTime + "</td>\n" +
             "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
-            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button>" +
+            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button></td>\n" +
             "                                                </tr>\n";
     }
     let $htmlEnd =
@@ -172,7 +174,7 @@ function showAllPickUpTable() {
         "                                                    <th>电话号码</th>\n" +
         "                                                    <th>火车航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
         "                                                    <th>是否完成</th>\n" +
         "                                                </tr>\n" +
         "                                                </thead>\n" +
@@ -196,6 +198,8 @@ function showAllPickUpTable() {
             "                                                    <td>" + participant.participantPhone + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
+            // <input type="date">
+            // "                                                    <td><input type=\"date\"></td>\n" +
             "                                                    <td>" + i.returnTime + "</td>\n" +
             "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
             "                                                </tr>\n";

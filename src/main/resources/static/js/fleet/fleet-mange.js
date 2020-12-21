@@ -472,3 +472,41 @@ function queryParticipantByParticipantPhone($participantPhone) {
         },
     });
 }
+
+
+function showFleetConference() {
+    getConference($fleetId);
+
+}
+
+
+/**
+ * 通过车队查会议
+ * @param $fleetId
+ */
+function getConference($fleetId) {
+    $.ajax({
+        async: false,
+        // headers: {
+        //     'token': token,
+        // },
+        url: "/conference/queryConferenceByFleetId",
+        type: "get",
+        dataType: "json",
+        data: {
+            'fleetId': $fleetId,
+        },
+        success: function (data) {
+            console.log(data);
+            if (data["code"] === 200) {
+                participant = data["data"]["conference"];
+                console.log(participant);
+            } else {
+                alert("获取会议数据失败");
+            }
+        },
+        error: function () {
+            alert("获取会议数据失败");
+        },
+    });
+}
