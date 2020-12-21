@@ -39,6 +39,9 @@ public class JoinConference {
         return isPickup;
     }
 
+    public JoinConference() {
+    }
+
     @Override
     public String toString() {
         return "JoinConference{" +

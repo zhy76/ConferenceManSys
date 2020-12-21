@@ -120,6 +120,7 @@
             let conference;
             let $fleetId;
             let $participantId;
+            let joinConference;
             $(function () {
                 $(window).scroll(function () {
                     if ($(this).scrollTop() > 100) $('.back-to-top').fadeIn('slow');
@@ -147,7 +148,7 @@
                             // console.log(conferences);
                             // console.log(conferences);
                             for (var i = 0; i < conferences.length; i++) {
-                                console.log(conferences[i]);
+                                // console.log(conferences[i]);
                                 var conferenceName = conferences[i].conferenceName;
                                 var conferenceLocation = conferences[i].conferenceLocation;
                                 var conferenceStart = conferences[i].conferenceStart;
@@ -155,11 +156,12 @@
                                 var conferenceId = conferences[i].conferenceId;
                                 // console.log(conferenceId);
                                 var organizerId = conferences[i].organizerId;
-                                alert(organizerId);
+                                // alert(organizerId);
+                                // alert(typeof organizerId);
                                 getOrganizerInfo(organizerId);
 
                                 var organizerUnit = organizer.organizerUnit;
-
+                                console.log(conferenceId);
                                 listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
                                     '                        <a href = "#">' +
                                     '                            <div class="items">' +
@@ -176,7 +178,7 @@
                                     '        <div class="export">' +
                                     '            <!--按钮开始-->' +
                                     '            <button id="new_add" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#renyuan' + conferenceId + '">' +
-                                    '                <span>加入</span>' +
+                                    '                <span>安排</span>' +
                                     '            </button>' +
                                     '            <!--按钮结束-->' +
                                     '            <div class="modal fade" id="renyuan' + conferenceId + '">' +
@@ -220,7 +222,7 @@
                                     '                        </div>' +
                                     '                        <div class="modal-footer">' +
                                     '                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>' +
-                                    '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"attendConference(' + i + ',' + conferenceId + ')">加入</button>' +
+                                    '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"arrangement(' + i + ',' + conferenceId + ')">安排</button>' +
                                     '                        </div>' +
                                     '                        <!--模态弹窗部分结束 -->' +
                                     '                    </div>' +
@@ -234,7 +236,7 @@
                             $('#mainContent').html(listConference);
                             if (data["code"] === 200) {
                                 console.log(data);
-                                alert(data);
+                                // alert(data);
                                 alert("获取会议数据成功");
                             } else {
                                 alert("获取数据失败1");
@@ -244,185 +246,104 @@
                             alert("获取会议数据失败");
                         },
                 })
-
-                // $participantId = parseJwt(token).participantId
-                // $.ajax({
-                //     async: false,
-                //     url: "/conference/showConferences",
-                //     type: "get",
-                //     dataType: "text",
-                //     data: {},
-                //     success: function (data) {
-                //         var listConference = "";
-                //         // console.log(data);
-                //         // console.log(typeof data)
-                //         data = JSON.parse(data)
-                //         // console.log(typeof data)
-                //         // console.log(data['data']['conferencesList'])
-                //         var conferences = data['data']['conferencesList'];
-                //
-                //         // console.log(conferences);
-                //         for (var i = 0; i < conferences.length; i++) {
-                //             // console.log(conferences[i]);
-                //             var conferenceName = conferences[i].conferenceName;
-                //             var conferenceLocation = conferences[i].conferenceLocation;
-                //             var conferenceStart = conferences[i].conferenceStart;
-                //             var conferenceEnd = conferences[i].conferenceEnd;
-                //             var conferenceId = conferences[i].conferenceId;
-                //             // console.log(conferenceId);
-                //             var organizerId = conferences[i].organizerId;
-                //
-                //             getOrganizerInfo(organizerId);
-                //
-                //             var organizerUnit = organizer.organizerUnit;
-                //
-                //             listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
-                //                 '                        <a href = "#">' +
-                //                 '                            <div class="items">' +
-                //                 '                                <img class="img-responsive" src="picture/conferenceImg.jpeg" />' +
-                //                 '                                <h4>' + conferenceName + '</h4>' +
-                //                 '                                <p> <span class="iconfont icon-dizhi"></span> ' + conferenceLocation + '</p>' +
-                //                 '                                <p> <span class="iconfont icon-shijian"></span>' + conferenceStart + '-' + conferenceEnd + '</p>' +
-                //                 '                                <p> <span class="iconfont icon-zhubandanwei"></span> ' + organizerUnit + '</p>' +
-                //                 '                            </div>' +
-                //                 '                        </a>' +
-                //                 '<div class="box">' +
-                //                 '    <div class="content">' +
-                //                 '        <!--添加按钮及bootstrap的模态框-->' +
-                //                 '        <div class="export">' +
-                //                 '            <!--按钮开始-->' +
-                //                 '            <button id="new_add" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#renyuan' + conferenceId + '">' +
-                //                 '                <span>加入</span>' +
-                //                 '            </button>' +
-                //                 '            <!--按钮结束-->' +
-                //                 '            <div class="modal fade" id="renyuan' + conferenceId + '">' +
-                //                 '                <div class="modal-dialog modal-lg modal_position">' +
-                //                 '                    <div class="modal-content">' +
-                //                 '                        <div class="modal-header">' +
-                //                 '                            <h4 class="modal-title" id="">加入会议</h4>' +
-                //                 '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
-                //                 '                        </div>\n' +
-                //                 '                        <!-- 模态弹窗部分开始 -->' +
-                //                 '                        <div class="modal-body">' +
-                //                 '                            <table id="xztb" class="table">' +
-                //                 '                                <!--新修改弹窗的样式-->' +
-                //                 '                                <tbody>' +
-                //                 '                                <tr>' +
-                //                 '                                    <td class=""><label for=""><font style="font-size: 14px; color: red;">*</font>住宿</label>' +
-                //                 '                                    </td>' +
-                //                 '                                    <td><input  type="radio" name="isPutup" value="true" id="putup"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                //                 '                                    <input  type="radio" name="isPutup"  value="false" id="unput"/>否</td>' +
-                //                 '                                </tr>' +
-                //                 '                                <tr>' +
-                //                 '                                    <td class="tb_bg"><label for=""><font style="font-size: 14px; color: red;">*</font>接送</label>' +
-                //                 '                                    </td>' +
-                //                 '                                    <td><input  type="radio" name="isPickup" value="true" id="pick"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                //                 '                                    <input  type="radio" name="isPickup"  value="false" id="unpick"/>否</td>' +
-                //                 '                                </tr>' +
-                //                 '                                <tr>' +
-                //                 '                                    <td class="tb_bg"><label for="">到达时间</label></td>' +
-                //                 '                                    <td><input type="text" name="toTime" id="toTime' + i + '" placeholder="2020-12-10 09:00:00" value="2020-12-09 09:00:00"></td>' +
-                //                 '                                </tr>' +
-                //                 '                                <tr>' +
-                //                 '                                    <td class="tb_bg"><label for="">离开时间</label></td>' +
-                //                 '                                    <td><input type="text" name="returnTime" id="returnTime' + i + '" placeholder="2020-12-12 12:00:00" value="2020-12-10 09:00:00"></td>' +
-                //                 '                                </tr>' +
-                //                 '                                <tr>' +
-                //                 '                                      <td class="tb_bg"><label for="">车次/航班号</label></td>' +
-                //                 '                                      <td><input type="text" name="trainNumber" id="trainNumber' + i + '" value="G1234" ></td>' +
-                //                 '                                </tr>' +
-                //                 '                                </tbody>' +
-                //                 '                            </table>' +
-                //                 '                        </div>' +
-                //                 '                        <div class="modal-footer">' +
-                //                 '                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>' +
-                //                 '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"attendConference(' + i + ',' + conferenceId + ')">加入</button>' +
-                //                 '                        </div>' +
-                //                 '                        <!--模态弹窗部分结束 -->' +
-                //                 '                    </div>' +
-                //                 '                </div>' +
-                //                 '            </div>' +
-                //                 '        </div>' +
-                //                 '    </div>' +
-                //                 '</div>' +
-                //                 '                   </div>'
-                //         }
-                //         $('#mainContent').html(listConference);
-                //         if (data["code"] === 200) {
-                //             alert("获取会议数据成功");
-                //         } else {
-                //             alert("获取数据失败1");
-                //         }
-                //     },
-                //     error: function () {
-                //         alert("获取会议数据失败");
-                //     },
-                // });
             })
 
             function getOrganizerInfo(organizerId) {
-
                 $.ajax({
                     async: false,
                     url: "/organizer/getOrganizerInfo",
                     type: "get",
-                    dataType: "text",
+                    dataType: "json",
                     data: {
                         'organizerId': organizerId,
                     },
                     success: function (data) {
-                        data = JSON.parse(data)
+                        // data = JSON.parse(data)
                         organizer = data['data']['getOrganizerInfo'];
+                        alert(organizer);
+                        console.log(organizer);
                     },
                     error: function () {
                         alert("获取用户数据失败2");
                     },
                 });
             }
-
-            function attendConference(i, conferenceId) {
-
-                let putup = $("input[name='isPutup']:checked").val();
-                let pickup = $("input[name='isPickup']:checked").val();
-                let toTime = $("#toTime" + i).val();
-                let returnTime = $("#returnTime" + i).val();
-                let trainNumber = $("#trainNumber" + i).val();
-                alert(putup)
-                alert(pickup)
-                alert(toTime)
-                alert(returnTime)
-                alert(trainNumber)
+            /**
+             * 通过会议的id查所有需要接送的参与者
+             *
+             *
+             */
+            function getNeedPickUpParticipant($conferenceId) {
                 $.ajax({
                     async: false,
-                    type: "POST",
+                    url: "/joinConference/queryJoinConferenceByConferenceId",
+                    type: "get",
                     dataType: "json",
-                    url: "/joinConference/joinAConference",
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        "participantId": "" + $participantId,
-                        "conferenceId": "" + conferenceId,
-                        "isPutup": "" + putup,
-                        "isPickup": "" + pickup,
-                        "toTime": "" + toTime,
-                        "returnTime": "" + returnTime,
-                        "trainNumber": "" + trainNumber,
-                    }),
+                    data: {
+                        'conferenceId': $conferenceId,
+                    },
                     success: function (data) {
-                        //data = JSON.parse(data)
-                        if (data['code'] == 200) {
-                            alert("加入成功！");
-                            window.location.href = "参与者查看会议.html";
-                        } else {
-                            alert("加入失败！" + data['message'])
-                            window.location.href = "参与者选择会议.html";
+                        console.log()
+                        if (data['code'] !== 200) {
+                            alert("获取需要接送的参与者失败");
                         }
-                        console.log(data)
+                        joinConference = data['data']['joinConference'];
                     },
                     error: function () {
-                        alert("获取用户数据失败2");
+                        alert("获取需要接送的参与者失败2");
                     },
                 });
             }
+            function arrangement(i, conferenceId) {
+                getNeedPickUpParticipant(conferenceId);
+                console.log(joinConference);
+            }
+
+
+            // function attendConference(i, conferenceId) {
+            //
+            //     let putup = $("input[name='isPutup']:checked").val();
+            //     let pickup = $("input[name='isPickup']:checked").val();
+            //     let toTime = $("#toTime" + i).val();
+            //     let returnTime = $("#returnTime" + i).val();
+            //     let trainNumber = $("#trainNumber" + i).val();
+            //     alert();
+            //     alert(putup)
+            //     alert(pickup)
+            //     alert(toTime)
+            //     alert(returnTime)
+            //     alert(trainNumber)
+            //     $.ajax({
+            //         async: false,
+            //         type: "POST",
+            //         dataType: "json",
+            //         url: "/joinConference/joinAConference",
+            //         contentType: "application/json",
+            //         data: JSON.stringify({
+            //             "participantId": $participantId,
+            //             "conferenceId": conferenceId,
+            //             "isPutup": "" + putup,
+            //             "isPickup": pickup,
+            //             "toTime": toTime,
+            //             "returnTime": "" + returnTime,
+            //             "trainNumber": "" + trainNumber,
+            //         }),
+            //         success: function (data) {
+            //             //data = JSON.parse(data)
+            //             if (data['code'] == 200) {
+            //                 alert("加入成功！");
+            //                 window.location.href = "参与者查看会议.html";
+            //             } else {
+            //                 alert("加入失败！" + data['message'])
+            //                 window.location.href = "参与者选择会议.html";
+            //             }
+            //             console.log(data)
+            //         },
+            //         error: function () {
+            //             alert("获取用户数据失败2");
+            //         },
+            //     });
+            // }
 
             /*获取token里面的用户数据*/
             function parseJwt(token) {
