@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script src="jquery3.js"></script>
+        <style>
+            .modal{
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                height: 400px;
+                width: 400px;
+                margin-left: -250px;
+                margin-top: -250px;
+                background-color: #dddddd;
+                z-index: 10;
+            }
+            .shadow{
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                opacity: 0.6;
+                background-color: black;
+                z-index: 9;
+            }
+            .hide{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <input type="button" onclick="addElement()" value="添加">
+        <table border="1">
+            <thead>
+            <tr>
+                <th style="text-align: center">序号</th>
+                <th style="text-align: center">IP</th>
+                <th style="text-align: center">端口</th>
+                <th style="text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>1.1.1.1</td>
+                <td>80</td>
+                <td><a class="edit">编辑</a> | <a class="delete">删除</a></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2.2.2.2</td>
+                <td>80</td>
+                <td><a class="edit">编辑</a> | <a class="delete">删除</a></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>3.3.3.3</td>
+                <td>80</td>
+                <td><a class="edit">编辑</a> | <a class="delete">删除</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="shadow hide"></div>
+        <div class="modal hide">
+            <div>
+                <span>序号：</span><label id="id"></label>
+                <input id="hostname" name="hostname" type="test">
+                <input id="port" name="port" type="test">
+                <br>
+                <input type="button" value="提交" onclick="subbiteData()">
+                <input type="button" value="取消" onclick="cancalModal()">
+            </div>
+        </div>
+
+        <script>
+            function addElement() {
+                $(".shadow,.modal").removeClass('hide')
+                $("#hostname").val("")
+                $("#port").val("")
+
+            }
+            function cancalModal() {
+                $(".shadow,.modal").addClass('hide')
+            }
+            $('.edit').click(function () {
+                $(".shadow,.modal").removeClass('hide')
+                //this当表当前点击的标签
+                var tds = $(this).parent().prevAll()
+                //获取<td>内容</td>获取中间的内容
+                //赋值给input标签中的value值
+                //$(tds[0]).text()         获取文本内容
+                //$(tds[0]).text('xxx')    设置文本内容
+                //(..).val()               获取相对应类型的value值
+                //(..).val(..)             设置相对应类型的value值
+                var port = ($(tds[0]).text())
+                var hostname = ($(tds[1]).text())
+                var id = ($(tds[2]).text())
+                //其中一种比较简易的写法
+                // $("#hostname").val(hostname)
+                // $("#port").val(port)
+                //通过获取标签属性操作
+                $('.modal input[name="hostname"]').val(hostname)
+                $('.modal input[name="port"]').val(port)
+                $("#id").text(id)
+
+            })
+            function subbiteData() {
+                //暂没提交功能
+                var id = $("#id").text()
+                console.log(id)
+
+            }
+        </script>
+    </body>
+</html>
