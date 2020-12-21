@@ -100,7 +100,7 @@ public class ParticipantController {
      * @return
      **/
 
-    @GetMapping("/getParticipantInfo")
+    @PostMapping("/getParticipantInfo")
     public Result getParticipantInfo(HttpServletRequest request){
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         System.out.println("getParticipantInfo");
