@@ -131,7 +131,7 @@
                             <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#生成会议" role="tab" onclick="showMethod()">
                                 生成会议</a> </li>
                             <li class="nav-item active"> <a class="nav-link" data-toggle="tab" href="#修改会议"
-                                                            role="tab">修改会议</a> </li>
+                                                            role="tab" onclick="showMyConference()">修改会议</a> </li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -189,10 +189,8 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="修改会议" role="tabpanel">
-                                <div class="container">
-                                    <div class="col-lg-3" style="margin: 0px 10px;">
+                                <div class="container" id="myConference">
 
-                                    </div>
 
                                 </div>
                             </div>
@@ -242,8 +240,10 @@
 <script src="js/jquery.toast.min.js"></script>
 <script src="js/dashboard-alpha.js"></script>
 
-
+<!--<script src="js/hotel/hotelindex.js"></script>-->
+<!--<script src="js/fleet/fleet-index.js"></script>-->
 <script src="js/organizer/organizer-index.js"></script>
 <script src="makeConference.js"></script>
+<script src="repairConference.js"></script>
 </body>
 </html>

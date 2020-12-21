@@ -188,7 +188,7 @@ function updateLiveRoom(liveTable){
     getBothId(liveTable);
     if (1) {
         $.ajax({
-            // async: false,
+            async: false,
             type: "POST",
             url: '/liveRoom/updateLiveRoom',
             contentType: "application/json",
