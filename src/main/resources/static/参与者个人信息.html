@@ -8,6 +8,9 @@
     <title>参与者个人信息</title>
     <!-- Common plugins -->
     <script src="js/jquery.min.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
     <link href="assets/css/font-awesome.min.css" rel="stylesheet">
@@ -31,6 +34,15 @@
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+    <script>
+
+    </script>
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
+
 </head>
 
     <body>
@@ -136,12 +148,13 @@
                                 <div class="tab-content">
                                     <div class="tab-pane" id="个人信息" role="tabpanel">
                                         <div class="card-body">
-                                            <form class="form-horizontal form-material">
+                                            <form class="form-horizontal form-material cmxform" id="updateForm">
                                                 <br>
                                                 <div class="form-group">
                                                     <label class="col-md-12">姓名</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantName" class="form-control form-control-line" value="Jessie J">
+                                                        <input type="text" id="participantName" name="participantName" class="form-control form-control-line" value="Jessie J">
+
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -155,7 +168,7 @@
                                                 <div class="form-group">
                                                     <label class="col-md-12">身份证号</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantIdCard" value="2342xxx" class="form-control form-control-line">
+                                                        <input type="text" id="participantIdCard" name="participantIdCard" value="2342xxx" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -167,32 +180,32 @@
                                                 <div class="form-group">
                                                     <label class="col-md-12">密码</label>
                                                     <div class="col-md-12">
-                                                        <input type="password" id="participantPass" value="password" class="form-control form-control-line">
+                                                        <input type="password" id="participantPass" name="participantPass" value="password" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-12">手机号</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantPhone" value="123 456 7890" class="form-control form-control-line">
+                                                        <input type="text" id="participantPhone" name="participantPhone" value="" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-12">职位</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantJob" value="教授" class="form-control form-control-line">
+                                                        <input type="text" id="participantJob" name="participantJob" value="教授" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="col-md-12">工作单位</label>
                                                     <div class="col-md-12">
-                                                        <input type="text" id="participantWorkUnit" value="南昌大学" class="form-control form-control-line">
+                                                        <input type="text" id="participantWorkUnit" name="participantWorkUnit" value="南昌大学" class="form-control form-control-line">
                                                     </div>
                                                 </div>
                                                 <br/>
                                                 <br/>
                                                 <div class="form-group">
                                                     <div class="col-sm-12 text-center" >
-                                                        <a type="submit" id="update"  class="btn btn-info">更新</a>
+                                                        <button type="submit" id="update"  class="btn btn-info">更新</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -334,8 +347,11 @@
         })
 
         $("#update").click(function (){
+            if(valiForm().form()){
+                updateParticipantInfo();
+            }
             // console.log(token);
-            updateParticipantInfo();
+
         })
 
     })
@@ -433,6 +449,66 @@
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
         }).join(''));
         return JSON.parse(jsonPayload);
+    }
+
+    function valiForm(){
+        return $("#updateForm").validate({
+
+            rules: {
+                // participantName: "required",
+                // lastname: "required",
+                participantName: {
+                    required: true,
+                    minlength: 2
+                },
+                participantIdCard:{
+                    required: true,
+                    minlength: 18,
+                    maxlength:18
+                },
+                participantEmail: {
+                    required: true,
+                    email: true
+                },
+                participantPass: {
+                    required: true,
+                    minlength: 6,
+                    maxlength:18
+                    //  equalTo: "#password"
+                },
+                participantPhone: {
+                    required: true,
+                    minlength: 11,
+                    maxlength:11
+                },
+                participantJob: "required",
+                participantWorkUnit: "required"
+            },
+            messages: {
+                participantName: {
+                    required: "请输入用户名",
+                    minlength: "用户名必需由两个字母组成"
+                },
+                participantIdCard: {
+                    required: "请输入18位身份证号",
+                    minlength:"身份证号位18位",
+                    maxlength:"身份证号位18位"
+                },
+                participantPass: {
+                    required: "请输入密码",
+                    minlength: "密码长度不能小于 6 个字母",
+                    maxlength: "密码长度不能大于 18 个字母"
+                },
+                participantPhone: {
+                    required: "请输入11位手机号",
+                    minlength:"手机号位11位",
+                    maxlength:"手机号位11位"
+                },
+                participantEmail: "请输入一个正确的邮箱",
+                participantJob: "请输入工作职位",
+                participantWorkUnit: "请输入工作单位"
+            }
+        });
     }
 </script>
 
