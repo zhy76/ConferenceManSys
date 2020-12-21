@@ -3,9 +3,9 @@ let $queryConferenceByOrganizerId;
 function queryConferenceByOrganizerId(){
     $.ajax({
         async: false,
-        headers: {
-            'token': token,
-        },
+        // headers: {
+        //     'token': token,
+        // },
         url: "/conference/queryConferenceByOrganizerId",
         type: "get",
         dataType: "json",

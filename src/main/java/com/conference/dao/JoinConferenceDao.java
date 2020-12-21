@@ -28,4 +28,5 @@ public interface JoinConferenceDao {
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
 
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
+    public List<JoinConference> queryConferenceByConferenceId(Integer conferenceId);
 }

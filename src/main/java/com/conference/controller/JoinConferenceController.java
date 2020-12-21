@@ -5,6 +5,7 @@ import com.conference.dao.ConferenceDao;
 import com.conference.dao.JoinConferenceDao;
 import com.conference.entity.Conference;
 import com.conference.entity.JoinConference;
+import com.conference.entity.Participant;
 import com.conference.service.ConferenceService;
 import com.conference.service.JoinConferenceService;
 import com.conference.service.TokenService;
@@ -128,4 +129,10 @@ public class JoinConferenceController {
             return new Result(ResultCode.FAIL);
         }
     }
+    @GetMapping("/queryConferenceByConferenceId")
+    public Result queryConferenceByConferenceId(@RequestParam int conferenceId){
+        List<JoinConference> queryConferenceByConferenceId = joinConferenceService.queryConferenceByConferenceId(conferenceId);
+        return Result.success("queryConferenceByConferenceId",queryConferenceByConferenceId);
+    }
+
 }
