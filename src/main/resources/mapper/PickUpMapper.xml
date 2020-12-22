@@ -63,11 +63,16 @@
 <!--        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId};-->
 <!--    </update>-->
 
-
     <update id="updatePickUp">
-        UPDATE pick_up SET train_number=#{trainNumber}, to_time=#{toTime},
-        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId}
-        and driver_id=#{driverId} and conference_id=#{conferenceId};
+        UPDATE pick_up SET participant_id=#{participantId}, driver_id=#{driverId} ,
+        conference_id=#{conferenceId}, train_number=#{trainNumber}, to_time=#{toTime},
+        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE pick_up_id=#{pickUpId};
     </update>
+
+<!--    <update id="updatePickUp">-->
+<!--        UPDATE pick_up SET train_number=#{trainNumber}, to_time=#{toTime},-->
+<!--        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId}-->
+<!--        and driver_id=#{driverId} and conference_id=#{conferenceId};-->
+<!--    </update>-->
 
 </mapper>

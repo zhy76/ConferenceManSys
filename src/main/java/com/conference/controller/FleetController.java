@@ -82,10 +82,13 @@ public class FleetController {
     @PostMapping("/login")
     public Result login(@RequestBody Fleet fleet) {
         Fleet fleetForBase = fleetService.findFleetByPhone(fleet.getFleetPhone());
+        System.out.println(fleet);
+        System.out.println("111111111111111");
         if (fleetForBase == null) {
             return new Result(ResultCode.UnknownAccountException);
         } else {
             if (!fleetForBase.getFleetPass().equals(fleet.getFleetPass())) {
+                System.out.println("error");
                 return new Result(ResultCode.IncorrectCredentialsException);
             } else {
                 String token = tokenService.getToken(fleetForBase);
