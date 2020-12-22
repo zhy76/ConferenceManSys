@@ -33,12 +33,12 @@ $(function () {
     })
 //接送管理
     $("#to-pick-up a").click(function () {
-        showAllFleetWaitPickUp()
+        showAllFleetAssignPickUp()
         $('#datatable').dataTable();
     })
     //接送查询
     $("#to-query-pick-up a").click(function () {
-        showAllFleetAssignPickUp();
+        showAllFleetAllPickUp();
         $('#datatable').dataTable();
     })
 

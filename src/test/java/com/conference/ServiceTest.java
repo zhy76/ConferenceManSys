@@ -5,6 +5,7 @@ import com.conference.dao.FleetDao;
 import com.conference.dao.JoinConferenceDao;
 import com.conference.dao.PickUpDao;
 import com.conference.entity.Driver;
+import com.conference.entity.PickUp;
 import com.conference.service.PickUpService;
 import com.conference.service.impl.DriverServiceImpl;
 import com.conference.service.impl.FleetServiceImpl;
@@ -42,7 +43,9 @@ public class ServiceTest {
     private PickUpDao pickUpDao;
     @Test
     void contextLoads() {
-        System.out.println(pickUpDao.findPickUpByParticipantIdAndConferenceId(1, 1));
+        System.out.println(pickUpService.updatePickUpByConferenceIdAndParticipantId(new PickUp(4,1,1,1,1,"000000","2020-10-10 20:00:00","2020-10-10 20:00:00", true)));
+//        System.out.println(joinConferenceDao.queryJoinedConferenceByParticipantIdAndConferenceId(1,1));
+//        System.out.println(pickUpDao.findPickUpByParticipantIdAndConferenceId(1, 1));
 //        System.out.println(joinConferenceDao.queryJoinConferenceByConferenceId(1));
 //        System.out.println(pickUpDao.updatePickUp());
 //

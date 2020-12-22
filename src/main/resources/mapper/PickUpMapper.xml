@@ -32,7 +32,7 @@
 
     <select id="findPickUp" resultType="PickUp">
         SELECT * FROM pick_up WHERE participant_id=#{participantId}
-        and driver_id =#{driverId} and conference_id=#{conferenceId};
+        and conference_id=#{conferenceId};
     </select>
 
     <select id="findPickUpById" resultType="PickUp">
@@ -71,6 +71,12 @@
         return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE pick_up_id=#{pickUpId};
     </update>
 
+    <update id="updatePickUpByConferenceIdAndParticipantId">
+        UPDATE pick_up SET fleet_id=#{fleetId}, driver_id=#{driverId} ,
+        train_number=#{trainNumber}, to_time=#{toTime},
+        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE conference_id=#{conferenceId}
+        and participant_id=#{participantId};
+    </update>
 <!--    <update id="updatePickUp">-->
 <!--        UPDATE pick_up SET train_number=#{trainNumber}, to_time=#{toTime},-->
 <!--        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId}-->

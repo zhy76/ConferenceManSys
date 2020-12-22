@@ -20,6 +20,22 @@ public class PickUp {
     private String returnTime;
     private boolean isFinishPickup;
 
+    public PickUp() {
+    }
+
+    public PickUp(Integer pickUpId, Integer participantId, Integer fleetId, Integer driverId, Integer conferenceId,
+                  String trainNumber, String toTime, String returnTime, boolean isFinishPickup) {
+        this.pickUpId = pickUpId;
+        this.participantId = participantId;
+        this.fleetId = fleetId;
+        this.driverId = driverId;
+        this.conferenceId = conferenceId;
+        this.trainNumber = trainNumber;
+        this.toTime = toTime;
+        this.returnTime = returnTime;
+        this.isFinishPickup = isFinishPickup;
+    }
+
     @Override
     public String toString() {
         return "PickUp{" +

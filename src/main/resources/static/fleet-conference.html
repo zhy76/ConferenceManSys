@@ -127,6 +127,7 @@
             let $participantId;
             let joinConference;
             let driver;
+            let pickUp;
             let participant;
             $(function () {
                 $(window).scroll(function () {
@@ -222,7 +223,14 @@
                                 /**
                                  * 通过会议id和参加者id查找司机id
                                  * */
-                                getDriverInfo(it.driverId);
+                                // getDriverInfo(it.driverId);
+                                driver = null;
+                                getPickUpByConferenceIdAndParticipantId(it.conferenceId, it.participantId);
+                                console.log(it);
+                                console.log(pickUp);
+                                if (pickUp !== null&& pickUp !== "null" && pickUp.driverId !== -1) {
+                                    getDriverInfo(pickUp.driverId);
+                                }
                                 getParticipantInfo(it.participantId);
                                 let driverName = "未分配";
                                 let driverPhone = "未分配";
@@ -235,15 +243,21 @@
                                 }
                                 listConference +=
                                     `
-                                <tr>
+                                <tr id="${it.participantId}">
                                     <td>${participant.participantName}</td>
                                     <td>${participant.participantPhone}</td>
                                     <td>${it.toTime}</td>
                                     <td>${it.returnTime}</td>
                                     <td>${it.trainNumber}</td>`
-                                listConference += "                                    <td><select class=\"form-control form-control-line\" name=\"account\" id='driverId'>"
-                                for (let it of allFleetDriver) {
-                                    listConference += "<option value='" + it.driverId + "'>" + it.driverId + '-' + it.driverName + "</option>"
+                                listConference += `<td><select class="form-control form-control-line" name="account" id='driverId${it.participantId}'>`
+                                if (driverName === '未分配') {
+                                    listConference += "<option value='-1'>未分配</option>";
+                                } else {
+                                    listConference += "<option value='" + driver.driverId + "'>" + driver.driverId + '-' + driver.driverName + "</option>"
+                                }
+                                for (let it1 of allFleetDriver) {
+                                    if (it.driverId === it1.driverId) continue;
+                                    listConference += "<option value='" + it1.driverId + "'>" + it1.driverId + '-' + it1.driverName + "</option>"
                                 }
                                 listConference +=
                                     "                                                        </select>\n"
@@ -252,53 +266,7 @@
                                 <td>已完成</td>
                                 </tr>
                                 `
-                                // listConference +=
-                                //     `
-                                // <tr>
-                                //     <td>Tiger Nixon</td>
-                                //     <td>System Architect</td>
-                                //     <td>Edinburgh</td>
-                                //     <td>61</td>
-                                //     <td>2011/04/25</td>
-                                //     <td>$320,800</td>
-                                // </tr>
-                                // <tr>
-                                //     <td>Garrett Winters</td>
-                                //     <td>Accountant</td>
-                                //     <td>Tokyo</td>
-                                //     <td>63</td>
-                                //     <td>2011/07/25</td>
-                                //     <td>$170,750</td>
-                                // </tr>
-                                // `
                             }
-
-
-
-                            // '                                <tr>' +
-                            // '                                    <td class=""><label for=""><font style="font-size: 14px; color: red;">*</font>住宿</label>' +
-                            // '                                    </td>' +
-                            // '                                    <td><input  type="radio" name="isPutup" value="true" id="putup"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                            // '                                    <input  type="radio" name="isPutup"  value="false" id="unput"/>否</td>' +
-                            // '                                </tr>' +
-                            // '                                <tr>' +
-                            // '                                    <td class="tb_bg"><label for=""><font style="font-size: 14px; color: red;">*</font>接送</label>' +
-                            // '                                    </td>' +
-                            // '                                    <td><input  type="radio" name="isPickup" value="true" id="pick"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                            // '                                    <input  type="radio" name="isPickup"  value="false" id="unpick"/>否</td>' +
-                            // '                                </tr>' +
-                            // '                                <tr>' +
-                            // '                                    <td class="tb_bg"><label for="">到达时间</label></td>' +
-                            // '                                    <td><input type="text" name="toTime" id="toTime' + i + '" placeholder="2020-12-10 09:00:00" value="2020-12-09 09:00:00"></td>' +
-                            // '                                </tr>' +
-                            // '                                <tr>' +
-                            // '                                    <td class="tb_bg"><label for="">离开时间</label></td>' +
-                            // '                                    <td><input type="text" name="returnTime" id="returnTime' + i + '" placeholder="2020-12-12 12:00:00" value="2020-12-10 09:00:00"></td>' +
-                            // '                                </tr>' +
-                            // '                                <tr>' +
-                            // '                                      <td class="tb_bg"><label for="">车次/航班号</label></td>' +
-                            // '                                      <td><input type="text" name="trainNumber" id="trainNumber' + i + '" value="G1234" ></td>' +
-                            // '                                </tr>' +
                             listConference += '</tbody>\n                            ' +
                                 '</table>' +
                                 '                                </tbody>' +
@@ -354,6 +322,31 @@
                 });
             }
 
+            function getPickUpByConferenceIdAndParticipantId(conferenceId, participantId) {
+                $.ajax({
+                    async: false,
+                    url: "/pickUp/getPickUpByConferenceIdAndParticipantId",
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        'conferenceId': conferenceId,
+                        'participantId': participantId
+                    },
+                    success: function (data) {
+                        console.log(conferenceId);
+                        console.log(data);
+                        if (data['code'] !== 200) {
+                            alert("获取PickUp失败");
+                        } else
+                            pickUp = data['data']['pickUp'];
+                        console.log(pickUp);
+                    },
+                    error: function () {
+                        alert("获取PickUp2");
+                    },
+                });
+            }
+            
             /**
              * 通过会议的id查所有需要接送的参与者
              *
@@ -372,8 +365,9 @@
                         console.log()
                         if (data['code'] !== 200) {
                             alert("获取需要接送的参与者失败");
-                        }
-                        joinConference = data['data']['joinConference'];
+                        } else
+                            joinConference = data['data']['joinConference'];
+                            console.log(joinConference);
                     },
                     error: function () {
                         alert("获取需要接送的参与者失败2");
@@ -381,9 +375,74 @@
                 });
             }
 
+            // 添加记录
             function arrangement(i, conferenceId) {
                 getNeedPickUpParticipant(conferenceId);
+                // console.log($('#renyuan' + conferenceId).children().children().children().next().children().children().next().next().children().next().children().children('td').eq(5).html());
+                let map=[];
                 console.log(joinConference);
+                for (let i of joinConference) {
+                    let driverId = $("#driverId" + i.participantId).val();
+                    console.log(driverId);
+                    $.ajax({
+                        async: false,
+                        headers: {
+                            'token': token,
+                        },
+                        url: "/pickUp/addOneNeedToPickUp",
+                        type: "get",
+                        dataType: "json",
+                        data: {
+                            // 'driverId': driverName,
+                            'conferenceId': conferenceId,
+                            'driverId': driverId,
+                            'participantId': i.participantId
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            if (data["code"] === 200) {
+                                console.log("成功");
+                                // driver = data["data"]["addOneNeedToPickUp"];
+                                // console.log(driver);
+                            }
+                        },
+                        error: function () {
+                            alert("获取用户数据失败");
+                        },
+                    });
+                }
+                alert(1);
+                // console.log(joinConference);
+                // getNeedPickUpParticipant(conferenceId);
+                // $.ajax({
+                //     async: false,
+                //     headers: {
+                //         'token': token,
+                //     },
+                //     url: "/pickUp/addAllNeedToPickUp",
+                //     type: "get",
+                //     dataType: "json",
+                //     data: {
+                //         'driverId': map,
+                //         // 'driverId': driverName,
+                //         'conferenceId': conferenceId,
+                //     },
+                //     success: function (data) {
+                //         console.log(data);
+                //         if (data["code"] === 200) {
+                //             driver = data["data"]["addAllNeedToPickUp"];
+                //             console.log(driver);
+                //         } else {
+                //             alert("获取用户数据失败");
+                //         }
+                //     },
+                //     error: function () {
+                //         alert("获取用户数据失败");
+                //     },
+                // });
+                //
+                // alert(1);
+                // console.log(joinConference);
             }
 
             /**
@@ -395,7 +454,7 @@
                     headers: {
                         'token': token,
                     },
-                    url: "/driver/getDriverInfo",
+                    url: "/driver/getDriverInfoById",
                     type: "get",
                     dataType: "json",
                     data: {
@@ -404,7 +463,7 @@
                     success: function (data) {
                         console.log(data);
                         if (data["code"] === 200) {
-                            driver = data["data"]["getDriverInfo"];
+                            driver = data["data"]["getDriverInfoById"];
                             console.log(driver);
                         } else {
                             alert("获取用户数据失败");
@@ -459,7 +518,7 @@
                         console.log(data);
                         if (data["code"] === 200) {
                             allFleetDriver = data["data"]["getAllFleetDriver"];
-                            console.log(fleet);
+                            console.log(allFleetDriver);
                         } else {
                             alert("获取用户数据失败");
                         }
