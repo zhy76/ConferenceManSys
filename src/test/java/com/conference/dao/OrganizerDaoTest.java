@@ -1,26 +1,33 @@
 package com.conference.dao;
 
 import com.conference.entity.Organizer;
+import com.conference.service.OrganizerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/4 22:52
- **/
+ * @Description
+ * @Author 谢 娇
+ * @Date 2020/12/18 10:02
+ * @sno 6109118015
+ */
 @SpringBootTest
 public class OrganizerDaoTest {
 
     @Autowired
     private OrganizerDao organizerDao;
 
-    @Test
-    public void contextLoad(){
-        System.out.println(organizerDao.queryOrganizers());
-        System.out.println(organizerDao.queryOrganizerByOrganizerUnit("信息工程学院"));
-        System.out.println(organizerDao.updateOrganizer(new Organizer(3,"111","111","食品学院","111@qq.com")));
+    @Autowired
+    private OrganizerService organizerService;
 
-        System.out.println(organizerDao.deleteOrganizer(3));
+
+    @Test
+    void contextLoads(){
+        Organizer organizer = organizerDao.findOrganizerById(1);
+        System.out.println(organizer);
+
+        Organizer organizer1 = organizerService.findOrganizerById(1);
+        System.out.println(organizer1);
     }
 }

@@ -1,6 +1,5 @@
 package com.conference.dao;
 
-import com.conference.entity.Organizer;
 import com.conference.entity.Participant;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -8,9 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/4 22:04
- **/
+ * @Description
+ * @Author 谢 娇
+ * @Date 2020/12/5 17:27
+ * @sno 6109118015
+ */
 @Mapper
 @Repository
 public interface ParticipantDao {
@@ -29,5 +30,20 @@ public interface ParticipantDao {
 
     public int deleteParticipant(Integer participantId);
 
-    public Participant queryParticipantByParticipantId(Integer participantId);
+    Participant queryParticipantByParticipantId(Integer participantId);
+
+    /**
+     * 1.无账号注册成功时，往数据库中participant表中增加一个参会者(addAParticipant)
+     * 2.已有账号登录时，查询账号密码是否正确(queryParticipantByParticipantName)
+     * 3.修改自己的个人信息(updateParticipant)
+     *
+     **/
+
+     public int addAParticipant(Participant participant);
+
+    public Participant queryParticipantByParticipantPhone(String participantPhone);
+
+
+
+
 }

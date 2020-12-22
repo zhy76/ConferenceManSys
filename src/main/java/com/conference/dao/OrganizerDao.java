@@ -1,33 +1,55 @@
 package com.conference.dao;
 
+import com.conference.entity.Driver;
 import com.conference.entity.Organizer;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/4 22:05
- **/
+ * @author 左海余
+ * @description
+ * @date 2020/12/11 11:42
+ * @stuid 6109118041
+ */
 @Mapper
 @Repository
 public interface OrganizerDao {
     /**
-     * 1、查询展示出所有注册的组织者
-     * 2、查询出指定单位的组织者
-     * 3、修改指定的组织者的账号信息
-     * 4、删除指定ID的组织者
-     * 5、查询指定ID的组织者
+     *更改组织者信息
      */
+    int updateOrganizer(@Param("organizerId") Integer organizerId, @Param("organizerEmail") String organizerEmail,
+                     @Param("organizerUnit") String organizerUnit, @Param("organizerPass") String organizerPass,
+                     @Param("organizerPhone") String organizerPhone);
 
-    public List<Organizer> queryOrganizers();
+    /**
+     * 查询所有组织者
+     */
+    List<Organizer> findAllOrganizer();
 
-    public Organizer queryOrganizerByOrganizerUnit(String organizerUnit);
+    /**
+     * 查询指定id组织者
+     */
+    Organizer findOrganizerById(@Param("organizerId") Integer organizerId);
 
-    public int updateOrganizer(Organizer organizer);
+    /**
+     * 按照电话查询司机
+     */
+    Organizer findOrganizerByPhone(@Param("organizerPhone") String organizerPhone);
 
-    public int deleteOrganizer(Integer organizerId);
+    /**
+     * 增加组织者
+     */
+    int addOrganizer(@Param("organizerId") Integer organizerId, @Param("organizerEmail") String organizerEmail,
+                  @Param("organizerUnit") String organizerUnit, @Param("organizerPass") String organizerPass,
+                  @Param("organizerPhone") String organizerPhone);
 
-    public Organizer queryOrganizerByOrganizerId(Integer organizerId);
+    /**
+     * 删除组织者
+     */
+    int deleteOrganizerById(@Param("organizerId") Integer driverId);
+
 }

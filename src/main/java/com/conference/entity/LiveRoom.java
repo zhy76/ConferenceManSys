@@ -1,14 +1,50 @@
 package com.conference.entity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-//住宿表
 public class LiveRoom {
-    private Integer participantId; //参会者id
-    private Integer hotelId; //酒店id
-    private String roomId; //房间号
+    private int participantId ;
+    private int hotelId;
+    private int conferenceId;
+    private String roomId;
+
+    @Override
+    public String toString() {
+        return "LiveRoom{" +
+                "participantId=" + participantId +
+                ", hotelId=" + hotelId +
+                ", conferenceId=" + conferenceId +
+                ", roomId='" + roomId + '\'' +
+                '}';
+    }
+
+    public int getParticipantId() {
+        return participantId;
+    }
+
+    public void setParticipantId(int participantId) {
+        this.participantId = participantId;
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public int getConferenceId() {
+        return conferenceId;
+    }
+
+    public void setConferenceId(int conferenceId) {
+        this.conferenceId = conferenceId;
+    }
+
+    public String getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
+    }
 }

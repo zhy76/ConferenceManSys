@@ -1,16 +1,100 @@
 package com.conference.entity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class Hotel {
-    private Integer hotelId;
-    private String hotelName; //酒店名
-    private String hotelLocation; //酒店地址
-    private String hotelPhone; //酒店电话
-    private String hotelPass; //酒店密码
-    private String hotelInfo; //酒店信息
+    private int hotelId;
+
+    @NotNull(message = "姓名必须存在")
+    @Length(min = 1, max = 10, message = "姓名长度应该在1至10之间")
+    @Pattern(regexp = "^[^\\s]+$", message = "酒店名不能包含空白字符")
+    private String hotelName ;
+
+    private String hotelLocation;
+
+    @NotNull(message = "电话号码必须存在")
+    @Pattern(regexp = "^1[3456789]\\d{9}$", message = "请输入正确的电话号码格式")
+    private String hotelPhone;
+
+    @NotNull(message = "密码必须存在")
+    @Length(min = 6, max = 26, message = "密码长度应该在6至26之间")
+    @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符")
+    private String hotelPass;
+
+    private String hotelInfo;
+
+    public Hotel() {
+    }
+
+    public Hotel(int hotelId, @NotNull(message = "姓名必须存在") @Length(min = 1, max = 10, message = "姓名长度应该在1至10之间") @Pattern(regexp = "^[^\\s]+$", message = "用户名不能包含空白字符") String hotelName, String hotelLocation, @NotNull(message = "电话号码必须存在") @Pattern(regexp = "^1[3456789]\\d{9}$", message = "请输入正确的电话号码格式") String hotelPhone, @NotNull(message = "密码必须存在") @Length(min = 6, max = 26, message = "密码长度应该在6至26之间") @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符") String hotelPass, String hotelInfo) {
+        this.hotelId = hotelId;
+        this.hotelName = hotelName;
+        this.hotelLocation = hotelLocation;
+        this.hotelPhone = hotelPhone;
+        this.hotelPass = hotelPass;
+        this.hotelInfo = hotelInfo;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "hotelId=" + hotelId +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelLocation='" + hotelLocation + '\'' +
+                ", hotelPhone='" + hotelPhone + '\'' +
+                ", hotelPass='" + hotelPass + '\'' +
+                ", hotelInfo='" + hotelInfo + '\'' +
+                '}';
+    }
+
+    public int getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(int hotelId) {
+        this.hotelId = hotelId;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public String getHotelLocation() {
+        return hotelLocation;
+    }
+
+    public void setHotelLocation(String hotelLocation) {
+        this.hotelLocation = hotelLocation;
+    }
+
+    public String getHotelPhone() {
+        return hotelPhone;
+    }
+
+    public void setHotelPhone(String hotelPhone) {
+        this.hotelPhone = hotelPhone;
+    }
+
+    public String getHotelPass() {
+        return hotelPass;
+    }
+
+    public void setHotelPass(String hotelPass) {
+        this.hotelPass = hotelPass;
+    }
+
+    public String getHotelInfo() {
+        return hotelInfo;
+    }
+
+    public void setHotelInfo(String hotelInfo) {
+        this.hotelInfo = hotelInfo;
+    }
 }

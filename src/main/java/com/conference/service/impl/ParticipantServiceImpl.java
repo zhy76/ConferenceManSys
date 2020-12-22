@@ -42,4 +42,14 @@ public class ParticipantServiceImpl implements ParticipantService {
     public Participant queryParticipantByParticipantId(Integer participantId) {
         return participantDao.queryParticipantByParticipantId(participantId);
     }
+
+    @Override
+    public int addAParticipant(Participant participant) {
+        return 0;
+    }
+
+    @Override
+    public Participant queryParticipantByParticipantPhone(String participantPhone) {
+        return null;
+    }
 }

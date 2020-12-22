@@ -27,9 +27,19 @@
     <delete id = "deleteParticipant">
         delete from participant where participant_id = #{participantId};
     </delete>
+    
+    <insert id = "addAParticipant" parameterType="Participant">
+        insert into participant(participant_id,participant_name,participant_job,participant_work_unit,
+        participant_email,participant_pass,participant_phone,participant_sex,participant_id_card)
+        values(#{participantId},#{participantName},#{participantJob},#{participantWorkUnit},
+        #{participantEmail},#{participantPass},#{participantPhone},#{participantSex},#{participantIdCard});
+    </insert>
 
-    <select id="queryParticipantByParticipantId" resultType="Participant" >
-       select * from participant where participant_id = #{participantId};
+    <select id="queryParticipantByParticipantId" resultType="Participant">
+        select * from participant where participant_id = #{participantId}
     </select>
 
+    <select id="queryParticipantByParticipantPhone" resultType="Participant">
+        select * from participant where participant_phone = #{participantPhone}
+    </select>
 </mapper>

@@ -18,12 +18,5 @@ public class AdminDaoTest {
 
     @Test
     public void contextLoads(){
-        List<Admin> lists = adminDao.queryAdmins();
-        for(Admin list : lists)
-        System.out.println(list);
-        System.out.println(adminDao.queryAdminByAccountAndPass("admin","lcy"));
-        System.out.println(adminDao.addAdmin(new Admin(null , "yk" , "yk" ,"yk" )));
-        System.out.println(adminDao.updateAdmin(new Admin(1,"lyc","lyc","adminlyc")));
-        System.out.println(adminDao.deleteAdmin(6));
     }
 }

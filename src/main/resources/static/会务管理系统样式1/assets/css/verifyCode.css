@@ -1,0 +1,28 @@
+    .box{
+    /* width:400px; */
+    /* height:50px; */
+    margin:100px auto;
+    }
+      .input-val {
+      width: 120px;
+      height: 32px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+      }
+      #canvas {
+      vertical-align: middle;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      }
+      .btn-verfifyCode {
+      display: block;
+      margin-top: 20px;
+      height: 32px;
+      width: 100px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #457adb;
+      border: none;
+      border-radius: 50px;
+      }

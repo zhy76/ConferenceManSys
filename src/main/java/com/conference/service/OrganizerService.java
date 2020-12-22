@@ -5,19 +5,22 @@ import com.conference.entity.Organizer;
 import java.util.List;
 
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/6 10:44
- **/
+ * @author 左海余
+ * @description
+ * @date 2020/12/11 11:39
+ * @stuid 6109118041
+ */
 public interface OrganizerService {
+    List<Organizer> findAllOrganizer();
 
-    public List<Organizer> queryOrganizers();
+    Organizer findOrganizerById(Integer organizerId);
 
-    public Organizer queryOrganizerByOrganizerUnit(String organizerUnit);
+    int updateOrganizer(Organizer organizer);
 
-    public int updateOrganizer(Organizer organizer);
+    Organizer findOrganizerByPhone(String organizerPhone);
 
-    public int deleteOrganizer(Integer organizerId);
+    int addOrganizer(Organizer organizer);
 
-    public Organizer queryOrganizerByOrganizerId(Integer organizerId);
+    int deleteOrganizerById(Integer organizerId);
 
 }

@@ -1,45 +1,57 @@
 package com.conference.service.impl;
 
+import com.conference.dao.DriverDao;
 import com.conference.dao.OrganizerDao;
+import com.conference.entity.Driver;
 import com.conference.entity.Organizer;
 import com.conference.service.OrganizerService;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/6 10:44
- **/
-@Service("organizerService")
+ * @author 左海余
+ * @description
+ * @date 2020/12/11 11:40
+ * @stuid 6109118041
+ */
+@Service("OrganizerService")
 public class OrganizerServiceImpl implements OrganizerService {
-
     @Autowired
     private OrganizerDao organizerDao;
 
     @Override
-    public List<Organizer> queryOrganizers() {
-        return organizerDao.queryOrganizers();
+    public List<Organizer> findAllOrganizer() {
+        return organizerDao.findAllOrganizer();
     }
 
     @Override
-    public Organizer queryOrganizerByOrganizerUnit(String organizerUnit) {
-        return organizerDao.queryOrganizerByOrganizerUnit(organizerUnit);
+    public Organizer findOrganizerById(Integer organizerId) {
+        return organizerDao.findOrganizerById(organizerId);
+    }
+
+    @Override
+    public Organizer findOrganizerByPhone(String organizerPhone) {
+        return organizerDao.findOrganizerByPhone(organizerPhone);
     }
 
     @Override
     public int updateOrganizer(Organizer organizer) {
-        return organizerDao.updateOrganizer(organizer);
+        return organizerDao.updateOrganizer(organizer.getOrganizerId(),organizer.getOrganizerEmail(),
+                organizer.getOrganizerUnit(),organizer.getOrganizerPass(),organizer.getOrganizerPhone());
     }
 
     @Override
-    public int deleteOrganizer(Integer organizerId) {
-        return organizerDao.deleteOrganizer(organizerId);
+    public int addOrganizer(Organizer organizer) {
+        return organizerDao.addOrganizer(organizer.getOrganizerId(),organizer.getOrganizerEmail(),organizer.getOrganizerUnit(),
+                organizer.getOrganizerPass(),organizer.getOrganizerPhone());
     }
 
     @Override
-    public Organizer queryOrganizerByOrganizerId(Integer organizerId) {
-        return organizerDao.queryOrganizerByOrganizerId(organizerId);
+    public int deleteOrganizerById(Integer organizerId) {
+        return organizerDao.deleteOrganizerById(organizerId);
     }
+
 }
