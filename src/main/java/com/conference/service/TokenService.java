@@ -1,8 +1,6 @@
 package com.conference.service;
 
-import com.conference.entity.Driver;
-import com.conference.entity.Fleet;
-import com.conference.entity.Organizer;
+import com.conference.entity.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
@@ -23,4 +21,8 @@ public interface TokenService {
     public Claims parseToken(String token);
 
     String getToken(Organizer organizerForBase);
+
+    String getToken(Participant participantForBase);
+
+    String getToken(Hotel hotelForBase);
 }

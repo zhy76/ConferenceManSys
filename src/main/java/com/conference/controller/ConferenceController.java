@@ -48,7 +48,7 @@ public class ConferenceController {
     @RequestMapping("/showConference/{conferenceId}")
     @ResponseBody
     public Result showConference(@PathVariable Integer conferenceId){
-        Conference conference = conferenceService.queryConferenceById(conferenceId);
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
         return Result.success("conference",conference);
     }
 
