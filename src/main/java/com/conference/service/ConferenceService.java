@@ -40,5 +40,4 @@ public interface ConferenceService {
     public int addConference(Conference conference);
 
     public List<Conference> queryConferenceByOrganizerId(Integer organizerId);
-
 }

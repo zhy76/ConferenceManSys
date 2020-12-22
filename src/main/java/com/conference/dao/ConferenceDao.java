@@ -43,5 +43,4 @@ public interface ConferenceDao {
     public int deleteConference(Integer conferenceId);
     public int addConference(Conference conference);
     public List<Conference> queryConferenceByOrganizerId(Integer organizerId);
-
 }

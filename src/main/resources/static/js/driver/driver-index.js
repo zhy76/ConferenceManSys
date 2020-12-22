@@ -56,7 +56,6 @@ $(function () {
         alert("退出成功");
         window.location.href = "popupsignin.html";
     })
-
 })
 
 /**
@@ -91,6 +90,7 @@ function getDriverInfo($driverId) {
 }
 
 /**
+<<<<<<< HEAD
  * 数字+位数
  * @param num
  * @param length
@@ -130,6 +130,8 @@ function getAllFleet() {
 }
 
 /**
+=======
+>>>>>>> ac9c9c24d86f55f7e2933d9792ba593a99e7a6ab
  * 清空登入时清空用户信息
  */
 function clearDriverInfo() {
@@ -148,7 +150,6 @@ function parseJwt(token) {
     }).join(''));
     return JSON.parse(jsonPayload);
 }
-
 
 /**
  * 司机信息
@@ -363,7 +364,6 @@ function submitChange() {
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     console.log('成功');
-
                     alert("修改成功");
                     // showDriverInfo(driver);
                     // location.reload();
@@ -388,3 +388,4 @@ function submitChange() {
         alert("信息格式有误，请重新填写！");
     }
 }
+

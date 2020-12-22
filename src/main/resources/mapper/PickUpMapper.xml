@@ -74,5 +74,4 @@
 <!--        return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE participant_id=#{participantId}-->
 <!--        and driver_id=#{driverId} and conference_id=#{conferenceId};-->
 <!--    </update>-->
-
 </mapper>

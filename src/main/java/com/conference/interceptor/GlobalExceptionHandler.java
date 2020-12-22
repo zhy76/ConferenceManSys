@@ -55,7 +55,6 @@ public class GlobalExceptionHandler {
         } else if (e instanceof DuplicateKeyException) {                            //唯一键插入重复数据
             return new Result(ResultCode.DuplicateKeyException);
         } else if (e instanceof IncorrectCredentialsException) {                    //密码不正确
-            System.out.println(1);
             return new Result(ResultCode.IncorrectCredentialsException);
         } else if (e instanceof UnknownAccountException) {                          //此账号不存在
             return new Result(ResultCode.UnknownAccountException);

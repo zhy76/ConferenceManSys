@@ -34,9 +34,11 @@ public class ParticipantDaoTest {
 
 //        System.out.println(participantDao.deleteParticipant(2));
 
+
 //        System.out.println(participantDao.queryParticipantByParticipantId(1));
 //
 //        System.out.println(participantDao.queryParticipantByParticipantPhone("1111111"));
+
     }
 
 }

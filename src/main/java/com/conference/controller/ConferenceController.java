@@ -187,3 +187,4 @@ public class ConferenceController {
         return Result.success("queryConferenceByOrganizerId", queryConferenceByOrganizerId);
     }
 }
+

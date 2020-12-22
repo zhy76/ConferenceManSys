@@ -1,4 +1,5 @@
 
+
 /**
  * 接送id, 参会姓名,电话号码,火车航班
  * 到达时间, 离开时间, 是否完成
@@ -83,7 +84,6 @@ function queryParticipantByParticipantId($participantId) {
 function showWaitPickUpTable() {
 
     getDriverAllPickUp();
-
     let $htmlStart =
         "                            <div class=\"row\">\n" +
         "                                <div class=\"col-md-12\">\n" +

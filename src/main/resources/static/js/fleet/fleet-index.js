@@ -1,10 +1,13 @@
+
 let driver;
 let fleet;
 let pickUp;
 let token;
 let mes;
+
 let participant;
 let allFleetDriver;
+
 let $driverId;
 let $fleetId;
 let $participantId;
@@ -17,6 +20,7 @@ $(function () {
     if (token == null || token === "null" || token === "undefined") {
         console.log("no token");
     } else {
+
         $fleetId = parseJwt(token).fleetId;/*获取用户信息*/
         console.log($driverId);
     }
@@ -133,9 +137,6 @@ function getFleetInfo($fleetId) {
         },
     });
 }
-
-
-
 /**
  * 清空登入时清空用户信息
  */
@@ -157,6 +158,7 @@ function parseJwt(token) {
 }
 
 /**
+<<<<<<< HEAD
  * 车队信息
  */
 
@@ -201,6 +203,7 @@ function showFleetInfo() {
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                            </form>"
+
     // 清空节点
     $(".jumbotron").empty();
     $(".jumbotron").append($html);
@@ -279,6 +282,7 @@ function submitChange() {
         $.ajax({
             // async: false,
             type: "POST",
+
             url: '/fleet/updateFleet',
             contentType: "application/json",
             headers: {'token': localStorage.getItem("hcs")},
@@ -286,13 +290,13 @@ function submitChange() {
                 "fleetName": $("#fleetName").val(),
                 "fleetPass": $("#fleetPass").val(),
                 "fleetPhone": $("#fleetPhone").val()
+
             }),
             success: function (jsonData, result) {
                 console.log(jsonData);
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     console.log('成功');
-
                     alert("修改成功");
 
                     // showDriverInfo(driver);
@@ -306,6 +310,7 @@ function submitChange() {
         });
         for (let i = 0; i < 500000000; i++) {
 
+
             /**
              * 意义不明的代码，
              * 不加会有bug
@@ -314,8 +319,11 @@ function submitChange() {
              */
         }
         // showDriverInfo();
+
         showFleetInfo();
+
     } else {
         alert("信息格式有误，请重新填写！");
     }
 }
+
