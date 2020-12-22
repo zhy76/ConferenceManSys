@@ -4,7 +4,7 @@
 
 <mapper namespace="com.conference.dao.FleetDao">
     <select id="findAllFleet" resultType="Fleet">
-        select * from Fleet
+        select * from fleet
     </select>
 
     <select id="findFleetById" resultType="Fleet">
