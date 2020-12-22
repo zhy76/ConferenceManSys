@@ -17,6 +17,12 @@ public interface AdminService {
     public List<Admin> queryAdmins();
 
     /**
+     * 根据登录时的账号和密码来返回完整的管理员信息
+     * @return 完整管理员对象
+     */
+    public Admin queryAdminByAccountAndPass(String adminAccount, String adminPass);
+
+    /**
      * 登录管理员
      * @return 返回null，表示登录失败，返回有值，则表示登录成功
      */

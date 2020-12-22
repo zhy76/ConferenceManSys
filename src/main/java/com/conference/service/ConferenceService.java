@@ -37,11 +37,8 @@ public interface ConferenceService {
      **/
     public Conference queryConferenceByConferenceId(Integer conferenceId);
 
-
-
-
-
     public int addConference(Conference conference);
 
-    public Conference queryConferenceById(Integer conferenceId);
+    public List<Conference> queryConferenceByOrganizerId(Integer organizerId);
+
 }

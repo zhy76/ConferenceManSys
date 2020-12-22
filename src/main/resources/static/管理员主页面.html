@@ -101,6 +101,7 @@
         }
         // 展示所有的参加者信息
         function participants() {
+
             $.ajax({
                 type:"post",
                 url: "/participant/showParticipants",
@@ -269,13 +270,13 @@
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    //获取到指定参加者信息
-                    var organizerObj = result["data"]["queryOrganizerByOrganizerId"];
-                    $("#organizerId").val(organizerObj.organizerId);
-                    $("#organizerUnit").val(organizerObj.organizerUnit);
-                    $("#organizerPhone").val(organizerObj.organizerPhone);
-                    $("#organizerEmail").val(organizerObj.organizerEmail);
-                    $("#organizerPass").val(organizerObj.organizerPass);
+                    //获取到指定组织者信息
+                    console.dir(result);
+                    $("#organizerId").val(result["data"]["queryOrganizerByOrganizerId"].organizerId);
+                    $("#organizerUnit").val(result["data"]["queryOrganizerByOrganizerId"].organizerUnit);
+                    $("#organizerPhone").val(result["data"]["queryOrganizerByOrganizerId"].organizerPhone);
+                    $("#organizerEmail").val(result["data"]["queryOrganizerByOrganizerId"].organizerEmail);
+                    $("#organizerPass").val(result["data"]["queryOrganizerByOrganizerId"].organizerPass);
                 },
                 error:function () {
                     alert("请求异常");
@@ -315,15 +316,9 @@
                 success:function (result) {
                     //获取到所有会议
                     var listConferences = "";
-                    console.dir(result);
-                    console.dir(result["data"]);
                     console.dir(result["data"]["trueConferencesList"]);
                     result["data"]["trueConferencesList"].forEach( (conference) => {
-                        var conferenceStr = conference.toString();
-                        console.dir(conference);
-                        console.dir(typeof conference);
-                        console.dir(conferenceStr);
-                        // var jsonStr = JSON.stringify(conference);
+
                         listConferences +=' <tr>\n' +
                             '                                        <td hidden>'+ conference.conferenceId +'</td>\n' +
                             '                                        <td>'+ conference.conferenceName +'</td>\n' +
@@ -335,7 +330,7 @@
                             '                                        <td>'+conference.fleetName+'</td>\n' +
                             '                                        <td>'+conference.conferenceInfo+'</td>\n' +
                             '                                        <td>\n' +
-                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateConference" data-backdrop="false" onclick = "javascript:updateConference('+  conferenceStr +')"> 修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateConference" data-backdrop="false" onclick = "javascript:updateConference('+  conference.conferenceId + ',' + conference.organizerId + ',' + conference.hotelId + ',' + conference.fleetId +')"> 修改</button>&nbsp;&nbsp;\n' +
                             '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteConference('+ conference.conferenceId +')">删除</button>\n' +
                             '                                        </td>\n' +
                             '                                    </tr>'
@@ -389,33 +384,64 @@
             });
         }
 
-        function updateConference(conference){
+        function updateConference(conferenceId,organizerId,hotelId,fleetId){
+            // console.dir(conferenceId);
+            // console.dir(organizerId);
+            // console.dir(hotelId);
+            // console.dir(fleetId);
+            $.ajax({
+                type:"post",
+                url: "/conference/updateConferenceByAdmin/" + conferenceId + "/" + organizerId + "/" + hotelId + "/" + fleetId,
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到会议信息
+                    var conference = result.data.conference;
+                    var fleet = result.data.fleet;
+                    var hotel = result.data.hotel;
+                    var organizer = result.data.organizer;
+                    $("#conferenceId").val(conference.conferenceId);
+                    $("#conferenceName").val(conference.conferenceName);
+                    $("#conferenceOrganizerUnitId").val(conference.organizerId);
+                    $("#conferenceOrganizerUnit").val(organizer.organizerUnit);
+                    $("#conferenceStart").val(conference.conferenceStart);
+                    $("#conferenceEnd").val(conference.conferenceEnd);
+                    $("#conferenceLocation").val(conference.conferenceLocation);
+                    $("#hotelId").val(conference.hotelId);
+                    $("#hotelName").val(hotel.hotelName);
+                    $("#fleetId").val(conference.fleetId);
+                    $("#fleetName").val(fleet.fleetName);
+                    $("#conferenceInfo").val(conference.conferenceInfo);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
 
-            alert(conference);
+        function submitUpdateConference(){
+            var form = new FormData(document.getElementById("updateConferenceForm"));//把表单的对象作为一个参数
 
-            console.dir(typeof conference);
-
-            console.dir(JSON.stringify(conference));
-            // $.ajax({
-            //     type:"post",
-            //     url: "/conference/updateConference",
-            //     data: conference,
-            //     dataType:"json",
-            //     processData:false,
-            //     contentType:false,
-            //     success:function (result) {
-            //         //获取到指定参加者信息
-            //         var organizerObj = result["data"]["queryOrganizerByOrganizerId"];
-            //         $("#organizerId").val(organizerObj.organizerId);
-            //         $("#organizerUnit").val(organizerObj.organizerUnit);
-            //         $("#organizerPhone").val(organizerObj.organizerPhone);
-            //         $("#organizerEmail").val(organizerObj.organizerEmail);
-            //         $("#organizerPass").val(organizerObj.organizerPass);
-            //     },
-            //     error:function () {
-            //         alert("请求异常");
-            //     }
-            // })
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/conference/submitUpdateConferenceByAdmin",
+                data: form,
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    console.dir(result);
+                },
+                error:function () {
+                    $.alert({
+                        title: '提示信息',
+                        content: '请求异常!',
+                    });
+                }
+            })
         }
         //会议模块
     </script>
@@ -432,37 +458,34 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html" >
+                <a class="navbar-brand" href="管理员主页面.html" >
                     <img alt="Brand" src="picture/logo.png" style = "height: 32px; margin-left: 25px; margin-top: -5px;">
                 </a>
-                <!-- <a href="index.html" style = "float: left; margin-top: 7px; ">
-                    <h1><img src="picture/logo.png" alt="" ></h1>
-                </a> -->
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="参与者.html" >
+                        <a href="管理员个人消息.html" >
                             <span class="icon-envelope-letter"> 消息</span>
                         </a>
                     </li>
                     <li>
-                        <a href="参与者.html" >
+                        <a href="管理员主页面.html" >
                             <span class="icon-settings"> 设置</span>
                         </a>
                     </li>
 
                     <li class="dropdown">
-                        <a href=""  class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
+                        <a href="#"  class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                         <span>
                             <!-- 头像 size要求：128*128尺寸-->
                             <img src="picture/noLogin.jpg" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;<b class="caret"></b>
                         </span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">个人信息</a></li>
+                            <li><a href="管理员个人信息.html">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="../登录.html">退出登录</a> </li>
+                            <li><a href="../登录New.html">退出登录</a> </li>
                         </ul>
                     </li>
 
@@ -509,7 +532,7 @@
 <!--                                        nav list-group  nav-tap   class="list-group-item"-->
                                         <ul class="nav list-group  nav-tap">
                                             <li  style="border: 1px solid #dddddd;border-radius: 4px;"><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员参加者人员管理.html'); participants(); })()" >参加者</a></li>
-                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员组织者单位管理.html'); organizers(); })()">组织者</a></li>
+                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)"  onclick="(function(){$('#main').load('管理员组织者单位管理.html'); organizers(); })()">组织者</a></li>
                                         </ul>
                                     </div>
 
@@ -545,9 +568,6 @@
                 </div>
 
             </div>
-
-
-
 
         </div>
     </div>
@@ -644,6 +664,99 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
                     <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdateOrganizer(); $('#updateOrganizer').modal('hide'); organizers();
+">保存修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--        修改会议信息的模态框-->
+    <div class="modal fade" id = "updateConference" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">会议信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id = "updateConferenceForm">
+                        <div class="form-group" hidden>
+                            <label for="conferenceId" class="col-sm-3 control-label" >会议ID</label>
+                            <div class="col-sm-9">
+                                <input type="hidden" class="form-control" name="conferenceId" id="conferenceId" placeholder="会议ID" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="conferenceName" class="col-sm-3 control-label">会议名</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control"  name="conferenceName" id="conferenceName" placeholder="会议名"  value="">
+                            </div>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="conferenceOrganizerUnitId" class="col-sm-3 control-label">组织单位ID</label>
+                            <div class="col-sm-9">
+                                <input type="hidden" class="form-control" name="conferenceOrganizerUnitId" id="conferenceOrganizerUnitId" placeholder="组织单位ID" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="conferenceOrganizerUnit" class="col-sm-3 control-label">组织单位</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control"  name="conferenceOrganizerUnit" id="conferenceOrganizerUnit" placeholder="组织单位"  value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="conferenceStart" class="col-sm-3 control-label">会议开始时间</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="conferenceStart" id="conferenceStart" placeholder="会议开始时间" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="conferenceEnd" class="col-sm-3 control-label">会议结束时间</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name = "conferenceEnd" id="conferenceEnd" placeholder="会议结束时间" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="conferenceLocation" class="col-sm-3 control-label">会议地址</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name = "conferenceLocation" id="conferenceLocation" placeholder="会议地址" value="">
+                            </div>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="hotelId" class="col-sm-3 control-label">酒店ID</label>
+                            <div class="col-sm-9">
+                                <input type="hidden" class="form-control" name="hotelId" id="hotelId" placeholder="酒店ID" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="hotelName" class="col-sm-3 control-label">酒店</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name = "hotelName" id="hotelName" placeholder="酒店" value="">
+                            </div>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="fleetId" class="col-sm-3 control-label">车队ID</label>
+                            <div class="col-sm-9">
+                                <input type="hidden" class="form-control" name="fleetId" id="fleetId" placeholder="车队ID" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fleetName" class="col-sm-3 control-label">车队</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name = "fleetName" id="fleetName" placeholder="车队" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="conferenceInfo" class="col-sm-3 control-label">其它信息</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name = "conferenceInfo" id="conferenceInfo" placeholder="其它信息" value="">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
+                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdateConference(); $('#updateConference').modal('hide'); conferences();
 ">保存修改</button>
                 </div>
             </div><!-- /.modal-content -->

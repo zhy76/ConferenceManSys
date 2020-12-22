@@ -23,6 +23,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Admin queryAdminByAccountAndPass(String adminAccount, String adminPass){
+        return adminDao.queryAdminByAccountAndPass(adminAccount,adminPass);
+    }
+
+    @Override
     public Admin login(String adminAccount, String adminPass) {
         return adminDao.queryAdminByAccountAndPass(adminAccount,adminPass);
     }

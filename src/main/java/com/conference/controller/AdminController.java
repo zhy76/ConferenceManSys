@@ -2,6 +2,7 @@ package com.conference.controller;
 
 import com.conference.entity.Admin;
 import com.conference.service.AdminService;
+import com.conference.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.http.HttpStatus;
@@ -20,16 +21,11 @@ import java.util.Map;
  * @Author: liuCenYu
  * @Date: 2020/12/5 11:57
  **/
-@Controller
+@RestController
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     private AdminService adminService;
-
-    //管理员端登录入口
-    @RequestMapping("/admin")
-    public String admin(){
-        return "admin/adminLogin";
-    }
 
     //处理管理员登录请求
     @PostMapping("/admin/adminLogin")
@@ -59,18 +55,18 @@ public class AdminController {
     }
 
     //进入管理员个人中心
-    @GetMapping("/admin/adminPersonal")
-    public String adminPersional(){
-        return "admin/adminPersonal";
+    @PostMapping("/showAdminPersonal")
+    public Result showAdminPersonal(@PathVariable String adminAccount,@PathVariable String adminPass){
+        //根据登录时的账号和密码来返回完整的管理员信息
+        Admin admin = adminService.queryAdminByAccountAndPass(adminAccount,adminPass);
+        return Result.success(admin);
     }
 
     //处理管理员修改个人信息请求
-    @PostMapping("/admin/adminUpdate")
-    @ResponseBody
-    public String adminUpdate(Admin admin, HttpSession session){
-        session.setAttribute("loginAdminName", admin.getAdminName());
-        session.setAttribute("admin",admin);
+    @PostMapping("/adminUpdate")
+    public Result adminUpdate(Admin admin, HttpSession session){
+
         adminService.updateAdmin(admin);
-        return "success";
+        return Result.success();
     }
 }
