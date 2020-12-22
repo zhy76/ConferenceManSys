@@ -42,23 +42,23 @@ $(function () {
  * 得到登入车队的信息
  */
 
-function getDriverInfo($fleetId) {
+function getFleetInfo($fleetId) {
     $.ajax({
-        async: false,
+        // async: false,
         headers: {
             'token': token,
         },
-        url: "/fleetId/getFleetIdInfo",
+        url: "/fleet/getFleetInfo",
         type: "get",
         dataType: "json",
         data: {
-            'driverId': $fleetId,
+            'fleetId': $fleetId,
         },
         success: function (data) {
             console.log(data);
             if (data["code"] === 200) {
-                driver = data["data"]["getFleetIdInfo"];
-                console.log(driver);
+                fleet = data["data"]["getFleetInfo"];
+                console.log(fleet);
             } else {
                 alert("获取用户数据失败");
             }

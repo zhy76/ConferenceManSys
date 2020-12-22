@@ -5,7 +5,7 @@ import com.conference.dao.OrganizerDao;
 import com.conference.entity.Conference;
 import com.conference.entity.Organizer;
 import com.conference.service.OrganizerService;
-import com.conference.service.impl.OrganizerServiceImpl;
+import com.conference.service.Impl.OrganizerServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -85,8 +85,9 @@ public class DriverController {
 //            return new Result(ResultCode.IllegalArgumentException);
 //        }
         int addNumber = driverService.addDriver(driver);
+        Driver driverForBase = driverService.findDriverByPhone(driver.getDriverPhone());
         if (addNumber > 0) {
-            String token = tokenService.getToken(addNumber);
+            String token = tokenService.getToken(driverForBase);
             return Result.success("token", token);
         } else {
             return new Result(ResultCode.FAIL);
@@ -191,8 +192,8 @@ public class DriverController {
     @GetMapping("/getAllDriver")
     public Result getAllDriver() {
         List<Driver> getAllDriver = driverService.findAllDriver();
-        return new Result(2, "时间冲突");
-//        return Result.success("getAllDriver", getAllDriver);
+//        return new Result(2, "时间冲突");
+        return Result.success("getAllDriver", getAllDriver);
     }
 
     /**

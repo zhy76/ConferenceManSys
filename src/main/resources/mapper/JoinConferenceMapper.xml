@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--参会者要能参加一个会议和取消已选会议-->
+<!--namespace绑定一个Mapper接口-->
+<mapper namespace="com.conference.dao.JoinConferenceDao">
+
+    <insert id="joinAConference" parameterType="JoinConference">
+        insert into join_conference(participant_id,conference_id,is_putup,is_pickup,to_time,return_time,Train_number)
+        values (#{participantId},#{conferenceId},#{isPutup},#{isPickup},#{toTime},#{returnTime},#{trainNumber});
+    </insert>
+
+    <delete id="cancelAJoinedConferenceById">
+        delete from join_conference where participant_id = #{participantId} and conference_id = #{conferenceId};
+    </delete>
+
+    <select id="queryConferenceByParticipantId" resultType="JoinConference">
+        select * from join_conference where participant_id = #{participantId}
+    </select>
+
+    <select id="queryConferenceByConferenceId" resultType="JoinConference">
+        select * from join_conference where conference_id = #{conferenceId}
+    </select>
+</mapper>

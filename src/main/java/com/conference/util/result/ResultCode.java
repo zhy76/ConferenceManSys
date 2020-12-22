@@ -1,11 +1,12 @@
 package com.conference.util.result;
 
 /**
- * @ClassName: ResultCode
- * @Description: That's enough.
- * @Author: Lance
- * @Date: 2020/12/6 18:51
+ * @Description
+ * @Author 谢 娇
+ * @Date 2020/12/14 21:59
+ * @sno 6109118015
  */
+
 public enum ResultCode {
     SUCCESS(200, "成功"),
     ERROR(1, "错误"),
@@ -13,7 +14,7 @@ public enum ResultCode {
     DuplicateKeyException(101, "插入的唯一性字段数据已存在"),
     BindException(111, "参数校验失败"),
     NeedLogin(121, "该操作需要先登录"),
-//    IllegalToken(122, "非法token"),
+    //    IllegalToken(122, "非法token"),
     IncorrectCredentialsException(131, "密码不正确"),
     UnknownAccountException(132, "此账号不存在"),
     AuthenticationException(134, "认证异常"),

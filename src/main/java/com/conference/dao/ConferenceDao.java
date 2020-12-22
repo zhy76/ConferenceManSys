@@ -28,5 +28,6 @@ public interface ConferenceDao {
 
     public int deleteConference(Integer conferenceId);
     public int addConference(Conference conference);
-    public Conference queryConferenceById(Integer conferenceId);
+    public Conference queryConferenceByConferenceId(Integer conferenceId);//统一
+    public List<Conference> queryConferenceByOrganizerId(Integer organizerId);
 }

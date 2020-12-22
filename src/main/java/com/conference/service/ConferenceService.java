@@ -19,5 +19,6 @@ public interface ConferenceService {
     public int deleteConference(Integer conferenceId);
     public int addConference(Conference conference);
 
-    public Conference queryConferenceById(Integer conferenceId);
+    public Conference queryConferenceByConferenceId(Integer conferenceId);//与xj统一
+    public List<Conference> queryConferenceByOrganizerId(Integer organizerId);
 }
