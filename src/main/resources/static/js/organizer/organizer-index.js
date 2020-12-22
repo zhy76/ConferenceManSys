@@ -24,7 +24,7 @@ $(function () {
     /**
      * 点击->个人信息
      */
-    $("#to-info a").click(function () {
+    $("#to-info a").ready(function () {
 
             showOrganizerInfo();
 
