@@ -5,15 +5,15 @@
 <mapper namespace="com.conference.dao.RoomDao">
 <!--    得到所有房间-->
     <select id="findAllRoom" resultType="Room">
-        select * from Room
+        select * from room
     </select>
 <!--    通过酒店ID查找房间-->
     <select id="getRoomByHotelId" resultType="Room">
-        select * from Room where hotel_id=#{hotelId}
+        select * from room where hotel_id=#{hotelId}
     </select>
 <!--通过房间号查找房间-->
     <select id="getRoomByRoomId" resultType="Hotel">
-        select * from Room where room_id=#{roomId}
+        select * from room where room_id=#{roomId}
     </select>
 <!--    酒店房间增加-->
     <insert id="addRoom">
@@ -22,11 +22,11 @@
     </insert>
 <!--    删除房间-->
     <delete id="deleteRoomById">
-        DELETE FROM Room WHERE hotel_id=#{hotelId} AND room_id=#{roomId}
+        DELETE FROM room WHERE hotel_id=#{hotelId} AND room_id=#{roomId}
     </delete>
 <!--  更新房间-->
     <update id="updateRoom">
-        UPDATE Room SET  is_live=#{isLive},
+        UPDATE room SET  is_live=#{isLive},
         room_type=#{roomType} WHERE hotel_id=#{hotelId} AND room_id=#{roomId};
     </update>
 </mapper>
