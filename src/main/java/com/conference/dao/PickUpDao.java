@@ -31,10 +31,15 @@ public interface PickUpDao {
 
     /**
      * 增
+     * pickUp.getPickUpId(),pickUp.getParticipantId(), pickUp.getFleetId(), pickUp.getDriverId(), pickUp.getConferenceId(), pickUp.getConferenceId(),
+     *                 pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup()
      */
-    int addPickUp(@Param("participantId") int participantId, @Param("driverId") int driverId,
+    int addPickUp(@Param("participantId") int participantId,
+                  @Param("fleetId") int fleetId,
+                  @Param("driverId") int driverId,
                   @Param("conferenceId") int conferenceId,
-                  @Param("trainNumber") String trainNumber, @Param("toTime") String toTime,
+                  @Param("trainNumber") String trainNumber,
+                  @Param("toTime") String toTime,
                   @Param("returnTime") String returnTime, @Param("isFinishPickup") boolean isFinishPickup);
 
     /**

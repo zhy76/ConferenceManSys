@@ -6,7 +6,7 @@
 
     <insert id="addPickUp">
         INSERT INTO pick_up
-        VALUES(null, #{participantId},#{conferenceId}, #{driverId}, #{conferenceId}, #{trainNumber}, #{toTime}, #{returnTime}, #{isFinishPickup});
+        VALUES(null, #{participantId}, #{fleetId}, #{driverId}, #{conferenceId}, #{trainNumber}, #{toTime}, #{returnTime}, #{isFinishPickup});
     </insert>
 
 
@@ -72,7 +72,7 @@
     </update>
 
     <update id="updatePickUpByConferenceIdAndParticipantId">
-        UPDATE pick_up SET fleet_id=#{fleetId}, driver_id=#{driverId} ,
+        UPDATE pick_up SET pick_up_id=#{pickUpId}, fleet_id=#{fleetId}, driver_id=#{driverId} ,
         train_number=#{trainNumber}, to_time=#{toTime},
         return_time=#{returnTime}, is_finish_pickup=#{isFinishPickup} WHERE conference_id=#{conferenceId}
         and participant_id=#{participantId};

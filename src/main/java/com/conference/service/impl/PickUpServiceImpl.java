@@ -22,7 +22,9 @@ public class PickUpServiceImpl implements PickUpService {
 
     @Override
     public int addPickUp(PickUp pickUp) {
-        return pickUpDao.addPickUp(pickUp.getParticipantId(), pickUp.getDriverId(), pickUp.getConferenceId(),
+        return pickUpDao.addPickUp(pickUp.getParticipantId(), pickUp.getFleetId(),
+                pickUp.getDriverId(),
+                pickUp.getConferenceId(),
                 pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
     }
 

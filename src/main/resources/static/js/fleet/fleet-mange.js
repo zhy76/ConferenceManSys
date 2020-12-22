@@ -173,7 +173,6 @@ function getDriverInfo($driverId) {
             if (data["code"] === 200) {
                 driver = data["data"]["getDriverInfoById"];
                 console.log(driver);
-                alert("driver")
             } else {
                 alert("获取用户数据失败");
             }

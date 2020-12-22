@@ -225,7 +225,7 @@
                                  * */
                                 // getDriverInfo(it.driverId);
                                 driver = null;
-                                getPickUpByConferenceIdAndParticipantId(it.conferenceId, it.participantId);
+                                getPickUpByConferenceIdAndParticipantId(it.participantId, it.conferenceId);
                                 console.log(it);
                                 console.log(pickUp);
                                 if (pickUp !== null&& pickUp !== "null" && pickUp.driverId !== -1) {
@@ -235,6 +235,7 @@
                                 let driverName = "未分配";
                                 let driverPhone = "未分配";
                                 console.log(driver);
+                                // alert(1111111111111);
                                 if (driver != null && driver !== "null") {
                                     driverName = driver['driverName'];
                                     driverPhone = driver['driverPhone'];
@@ -322,15 +323,16 @@
                 });
             }
 
-            function getPickUpByConferenceIdAndParticipantId(conferenceId, participantId) {
+            function getPickUpByConferenceIdAndParticipantId(participantId, conferenceId) {
                 $.ajax({
                     async: false,
                     url: "/pickUp/getPickUpByConferenceIdAndParticipantId",
                     type: "get",
                     dataType: "json",
                     data: {
-                        'conferenceId': conferenceId,
-                        'participantId': participantId
+
+                        'participantId': participantId,
+                        'conferenceId': conferenceId
                     },
                     success: function (data) {
                         console.log(conferenceId);
@@ -378,8 +380,6 @@
             // 添加记录
             function arrangement(i, conferenceId) {
                 getNeedPickUpParticipant(conferenceId);
-                // console.log($('#renyuan' + conferenceId).children().children().children().next().children().children().next().next().children().next().children().children('td').eq(5).html());
-                let map=[];
                 console.log(joinConference);
                 for (let i of joinConference) {
                     let driverId = $("#driverId" + i.participantId).val();
@@ -400,7 +400,7 @@
                         },
                         success: function (data) {
                             console.log(data);
-                            if (data["code"] === 200) {
+                            if (data["code"] === 200 || data["message"] === "已存在") {
                                 console.log("成功");
                                 // driver = data["data"]["addOneNeedToPickUp"];
                                 // console.log(driver);
@@ -411,38 +411,7 @@
                         },
                     });
                 }
-                alert(1);
-                // console.log(joinConference);
-                // getNeedPickUpParticipant(conferenceId);
-                // $.ajax({
-                //     async: false,
-                //     headers: {
-                //         'token': token,
-                //     },
-                //     url: "/pickUp/addAllNeedToPickUp",
-                //     type: "get",
-                //     dataType: "json",
-                //     data: {
-                //         'driverId': map,
-                //         // 'driverId': driverName,
-                //         'conferenceId': conferenceId,
-                //     },
-                //     success: function (data) {
-                //         console.log(data);
-                //         if (data["code"] === 200) {
-                //             driver = data["data"]["addAllNeedToPickUp"];
-                //             console.log(driver);
-                //         } else {
-                //             alert("获取用户数据失败");
-                //         }
-                //     },
-                //     error: function () {
-                //         alert("获取用户数据失败");
-                //     },
-                // });
-                //
-                // alert(1);
-                // console.log(joinConference);
+                alert("分配成功");
             }
 
             /**
@@ -528,50 +497,6 @@
                     },
                 });
             }
-            // function attendConference(i, conferenceId) {
-            //
-            //     let putup = $("input[name='isPutup']:checked").val();
-            //     let pickup = $("input[name='isPickup']:checked").val();
-            //     let toTime = $("#toTime" + i).val();
-            //     let returnTime = $("#returnTime" + i).val();
-            //     let trainNumber = $("#trainNumber" + i).val();
-            //     alert();
-            //     alert(putup)
-            //     alert(pickup)
-            //     alert(toTime)
-            //     alert(returnTime)
-            //     alert(trainNumber)
-            //     $.ajax({
-            //         async: false,
-            //         type: "POST",
-            //         dataType: "json",
-            //         url: "/joinConference/joinAConference",
-            //         contentType: "application/json",
-            //         data: JSON.stringify({
-            //             "participantId": $participantId,
-            //             "conferenceId": conferenceId,
-            //             "isPutup": "" + putup,
-            //             "isPickup": pickup,
-            //             "toTime": toTime,
-            //             "returnTime": "" + returnTime,
-            //             "trainNumber": "" + trainNumber,
-            //         }),
-            //         success: function (data) {
-            //             //data = JSON.parse(data)
-            //             if (data['code'] == 200) {
-            //                 alert("加入成功！");
-            //                 window.location.href = "参与者查看会议.html";
-            //             } else {
-            //                 alert("加入失败！" + data['message'])
-            //                 window.location.href = "参与者选择会议.html";
-            //             }
-            //             console.log(data)
-            //         },
-            //         error: function () {
-            //             alert("获取用户数据失败2");
-            //         },
-            //     });
-            // }
 
             /*获取token里面的用户数据*/
             function parseJwt(token) {

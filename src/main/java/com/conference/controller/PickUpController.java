@@ -285,6 +285,9 @@ public class PickUpController {
                                      @RequestParam("driverId") Integer driverId,
                                      @RequestParam("participantId") Integer participantId
     ) {
+//        System.out.println(conferenceId);
+//        System.out.println(driverId);
+//        System.out.println(participantId);
         JoinConference joinConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(participantId, conferenceId);
         Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
         List<PickUp> allPickUp = pickUpService.findAllFleetPickUp(conference.getFleetId());
@@ -296,15 +299,32 @@ public class PickUpController {
         pickUp.setFleetId(conference.getFleetId());
         pickUp.setTrainNumber(joinConference.getTrainNumber());
         pickUp.setDriverId(driverId);
-        System.out.println(pickUp);
-        for (PickUp it1 : allPickUp)
-            if (it1.getParticipantId() == joinConference.getParticipantId()) {
-                PickUp pickUpNew = pickUpService.findPickUp(conferenceId, participantId);
+        for (PickUp it1 : allPickUp){
+            if (it1.getParticipantId() == joinConference.getParticipantId() && it1.getConferenceId() == joinConference.getConferenceId()) {
+                System.out.println(5);
+                System.out.println(conferenceId);
+                System.out.println(participantId);
+                PickUp pickUpNew = pickUpService.findPickUp(participantId, conferenceId);
+                System.out.println(pickUpNew);
+//                System.out.println(6);
+                if (pickUpNew.getDriverId() == driverId) {
+                    System.out.println("----------------");
+                    System.out.println(pickUpNew.getDriverId());
+                    System.out.println(driverId);
+                    return new Result(1, "已存在");
+                }
                 pickUpNew.setDriverId(driverId);
-                System.out.println(pickUp);
+
+                System.out.println("-----------------------");
+                System.out.println(pickUpNew);
                 pickUpService.updatePickUpByConferenceIdAndParticipantId(pickUpNew);
                 return new Result(1, "已存在");
             }
+            System.out.println(4);
+        }
+
+        System.out.println("-----------------------");
+        System.out.println(pickUp);
         pickUpService.addPickUp(pickUp);
         return Result.success();
     }
@@ -315,11 +335,9 @@ public class PickUpController {
      * @return
      */
     @GetMapping("/getPickUpByConferenceIdAndParticipantId")
-    public Result getPickUpByConferenceIdAndParticipantId(@RequestParam("conferenceId") Integer conferenceId,
-                                                          @RequestParam("participantId") Integer participantId) {
-        PickUp pickUp = pickUpService.findPickUp(conferenceId, participantId);
+    public Result getPickUpByConferenceIdAndParticipantId(
+            @RequestParam("participantId") Integer participantId,@RequestParam("conferenceId") Integer conferenceId) {
+        PickUp pickUp = pickUpService.findPickUp(participantId, conferenceId);
         return Result.success("pickUp", pickUp);
     }
-
-
 }
