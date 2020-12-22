@@ -16,13 +16,12 @@ import java.util.List;
 public class TokenServiceImpl implements TokenService {
     private static final String SECRET = "asfdsfadsfLMNQNQJQKdfkjsdrow32234545fdffdhgdhfgdhgfdhgfdhfgdhfgdh";
     private static final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-    private static int expiration = 3600 * 2;
+    public static int expiration = 3600 * 2;// 7200秒 = 2小时
 
     /**
      * 登录成功后，将用户的用户id写入,
      * driver
      */
-
     public String getToken(Driver driver){
         String token = "";
         token = Jwts.builder()
@@ -45,6 +44,19 @@ public class TokenServiceImpl implements TokenService {
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
         System.out.println(fleet.getFleetId());
+        System.out.println(token);
+        return token;
+    }
+
+    //登录成功后，将管理员用户的用户名和用户类型写入token
+    public String getToken(Admin admin){
+        String token = "";
+        token = Jwts.builder()
+                .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
+                .claim("adminId", admin.getAdminId())
+                .signWith(signatureAlgorithm, SECRET)
+                .compact();
+        System.out.println(admin.getAdminId());
         System.out.println(token);
         return token;
     }

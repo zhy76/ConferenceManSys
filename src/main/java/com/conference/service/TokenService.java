@@ -1,9 +1,6 @@
 package com.conference.service;
 
-import com.conference.entity.Driver;
-import com.conference.entity.Fleet;
-import com.conference.entity.Organizer;
-import com.conference.entity.Participant;
+import com.conference.entity.*;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,6 +14,7 @@ import java.util.Date;
 public interface TokenService {
     String getToken(Driver driver);
     String getToken(Fleet fleet);
+    String getToken(Admin admin);
     String getToken(Participant participant);
     String getToken(Organizer organizerForBase);
     //将增加用户的人数写入token

@@ -2,7 +2,9 @@ package com.conference.controller;
 
 import com.conference.entity.Admin;
 import com.conference.service.AdminService;
+import com.conference.service.TokenService;
 import com.conference.util.result.Result;
+import com.conference.util.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.http.HttpStatus;
@@ -27,31 +29,25 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private TokenService tokenService;
     //处理管理员登录请求
-    @PostMapping("/admin/adminLogin")
-    @ResponseBody
-    public Map<String,Object> adminLogin(@RequestBody Admin LoginAdmin,HttpSession session){
+    @PostMapping("/login")
+    public Result adminLogin(@RequestBody Admin loginAdmin){
         //获取ajax中JSON传参的管理员账号和密码
-        String adminAccount = LoginAdmin.getAdminAccount();
-        String adminPass = LoginAdmin.getAdminPass();
+        System.out.println(loginAdmin);
+        String adminAccount = loginAdmin.getAdminAccount();
+        String adminPass = loginAdmin.getAdminPass();
         System.out.println(adminAccount + adminPass);
-        Map<String,Object> map = new HashMap<>();
+
         if( !StringUtils.isEmpty(adminAccount) && !StringUtils.isEmpty(adminPass) && adminService.login(adminAccount,adminPass) != null )
         {//登录成功
             Admin admin = adminService.login(adminAccount,adminPass);
-            session.setAttribute("loginAdminName", admin.getAdminName());
-            session.setAttribute("admin",admin);
-//            return "redirect:/管理员主界面.html";
-            map.put("msg","success");
-//            return "success";
+            //生成token令牌
+            String token = tokenService.getToken(admin);
+            return Result.success("token",token);
         }
-        else
-        {
-            //告诉管理员，登录失败!
-            map.put("msg","账号或密码错误! ");
-//            return "admin/adminLogin";
-        }
-        return map;
+        else return new Result(111,"登录失败",null);
     }
 
     //进入管理员个人中心

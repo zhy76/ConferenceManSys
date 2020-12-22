@@ -56,6 +56,21 @@
 
 		<script>
 			$(function(){
+				//监听如果role角色选择了管理员，那么手机号/邮箱显示改成账号！
+				$("#role").on('change',function() {
+					if ( $("#role option:selected").val() == "admin" )
+					{
+						$("label[for='userAccount']").html('<span class="glyphicon glyphicon-edit" style="color: rgb(140, 132, 251);"></span>  账号');
+						$("#userAccount").attr("placeholder","请输入账号");
+					}
+					else
+					{
+						$("label[for='userAccount']").html('<span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号/\n' +
+								'\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  电子邮箱');
+						$("#userAccount").attr("placeholder","请输入手机号/电子邮箱");
+					}
+				});
+
 				// $('#account').focus(function(){
 				// 	$("#account-icon").css({"display":"none"});
 				// })
@@ -151,70 +166,39 @@
 
 				$("#login").click(function () {
 					let role = $("#role").val();
-					if( role == "admin" )
-					{
-						//管理员登录，高凌志的我看不懂，就用if-else剥离出来了！！！
-						var adminAccount = $("#userAccount").val();
-						var adminPass = $("#accountPass").val();
-						$.ajax({
-							type:"post",
-							url: "/admin/adminLogin",
-							data: JSON.stringify({
-								adminAccount: adminAccount,
-								adminPass: adminPass,
-							}),
-							dataType:"json",
-							processData:false,
-							contentType:"application/json;charset=UTF-8",
-							success:function (data) {
-								if (data["msg"] == "success")
-									window.location.href = "管理员主页面.html";
-								else
-								{
-									alert(data["msg"]);
-								}
-							},
-							error:function () {
-								alert("请求异常! ");
+					var userAccount = $("#userAccount").val();
+					var accountPass = $("#accountPass").val();
+					var phoneKey = role + "Phone";
+					if( role == 'admin' ) phoneKey = "adminAccount";
+					var passKey = role + "Pass";
+					var json = {
+						// phoneKey: "" + driverPhone,
+						// passKey: "" + driverPass
+					};
+					json[phoneKey] = userAccount;
+					json[passKey] = accountPass;
+					$.ajax({
+						type: "POST",
+						dataType: "json",
+						url: role +  '/login',
+						contentType: "application/json",
+						data: JSON.stringify(json),// 方法将一个 JavaScript 对象或值转换为 JSON 字符串
+						success: function (jsonData, result) {
+							// console.dir("data is :" + result);
+							// console.dir(jsonData);
+							if(jsonData["code"]!=200){
+								alert(jsonData["message"]);
 							}
-						})
-					}
-
-					else
-					{
-						var userAccount = $("#userAccount").val();
-						var accountPass = $("#accountPass").val();
-						var phoneKey = role + "Phone";
-						var passKey = role + "Pass";
-						var json = {
-							// phoneKey: "" + driverPhone,
-							// passKey: "" + driverPass
-						};
-						json[phoneKey] = userAccount;
-						json[passKey] = accountPass;
-						console.log(json);
-						console.log(userAccount);
-						$.ajax({
-							type: "POST",
-							dataType: "json",
-							url: role +  '/login',
-							contentType: "application/json",
-							data: JSON.stringify(json),// 方法将一个 JavaScript 对象或值转换为 JSON 字符串
-							success: function (jsonData, result) {
-								console.log("data is :" + result);
-								if(jsonData["code"]!=200){
-									alert(jsonData["message"]);
-								}
-								else if (jsonData["data"]["token"]!=null) {
-									localStorage.setItem("conNCU", jsonData["data"]["token"]);
-									window.location.href = role + "-index.html";
-								} else {
-									console.log(jsonData["data"]["token"]);
-									alert("登录失败，请重试");
-								}
+							else if (jsonData["data"]["token"]!=null) {
+								localStorage.setItem("conNCU", jsonData["data"]["token"]);
+								window.location.href = role + "-index.html";
+								return false;
+							} else {
+								console.log(jsonData["data"]["token"]);
+								alert("登录失败，请重试");
 							}
-						});
-					}
+						}
+					});
 
 				})
 			});
