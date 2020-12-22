@@ -6,7 +6,7 @@ var $participantId;
 var participant={};
 var $participantPhone;
 var $conferenceId;
-
+var room={};
 $(function () {
 
     //获取token
@@ -44,6 +44,11 @@ $(function () {
         //console.log("success");
         findAllLiveRoomByHotelId();
         showLiveRoomTable();
+    })
+    //查看酒店房间情况
+    $("#to-check-room").click(function () {
+        getRoomByHotelId();
+        showRoom();
     })
     //点击 退出登录 按钮
     $(".login-out").click(function () {
@@ -114,7 +119,7 @@ function showLiveRoomTable(){
                 "                                                    <td>" + i.conferenceId + "</td>\n" +
                 "                                                    <td>" + i.roomId + "</td>\n" +
                 "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"resetLiveRoom(this)\" >重置</button>" +
-                "                                        <button type='button' class=\"btn btn-info\" style=\"background-color:#ff4b00\"onclick=\"deleteLiveRoomByAll(this)\">删除</button>"+
+                "                                        <button type='button' class=\"btn btn-danger\" onclick=\"deleteLiveRoomByAll(this)\">删除</button>"+
                 "                                                   </td>\n" +
                 "                                                </tr>\n";
         }
@@ -206,13 +211,17 @@ function updateLiveRoom(liveTable){
                     alert("修改成功");
 
                     // showDriverInfo(driver)
-                    location.reload();
+                    //location.reload();
                 } else {
                     alert("修改失败");
-                    location.reload();
+                    //location.reload();
                 }
             },
         });
+        for (let i=0;i<100000000;i++){
+
+        }
+        doLiveRoom();
     } else {
         alert("信息格式有误，请重新填写！");
     }
@@ -255,7 +264,7 @@ function  showHotelInfo(){
         "                        <div class=\"card\">\n" +
         "                            <!-- Nav tabs -->\n" +
         "                            <ul class=\"nav nav-tabs profile-tab\" role=\"tablist\">\n" +
-        "                                <li class=\"nav-item\"> <a class=\"nav-link\" data-toggle=\"tab\" href=\"#酒店信息\"\n" +
+        "                                <li class=\"nav-item \"> <a class=\"nav-link\" data-toggle=\"tab\" href=\"#酒店信息\"\n" +
         "                                        role=\"tab\">酒店信息</a> </li>\n" +
         "                            </ul>\n" +
         "                            <!-- Tab panes -->\n" +
@@ -332,64 +341,72 @@ function clearHotelInfo() {
 }
 
 //信息表单前端验证
-function validformHotel() {
-    /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
+
+function validForm() {
+    jQuery.validator.addMethod("mobile", function(value, element) {
+        var length = value.length;
+        var mobile = /^1[3456789]\d{9}$/
+        return this.optional(element) || (length == 11 && mobile.test(value));
+    }, "手机号码格式错误");
     return $("#hotelForm").validate({
         rules: {
             hotelName: {
-                minlength: 2,
-                maxlength: 13
-            },
-            hotelPhone: {
-                minlength: 11,
-                maxlength: 11
-            },
-            hotelLocation: {
-                minlength: 2,
-                maxlength: 8
+                required: true,
+                minlength: 1,
+                maxlength: 13,
             },
             hotelPass: {
                 minlength: 6,
-                maxlength: 20,
-
+                maxlength: 20
             },
             repeatHotelPass: {
                 minlength: 6,
                 maxlength: 20,
                 equalTo: "#hotelPass"
+            },
+            hotelPhone: {
+                minlength: 11,
+                maxlength: 11,
+                mobile: true
+            },
+            hotelLocation: {
+                minlength: 2,
+                maxlength: 20
             }
         },
         messages: {
             hotelName: {
-                minlength: "用户名至少包含2个字符",
+                minlength: "姓名名至少包含1个字符",
                 maxlength: "用户名长度不能超过13个字符"
+            },
+            hotelPass: {
+                minlength: "密码长度不能少于6个字符",
+                maxlength: "密码长度不能多于20个字符"
+            },
+            repeatHotelPass: {
+                minlength: "密码长度不能少于6个字符",
+                maxlength: "密码长度不能多于20个字符",
+                equalTo: "两次密码输入不一致"
             },
             hotelPhone: {
                 minlength: "请输入正确的电话号码",
                 maxlength: "请输入正确的电话号码"
             },
             hotelLocation: {
-                minlength: "居住地名称长度过短",
-                maxlength: "居住地长度过长"
-            },
-            hotelPass: {
-                minlength: "密码长度不能少于6个字符",
-                maxlength: "密码长度不能多于20个字符",
-
-            },
-            repeatHotelPass: {
-                minlength: "密码长度不能少于6个字符",
-                maxlength: "密码长度不能多于20个字符",
-                equalTo: "两次密码输入不一致"
+                minlength: "地址描述过短",
+                maxlength: "地址描述过长"
             }
-
         }
     });
 }
+
 //酒店信息更新
 function submitChange() {
     //console.log("修改中...");
-    if (1) {
+    if (!validForm().form()) {
+        alert("信息有误")
+        return;
+    }
         $.ajax({
             // async: false,
             type: "POST",
@@ -409,16 +426,17 @@ function submitChange() {
                 if (jsonData['code'] === 200) {
                     alert("修改成功");
                     // showDriverInfo(driver)
-                    location.reload();
+                    //location.reload();
                 } else {
                     alert("修改失败");
-                    location.reload();
+                    //location.reload();
                 }
             },
         });
-    } else {
-        alert("信息格式有误，请重新填写！");
+    for (let i = 0; i < 500000000; i++) {
+
     }
+        showHotelInfo();
 }
 /*base 64 加密字符串*/
 function encodeStr(str) {

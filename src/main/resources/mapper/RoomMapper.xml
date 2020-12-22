@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.conference.dao.RoomDao">
+<!--    得到所有房间-->
+    <select id="findAllRoom" resultType="Room">
+        select * from Room
+    </select>
+<!--    通过酒店ID查找房间-->
+    <select id="getRoomByHotelId" resultType="Room">
+        select * from Room where hotel_id=#{hotelId}
+    </select>
+<!--通过房间号查找房间-->
+    <select id="getRoomByRoomId" resultType="Hotel">
+        select * from Room where room_id=#{roomId}
+    </select>
+<!--    酒店房间增加-->
+    <insert id="addRoom">
+        INSERT INTO Room(room_id, hotel_id, is_live, room_type)
+        VALUES(#{roomId}, #{hotelId}, #{isLive}, #{roomType})
+    </insert>
+<!--    删除房间-->
+    <delete id="deleteRoomById">
+        DELETE FROM Room WHERE hotel_id=#{hotelId} AND room_id=#{roomId}
+    </delete>
+<!--  更新房间-->
+    <update id="updateRoom">
+        UPDATE Room SET  is_live=#{isLive},
+        room_type=#{roomType} WHERE hotel_id=#{hotelId} AND room_id=#{roomId};
+    </update>
+</mapper>
