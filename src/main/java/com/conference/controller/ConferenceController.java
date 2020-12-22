@@ -57,8 +57,8 @@ public class ConferenceController {
      * @param conferenceId
      * @return
      */
-    @GetMapping("/deleteConference/{conferenceId}")
-    public Result deleteConference(@PathVariable("conferenceId") Integer conferenceId) {
+    @GetMapping("/deleteConference")
+    public Result deleteConference(@RequestParam Integer conferenceId) {
         conferenceService.deleteConference(conferenceId);
 //        if (driverNum < 1) return new Result(ResultCode.FAIL);
         return Result.success();
@@ -85,6 +85,12 @@ public class ConferenceController {
     public Result updateConference(@Validated({OrganizerRegister.class}) @RequestBody Conference conference) {
         conferenceService.updateConference(conference);
         return Result.success();
+    }
+
+    @GetMapping("/queryConferenceByOrganizerId")
+    public Result queryConferenceByOrganizerId(@RequestParam int OrganizerId) {
+        List<Conference> queryConferenceByOrganizerId = conferenceService.queryConferenceByOrganizerId(OrganizerId);
+        return Result.success("queryConferenceByOrganizerId", queryConferenceByOrganizerId);
     }
 }
 
