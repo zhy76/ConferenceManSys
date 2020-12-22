@@ -101,9 +101,13 @@ function showMyConference(){
         console.log(fleetId);
         var conferenceInfo=$queryConferenceByOrganizerId[i].conferenceInfo;
         getOrganizerInfo(organizerId);
-        findFleetById(fleetId);
-        getHotelById(hotelId);
-        console.log(getfleet);
+        if(hotelId!=null){
+            getHotelById(hotelId);
+        }
+        if(fleetId!=null){
+            findFleetById(fleetId);
+        }
+        //console.log(getfleet);
         //var chooseFleetName=getfleet["fleetName"];
         getAllHotel();
         getAllFleet();
