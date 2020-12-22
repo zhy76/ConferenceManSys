@@ -39,7 +39,10 @@
         SELECT * FROM pick_up WHERE pick_up_id=#{pickUpId};
     </select>
 
-
+    <select id="findPickUpByParticipantIdAndConferenceId" resultType="PickUp">
+        SELECT * FROM pick_up WHERE participant_id=#{participantId}
+        and conference_id=#{conferenceId};
+    </select>
 
     <delete id="deletePickUpById">
         DELETE from pick_up where pick_up_id=#{pickUpId};

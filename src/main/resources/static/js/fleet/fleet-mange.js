@@ -153,7 +153,7 @@ function getAllFleetDriverPickUp($fleetId) {
 }
 
 /**
- * 得到登入司机的信息
+ * 得到司机的信息
  */
 function getDriverInfo($driverId) {
     $.ajax({

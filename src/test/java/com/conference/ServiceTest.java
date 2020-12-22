@@ -42,7 +42,8 @@ public class ServiceTest {
     private PickUpDao pickUpDao;
     @Test
     void contextLoads() {
-        System.out.println(joinConferenceDao.queryJoinConferenceByConferenceId(1));
+        System.out.println(pickUpDao.findPickUpByParticipantIdAndConferenceId(1, 1));
+//        System.out.println(joinConferenceDao.queryJoinConferenceByConferenceId(1));
 //        System.out.println(pickUpDao.updatePickUp());
 //
 //        System.out.println(fleetDao.findAllFleet());

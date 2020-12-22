@@ -112,7 +112,12 @@
         </style>
 
         <![endif]-->
-
+        <!-- Datatables-->
+        <script src="js/jquery.datatables.min.js"></script>
+        <script src="js/datatables.responsive.min.js"></script>
+        <script src="js/jquery.toast.min.js"></script>
+        <script src="js/dashboard-alpha.js"></script>
+<!--        <script src="js/fleet/fleet-mange.js"></script>-->
         <script>
             let organizer;
             let token;
@@ -121,130 +126,210 @@
             let $fleetId;
             let $participantId;
             let joinConference;
+            let driver;
+            let participant;
             $(function () {
                 $(window).scroll(function () {
                     if ($(this).scrollTop() > 100) $('.back-to-top').fadeIn('slow');
                     else $('.back-to-top').fadeOut('slow');
                 });
+
                 token = localStorage.getItem("hcs");
                 console.log(token);
                 $fleetId = parseJwt(token).fleetId;
+                getAllFleetDriver($fleetId);
                 $.ajax({
-                        async: false,
-                        url: "/conference/queryConferenceByFleetId",
-                        type: "get",
-                        dataType: "json",
-                        data: {
-                            "fleetId" : $fleetId
-                        },
-                        success: function (data) {
-                            var listConference = "";
-                            // console.log(data);
-                            // console.log(typeof data)
-                            // data = JSON.parse(data)
-                            // console.log(typeof data)
-                            // console.log(data['data']['conferencesList'])
-                            var conferences = data['data']['conference'];
-                            // console.log(conferences);
-                            // console.log(conferences);
-                            for (var i = 0; i < conferences.length; i++) {
-                                // console.log(conferences[i]);
-                                var conferenceName = conferences[i].conferenceName;
-                                var conferenceLocation = conferences[i].conferenceLocation;
-                                var conferenceStart = conferences[i].conferenceStart;
-                                var conferenceEnd = conferences[i].conferenceEnd;
-                                var conferenceId = conferences[i].conferenceId;
-                                // console.log(conferenceId);
-                                var organizerId = conferences[i].organizerId;
-                                // alert(organizerId);
-                                // alert(typeof organizerId);
-                                getOrganizerInfo(organizerId);
+                    async: false,
+                    url: "/conference/queryConferenceByFleetId",
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        "fleetId": $fleetId
+                    },
+                    success: function (data) {
+                        var listConference = "";
+                        // console.log(data);
+                        // console.log(typeof data)
+                        // data = JSON.parse(data)
+                        // console.log(typeof data)
+                        // console.log(data['data']['conferencesList'])
+                        var conferences = data['data']['conference'];
+                        // console.log(conferences);
+                        // console.log(conferences);
+                        for (var i = 0; i < conferences.length; i++) {
+                            // console.log(conferences[i]);
+                            var conferenceName = conferences[i].conferenceName;
+                            var conferenceLocation = conferences[i].conferenceLocation;
+                            var conferenceStart = conferences[i].conferenceStart;
+                            var conferenceEnd = conferences[i].conferenceEnd;
+                            var conferenceId = conferences[i].conferenceId;
+                            // console.log(conferenceId);
+                            var organizerId = conferences[i].organizerId;
+                            // alert(organizerId);
+                            // alert(typeof organizerId);
 
-                                var organizerUnit = organizer.organizerUnit;
-                                console.log(conferenceId);
-                                listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
-                                    '                        <a href = "#">' +
-                                    '                            <div class="items">' +
-                                    '                                <img class="img-responsive" src="picture/conferenceImg.jpeg" />' +
-                                    '                                <h4>' + conferenceName + '</h4>' +
-                                    '                                <p> <span class="iconfont icon-dizhi"></span> ' + conferenceLocation + '</p>' +
-                                    '                                <p> <span class="iconfont icon-shijian"></span>' + conferenceStart + '-' + conferenceEnd + '</p>' +
-                                    '                                <p> <span class="iconfont icon-zhubandanwei"></span> ' + organizerUnit + '</p>' +
-                                    '                            </div>' +
-                                    '                        </a>' +
-                                    '<div class="box">' +
-                                    '    <div class="content">' +
-                                    '        <!--添加按钮及bootstrap的模态框-->' +
-                                    '        <div class="export">' +
-                                    '            <!--按钮开始-->' +
-                                    '            <button id="new_add" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#renyuan' + conferenceId + '">' +
-                                    '                <span>安排</span>' +
-                                    '            </button>' +
-                                    '            <!--按钮结束-->' +
-                                    '            <div class="modal fade" id="renyuan' + conferenceId + '">' +
-                                    '                <div class="modal-dialog modal-lg modal_position">' +
-                                    '                    <div class="modal-content">' +
-                                    '                        <div class="modal-header">' +
-                                    '                            <h4 class="modal-title" id="">加入会议</h4>' +
-                                    '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
-                                    '                        </div>\n' +
-                                    '                        <!-- 模态弹窗部分开始 -->' +
-                                    '                        <div class="modal-body">' +
-                                    '                            <table id="xztb" class="table">' +
-                                    '                                <!--新修改弹窗的样式-->' +
-                                    '                                <tbody>' +
-                                    '                                <tr>' +
-                                    '                                    <td class=""><label for=""><font style="font-size: 14px; color: red;">*</font>住宿</label>' +
-                                    '                                    </td>' +
-                                    '                                    <td><input  type="radio" name="isPutup" value="true" id="putup"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                                    '                                    <input  type="radio" name="isPutup"  value="false" id="unput"/>否</td>' +
-                                    '                                </tr>' +
-                                    '                                <tr>' +
-                                    '                                    <td class="tb_bg"><label for=""><font style="font-size: 14px; color: red;">*</font>接送</label>' +
-                                    '                                    </td>' +
-                                    '                                    <td><input  type="radio" name="isPickup" value="true" id="pick"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                                    '                                    <input  type="radio" name="isPickup"  value="false" id="unpick"/>否</td>' +
-                                    '                                </tr>' +
-                                    '                                <tr>' +
-                                    '                                    <td class="tb_bg"><label for="">到达时间</label></td>' +
-                                    '                                    <td><input type="text" name="toTime" id="toTime' + i + '" placeholder="2020-12-10 09:00:00" value="2020-12-09 09:00:00"></td>' +
-                                    '                                </tr>' +
-                                    '                                <tr>' +
-                                    '                                    <td class="tb_bg"><label for="">离开时间</label></td>' +
-                                    '                                    <td><input type="text" name="returnTime" id="returnTime' + i + '" placeholder="2020-12-12 12:00:00" value="2020-12-10 09:00:00"></td>' +
-                                    '                                </tr>' +
-                                    '                                <tr>' +
-                                    '                                      <td class="tb_bg"><label for="">车次/航班号</label></td>' +
-                                    '                                      <td><input type="text" name="trainNumber" id="trainNumber' + i + '" value="G1234" ></td>' +
-                                    '                                </tr>' +
-                                    '                                </tbody>' +
-                                    '                            </table>' +
-                                    '                        </div>' +
-                                    '                        <div class="modal-footer">' +
-                                    '                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>' +
-                                    '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"arrangement(' + i + ',' + conferenceId + ')">安排</button>' +
-                                    '                        </div>' +
-                                    '                        <!--模态弹窗部分结束 -->' +
-                                    '                    </div>' +
-                                    '                </div>' +
-                                    '            </div>' +
-                                    '        </div>' +
-                                    '    </div>' +
-                                    '</div>' +
-                                    '                   </div>'
+                            getOrganizerInfo(organizerId);
+                            getNeedPickUpParticipant(conferenceId);
+
+                            var organizerUnit = organizer.organizerUnit;
+                            console.log(conferenceId);
+                            listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
+                                '                        <a href = "#">' +
+                                '                            <div class="items">' +
+                                '                                <img class="img-responsive" src="picture/conferenceImg.jpeg" />' +
+                                '                                <h4>' + conferenceName + '</h4>' +
+                                '                                <p> <span class="iconfont icon-dizhi"></span> ' + conferenceLocation + '</p>' +
+                                '                                <p> <span class="iconfont icon-shijian"></span>' + conferenceStart + '-' + conferenceEnd + '</p>' +
+                                '                                <p> <span class="iconfont icon-zhubandanwei"></span> ' + organizerUnit + '</p>' +
+                                '                            </div>' +
+                                '                        </a>' +
+                                '<div class="box">' +
+                                '    <div class="content">' +
+                                '        <!--添加按钮及bootstrap的模态框-->' +
+                                '        <div class="export">' +
+                                '            <!--按钮开始-->' +
+                                '            <button id="new_add" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#renyuan' + conferenceId + '">' +
+                                '                <span>安排</span>' +
+                                '            </button>' +
+                                '            <!--按钮结束-->' +
+                                '            <div class="modal fade" id="renyuan' + conferenceId + '">' +
+                                '                <div class="modal-dialog modal-lg modal_position">' +
+                                '                    <div class="modal-content">' +
+                                '                        <div class="modal-header">' +
+                                '                            <h4 class="modal-title" id="">为' + conferenceName + '分配司机</h4>' +
+                                '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
+                                '                        </div>\n' +
+                                '                        <!-- 模态弹窗部分开始 -->' +
+                                '                        <div class="modal-body">' +
+                                '                            <table id="xztb" class="table">' +
+                                '                                <!--新修改弹窗的样式-->' +
+                                '                                <tbody>'
+                            listConference += `                            <table class="table table-striped dt-responsive nowrap" id="datatable">
+                                <thead>
+                                <tr>
+                                    <th>参会者姓名</th>
+                                    <th>电话号码</th>
+                                    <th>到达时间</th>
+                                    <th>离开时间</th>
+                                    <th>航班</th>
+                                    <th>司机姓名</th>
+                                    <th>司机电话</th>
+                                    <th>状态</th>
+                                </tr>
+                                </thead>
+                                <tbody>`
+                            for (let it of joinConference) {
+                                /**
+                                 * 通过会议id和参加者id查找司机id
+                                 * */
+                                getDriverInfo(it.driverId);
+                                getParticipantInfo(it.participantId);
+                                let driverName = "未分配";
+                                let driverPhone = "未分配";
+                                console.log(driver);
+                                if (driver != null && driver !== "null") {
+                                    driverName = driver['driverName'];
+                                    driverPhone = driver['driverPhone'];
+                                    // driver['driverName'] = "未分配";
+                                    // driver['driverPhone'] = "未分配";
+                                }
+                                listConference +=
+                                    `
+                                <tr>
+                                    <td>${participant.participantName}</td>
+                                    <td>${participant.participantPhone}</td>
+                                    <td>${it.toTime}</td>
+                                    <td>${it.returnTime}</td>
+                                    <td>${it.trainNumber}</td>`
+                                listConference += "                                    <td><select class=\"form-control form-control-line\" name=\"account\" id='driverId'>"
+                                for (let it of allFleetDriver) {
+                                    listConference += "<option value='" + it.driverId + "'>" + it.driverId + '-' + it.driverName + "</option>"
+                                }
+                                listConference +=
+                                    "                                                        </select>\n"
+                                "</td>"
+                                listConference +=      `<td>${driverPhone}</td>
+                                <td>已完成</td>
+                                </tr>
+                                `
+                                // listConference +=
+                                //     `
+                                // <tr>
+                                //     <td>Tiger Nixon</td>
+                                //     <td>System Architect</td>
+                                //     <td>Edinburgh</td>
+                                //     <td>61</td>
+                                //     <td>2011/04/25</td>
+                                //     <td>$320,800</td>
+                                // </tr>
+                                // <tr>
+                                //     <td>Garrett Winters</td>
+                                //     <td>Accountant</td>
+                                //     <td>Tokyo</td>
+                                //     <td>63</td>
+                                //     <td>2011/07/25</td>
+                                //     <td>$170,750</td>
+                                // </tr>
+                                // `
                             }
-                            $('#mainContent').html(listConference);
-                            if (data["code"] === 200) {
-                                console.log(data);
-                                // alert(data);
-                                alert("获取会议数据成功");
-                            } else {
-                                alert("获取数据失败1");
-                            }
-                        },
-                        error: function () {
-                            alert("获取会议数据失败");
-                        },
+
+
+
+                            // '                                <tr>' +
+                            // '                                    <td class=""><label for=""><font style="font-size: 14px; color: red;">*</font>住宿</label>' +
+                            // '                                    </td>' +
+                            // '                                    <td><input  type="radio" name="isPutup" value="true" id="putup"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            // '                                    <input  type="radio" name="isPutup"  value="false" id="unput"/>否</td>' +
+                            // '                                </tr>' +
+                            // '                                <tr>' +
+                            // '                                    <td class="tb_bg"><label for=""><font style="font-size: 14px; color: red;">*</font>接送</label>' +
+                            // '                                    </td>' +
+                            // '                                    <td><input  type="radio" name="isPickup" value="true" id="pick"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            // '                                    <input  type="radio" name="isPickup"  value="false" id="unpick"/>否</td>' +
+                            // '                                </tr>' +
+                            // '                                <tr>' +
+                            // '                                    <td class="tb_bg"><label for="">到达时间</label></td>' +
+                            // '                                    <td><input type="text" name="toTime" id="toTime' + i + '" placeholder="2020-12-10 09:00:00" value="2020-12-09 09:00:00"></td>' +
+                            // '                                </tr>' +
+                            // '                                <tr>' +
+                            // '                                    <td class="tb_bg"><label for="">离开时间</label></td>' +
+                            // '                                    <td><input type="text" name="returnTime" id="returnTime' + i + '" placeholder="2020-12-12 12:00:00" value="2020-12-10 09:00:00"></td>' +
+                            // '                                </tr>' +
+                            // '                                <tr>' +
+                            // '                                      <td class="tb_bg"><label for="">车次/航班号</label></td>' +
+                            // '                                      <td><input type="text" name="trainNumber" id="trainNumber' + i + '" value="G1234" ></td>' +
+                            // '                                </tr>' +
+                            listConference += '</tbody>\n                            ' +
+                                '</table>' +
+                                '                                </tbody>' +
+                                '                            </table>' +
+                                '                        </div>' +
+                                '                        <div class="modal-footer">' +
+                                '                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>' +
+                                '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"arrangement(' + i + ',' + conferenceId + ')">安排</button>' +
+                                '                        </div>' +
+                                '                        <!--模态弹窗部分结束 -->' +
+                                '                    </div>' +
+                                '                </div>' +
+                                '            </div>' +
+                                '        </div>' +
+                                '    </div>' +
+                                '</div>' +
+                                '                   </div>'
+                        }
+                        $('#mainContent').html(listConference);
+                        $('#datatable').dataTable();
+                        if (data["code"] === 200) {
+                            console.log(data);
+                            // alert(data);
+                            alert("获取会议数据成功");
+                        } else {
+                            alert("获取数据失败1");
+                        }
+                    },
+                    error: function () {
+                        alert("获取会议数据失败");
+                    },
                 })
             })
 
@@ -260,7 +345,7 @@
                     success: function (data) {
                         // data = JSON.parse(data)
                         organizer = data['data']['getOrganizerInfo'];
-                        alert(organizer);
+                        // alert(organizer);
                         console.log(organizer);
                     },
                     error: function () {
@@ -268,6 +353,7 @@
                     },
                 });
             }
+
             /**
              * 通过会议的id查所有需要接送的参与者
              *
@@ -294,12 +380,95 @@
                     },
                 });
             }
+
             function arrangement(i, conferenceId) {
                 getNeedPickUpParticipant(conferenceId);
                 console.log(joinConference);
             }
 
+            /**
+             * 得到司机的信息
+             */
+            function getDriverInfo($driverId) {
+                $.ajax({
+                    async: false,
+                    headers: {
+                        'token': token,
+                    },
+                    url: "/driver/getDriverInfo",
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        'driverId': $driverId,
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data["code"] === 200) {
+                            driver = data["data"]["getDriverInfo"];
+                            console.log(driver);
+                        } else {
+                            alert("获取用户数据失败");
+                        }
+                    },
+                    error: function () {
+                        alert("获取用户数据失败");
+                    },
+                });
+            }
+            /**
+             * 得到会议参加者信息
+             * */
+            function getParticipantInfo($participantId) {
+                $.ajax({
+                    async: false,
+                    url: "/participant/queryParticipantByParticipantId",
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        'participantId': $participantId,
+                    },
+                    success: function (data) {
+                        // console.log(data);
+                        if (data["code"] === 200) {
+                            participant = data["data"]["queryParticipantByParticipantId"];
+                            console.log(participant);
+                        } else {
+                            alert("获取用户数据失败");
+                        }
+                    },
+                    error: function () {
 
+                        alert("获取用户数据失败");
+                    },
+                });
+            }
+
+            function getAllFleetDriver($fleetId) {
+                $.ajax({
+                    async: false,
+                    headers: {
+                        'token': token,
+                    },
+                    url: "/driver/getAllFleetDriver",
+                    type: "get",
+                    dataType: "json",
+                    data: {
+                        'fleetId': $fleetId,
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data["code"] === 200) {
+                            allFleetDriver = data["data"]["getAllFleetDriver"];
+                            console.log(fleet);
+                        } else {
+                            alert("获取用户数据失败");
+                        }
+                    },
+                    error: function () {
+                        alert("获取用户数据失败");
+                    },
+                });
+            }
             // function attendConference(i, conferenceId) {
             //
             //     let putup = $("input[name='isPutup']:checked").val();
@@ -415,10 +584,10 @@
                             <a aria-expanded="true" href="javascript: void(0);"><i class="icon-list"></i> 车队管理 <span
                                     class="fa arrow"></span></a>
                             <ul aria-expanded="true" class="nav-second-level nav">
-                                <li  id="to-pick-up"><a href="fleet-index.html">接送管理</a></li>
-                                <li  id="to-query-pick-up"><a href="fleet-index.html">接送查询</a></li>
-                                <li  id="to-driver"><a href="fleet-index.html">司机管理</a></li>
-                                <li  id="to-conference"><a href="javascript:void(0)">会议订单管理</a></li>
+                                <li id="to-pick-up"><a href="fleet-index.html">接送管理</a></li>
+                                <li id="to-query-pick-up"><a href="fleet-index.html">接送查询</a></li>
+                                <li id="to-driver"><a href="fleet-index.html">司机管理</a></li>
+                                <li id="to-conference"><a href="javascript:void(0)">会议订单管理</a></li>
                             </ul>
                         </li>
                         <li>

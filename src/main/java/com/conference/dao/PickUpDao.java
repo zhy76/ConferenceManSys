@@ -74,4 +74,7 @@ public interface PickUpDao {
                      @Param("conferenceId")int conferenceId, @Param("trainNumber")String trainNumber,
                      @Param("toTime")String toTime, @Param("returnTime")String returnTime,
                      @Param("isFinishPickup")boolean isFinishPickup);
+
+    PickUp findPickUpByParticipantIdAndConferenceId(@Param("participantId")int participantId,
+                                                    @Param("conferenceId")int conferenceId);
 }

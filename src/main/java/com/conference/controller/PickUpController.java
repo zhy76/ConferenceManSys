@@ -224,4 +224,15 @@ public class PickUpController {
         pickUpService.updatePickUp(pickUp);
         return Result.success();
     }
+
+    /**
+     *
+     * @return
+     */
+    @GetMapping("/getPickUpByconferenceIdAndparticipantId")
+    public Result getPickUpByconferenceIdAndparticipantId() {
+
+
+        return Result.success();
+    }
 }

@@ -25,8 +25,7 @@ import java.util.List;
 @RequestMapping("/organizer")
 public class OrganizerController {
 
-    @Autowired
-    private TokenService tokenService;
+    @Autowired private TokenService tokenService;
 
     @Autowired
     private OrganizerService organizerService;
