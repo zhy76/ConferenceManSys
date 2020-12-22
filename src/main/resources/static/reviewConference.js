@@ -1,4 +1,4 @@
-let JoinConference;
+var JoinConference={};
 // function getBothId(liveTable){
 //     $participantPhone = $(liveTable).parent().parent("tr").children('td').eq(1).html();//从0开始
 //     $conferenceId = $(liveTable).parent().parent("tr").children('td').eq(2).html();
@@ -8,7 +8,7 @@ let JoinConference;
 $(function () {
     queryConferenceByConferenceId();
 });
-function showJoinParticipant(){
+function showJoinParticipant(i){
     let $html="<div class=\"row\">\n" +
         "            <div class=\"col-md-12\">\n" +
         "                <div class=\"panel panel-default collapsed\">\n" +
@@ -16,7 +16,7 @@ function showJoinParticipant(){
         "                        申请加入会议表\n" +
         "                    </div>\n" +
         "                    <div class=\"panel-body\">\n" +
-        "                        <table id=\"datatable\" class=\"table table-striped dt-responsive nowrap\">\n" +
+        '                       <table id=\"datatable' + i + '\" class=\"table table-striped dt-responsive nowrap\">\n' +
         "                            <thead>\n" +
         "                                <tr>\n" +
         "                                    <th>参会者姓名</th>\n" +
@@ -38,12 +38,24 @@ function showJoinParticipant(){
                 "                                                <tr>\n" +
                 "                                                    <td>" + participant.participantName + "</td>\n" +
                 "                                                    <td>" + participant.participantPhone + "</td>\n" +
-                "                                                    <td>" + i.conferenceId + "</td>\n" +
-                "                                                    <td>" + i.isPickup + "</td>\n" +
-                "                                                    <td>" + i.isPutup + "</td>\n" +
-                "                                                    <td>" + i.trainNumber + "</td>\n" +
+                "                                                    <td>" + i.conferenceId + "</td>\n"
+        if (i.pickup==false){
+            $html +="                                                    <td>" + '否' + "</td>\n"
+        }
+        else{
+            $html +="                                                    <td>" + '是' + "</td>\n"
+        }
+        if (i.isPutup==0){
+            $html +="                                                    <td>" + '否' + "</td>\n"
+        }
+        else{
+            $html +="                                                    <td>" + '是' + "</td>\n"
+        }
+
+        $html +=    "                                                    <td>" + i.trainNumber + "</td>\n" +
                 "                                    <td>" +
-                "                                        <button type='button' class=\"btn btn-danger\" onclick=\"deleteLiveRoomByAll(this)\">删除</button>"+
+                "                                       <button type='button' class=\"btn btn-success\" onclick=\"\">同意</button>"+
+                "                                        <button type='button' class=\"btn btn-danger\" onclick=\"\">拒绝</button>"+
                 "                                                   </td>\n" +
                 "                                                </tr>\n";
         }
@@ -60,9 +72,9 @@ function showJoinParticipant(){
         "\n" +
         "        <!--end page content-->"
     // 清空节点
-
+    //$("#reviewConference").empty();
     $("#reviewConference").append($html+$htmlEnd);
-    $('#datatable').dataTable();
+    $('#datatable'+i).dataTable();
 }
 function queryConferenceByConferenceId(){
     queryConferenceByOrganizerId();
@@ -81,17 +93,21 @@ function queryConferenceByConferenceId(){
                 //data = JSON.parse(data)
                 if(data['code']==200){
                     JoinConference = data["data"]["queryConferenceByConferenceId"];
-                    showJoinParticipant();
+                    console.log(JoinConference);
+                    if (JoinConference.length!=0){
+                        showJoinParticipant(i);
+
+                    }
                 }else{
                     alert("获取信息失败！"+ data['message'])
                     // location.reload();
                 }
-                console.log(data)
+
             },
             error: function () {
                 alert("获取用户数据失败!");
             },
         });
     }
-    //$("#reviewConference").empty();
+
 }

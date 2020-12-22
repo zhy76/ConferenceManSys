@@ -46,13 +46,12 @@ public class ConferenceController {
      * @param conferenceId
      * @return
      */
-    @RequestMapping("/showConference/{conferenceId}")
-    @ResponseBody
-    public Conference showConference(@PathVariable Integer conferenceId){
+    @GetMapping("/showConferenceById")
+    public Result showConference(@RequestParam Integer conferenceId){
         Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
-        return conference;
+        System.out.println(conference);
+        return Result.success("conference",conference);
     }
-
 //    /**
 //     * 修改对应会议信息
 //     * @param

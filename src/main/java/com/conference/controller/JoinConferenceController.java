@@ -129,10 +129,22 @@ public class JoinConferenceController {
             return new Result(ResultCode.FAIL);
         }
     }
+    @GetMapping("/queryJoinedConference")
+    public Result queryJoinedConferenceByParticipantId(@RequestParam Integer participantId){
+        List<JoinConference> joinConferenceList = joinConferenceService.queryConferenceByParticipantId(participantId);
+        return Result.success("joinConferenceList",joinConferenceList);
+    }
+
+
+    @GetMapping("/queryUnConfirmConference")
+    public Result queryUnConfirmConferenceByParticipantId(@RequestParam Integer participantId){
+        List<JoinConference> unConfirmConferenceList = joinConferenceService.queryUnConfirmConferenceByParticipantId(participantId);
+        return Result.success("unConfirmConferenceList",unConfirmConferenceList);
+    }
+
     @GetMapping("/queryConferenceByConferenceId")
     public Result queryConferenceByConferenceId(@RequestParam int conferenceId){
         List<JoinConference> queryConferenceByConferenceId = joinConferenceService.queryConferenceByConferenceId(conferenceId);
         return Result.success("queryConferenceByConferenceId",queryConferenceByConferenceId);
     }
-
 }
