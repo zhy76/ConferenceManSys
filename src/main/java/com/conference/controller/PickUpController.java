@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.*;
 
+import static java.lang.Math.abs;
+
 /**
  * @ClassName: PickUpController
  * @Description: That's enough.
@@ -370,8 +372,42 @@ public class PickUpController {
      */
     @GetMapping("/updateDriverConfirmPickUp")
     public Result updateDriverConfirmPickUp(@RequestParam("pickUpId") Integer pickUpId,
-                                            @RequestParam("returnTime") String returnTime) {
+                                            @RequestParam("driverId") Integer driverId,
+                                            @RequestParam("returnTime") String returnTime
+    ) {
+
+        /**
+         * 接送时间 >= 到达时间
+         * 接送时间 +30, -30,
+         */
+
         PickUp pickUp = pickUpService.findPickUpById(pickUpId);
+        List<PickUp> pickUpList = pickUpService.findAllDriverPickUp(driverId);
+        // 2020-10-10 14:14:00
+        //
+        if (pickUp.getToTime().compareTo(returnTime) < 0) {
+            return new Result(1, "接送时间不应小于到达时间");
+        }
+        if (!pickUp.getToTime().substring(0, 10).equals(returnTime.substring(0,10))) {
+            return new Result(1, "接送时间与到达时间间隔过大");
+        }
+        for (PickUp it : pickUpList) {
+            if (it.getReturnTime() == null || !pickUp.getToTime().substring(0, 10).equals(returnTime.substring(0,10))) {
+                continue;
+            }
+            if (it.isFinishPickup() == true) {
+                continue;
+            }
+            String confirmPickUpTime = returnTime.substring(10, 15);
+            String pickUpTime = it.getReturnTime().substring(10, 15);
+            int confirmPickUpTimeInt = Integer.valueOf(confirmPickUpTime.substring(0, 2)) * 60 + Integer.valueOf(confirmPickUpTime.substring(3, 5));
+            int pickUpTimeInt = Integer.valueOf(pickUpTime.substring(0, 2)) * 60 + Integer.valueOf(pickUpTime.substring(3, 5));
+            if (abs(confirmPickUpTimeInt - pickUpTimeInt) <= 30) {
+                return new Result(1, "两次接送订单时间间隔应大于半个小时");
+            }
+
+        }
+
         pickUp.setReturnTime(returnTime);
         System.out.println(pickUp);
         pickUpService.updatePickUp(pickUp);

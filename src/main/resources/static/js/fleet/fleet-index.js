@@ -32,7 +32,7 @@ $(function () {
 
     if (localStorage.getItem("function") !== "null" && localStorage.getItem("function") !== null) {
         eval(localStorage.getItem("function"));
-        localStorage.setItem("function", null)
+        localStorage.setItem("function", null);
     }
     getFleetInfo($fleetId);
     // showFleetInfo();

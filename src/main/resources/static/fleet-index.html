@@ -22,9 +22,62 @@
         <link href="css/jquery.toast.min.css" rel="stylesheet">
         <!--template css-->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="fonts/font_byLCY/iconfont.css">
         <style>
             .error {
                 color: red;
+            }
+        </style>
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .card a .items{
+                border: 1px solid#eeeeee;
+                /* padding: 5px; */
+                margin-bottom: 50px;
+                background-color: #ffffff;
+                box-shadow: 0px 0 16px rgba(0, 0, 0, 0.2);
+            }
+            .card a .items p {
+                color: #6f6f6f;
+                padding :0px 10px;
+                margin: 0px;
+            }
+            .card a .items h4{
+                padding :0px 10px;
+                margin-top:10px;
+                color: #666666;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .card a:hover div{
+                transform: scale(1.15);
+                transition: all .65s;
+                overflow: hidden;
+            }
+            .card a:hover h4{
+                color: #00a0e9;
+            }
+            .card a p span{
+                color :#d7d7d7;
+            }
+            .back-to-top {
+                position: fixed;
+                display: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 3px;
+                right: 15px;
+                bottom: 15px;
+                background: #428bca;
+                color: #ffffff;
+                text-align: center;
+                line-height: 40px;
+                transition: display 0.5s ease-in-out;
+                z-index: 99999;
             }
         </style>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

@@ -44,9 +44,13 @@ public class ServiceTest {
     private PickUpDao pickUpDao;
     @Test
     void contextLoads() {
-        System.out.println(pickUpService.findPickUp(2,1));
-        System.out.println(pickUpService.findPickUp(1, 2));
-        System.out.println(pickUpService.updatePickUpByConferenceIdAndParticipantId(new PickUp(4,1,1,1,1,"000000","2020-10-10 20:00:00","2020-10-10 20:00:00", true)));
+        String s1 = "14:31";
+        String s2 = "40:01";
+        System.out.println(s1.compareTo(s2));
+//        System.out.println(joinConferenceDao.queryJoinConferenceByConferenceId(1));
+//        System.out.println(pickUpService.findPickUp(2,1));
+//        System.out.println(pickUpService.findPickUp(1, 2));
+//        System.out.println(pickUpService.updatePickUpByConferenceIdAndParticipantId(new PickUp(4,1,1,1,1,"000000","2020-10-10 20:00:00","2020-10-10 20:00:00", true)));
 //        System.out.println(joinConferenceDao.queryJoinedConferenceByParticipantIdAndConferenceId(1,1));
 //        System.out.println(pickUpDao.findPickUpByParticipantIdAndConferenceId(1, 1));
 //        System.out.println(joinConferenceDao.queryJoinConferenceByConferenceId(1));

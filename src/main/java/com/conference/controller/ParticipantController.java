@@ -123,5 +123,30 @@ public class ParticipantController {
         System.out.println(queryParticipantByParticipantPhone);
         return Result.success("queryParticipantByParticipantPhone",queryParticipantByParticipantPhone);
     }
+    //管理员修改参加者信息页面
+    //修改参加者信息
+    @PostMapping("/updateParticipantByAdmin")
+    public Result postUpdateParticipant(Participant participant){
+//        System.out.println(participant);
+        int status = participantService.updateParticipant(participant);
+//        System.out.println(status);
+        return Result.success();
+    }
 
+    //管理员删除某参加者
+    @PostMapping("/deleteParticipantByAdmin/{participantId}")
+    @ResponseBody
+    public Result getDeleteParticipant(@PathVariable("participantId") Integer participantId){
+        participantService.deleteParticipant(participantId);
+        return Result.success();
+    }
+
+
+    //管理员查看所有的参加者
+    @RequestMapping("/showParticipants")
+    @ResponseBody
+    public Result showParticipants(){
+        List<Participant> participantsList = participantService.queryParticipants();
+        return Result.success(participantsList);
+    }
 }

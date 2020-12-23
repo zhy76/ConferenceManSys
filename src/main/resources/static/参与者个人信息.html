@@ -70,7 +70,7 @@
                     <div class="col-xs-8">
                         <ul class="list-inline top-right-nav">
                             <li >
-                                <a href="参与者消息.html" >
+                                <a href="参与者查看接送信息.html" >
                                     <span class="glyphicon glyphicon-envelope"> 消息</span>
                                 </a>
                             </li>
@@ -135,7 +135,7 @@
         <!--            </div>-->
                     <div class="col-sm-12 text-right">
                         <ol class="breadcrumb">
-                            <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                            <li><a href="participant-index.html"><i class="fa fa-home"></i></a></li>
                             <li>个人信息</li>
                         </ol>
                     </div>
@@ -313,6 +313,7 @@
     let $participantId;
     $(function (){
 
+
         //token = localStorage.getItem("xj");
         // console.log(typeof (token));
         // console.log(token);
@@ -364,7 +365,7 @@
             // console.log(token);
 
         })
-
+        $("#to-info a").click();
     })
 
     function updateParticipantInfo(){

@@ -13,8 +13,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //当访问localhost:8080/的时候，会自动跳转到templates下的conference页面
 //        registry.addViewController("/").setViewName("conference");
 //        registry.addViewController("/conference.html").setViewName("conference");
-        registry.addViewController("/").setViewName("index");
-        registry.addViewController("/index.html").setViewName("index");
+//        registry.addViewController("/").setViewName("index");
+//        registry.addViewController("/index.html").setViewName("index");
         registry.addViewController("/admin/adminMain.html").setViewName("admin/adminMain");
         registry.addViewController("/admin/adminLogin.html").setViewName("admin/adminLogin");
     }
