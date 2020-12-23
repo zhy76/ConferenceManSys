@@ -1,8 +1,8 @@
 package com.conference.dao;
 
-
+import com.conference.entity.Driver;
 import com.conference.entity.Organizer;
-
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -22,8 +22,8 @@ public interface OrganizerDao {
      *更改组织者信息
      */
     int updateOrganizer(@Param("organizerId") Integer organizerId, @Param("organizerEmail") String organizerEmail,
-                        @Param("organizerUnit") String organizerUnit, @Param("organizerPass") String organizerPass,
-                        @Param("organizerPhone") String organizerPhone);
+                     @Param("organizerUnit") String organizerUnit, @Param("organizerPass") String organizerPass,
+                     @Param("organizerPhone") String organizerPhone);
 
     /**
      * 查询所有组织者
@@ -44,12 +44,12 @@ public interface OrganizerDao {
      * 增加组织者
      */
     int addOrganizer(@Param("organizerId") Integer organizerId, @Param("organizerEmail") String organizerEmail,
-                     @Param("organizerUnit") String organizerUnit, @Param("organizerPass") String organizerPass,
-                     @Param("organizerPhone") String organizerPhone);
+                  @Param("organizerUnit") String organizerUnit, @Param("organizerPass") String organizerPass,
+                  @Param("organizerPhone") String organizerPhone);
 
     /**
      * 删除组织者
      */
-    int deleteOrganizerById(@Param("organizerId") Integer organizerId);
+    int deleteOrganizerById(@Param("organizerId") Integer driverId);
 
 }

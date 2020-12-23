@@ -1,30 +1,40 @@
 package com.conference.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.sql.Timestamp;
-
 /**
- * @Description
- * @Author 谢 娇
- * @Date 2020/12/5 20:40
- * @sno 6109118015
+ * @Description 会议类
+ * @Author 左海余
+ * @Date 2020/12/10 21:46
+ * @sno 6109118041
  */
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Conference {
     private Integer conferenceId;
     private Integer organizerId;
     private Integer fleetId;
     private Integer hotelId;
     private String conferenceName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String conferenceStart; //会议开始时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private String conferenceEnd; //会议结束时间
     private String conferenceLocation; //会议地址
     private String conferenceInfo; //会议相关信息
+
+    public Conference(Integer conferenceId, Integer organizerId, Integer fleetId, Integer hotelId, String conferenceName, String conferenceStart, String conferenceEnd, String conferenceLocation, String conferenceInfo) {
+        this.conferenceId = conferenceId;
+        this.organizerId = organizerId;
+        this.fleetId = fleetId;
+        this.hotelId = hotelId;
+        this.conferenceName = conferenceName;
+        this.conferenceStart = conferenceStart;
+        this.conferenceEnd = conferenceEnd;
+        this.conferenceLocation = conferenceLocation;
+        this.conferenceInfo = conferenceInfo;
+    }
+
+    public Conference() {
+    }
 
     @Override
     public String toString() {
@@ -34,8 +44,8 @@ public class Conference {
                 ", fleetId=" + fleetId +
                 ", hotelId=" + hotelId +
                 ", conferenceName='" + conferenceName + '\'' +
-                ", conferenceStart='" + conferenceStart + '\'' +
-                ", conferenceEnd='" + conferenceEnd + '\'' +
+                ", conferenceStart=" + conferenceStart +
+                ", conferenceEnd=" + conferenceEnd +
                 ", conferenceLocation='" + conferenceLocation + '\'' +
                 ", conferenceInfo='" + conferenceInfo + '\'' +
                 '}';

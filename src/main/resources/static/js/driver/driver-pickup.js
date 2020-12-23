@@ -267,5 +267,3 @@ function finish(btn) {
         alert("信息格式有误，请重新填写！");
     }
 }
-
-

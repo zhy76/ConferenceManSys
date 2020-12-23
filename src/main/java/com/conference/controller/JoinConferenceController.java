@@ -93,7 +93,7 @@ public class JoinConferenceController {
             if ((start.compareTo(starts) >= 0 && start.compareTo(ends) <= 0)
                     || (end.compareTo(starts) >= 0 && end.compareTo(ends) <= 0)
                     ||(start.compareTo(starts) <= 0 && end.compareTo(ends) >= 0 )){
-               return new Result(2,"与已申请会议时间冲突！");
+               return new Result(2,"时间冲突");
             }
         }
         int addNumber = joinConferenceService.joinAConference(joinConference);
@@ -135,13 +135,6 @@ public class JoinConferenceController {
     public Result queryJoinedConferenceByParticipantId(@RequestParam Integer participantId){
         List<JoinConference> joinConferenceList = joinConferenceService.queryConferenceByParticipantId(participantId);
         return Result.success("joinConferenceList",joinConferenceList);
-    }
-
-
-    @GetMapping("/queryUnConfirmConference")
-    public Result queryUnConfirmConferenceByParticipantId(@RequestParam Integer participantId){
-        List<JoinConference> unConfirmConferenceList = joinConferenceService.queryUnConfirmConferenceByParticipantId(participantId);
-        return Result.success("unConfirmConferenceList",unConfirmConferenceList);
     }
 
 

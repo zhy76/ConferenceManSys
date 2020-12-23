@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Float-Admin</title>
+
+        <!-- Common plugins -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/simple-line-icons.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/pace.css" rel="stylesheet">
+        <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
+        <link href="css/nanoscroller.css" rel="stylesheet">
+        <link href="css/metismenu.min.css" rel="stylesheet">
+        <!-- dataTables -->
+        <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+        <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+        <!--template css-->
+        <link href="css/style.css" rel="stylesheet">
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.min.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+
+
+
+
+        <!--main content start-->
+        <section class="main-content">
+
+
+            <!--page header start-->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>Data Tables</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <ol class="breadcrumb">
+                            <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                            <li>tables</li>
+                            <li>data tables</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!--page header end-->
+
+
+            <!--start page content-->
+
+<!--            <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="panel panel-default collapsed">-->
+<!--                        <div class="panel-heading">-->
+<!--                            Responsive Data tables-->
+<!--                        </div>-->
+<!--                        <div class="panel-body">-->
+                            <table class="table table-striped dt-responsive nowrap" id="datatable">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Office</th>
+                                    <th>Age</th>
+                                    <th>Start date</th>
+                                    <th>Salary</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr>
+                                    <td>Tiger Nixon</td>
+                                    <td>System Architect</td>
+                                    <td>Edinburgh</td>
+                                    <td>61</td>
+                                    <td>2011/04/25</td>
+                                    <td>$320,800</td>
+                                </tr>
+                                <tr>
+                                    <td>Garrett Winters</td>
+                                    <td>Accountant</td>
+                                    <td>Tokyo</td>
+                                    <td>63</td>
+                                    <td>2011/07/25</td>
+                                    <td>$170,750</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>&lt;!&ndash;end row&ndash;&gt;-->
+
+            <!--end page content-->
+
+
+            <!--Start footer-->
+            <footer class="footer">
+                <span>Copyright &copy; 2016. Float</span>
+            </footer>
+            <!--end footer-->
+
+        </section>
+        <!--end main content-->
+
+
+        <!--Common plugins-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/pace.min.js"></script>
+        <script src="js/jasny-bootstrap.min.js"></script>
+        <script src="js/jquery.slimscroll.min.js"></script>
+        <script src="js/jquery.nanoscroller.min.js"></script>
+        <script src="js/metismenu.min.js"></script>
+        <script src="js/float-custom.js"></script>
+
+        <!-- Datatables-->
+        <script src="js/jquery.datatables.min.js"></script>
+        <script src="js/datatables.responsive.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#datatable').dataTable();
+            });
+        </script>
+
+    </body>
+</html>

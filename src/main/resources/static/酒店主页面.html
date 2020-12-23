@@ -19,7 +19,7 @@
     <!-- dataTables -->
     <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
     <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="css/jquery.toast.min.css" rel="stylesheet">
+<!--    <link href="css/jquery.toast.min.css" rel="stylesheet">-->
     <!--template css-->
     <link href="css/style.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -28,6 +28,7 @@
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+
 </head>
 <body>
 
@@ -55,7 +56,7 @@
                         </a>
                     </li>
                     <li >
-                        <a href="登录.html" >
+                        <a href="javascript:void(0)" class="login-out">
                             <span class="glyphicon glyphicon-log-out"> 退出登录</span>
                         </a>
                     </li>
@@ -80,11 +81,16 @@
                 <li>
                     <a href="酒店主页面.html"><i class="icon-home"></i> 主页 </a>
                 </li>
-                <li>
-                    <a href="酒店信息.html"><i class="icon-user"></i> 酒店信息 </a>
+                <li id="get-hotel">
+                    <a href="javascript:void(0)"><i class="icon-user"></i> 酒店信息 </a>
                 </li>
                 <li>
-                    <a href="酒店管理.html"><i class="icon-list"></i> 酒店管理 </a>
+                    <a aria-expanded="true" href="javascript: void(0);"><i class="icon-map"></i> 酒店管理 <span
+                            class="fa arrow"></span></a>
+                    <ul aria-expanded="true" class="nav-second-level nav">
+                        <li id="to-wait-live"><a href="javascript:void(0)">住宿安排</a></li>
+                        <li id="to-all-live"><a href="javascript:void(0)">住宿查询</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="酒店消息.html"><i class="icon-envelope-letter"></i> 消息 </a>
@@ -113,7 +119,23 @@
     <!--主体页面头部结束-->
 
     <!--页面主体内容部分开始-->
-
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-10 column">
+                <div class="jumbotron">
+                    <h1>
+                        欢迎!
+                    </h1>
+                    <p>
+                        这里是酒店的管理界面，可以执行您需要的操作！
+                    </p>
+                </div>
+            </div>
+<!--            <div class="col-md-4 column">-->
+<!--                <img alt="这里有一张图片" src="assets/picture/3.jpg" />-->
+<!--            </div>-->
+        </div>
+    </div>
 
     <!--页面主体内容部分结束-->
 
@@ -148,5 +170,9 @@
 <script src="js/datatables.responsive.min.js"></script>
 <script src="js/jquery.toast.min.js"></script>
 <script src="js/dashboard-alpha.js"></script>
+<script src="js/jquery.validate.min.js"></script>
+
+<script src="js/hotel/hotelindex.js"></script>
+<script src="js/hotel/liveroomindex.js"></script>
 </body>
 </html>

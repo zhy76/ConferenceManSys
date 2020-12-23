@@ -119,6 +119,7 @@
                 else $('.back-to-top').fadeOut('slow');
             });
             token = localStorage.getItem("xj");
+            console.log(token);
             $participantId = parseJwt(token).participantId
             $.ajax({
                 async: false,

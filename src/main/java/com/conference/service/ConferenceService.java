@@ -1,15 +1,15 @@
 package com.conference.service;
 
+/**
+ * @author 左海余
+ * @description
+ * @date 2020/12/11 10:28
+ * @stuid 6109118041
+ */
+
 import com.conference.entity.Conference;
 
 import java.util.List;
-
-/**
- * @Description
- * @Author 谢 娇
- * @Date 2020/12/5 22:29
- * @sno 6109118015
- */
 
 public interface ConferenceService {
     /**
@@ -38,4 +38,11 @@ public interface ConferenceService {
     public Conference queryConferenceByConferenceId(Integer conferenceId);
 
 
+
+
+
+    public int addConference(Conference conference);
+
+    public Conference queryConferenceById(Integer conferenceId);
+    public List<Conference> queryConferenceByFleetId(Integer fleetId);
 }

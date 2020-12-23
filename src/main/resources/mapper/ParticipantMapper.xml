@@ -42,4 +42,6 @@
     <select id="queryParticipantByParticipantPhone" resultType="Participant">
         select * from participant where participant_phone = #{participantPhone}
     </select>
+
+
 </mapper>
