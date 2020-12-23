@@ -18,25 +18,120 @@
     <script src="admin/deleteURL.js"></script>
     <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
     <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
+    <script src = "admin/admin-index.js"> </script>
 
     <script>
-        $.ajax({
-            type:"get",
-            url: "/admin/showAdminPersonal",
-            data: "",
-            dataType:"json",
-            processData:false,
-            contentType:false,
-            success:function (result) {
+        //进来时显示管理员个人信息
+        $(function () {
+            showAdmin();
 
-            },
-            error:function () {
-                $.alert({
-                    title: '提示信息',
-                    content: '请求异常!',
+            $("#submit_head_photo").click(function () {
+                var form = new FormData(document.getElementById("form_submit_photo"));//把表单的对象作为一个参数
+                $.ajax({
+                    type:"POST",
+                    url:"/file/headPhotoUpload",
+                    data:form,
+                    headers:{"conNCU": localStorage.conNCU},
+                    dataType:"json",
+                    processData:false,
+                    contentType:false,
+                    success:function(result) {
+                        if (result.message == "成功") {
+                            $.alert({
+                                title: '提示信息',
+                                content: '更新头像成功!',
+                            });
+                        } else {
+                            $.alert({
+                                title: '提示信息',
+                                content: '更新头像失败!',
+                            });
+                        }
+                    },
+                    error:function() {
+                        $.alert({
+                            title: '提示信息',
+                            content: '更新异常!',
+                        });
+                    }
                 });
-            }
+            })
         })
+
+        function showAdmin(){
+            $.ajax({
+                type:"post",
+                url: "/admin/showAdminPersonal",
+                data: "",
+                dataType:"json",
+                headers:{"conNCU": localStorage.conNCU},
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    // console.dir(result);
+                    $("#adminId").val(result.data.adminId);
+                    $("#adminName").val(result.data.adminName);
+                    $("#adminAccount").val(result.data.adminAccount);
+                    $("#adminPass").val(result.data.adminPass);
+                    $("#roleId").val(result.data.adminId);
+                    $("#head_photo").attr("src",result.data.adminPhoto);
+                },
+                error:function () {
+                    $.alert({
+                        title: '提示信息',
+                        content: '请求异常!',
+                    });
+                }
+            })
+        }
+
+        function submitUpdateAdmin(){
+            var form = new FormData(document.getElementById("updateAdminForm"));//把表单的对象作为一个参数
+            console.dir(form);
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/admin/adminUpdate",
+                data: form,
+                headers:{"conNCU": localStorage.conNCU},
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    // console.dir(result);
+                    if( result.message == "成功"){
+                        $.alert({
+                            title: '提示信息',
+                            content: '修改成功!',
+                        });
+                    }else {
+                        $.alert({
+                            title: '提示信息',
+                            content: '修改失败!',
+                        });
+                    }
+                    showAdmin();
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        //预览图片
+        function onLoadImage() {
+                var file=$('#ingredient_file').get(0).files[0];
+                var reader = new FileReader();
+                //将文件以Data URL形式读入页面
+                reader.readAsDataURL(file);
+                reader.onload = function(e){
+                    //显示文件
+                    $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result +'" alt="" />');
+                }
+            }
+
+
+
     </script>
 </head>
 
@@ -78,7 +173,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="管理员个人信息.html">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="../登录New.html">退出登录</a> </li>
+                            <li><a href="login.html">退出登录</a> </li>
                         </ul>
                     </li>
 
@@ -97,17 +192,22 @@
                     <div class="panel-body">
 <!--                        头像展示-->
                         <div class="head_photo_container">
-                            <img id="head_photo" class="img-responsive center-block" src="https://cdn.acwing.com/media/user/profile/photo/30692_lg_448e7b42e4.jpg" style="">
+                            <img id="head_photo" class="img-responsive center-block" src="" style="" >
                         </div>
                         <hr>
 
 <!--                        换头像-->
                         <div align="center">
-                            <form id="form_submit_photo" class="form-horizontal"  action="/admin/adminUpdate" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="adminID" value=""> //带入管理员ID
+                            <form id="form_submit_photo" class="form-horizontal">
+                                <input type="hidden" name="role" value="admin">
+                                <input type="hidden" name="roleId" value="" id = "roleId">
                                 <label class="btn btn-default btn-file">
                                     更新头像
-                                    <input id="ingredient_file" type="file" style="display: none;" name="photo" required="">
+                                    <input id="ingredient_file" type="file" style="display: none;" name="file" required="" onchange="onLoadImage()">
+                                </label>
+                                <label class="btn btn-default btn-file">
+                                    确认更新
+                                    <input id = "submit_head_photo" type="button" style="display: none;" class="btn btn-primary" />
                                 </label>
                             </form>
                         </div>
@@ -122,8 +222,8 @@
                         <div class="row" style="margin-left: 20px; margin-right: 20px;">
                             <h3>管理员个人信息</h3>
                             <hr>
-                            <form id="" class="form-horizontal"  action="/admin/adminUpdate" method="post" enctype="multipart/form-data">
-                                <input type="hidden" name="adminID" value=""> //带入管理员ID
+                            <form id="updateAdminForm" class="form-horizontal" action="">
+                                <input type="hidden" name="adminId" id = "adminId" value="">
 
                                 <div class="form-group">
                                     <label class="control-label col-sm-3"><label for="adminName">姓名:</label></label>
@@ -139,7 +239,7 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-sm-3"><label for="adminPass">密码:</label></label>
-                                    <div class="col-sm-7"><input type="text" name="adminPass" class="form-control" maxlength="40" id="adminPass" placeholder="密码"></div>
+                                    <div class="col-sm-7"><input type="text" name="adminPass" class="form-control" maxlength="40" id="adminPass" placeholder="密码" value = ""></div>
                                     <span class="text-danger small"></span>
                                 </div>
 
@@ -151,7 +251,7 @@
 
 
                                 <div class="col-xs-offset-5">
-                                    <button type="button" class="btn btn-success" style="border-radius: 5px" onclick="">更新信息</button>
+                                    <button type="button" class="btn btn-success" style="border-radius: 5px" onclick="submitUpdateAdmin(); return false;">更新信息</button>
                                 </div>
 
                             </form>
@@ -163,7 +263,6 @@
 
         </div>
     </div>
-
 
 </body>
 </html>

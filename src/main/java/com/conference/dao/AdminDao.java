@@ -34,4 +34,9 @@ public interface AdminDao {
     public int updateAdmin(Admin admin);
 
     public int deleteAdmin(Integer adminId);
+
+    public Admin queryAdminByAdminId(Integer adminId);
+
+    public int updateAdminPhoto(@Param("adminPhoto") String adminPhoto, @Param("adminId") Integer adminId);
+
 }

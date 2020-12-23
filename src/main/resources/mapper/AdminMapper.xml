@@ -13,6 +13,9 @@
        select * from admin;
     </select>
 
+    <select id = "queryAdminByAdminId" resultType="Admin">
+        select * from admin where admin_id = #{adminId};
+    </select>
     <select id="queryAdminByAccountAndPass" resultType="Admin" >
        select * from admin where admin_account = #{adminAccount} and admin_pass = #{adminPass};
     </select>
@@ -28,5 +31,9 @@
     <delete id = "deleteAdmin">
         delete from admin where admin_id = #{adminId};
     </delete>
+
+    <update id = "updateAdminPhoto">
+        update admin set admin_photo=#{adminPhoto} where admin_id=#{adminId};
+    </update>
 
 </mapper>

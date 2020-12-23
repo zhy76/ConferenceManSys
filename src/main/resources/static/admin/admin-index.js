@@ -8,6 +8,15 @@ function parseJwt(token) {
     return JSON.parse(jsonPayload);
 }
 
+//注销登录模块
+function logout(){
+    //将localstorage中的token删除
+    localStorage.removeItem("conNCU");
+    //跳转到登录页面
+    location.href = "login.html";
+}
+//注销登录模块
+
 $(function () {
     //获取token
     token = localStorage.getItem("conNCU");
@@ -29,9 +38,15 @@ $(function () {
             title: '提示信息',
             content: '请先登录!',
         });
-        window.location.href = "login.html";
+        setTimeout(function (){
+            window.location.href = "login.html";
+        }, 2000);
+
+
     }
 
 }
 )
+
+
 

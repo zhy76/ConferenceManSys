@@ -5,6 +5,7 @@ import com.conference.service.AdminService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 //import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,16 +61,19 @@ public class AdminController {
 
     //进入管理员个人中心
     @PostMapping("/showAdminPersonal")
-    public Result showAdminPersonal(@PathVariable String adminAccount,@PathVariable String adminPass){
+    public Result showAdminPersonal(HttpServletRequest request){
         //根据登录时的账号和密码来返回完整的管理员信息
-        Admin admin = adminService.queryAdminByAccountAndPass(adminAccount,adminPass);
+        String token = request.getHeader("conNCU");
+        Claims claims = tokenService.parseToken(token);
+        Integer adminId = (Integer) claims.get("adminId");
+        Admin admin = adminService.queryAdminByAdminId(adminId);
         return Result.success(admin);
     }
 
     //处理管理员修改个人信息请求
     @PostMapping("/adminUpdate")
-    public Result adminUpdate(Admin admin, HttpSession session){
-
+    public Result adminUpdate(Admin admin){
+        System.out.println(admin);
         adminService.updateAdmin(admin);
         return Result.success();
     }
