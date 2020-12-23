@@ -41,6 +41,17 @@ public class JoinConferenceServiceImpl implements JoinConferenceService {
     public int confirmAJoinedConferenceById(Integer participantId, Integer conferenceId) {
         return joinConferenceDao.confirmAJoinedConferenceById(participantId,conferenceId);
     }
+    /**
+     * 左海余
+     * 确定会议后与酒店同步
+     * @param participantId
+     * @param conferenceId
+     * @return
+     */
+    @Override
+    public int addAJoinedConferenceToRoom(Integer participantId, Integer hotelId,Integer conferenceId) {
+        return joinConferenceDao.addAJoinedConferenceToRoom(participantId,hotelId,conferenceId);
+    }
 
     @Override
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId) {

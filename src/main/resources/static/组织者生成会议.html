@@ -164,7 +164,7 @@
                                             <label class="col-md-12">会议地点</label>
                                             <div class="col-md-12">
                                                 <input type="text" class="form-control form-control-line"
-                                                       id="conferenceLocation">
+                                                       id="conferenceLocation" >
                                             </div>
                                         </div>
                                         <div id="choose-method">
@@ -182,7 +182,7 @@
                                         <br />
                                         <div class="form-group">
                                             <div class="col-sm-12 text-center">
-                                                <button  type="button" class="btn btn-info" onclick="addConference()">生成会议</button>
+                                                <button  type="button" class="btn btn-info" onclick="check()">生成会议</button>
                                             </div>
                                         </div>
                                     </form>
@@ -245,5 +245,25 @@
 <script src="js/organizer/organizer-index.js"></script>
 <script src="makeConference.js"></script>
 <script src="repairConference.js"></script>
+<script type="text/javascript">
+    function check() {
+        var start = document.getElementById("conferenceStart").value;
+        var end = document.getElementById("conferenceEnd").value;
+        var f=1;
+        if(start>end){
+            alert("会议起始时间不能大于会议结束时间！")
+            f=0;
+        }
+        var   d=new Date(Date.parse(start.replace(/-/g,"/")));
+        var   curDate=new  Date();
+        if(d <curDate){
+            alert("会议开始时间不能小于当前时间");
+            f=0;
+        }
+        if(f==1){
+            addConference();
+        }
+    }
+</script>
 </body>
 </html>
