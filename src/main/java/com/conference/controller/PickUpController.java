@@ -104,6 +104,7 @@ public class PickUpController {
     @GetMapping("/getParticipantAllPickUp")
     public Result getParticipantAllPickUp(@RequestParam("participantId") Integer participantId) {
         List<PickUp> getParticipantAllPickUp = pickUpService.findAllParticipantPickUp(participantId);
+        System.out.println(getParticipantAllPickUp);
         return Result.success("getParticipantAllPickUp", getParticipantAllPickUp);
     }
 
