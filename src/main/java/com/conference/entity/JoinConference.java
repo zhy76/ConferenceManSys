@@ -11,6 +11,7 @@ import java.sql.Timestamp;
  */
 
 public class JoinConference {
+
     public Integer getParticipantId() {
         return participantId;
     }
@@ -37,19 +38,6 @@ public class JoinConference {
 
     public Boolean getPickup() {
         return isPickup;
-    }
-
-    @Override
-    public String toString() {
-        return "JoinConference{" +
-                "participantId=" + participantId +
-                ", conferenceId=" + conferenceId +
-                ", isPutup=" + isPutup +
-                ", isPickup=" + isPickup +
-                ", toTime='" + toTime + '\'' +
-                ", returnTime='" + returnTime + '\'' +
-                ", trainNumber='" + trainNumber + '\'' +
-                '}';
     }
 
     public void setPickup(Boolean pickup) {
@@ -80,6 +68,28 @@ public class JoinConference {
         this.trainNumber = trainNumber;
     }
 
+    public Boolean getConfirm() {
+        return isConfirm;
+    }
+
+    public void setConfirm(Boolean confirm) {
+        isConfirm = confirm;
+    }
+
+    @Override
+    public String toString() {
+        return "JoinConference{" +
+                "participantId=" + participantId +
+                ", conferenceId=" + conferenceId +
+                ", isPutup=" + isPutup +
+                ", isPickup=" + isPickup +
+                ", toTime='" + toTime + '\'' +
+                ", returnTime='" + returnTime + '\'' +
+                ", trainNumber='" + trainNumber + '\'' +
+                ", isConfirm=" + isConfirm +
+                '}';
+    }
+
     private Integer participantId;
     private Integer conferenceId;
     private Integer isPutup; //是否需要住宿
@@ -87,4 +97,5 @@ public class JoinConference {
     private String toTime; //参会往时间
     private String returnTime; //参会返时间
     private String trainNumber; //车次或航班号
+    private Boolean isConfirm;//是否已确认
 }

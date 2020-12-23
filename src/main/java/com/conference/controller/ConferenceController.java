@@ -9,6 +9,7 @@ package com.conference.controller;
 
 import com.conference.entity.Conference;
 import com.conference.entity.Driver;
+import com.conference.entity.Hotel;
 import com.conference.entity.Organizer;
 import com.conference.service.ConferenceService;
 import com.conference.util.result.Result;
@@ -45,12 +46,23 @@ public class ConferenceController {
      * @param conferenceId
      * @return
      */
-    @RequestMapping("/showConference/{conferenceId}")
-    @ResponseBody
-    public Result showConference(@PathVariable Integer conferenceId){
+    @GetMapping("/showConferenceById")
+    public Result showConference(@RequestParam Integer conferenceId){
         Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        System.out.println(conference);
         return Result.success("conference",conference);
     }
+//    /**
+//     * 修改对应会议信息
+//     * @param
+//     * @return
+//     */
+//    @RequestMapping("/updateConference/{conferenceId}")
+//    @ResponseBody
+//    public Result updateConference(@PathVariable("conferenceId") Integer conferenceId){
+//        conferenceService.updateConference(conference);
+//        return Result.success();
+//    }
 
     /**
      * 删除指定会议
@@ -93,5 +105,4 @@ public class ConferenceController {
         return Result.success("queryConferenceByOrganizerId", queryConferenceByOrganizerId);
     }
 }
-
 
