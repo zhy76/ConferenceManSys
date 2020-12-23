@@ -21,9 +21,9 @@ $(function () {
         console.log("no token");
     } else {
         $fleetId = parseJwt(token).fleetId;/*获取用户信息*/
-        console.log($driverId);
+        console.log($fleetId);
     }
-    if (token == null || token == "null" || typeof ($driverId) == "undefined" || $driverId == undefined) {//未登录
+    if (token == null || token == "null" || typeof ($fleetId) == "undefined" || $fleetId == undefined) {//未登录
         console.log("未登录");
         localStorage.setItem("hcs", null);
         alert("请先登录！");
