@@ -25,4 +25,6 @@ public interface TokenService {
     String getToken(Participant participantForBase);
 
     String getToken(Hotel hotelForBase);
+
+    String getToken(Admin adminForBase);
 }

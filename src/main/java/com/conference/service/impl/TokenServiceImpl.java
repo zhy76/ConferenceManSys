@@ -59,6 +59,19 @@ public class TokenServiceImpl implements TokenService {
         return token;
     }
 
+    @Override
+    public String getToken(Admin admin){
+        String token = "";
+        token = Jwts.builder()
+                .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
+                .claim("adminId", admin.getAdminId())
+                .signWith(signatureAlgorithm, SECRET)
+                .compact();
+        System.out.println(admin.getAdminId());
+        System.out.println(token);
+        return token;
+    }
+
     /**
      * 登录成功后，将用户的用户id写入,
      * driver
