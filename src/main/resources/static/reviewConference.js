@@ -57,15 +57,19 @@ function showJoinParticipant(i){
         $html +=    "                                                    <td>" + i.trainNumber + "</td>\n"
         if (i.confirm==0){
             $html +="                                                    <td>" + '否' + "</td>\n"
-        }
-        else{
-            $html +="                                                    <td>" + '是' + "</td>\n"
-        }
-        $html += "                                    <td>" +
+            $html += "                                    <td>" +
                 '                                     <button type="button" class="btn btn-success" onclick=\"confirmAJoinedConferenceById(' + i.participantId + ',' + i.conferenceId + ')\">同意加入</button>'+
                 '                                     <button type="button" class="btn btn-danger" onclick=\"cancelAJoinedConferenceById(' + i.participantId + ',' + i.conferenceId + ')\">移出会议</button>'+
                 "                                                   </td>\n" +
                 "                                                </tr>\n";
+        }
+        else{
+            $html +="                                                    <td>" + '是' + "</td>\n"
+            $html += "                                    <td>" +
+                '                                     <button type="button" class="btn btn-danger" onclick=\"cancelAJoinedConferenceById(' + i.participantId + ',' + i.conferenceId + ')\">移出会议</button>'+
+                "                                                   </td>\n" +
+                "                                                </tr>\n";
+        }
         }
 
     let $htmlEnd =
