@@ -18,8 +18,9 @@ import java.util.List;
 public interface JoinConferenceDao {
     /**
      * 1、加入会议
-     * 2、取消已参加的会议
-     * 3、查询某人参加的所有会议
+     * 2、取消已参加的会议（通过会议id和参会者id）
+     * 3、查询某人参加的所有会议（通过参会者id）
+     * 4、查询某人待审核的所有会议（通过参会者id）
      * @
      **/
 
@@ -28,4 +29,6 @@ public interface JoinConferenceDao {
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
 
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
+
+    public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId);
 }

@@ -141,13 +141,7 @@
                     'participantId':""+$participantId
                 },
                 success: function (data) {
-                    // var listConference = "";
-                    // console.log(data);
-                    // console.log(typeof data)
                     data = JSON.parse(data)
-                    // console.log(typeof data)
-                    // console.log(data['data']['joinConferenceList'])
-
                     var joinConferenceList = data['data']['joinConferenceList'];
                     for (let i = 0; i < joinConferenceList.length; i++) {
                         $conferenceId = joinConferenceList[i].conferenceId;
@@ -187,22 +181,15 @@
                     'conferenceId':""+$conferenceId
                 },
                 success: function (data) {
-
-                    // console.log(data);
-                    // console.log(typeof data)
                     data = JSON.parse(data)
-                    // console.log(typeof data)
-                    // console.log(data['data']['conference'])
                     conference = data['data']['conference'];
                     var conferenceName = conference.conferenceName;
                     var conferenceLocation = conference.conferenceLocation;
                     var conferenceStart = conference.conferenceStart;
                     var conferenceEnd = conference.conferenceEnd;
-
                     var organizerId = conference.organizerId;
-
+                    var conferenceInfo = conference.conferenceInfo;
                     getOrganizerInfo(organizerId);
-
                     var organizerUnit = organizer.organizerUnit;
 
                     listConference += '   <div id= "' + $conferenceId +' " class="col-lg-3" style = "margin: 0px 10px;">' +
@@ -214,12 +201,60 @@
                                 '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
                                 '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
                                 '                            </div>' +
-                                '                        </a>' +
-                                '                        <div class="form-group">' +
-                                '                            <div class="col-sm-12 text-center" > ' +
+                                '                            <div class="form-group">' +
+                                '                               <div class="col-sm-12 text-center" > ' +
+                                '                                  <a id="new_add" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#lingchen'+conferenceId+'">查看详情</a>' +
                                 '                                  <a  onclick=\"exitConference('+ conferenceId +')"  class="btn btn-danger">退出会议</a> ' +
-                                '                            </div>' +
-                                '                        </div>'+
+                                '                               </div>' +
+                                '                           </div>'+
+                                '                        </a>' +
+                                '            <div class="modal fade" id="lingchen'+conferenceId+'">' +
+                                '                <div class="modal-dialog modal-lg modal_position">' +
+                                '                    <div class="modal-content">' +
+                                '                        <div class="modal-header">' +
+                                '                            <h4 class="modal-title" id="">会议详情</h4>' +
+                                '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
+                                '                        </div>\n' +
+                                '                        <!-- 模态弹窗部分开始 -->' +
+                                '                        <div class="modal-body">' +
+                                '                            <table id="xztb" class="table">' +
+                                '                                <!--新修改弹窗的样式-->' +
+                                '                                <tbody>' +
+                                '                                <tr>' +
+                                '                                    <td class="tb_bg"><label for="">会议名称</label></td>' +
+                                '                                    <td><input type="text" name="conferenceName" id="conferenceName" readonly unselectable="on" value="'+ conferenceName +'"></td>' +
+                                '                                </tr>' +
+                                '                                <tr>' +
+                                '                                    <td class="tb_bg"><label for="">会议开始时间</label></td>' +
+                                '                                    <td><input type="text" name="conferenceStart" id="conferenceStart" readonly unselectable="on" value="'+ conferenceStart +'"></td>' +
+                                '                                </tr>' +
+                                '                                <tr>'+
+                                '                                      <td class="tb_bg"><label for="">会议结束时间</label></td>'+
+                                '                                      <td><input type="text" name="conferenceEnd" id="conferenceEnd" readonly unselectable="on" value="'+ conferenceEnd +'"></td>'+
+                                '                                </tr>'+
+                                '                                <tr>' +
+                                '                                    <td class="tb_bg"><label for="">会议地点</label></td>' +
+                                '                                    <td><input type="text" name="conferenceLocation" id="conferenceLocation" readonly unselectable="on" value="'+ conferenceLocation +'"></td>' +
+                                '                                </tr>' +
+                                '                                <tr>' +
+                                '                                    <td class="tb_bg"><label for="">会议相关信息</label></td>' +
+                                '                                    <td><input type="text" name="conferenceInfo" id="conferenceInfo" readonly unselectable="on" value="'+ conferenceInfo +'"></td>' +
+                                '                                </tr>' +
+                                '                                <tr>' +
+                                '                                    <td class="tb_bg"><label for="">会议主办单位</label></td>' +
+                                '                                    <td><input type="text" name="organizerUnit" id="organizerUnit" readonly unselectable="on" value="'+ organizerUnit +'"></td>' +
+                                '                                </tr>' +
+                                '                                </tbody>' +
+                                '                            </table>' +
+                                '                        </div>' +
+                                '                        <div class="modal-footer">' +
+                                '                            <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>' +
+                                // '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"attendConference('+ i + ','+ conferenceId + ')\">加入</button>' +
+                                '                        </div>' +
+                                '                        <!--模态弹窗部分结束 -->' +
+                                '                    </div>' +
+                                '                </div>' +
+                                '            </div>' +
                                 '            </div>'
                     },
                     error: function () {
@@ -239,15 +274,10 @@
                         'conferenceId':""+conferenceId
                     },
                     success: function (data) {
-                        // console.log(data);
-                        // console.log(typeof data)
                         data = JSON.parse(data)
-                        // console.log(typeof data)
-                        //console.log(data['data']['joinConferenceList'])
-
                         if (data["code"] === 200) {
                             alert("取消会议成功！");
-                            window.location.href = "参与者查看会议.html"
+                            window.location.href = "参与者已参加会议.html"
                         } else {
                             alert("获取用户数据失败1");
                         }
@@ -287,7 +317,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4">
-                <a href="参与者主页面.html" class="admin-logo">
+                <a href="participant-index.html" class="admin-logo">
                     <h1><img src="assets/picture/meeting.jpg" alt=""></h1>
                 </a>
                 <!-- 以下div为页面缩小后出现左边导航栏的按钮  -->
@@ -311,7 +341,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="参与者主页面.html">
+                        <a href="participant-index.html">
                             <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
                         </a>
                     </li>
@@ -329,7 +359,7 @@
             <ul class="metisMenu nav" id="menu">
                 <!--                        <li class="nav-heading"><span>Navigation</span></li>-->
                 <li>
-                    <a href="参与者主页面.html"><i class="icon-home"></i> 主页 </a>
+                    <a href="participant-index.html"><i class="icon-home"></i> 主页 </a>
                 </li>
                 <li>
                     <a href="参与者个人信息.html"><i class="icon-user"></i> 个人信息 </a>
@@ -338,7 +368,8 @@
                     <a href="javascript: void(0);" aria-expanded="true"><i class="icon-note"></i> 会议 <span class="fa arrow"></span></a>
                     <ul class="nav-second-level nav" aria-expanded="true">
                         <li><a href="参与者选择会议.html">选择会议</a></li>
-                        <li><a href="参与者查看会议.html">查看会议</a></li>
+                        <li><a href="参与者待审核会议.html">待审核会议</a></li>
+                        <li><a href="参与者已参加会议.html">已参加会议</a></li>
                     </ul>
                 </li>
                 <li>
@@ -362,7 +393,7 @@
             <!--面包屑导航-->
             <div class="col-sm-12 text-right">
                 <ol class="breadcrumb">
-                    <li><a href="参与者主页面.html"><i class="fa fa-home"></i></a></li>
+                    <li><a href="participant-index.html"><i class="fa fa-home"></i></a></li>
                     <li>会议</li>
                     <li>查看会议</li>
                 </ol>

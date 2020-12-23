@@ -16,6 +16,10 @@
     </delete>
 
     <select id="queryConferenceByParticipantId" resultType="JoinConference">
-        select * from join_conference where participant_id = #{participantId}
+        select * from join_conference where participant_id = #{participantId} and is_confirm = true;
+    </select>
+
+    <select id="queryUnConfirmConferenceByParticipantId" resultType="JoinConference">
+        select * from join_conference where participant_id = #{participantId} and is_confirm = false ;
     </select>
 </mapper>

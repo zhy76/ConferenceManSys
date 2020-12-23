@@ -24,4 +24,5 @@ public class JoinConference {
     private String toTime; //参会往时间
     private String returnTime; //参会返时间
     private String trainNumber; //车次或航班号
+    private Boolean isConfirm;//是否已确认
 }
