@@ -25,14 +25,16 @@ function showJoinParticipant(i){
         "                                    <th>是否需要接送</th>\n" +
         "                                    <th>是否需要住宿</th>\n" +
         "                                    <th>航班号</th>\n" +
+        "                                    <th>是否审核</th>\n" +
         "                                    <th>操作</th>\n" +
         "                                </tr>\n" +
         "                            </thead>\n" +
         "\n" +
         "                            <tbody>\n"
+
     for (let i of JoinConference) {
 
-            $participantId=i.participantId;
+             $participantId=i.participantId;
             queryParticipantByParticipantId($participantId);
             $html +=
                 "                                                <tr>\n" +
@@ -52,10 +54,16 @@ function showJoinParticipant(i){
             $html +="                                                    <td>" + '是' + "</td>\n"
         }
 
-        $html +=    "                                                    <td>" + i.trainNumber + "</td>\n" +
-                "                                    <td>" +
-                "                                       <button type='button' class=\"btn btn-success\" onclick=\"\">同意</button>"+
-                "                                        <button type='button' class=\"btn btn-danger\" onclick=\"\">拒绝</button>"+
+        $html +=    "                                                    <td>" + i.trainNumber + "</td>\n"
+        if (i.confirm==0){
+            $html +="                                                    <td>" + '否' + "</td>\n"
+        }
+        else{
+            $html +="                                                    <td>" + '是' + "</td>\n"
+        }
+        $html += "                                    <td>" +
+                "                                       <button type='button' class=\"btn btn-success\" onclick=\"\">同意加入</button>"+
+                '                                     <button type="button" class="btn btn-danger" onclick=\"cancelAJoinedConferenceById(' + i.participantId + ',' + i.conferenceId + ')\">移出会议</button>'+
                 "                                                   </td>\n" +
                 "                                                </tr>\n";
         }
@@ -110,4 +118,33 @@ function queryConferenceByConferenceId(){
         });
     }
 
+}
+
+function cancelAJoinedConferenceById(participantId,conferenceId){
+    if(confirm("确定拒绝吗？")){
+        $.ajax({
+            async: false,
+            headers: {
+                'token': token,
+            },
+            url: "/joinConference/cancelAConference",
+            type: "get",
+            dataType: "json",
+            data: {
+                "participantId": participantId,
+                "conferenceId": conferenceId
+            },
+            success: function (jsonData, result) {
+                console.log(jsonData);
+                console.log(result);
+                if (jsonData['code'] === 200) {
+                    alert("移除成功");
+                    location.reload();
+                } else {
+                    alert("移除失败");
+                    //location.reload();
+                }
+            },
+        });
+    }
 }
