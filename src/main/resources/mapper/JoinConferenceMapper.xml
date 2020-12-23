@@ -15,6 +15,10 @@
         delete from join_conference where participant_id = #{participantId} and conference_id = #{conferenceId};
     </delete>
 
+    <update id="confirmAJoinedConferenceById">
+        update join_conference set is_confirm=1 where participant_id = #{participantId} and conference_id = #{conferenceId};
+    </update>
+
     <select id="queryConferenceByParticipantId" resultType="JoinConference">
         select * from join_conference where participant_id = #{participantId} and is_confirm = true;
     </select>

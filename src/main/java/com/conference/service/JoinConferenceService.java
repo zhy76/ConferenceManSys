@@ -24,6 +24,7 @@ public interface JoinConferenceService {
      **/
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
 
+    public int confirmAJoinedConferenceById(Integer participantId,Integer conferenceId);
     /*
      * @Description 通过参会者id查询他参加的所有会议
      * @return  JoinConference 的列表
