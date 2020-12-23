@@ -32,4 +32,7 @@ public interface JoinConferenceService {
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
 
     List<JoinConference> queryJoinConferenceByConferenceId(Integer conferenceId);
+
+    JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId,
+                                                                       Integer conferenceId);
 }

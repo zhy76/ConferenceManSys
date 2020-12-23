@@ -77,8 +77,8 @@ function showFleetDriver() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 
 }
@@ -153,7 +153,7 @@ function getAllFleetDriverPickUp($fleetId) {
 }
 
 /**
- * 得到登入司机的信息
+ * 得到司机的信息
  */
 function getDriverInfo($driverId) {
     $.ajax({
@@ -168,6 +168,7 @@ function getDriverInfo($driverId) {
             'driverId': $driverId,
         },
         success: function (data) {
+            console.log($driverId);
             console.log(data);
             if (data["code"] === 200) {
                 driver = data["data"]["getDriverInfoById"];
@@ -217,7 +218,7 @@ function getConferenceName($conferenceId) {
  * 展示待车队的接送
  */
 
-function showAllFleetWaitPickUp() {
+function showAllFleetAllPickUp() {
     getAllFleetDriverPickUp($fleetId);
     getAllFleetDriver($fleetId)
     console.log(getAllFleetPickUp);
@@ -238,10 +239,9 @@ function showAllFleetWaitPickUp() {
         "                                                    <th>会议</th>\n" +
         "                                                    <th>航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
         // "                                                    <th>状态</th>\n" +
-        "                                                    <th>分配司机</th>\n" +
-        "                                                    <th>操作</th>\n" +
+        "                                                    <th>司机</th>\n" +
         "                                                </tr>\n" +
         "                                                </thead>\n" +
         "                                                <tbody>\n"
@@ -253,11 +253,18 @@ function showAllFleetWaitPickUp() {
         // } else if (i.finishPickup === false && flag === 2) {
         //
         // }
-        if (i.driverId !== null) continue;
         console.log(typeof i.driverId);
         getConferenceName(i.conferenceId);
         // getDriverInfo(i.driverId);
         queryParticipantByParticipantId(i.participantId);
+        let driverName = "未分配";
+        if (i.driverId !== -1) {
+            getDriverInfo(i.driverId);
+            driverName = driver.driverName;
+        } else {
+            driverName = "未分配";
+        }
+
         console.log(conference);
         $html +=
             "                                                <tr>\n" +
@@ -267,17 +274,13 @@ function showAllFleetWaitPickUp() {
             "                                                    <td>" + conference.conferenceName + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
-            "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                                    <td>" + (i.returnTime === "null" || i.returnTime === null?"未确认" : "" + i.returnTime) + "</td>\n" +
+            "                                                    <td>" + driverName + "</td>\n"
             // "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
-            "                                    <td><select class=\"form-control form-control-line\" name=\"account\" id='driverId'>"
-        for (let it of allFleetDriver) {
-            $html += "<option value='" + it.driverId + "'>" + it.driverId + '-' + it.driverName + "</option>"
-        }
-        $html +=
-            "                                                        </select>\n" +
-            "</td>\n" +
-            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"setDriver(this)\">提交</button></td>\n" +
-            "                                                </tr>\n";
+        //     "                                    <td><select class=\"form-control form-control-line\" name=\"account\" id='driverId'>"
+        // for (let it of allFleetDriver) {
+        //     $html += "<option value='" + it.driverId + "'>" + it.driverId + '-' + it.driverName + "</option>"
+        // }
     }
     let $htmlEnd =
         "                                                </tbody>\n" +
@@ -289,8 +292,8 @@ function showAllFleetWaitPickUp() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 }
 /**
@@ -318,7 +321,7 @@ function showAllFleetAssignPickUp() {
         "                                                    <th>会议</th>\n" +
         "                                                    <th>航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
         // "                                                    <th>状态</th>\n" +
         "                                                    <th>分配司机</th>\n" +
         "                                                    <th>操作</th>\n" +
@@ -333,9 +336,10 @@ function showAllFleetAssignPickUp() {
         // } else if (i.finishPickup === false && flag === 2) {
         //
         // }
-        if (i.driverId === null) continue;
+        if (i.driverId === null || i.driverId === 'null') continue;
         getConferenceName(i.conferenceId);
         getDriverInfo(i.driverId);
+
         queryParticipantByParticipantId(i.participantId);
         console.log(conference);
         $html +=
@@ -346,10 +350,14 @@ function showAllFleetAssignPickUp() {
             "                                                    <td>" + conference.conferenceName + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
-            "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                                    <td>" + (i.returnTime === "null" || i.returnTime === null?"未确认" : "" + i.returnTime) + "</td>\n" +
             // "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
             "                                    <td><select class=\"form-control form-control-line\" name=\"account\" id='driverId'>"
-        $html += "<option value='" + i.driverId + "'>" + i.driverId + '-' + driver.driverName + "</option>";
+        if (driver === null || driver ==='null') {
+            $html += "<option value='" + null + "'>未分配</option>";
+        } else {
+            $html += "<option value='" + i.driverId + "'>" + i.driverId + '-' + driver.driverName + "</option>";
+        }
 
         for (let it of allFleetDriver) {
             if (it.driverId === i.driverId) continue;
@@ -371,8 +379,8 @@ function showAllFleetAssignPickUp() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 }
 

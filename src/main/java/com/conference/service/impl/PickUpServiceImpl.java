@@ -22,7 +22,9 @@ public class PickUpServiceImpl implements PickUpService {
 
     @Override
     public int addPickUp(PickUp pickUp) {
-        return pickUpDao.addPickUp(pickUp.getParticipantId(), pickUp.getDriverId(), pickUp.getConferenceId(),
+        return pickUpDao.addPickUp(pickUp.getParticipantId(), pickUp.getFleetId(),
+                pickUp.getDriverId(),
+                pickUp.getConferenceId(),
                 pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
     }
 
@@ -62,8 +64,8 @@ public class PickUpServiceImpl implements PickUpService {
     }
 
     @Override
-    public PickUp findPickUp(Integer participantId, Integer driverId, Integer conferenceId) {
-        return pickUpDao.findPickUp(participantId, driverId, conferenceId);
+    public PickUp findPickUp(Integer participantId, Integer conferenceId) {
+        return pickUpDao.findPickUp(participantId, conferenceId);
     }
 
     @Override
@@ -88,5 +90,11 @@ public class PickUpServiceImpl implements PickUpService {
     public int updatePickUp(PickUp pickUp) {
         return pickUpDao.updatePickUp(pickUp.getPickUpId(),pickUp.getParticipantId(), pickUp.getFleetId(),pickUp.getDriverId(), pickUp.getConferenceId(),
                 pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
+    }
+    @Override
+    public int updatePickUpByConferenceIdAndParticipantId(PickUp pickUp){
+        return pickUpDao.updatePickUpByConferenceIdAndParticipantId
+                (pickUp.getPickUpId(),pickUp.getParticipantId(), pickUp.getFleetId(),pickUp.getDriverId(), pickUp.getConferenceId(),
+                        pickUp.getTrainNumber(), pickUp.getToTime(), pickUp.getReturnTime(), pickUp.isFinishPickup());
     }
 }

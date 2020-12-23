@@ -22,4 +22,8 @@
     <select id="queryJoinConferenceByConferenceId" resultType="JoinConference">
         select * from join_conference where conference_id = #{conferenceId}
     </select>
+
+    <select id="queryJoinedConferenceByParticipantIdAndConferenceId" resultType="JoinConference">
+        select * from join_conference where conference_id = #{conferenceId} and participant_id = #{participantId};
+    </select>
 </mapper>

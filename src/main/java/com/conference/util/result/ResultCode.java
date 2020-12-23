@@ -20,7 +20,6 @@ public enum ResultCode {
     AuthenticationException(134, "认证异常"),
     UnauthenticatedException(141, "用户没有登录"),
     IllegalArgumentException(151, "参数不合法");
-
     /**
      * 状态码
      */

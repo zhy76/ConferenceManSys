@@ -9,6 +9,8 @@ let allFleetDriver;
 let $driverId;
 let $fleetId;
 let $participantId;
+let joinConference;
+
 $(function () {
     let $fleetPhone;
     /*获取token*/
@@ -19,7 +21,18 @@ $(function () {
         console.log("no token");
     } else {
         $fleetId = parseJwt(token).fleetId;/*获取用户信息*/
-        console.log($driverId);
+        console.log($fleetId);
+    }
+    if (token == null || token == "null" || typeof ($fleetId) == "undefined" || $fleetId == undefined) {//未登录
+        console.log("未登录");
+        localStorage.setItem("hcs", null);
+        alert("请先登录！");
+        window.location.href = "popupsignin.html";
+    }
+
+    if (localStorage.getItem("function") !== "null" && localStorage.getItem("function") !== null) {
+        eval(localStorage.getItem("function"));
+        localStorage.setItem("function", null)
     }
     getFleetInfo($fleetId);
     // showFleetInfo();
@@ -33,12 +46,12 @@ $(function () {
     })
 //接送管理
     $("#to-pick-up a").click(function () {
-        showAllFleetWaitPickUp()
+        showAllFleetAssignPickUp()
         $('#datatable').dataTable();
     })
     //接送查询
     $("#to-query-pick-up a").click(function () {
-        showAllFleetAssignPickUp();
+        showAllFleetAllPickUp();
         $('#datatable').dataTable();
     })
 
@@ -54,9 +67,10 @@ $(function () {
 
     //会议订单管理
     $("#to-conference a").click(function () {
-        alert(3);
-        localStorage.setItem("hcs", token);
-        window.location.href = "../../fleet-conference.html";
+        fleetConference();
+        // alert(3);
+        // localStorage.setItem("hcs", token);
+        // window.location.href = "../../fleet-conference.html";
     })
 
     /*点击 退出登录 按钮*/

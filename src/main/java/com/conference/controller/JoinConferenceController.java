@@ -149,4 +149,11 @@ public class JoinConferenceController {
         }
         return Result.success("joinConference", joinConference);
     }
+
+    @GetMapping("/queryJoinedConferenceByParticipantIdAndConferenceId")
+    public Result queryJoinedConferenceByParticipantIdAndConferenceId(@RequestParam Integer participantId,
+                                                                      @RequestParam Integer conferenceId){
+        JoinConference joinConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(participantId, conferenceId);
+        return Result.success("joinConference",joinConference);
+    }
 }

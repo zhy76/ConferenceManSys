@@ -1,12 +1,12 @@
 package com.conference.controller;
 
+import com.conference.entity.Conference;
+import com.conference.entity.JoinConference;
 import com.conference.entity.PickUp;
-import com.conference.service.DriverService;
-import com.conference.service.FleetService;
-import com.conference.service.PickUpService;
-import com.conference.service.TokenService;
+import com.conference.service.*;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +32,10 @@ public class PickUpController {
     private DriverService driverService;
     @Autowired
     private PickUpService pickUpService;
+    @Autowired
+    private JoinConferenceService joinConferenceService;
+    @Autowired
+    private ConferenceService conferenceService;
 
     /**
      * 确认完成接送 Api
@@ -114,13 +118,14 @@ public class PickUpController {
     public Result getDriverWaitPickUp(@RequestParam("driverId") Integer driverId) {
         List<PickUp> getDriverAllPickUp = pickUpService.findAllDriverPickUp(driverId);
         List<PickUp> getDriverWaitPickUp = new ArrayList<PickUp>();
-        for (PickUp it : getDriverAllPickUp) {
-            if (it.isFinishPickup() == false) {
+        for (PickUp it : getDriverAllPickUp ) {
+            if (it.isFinishPickup() == false && it.getReturnTime() != null) {
                 getDriverWaitPickUp.add(it);
             }
         }
         return Result.success("getDriverWaitPickUp", getDriverWaitPickUp);
     }
+
     /**
      * 通过id司机查找自己已完成接送的接送记录 Api
      * /pickUp/getDriverDonePickUp
@@ -133,10 +138,12 @@ public class PickUpController {
         List<PickUp> getDriverAllPickUp = pickUpService.findAllDriverPickUp(driverId);
         List<PickUp> getDriverDonePickUp = new ArrayList<PickUp>();
         for (PickUp it : getDriverAllPickUp)
-            if (it.isFinishPickup())
+            if (it.isFinishPickup() && it.getReturnTime() != null)
                 getDriverDonePickUp.add(it);
+        System.out.println(getDriverAllPickUp);
         return Result.success("getDriverWaitPickUp", getDriverDonePickUp);
     }
+
     /**
      * 通过id司机查找自己所有的接送记录 Api
      * /pickUp/getDriverAllPickUp
@@ -147,7 +154,11 @@ public class PickUpController {
     @GetMapping("/getDriverAllPickUp")
     public Result getDriverAllPickUp(@RequestParam("driverId") Integer driverId) {
         List<PickUp> getDriverAllPickUp = pickUpService.findAllDriverPickUp(driverId);
-        return Result.success("getDriverAllPickUp", getDriverAllPickUp);
+        List<PickUp> getDriverAllPickUpNew = new ArrayList<PickUp>();
+        for (PickUp it : getDriverAllPickUp)
+            if (it.getReturnTime() != null)
+                getDriverAllPickUpNew.add(it);
+        return Result.success("getDriverAllPickUp", getDriverAllPickUpNew);
     }
 
     /**
@@ -205,13 +216,12 @@ public class PickUpController {
         List<PickUp> getAllFleetPickUp = pickUpService.findAllFleetPickUp(fleetId);
         List<PickUp> getAllFleetDonePickUp = new ArrayList<>();
         for (PickUp it : getAllFleetPickUp)
-            if (it.isFinishPickup())
+            if (it.isFinishPickup() && it.getReturnTime() != null)
                 getAllFleetDonePickUp.add(it);
         return Result.success("getAllFleetDonePickUp", getAllFleetDonePickUp);
     }
 
     /**
-     *
      * @return
      */
     @GetMapping("/updatePickUp")
@@ -221,6 +231,148 @@ public class PickUpController {
         PickUp pickUp = pickUpService.findPickUpById(pickUpId);
         pickUp.setDriverId(driverId);
         pickUp.setFleetId(fleetId);
+        pickUpService.updatePickUp(pickUp);
+        return Result.success();
+    }
+
+
+    /**
+     * 将会议表内的所有需要接送的记录加入接送表
+     */
+    @GetMapping("/addAllNeedToPickUp")
+    public Result addAllNeedToPickUp(@RequestParam("conferenceId") Integer conferenceId) {
+        List<JoinConference> joinConferences = joinConferenceService.queryJoinConferenceByConferenceId(conferenceId);
+        List<JoinConference> joinConference = new ArrayList<>();
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        for (JoinConference it : joinConferences) {
+            if (it.getPickup()) {
+                joinConference.add(it);
+            }
+        }
+        List<PickUp> allPickUp = pickUpService.findAllFleetPickUp(conference.getFleetId());
+//        System.out.println(allPickUp);
+        int addNumber = 0;
+
+        for (JoinConference it : joinConference) {
+            int con = 0;
+            int flag = 0;
+            for (PickUp it1 : allPickUp)
+                if (it1.getParticipantId() == it.getParticipantId()) flag = 1;
+            if (flag == 1) {
+                con++;
+                continue;
+            }
+            PickUp pickUp = new PickUp();
+            pickUp.setConferenceId(it.getConferenceId());
+            pickUp.setParticipantId(it.getParticipantId());
+            pickUp.setToTime(it.getToTime());
+            pickUp.setReturnTime(it.getReturnTime());
+            pickUp.setFleetId(conference.getFleetId());
+            pickUp.setTrainNumber(it.getTrainNumber());
+//            pickUp.setDriverId(driverId[con++]);
+            pickUp.setDriverId(-1);// 未分配
+            System.out.println(pickUp);
+            addNumber += pickUpService.addPickUp(pickUp);
+        }
+        return Result.success("addAllNeedToPickUp", addNumber);
+    }
+
+    /**
+     * 给车队用的
+     *
+     * @param conferenceId
+     * @param driverId
+     * @param participantId
+     * @return
+     */
+    @GetMapping("/addOneNeedToPickUp")
+    public Result addOneNeedToPickUp(@RequestParam("conferenceId") Integer conferenceId,
+                                     @RequestParam("driverId") Integer driverId,
+                                     @RequestParam("participantId") Integer participantId
+    ) {
+        JoinConference joinConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(participantId, conferenceId);
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        List<PickUp> allPickUp = pickUpService.findAllFleetPickUp(conference.getFleetId());
+        PickUp pickUp = new PickUp();
+        pickUp.setConferenceId(joinConference.getConferenceId());
+        pickUp.setParticipantId(joinConference.getParticipantId());
+        pickUp.setToTime(joinConference.getToTime());
+//        pickUp.setReturnTime(joinConference.getReturnTime());
+        pickUp.setFleetId(conference.getFleetId());
+        pickUp.setTrainNumber(joinConference.getTrainNumber());
+        pickUp.setDriverId(driverId);
+        for (PickUp it1 : allPickUp){
+            if (it1.getParticipantId() == joinConference.getParticipantId() && it1.getConferenceId() == joinConference.getConferenceId()) {
+                System.out.println(5);
+                System.out.println(conferenceId);
+                System.out.println(participantId);
+                PickUp pickUpNew = pickUpService.findPickUp(participantId, conferenceId);
+                System.out.println(pickUpNew);
+//                System.out.println(6);
+                if (pickUpNew.getDriverId() == driverId) {
+                    System.out.println("----------------");
+                    System.out.println(pickUpNew.getDriverId());
+                    System.out.println(driverId);
+                    return new Result(1, "已存在");
+                }
+                pickUpNew.setDriverId(driverId);
+
+                System.out.println("-----------------------");
+                System.out.println(pickUpNew);
+                pickUpService.updatePickUpByConferenceIdAndParticipantId(pickUpNew);
+                return new Result(1, "已存在");
+            }
+            System.out.println(4);
+        }
+
+        System.out.println("-----------------------");
+        System.out.println(pickUp);
+        pickUpService.addPickUp(pickUp);
+        return Result.success();
+    }
+
+    /**
+     * @param conferenceId
+     * @param participantId
+     * @return
+     */
+    @GetMapping("/getPickUpByConferenceIdAndParticipantId")
+    public Result getPickUpByConferenceIdAndParticipantId(
+            @RequestParam("participantId") Integer participantId,@RequestParam("conferenceId") Integer conferenceId) {
+        PickUp pickUp = pickUpService.findPickUp(participantId, conferenceId);
+        return Result.success("pickUp", pickUp);
+    }
+
+    /**
+     * 得到司机待确认订单
+     * /pickUp/getDriverConfirmPickUp
+     * @param driverId
+     * @return
+     */
+    @GetMapping("/getDriverConfirmPickUp")
+    public Result getDriverConfirmPickUp(@RequestParam("driverId") Integer driverId) {
+        List<PickUp> pickUp = pickUpService.findAllDriverPickUp(driverId);
+        List<PickUp> confirmPickUp = new ArrayList<>();
+        for (PickUp it : pickUp) {
+            if (it.getReturnTime() == null) {
+                confirmPickUp.add(it);
+            }
+        }
+        return Result.success("pickUp", confirmPickUp);
+    }
+
+    /**
+     * 司机确认
+     * @param pickUpId
+     * @param returnTime
+     * @return
+     */
+    @GetMapping("/updateDriverConfirmPickUp")
+    public Result updateDriverConfirmPickUp(@RequestParam("pickUpId") Integer pickUpId,
+                                            @RequestParam("returnTime") String returnTime) {
+        PickUp pickUp = pickUpService.findPickUpById(pickUpId);
+        pickUp.setReturnTime(returnTime);
+        System.out.println(pickUp);
         pickUpService.updatePickUp(pickUp);
         return Result.success();
     }

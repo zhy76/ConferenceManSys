@@ -1,6 +1,3 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// var jquery_1 = require("jquery");
 let driver;
 let pickUp;
 let token;
@@ -34,6 +31,10 @@ $(function () {
             showDriverInfo();
         }
     )
+    $("#to-confirm-pick a").click(function () {
+        // getDriverConfirmPickUp($driverId);
+        showDriverConfirmPickUp($driverId)
+    })
     $("#to-wait-pick a").click(function () {
         getDriverAllPickUp();
         // for (let it of pickUp) {
@@ -57,16 +58,15 @@ $(function () {
         window.location.href = "popupsignin.html";
     })
 
-    $('#driverInfo').submit(function () {	//这次我们这么绑定
-        alert(1);
-        return false;	//还是要return false, 跟上面一样的道理
-    });
+    // $('#driverInfo').submit(function () {	//这次我们这么绑定
+    //     alert(1);
+    //     return false;	//还是要return false, 跟上面一样的道理
+    // });
 })
 
 /**
  * 得到登入司机的信息
  */
-
 function getDriverInfo($driverId) {
     $.ajax({
         async: false,
@@ -123,11 +123,11 @@ function getAllFleet() {
                 allFleet = allFleet["getAllFleet"];
                 console.log(allFleet);
             } else {
-                alert("获取车队数据失败");
+                alert("获取司机数据失败");
             }
         },
         error: function () {
-            alert("获取车队数据失败");
+            alert("获取司机数据失败");
         },
     });
 
@@ -178,14 +178,6 @@ function showDriverInfo() {
         "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
-        // "                                            <div class=\"form-group\">\n" +
-        // "                                                <label for=\"example-email\" class=\"col-md-12\">邮箱</label>\n" +
-        // "                                                <div class=\"col-md-12\">\n" +
-        // "                                                    <input type=\"email\" \n" +
-        // "                                                        class=\"form-control form-control-line\" name=\"example-email\"\n" +
-        // "                                                        id=\"example-email\">\n" +
-        // "                                                </div>\n" +
-        // "                                            </div>\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">密码</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
@@ -275,8 +267,8 @@ function showDriverInfo() {
         "                                    </div>\n" +
         "                                </div>"
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($html);
+    $(".card").empty();
+    $(".card").append($html);
 }
 
 /**
