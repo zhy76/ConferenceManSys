@@ -1,31 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="js/jquery-1.7.2.js"/>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            img {
+                height: 100px;
+                width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+<!--        <input type="file" accept="image/jpg, image/jpeg, image/png">-->
+<!--        方法1-->
+<!--        <input id="inputFile" type="file" accept="image/*">-->
+<!--        <img src="" id="previewImage" alt="图片预览">-->
+<!--        <script>-->
+<!--            const $ = document.getElementById.bind(document);-->
+<!--            const $inputFile = $('inputFile');-->
+<!--            const $previewImage = $('previewImage');-->
+<!--            $inputFile.addEventListener('change', function() {-->
+<!--            const file = this.files[0];-->
+<!--            $previewImage.src = file ? URL. createObjectURL(file) : '';-->
+<!--            },this);-->
+<!--        </script>-->
+        <input id="inputFile" type="file" accept="image/*">
+        <img src="" id="previewImage" alt="图片预览">
+        <script>
+            const $ = document.getElementById.bind(document);
+            const $inputFile = $('inputFile');
+            const $previewImage = $('previewImage' );
+            $inputFile.addEventListener('change',function() {
+                const file = this.files[0];
+                const reader = new FileReader();
+                reader . addEventListener('load', function() {
+                    $previewImage.src = reader.result;
+                },false);
+                if(file) {
+                    reader.readAsDataURL(file);
+                }
+            },false)
+        </script>
+        <script>
+            function uploadFile() {
+                cropperInstance.getCroppedCanvas().toBlob(function(blob) {
+                    const formData = new FormData();
+                    formData.append('avatar', blob);
+                    fetch('xxx', {
+                        method: 'POST',
+                        body: formData
+                    });
+                });
+            }
+        </script>
 
-</head>
-<body>
-    <script type="text/javascript">
-        function f() {
-            $.ajax({
-                url: ${pageContext.request.contextPath}/ajax/al
 
-            });
-
-
-            // 输出
-            $("textName").val();
-            //
-
-            //
-
-        }
-
-
-    </script>
-    用户名：
-    <input type="text" id="textName" onblur="">
-</body>
+    </body>
 </html>

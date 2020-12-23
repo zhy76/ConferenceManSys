@@ -77,8 +77,8 @@ function showFleetDriver() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 
 }
@@ -239,7 +239,7 @@ function showAllFleetAllPickUp() {
         "                                                    <th>会议</th>\n" +
         "                                                    <th>航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
         // "                                                    <th>状态</th>\n" +
         "                                                    <th>司机</th>\n" +
         "                                                </tr>\n" +
@@ -259,7 +259,8 @@ function showAllFleetAllPickUp() {
         queryParticipantByParticipantId(i.participantId);
         let driverName = "未分配";
         if (i.driverId !== -1) {
-            getDriverInfo(i.driverId);driverName = driver.driverName;
+            getDriverInfo(i.driverId);
+            driverName = driver.driverName;
         } else {
             driverName = "未分配";
         }
@@ -273,7 +274,7 @@ function showAllFleetAllPickUp() {
             "                                                    <td>" + conference.conferenceName + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
-            "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                                    <td>" + (i.returnTime === "null" || i.returnTime === null?"未确认" : "" + i.returnTime) + "</td>\n" +
             "                                                    <td>" + driverName + "</td>\n"
             // "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
         //     "                                    <td><select class=\"form-control form-control-line\" name=\"account\" id='driverId'>"
@@ -291,8 +292,8 @@ function showAllFleetAllPickUp() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 }
 /**
@@ -320,7 +321,7 @@ function showAllFleetAssignPickUp() {
         "                                                    <th>会议</th>\n" +
         "                                                    <th>航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
         // "                                                    <th>状态</th>\n" +
         "                                                    <th>分配司机</th>\n" +
         "                                                    <th>操作</th>\n" +
@@ -349,7 +350,7 @@ function showAllFleetAssignPickUp() {
             "                                                    <td>" + conference.conferenceName + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
-            "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                                    <td>" + (i.returnTime === "null" || i.returnTime === null?"未确认" : "" + i.returnTime) + "</td>\n" +
             // "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
             "                                    <td><select class=\"form-control form-control-line\" name=\"account\" id='driverId'>"
         if (driver === null || driver ==='null') {
@@ -378,8 +379,8 @@ function showAllFleetAssignPickUp() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 }
 

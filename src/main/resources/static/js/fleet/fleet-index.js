@@ -9,6 +9,8 @@ let allFleetDriver;
 let $driverId;
 let $fleetId;
 let $participantId;
+let joinConference;
+
 $(function () {
     let $fleetPhone;
     /*获取token*/
@@ -20,6 +22,17 @@ $(function () {
     } else {
         $fleetId = parseJwt(token).fleetId;/*获取用户信息*/
         console.log($driverId);
+    }
+    if (token == null || token == "null" || typeof ($driverId) == "undefined" || $driverId == undefined) {//未登录
+        console.log("未登录");
+        localStorage.setItem("hcs", null);
+        alert("请先登录！");
+        window.location.href = "popupsignin.html";
+    }
+
+    if (localStorage.getItem("function") !== "null" && localStorage.getItem("function") !== null) {
+        eval(localStorage.getItem("function"));
+        localStorage.setItem("function", null)
     }
     getFleetInfo($fleetId);
     // showFleetInfo();
@@ -54,9 +67,10 @@ $(function () {
 
     //会议订单管理
     $("#to-conference a").click(function () {
-        alert(3);
-        localStorage.setItem("hcs", token);
-        window.location.href = "../../fleet-conference.html";
+        fleetConference();
+        // alert(3);
+        // localStorage.setItem("hcs", token);
+        // window.location.href = "../../fleet-conference.html";
     })
 
     /*点击 退出登录 按钮*/
