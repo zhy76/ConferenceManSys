@@ -23,8 +23,13 @@ public interface JoinConferenceService {
      * @return 受影响行数
      **/
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
-
+    /**
+     * 左海余
+     * @Description 确定会议(需要参会者id和会议id)
+     * @return 受影响行数
+     **/
     public int confirmAJoinedConferenceById(Integer participantId,Integer conferenceId);
+
     /*
      * @Description 通过参会者id查询他参加的所有会议
      * @return  JoinConference 的列表

@@ -1,4 +1,4 @@
-package com.conference.service.Impl;
+package com.conference.service.impl;
 
 import com.conference.dao.JoinConferenceDao;
 import com.conference.entity.JoinConference;
@@ -28,6 +28,18 @@ public class JoinConferenceServiceImpl implements JoinConferenceService {
     @Override
     public int cancelAJoinedConferenceById(Integer participantId, Integer conferenceId) {
         return joinConferenceDao.cancelAJoinedConferenceById(participantId,conferenceId);
+    }
+
+    /**
+     * 左海余
+     * 确定会议
+     * @param participantId
+     * @param conferenceId
+     * @return
+     */
+    @Override
+    public int confirmAJoinedConferenceById(Integer participantId, Integer conferenceId) {
+        return joinConferenceDao.confirmAJoinedConferenceById(participantId,conferenceId);
     }
 
     @Override
