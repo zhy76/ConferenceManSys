@@ -115,7 +115,7 @@ function showMyConference(){
         $listConference +=  '<div class="col-lg-3" style = "margin: 0px 10px;">' +
             '                        <a href = "#">' +
             '                            <div class="items">' +
-            '                                <img class="img-responsive" src="picture/img1.jpg" />' +
+            '                               <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
             '                                <h4>'+ conferenceName +'</h4>' +
             '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
             '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
