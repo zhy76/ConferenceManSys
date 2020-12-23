@@ -7,8 +7,8 @@
 <mapper namespace="com.conference.dao.JoinConferenceDao">
 
     <insert id="joinAConference" parameterType="JoinConference">
-        insert into join_conference(participant_id,conference_id,is_putup,is_pickup,to_time,return_time,Train_number)
-        values (#{participantId},#{conferenceId},#{isPutup},#{isPickup},#{toTime},#{returnTime},#{trainNumber});
+        insert into join_conference(participant_id,conference_id,is_putup,is_pickup,to_time,return_time,Train_number,is_confirm)
+        values (#{participantId},#{conferenceId},#{isPutup},#{isPickup},#{toTime},#{returnTime},#{trainNumber},#{isConfirm});
     </insert>
 
     <delete id="cancelAJoinedConferenceById">
