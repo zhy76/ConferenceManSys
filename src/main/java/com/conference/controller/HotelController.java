@@ -74,6 +74,12 @@ public class HotelController {
         }
     }
 
+    @GetMapping("/getHotelById")
+    public Result getHotelById(@RequestParam int hotelId){
+        Hotel getHotelById = hotelService.getHotelById(hotelId);
+        return Result.success("getHotelById", getHotelById);
+    }
+
     @PostMapping("/getHotelInfo")
     public Result getHotelInfo(HttpServletRequest request) {
        // System.out.println(request.getHeader("token"));
@@ -82,6 +88,7 @@ public class HotelController {
         //System.out.println(getHotelInfo);
         return Result.success("getHotelInfo", getHotelInfo);
     }
+
     @GetMapping("/getAllHotel")
         public Result getAllHotel() {
         List<Hotel> getAllHotel = hotelService.findAllHotel();

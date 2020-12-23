@@ -9,24 +9,24 @@
     </select>
 <!--    通过酒店ID查找酒店-->
     <select id="getHotelById" resultType="Hotel">
-        select * from Hotel where hotel_id=#{hotelId}
+        select * from hotel where hotel_id=#{hotelId}
     </select>
 <!--通过电话查找酒店-->
     <select id="getHotelByPhone" resultType="Hotel">
-        select * from Hotel where hotel_phone=#{hotelPhone}
+        select * from hotel where hotel_phone=#{hotelPhone}
     </select>
 <!--    酒店增加-->
     <insert id="addHotel">
-        INSERT INTO Hotel(hotel_name, hotel_location, hotel_phone, hotel_pass, hotel_info)
+        INSERT INTO hotel(hotel_name, hotel_location, hotel_phone, hotel_pass, hotel_info)
         VALUES(#{hotelName}, #{hotelLocation}, #{hotelPhone}, #{hotelPass}, #{hotelInfo})
     </insert>
 <!--    删除酒店-->
     <delete id="deleteHotelById">
-        DELETE FROM Hotel WHERE hotel_id=#{hotelId}
+        DELETE FROM hotel WHERE hotel_id=#{hotelId}
     </delete>
 <!--    更新酒店-->
     <update id="updateHotel">
-        UPDATE Hotel SET hotel_name=#{hotelName}, hotel_location=#{hotelLocation}, hotel_phone=#{hotelPhone},
+        UPDATE hotel SET hotel_name=#{hotelName}, hotel_location=#{hotelLocation}, hotel_phone=#{hotelPhone},
         hotel_pass=#{hotelPass}, hotel_info=#{hotelInfo} WHERE hotel_id=#{hotelId};
     </update>
 </mapper>

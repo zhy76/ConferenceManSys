@@ -34,6 +34,10 @@ public class JoinConferenceServiceImpl implements JoinConferenceService {
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId) {
         return joinConferenceDao.queryConferenceByParticipantId(participantId);
     }
+    @Override
+    public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId) {
+        return joinConferenceDao.queryUnConfirmConferenceByParticipantId(participantId);
+    }
 
     @Override
     public List<JoinConference>  queryJoinConferenceByConferenceId(Integer conferenceId) {
@@ -44,5 +48,4 @@ public class JoinConferenceServiceImpl implements JoinConferenceService {
     public JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId, Integer conferenceId) {
         return joinConferenceDao.queryJoinedConferenceByParticipantIdAndConferenceId(participantId,conferenceId);
     }
-
 }

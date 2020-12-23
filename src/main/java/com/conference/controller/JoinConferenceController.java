@@ -81,6 +81,10 @@ public class JoinConferenceController {
         if(joinConference.getParticipantId()==null||joinConference.getConferenceId()==null){
             return new Result(ResultCode.BindException);
         }
+        JoinConference isJoinedConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(joinConference.getParticipantId(), joinConference.getConferenceId());
+        if(isJoinedConference != null){
+            return new Result(3,"您已加入该会议！");
+        }
         //获取当前会议的开始和结束时间
         Conference conference = conferenceService.queryConferenceByConferenceId(joinConference.getConferenceId());
         String start = conference.getConferenceStart();
@@ -136,6 +140,12 @@ public class JoinConferenceController {
     public Result queryJoinedConferenceByParticipantId(@RequestParam Integer participantId){
         List<JoinConference> joinConferenceList = joinConferenceService.queryConferenceByParticipantId(participantId);
         return Result.success("joinConferenceList",joinConferenceList);
+    }
+
+    @GetMapping("/queryUnConfirmConference")
+    public Result queryUnConfirmConferenceByParticipantId(@RequestParam Integer participantId){
+        List<JoinConference> unConfirmConferenceList = joinConferenceService.queryUnConfirmConferenceByParticipantId(participantId);
+        return Result.success("unConfirmConferenceList",unConfirmConferenceList);
     }
 
     @GetMapping("/queryJoinConferenceByConferenceId")

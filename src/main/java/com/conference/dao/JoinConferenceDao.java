@@ -4,7 +4,6 @@ import com.conference.entity.JoinConference;
 import com.conference.entity.Participant;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -30,6 +29,8 @@ public interface JoinConferenceDao {
 
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
 
+
+
     /**
      * 给车队用的
      * @param conferenceId
@@ -45,4 +46,6 @@ public interface JoinConferenceDao {
      */
     public JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId,
                                                                               Integer conferenceId);
+
+    public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId);
 }

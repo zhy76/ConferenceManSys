@@ -11,6 +11,20 @@ import java.sql.Timestamp;
  */
 
 public class JoinConference {
+    @Override
+    public String toString() {
+        return "JoinConference{" +
+                "participantId=" + participantId +
+                ", conferenceId=" + conferenceId +
+                ", isPutup=" + isPutup +
+                ", isPickup=" + isPickup +
+                ", toTime='" + toTime + '\'' +
+                ", returnTime='" + returnTime + '\'' +
+                ", trainNumber='" + trainNumber + '\'' +
+                ", isConfirm=" + isConfirm +
+                '}';
+    }
+
     public Integer getParticipantId() {
         return participantId;
     }
@@ -27,32 +41,16 @@ public class JoinConference {
         this.conferenceId = conferenceId;
     }
 
-    public Boolean getIsPutup() {
+    public Boolean getPutup() {
         return isPutup;
     }
 
-    public void setIsPutup(Boolean isPutup) {
-        this.isPutup = isPutup;
+    public void setPutup(Boolean putup) {
+        isPutup = putup;
     }
 
     public Boolean getPickup() {
         return isPickup;
-    }
-
-    public JoinConference() {
-    }
-
-    @Override
-    public String toString() {
-        return "JoinConference{" +
-                "participantId=" + participantId +
-                ", conferenceId=" + conferenceId +
-                ", isPutup=" + isPutup +
-                ", isPickup=" + isPickup +
-                ", toTime='" + toTime + '\'' +
-                ", returnTime='" + returnTime + '\'' +
-                ", trainNumber='" + trainNumber + '\'' +
-                '}';
     }
 
     public void setPickup(Boolean pickup) {
@@ -79,8 +77,27 @@ public class JoinConference {
         return trainNumber;
     }
 
+    public JoinConference(Integer participantId, Integer conferenceId, Boolean isPutup, Boolean isPickup, String toTime, String returnTime, String trainNumber, Boolean isConfirm) {
+        this.participantId = participantId;
+        this.conferenceId = conferenceId;
+        this.isPutup = isPutup;
+        this.isPickup = isPickup;
+        this.toTime = toTime;
+        this.returnTime = returnTime;
+        this.trainNumber = trainNumber;
+        this.isConfirm = isConfirm;
+    }
+
     public void setTrainNumber(String trainNumber) {
         this.trainNumber = trainNumber;
+    }
+
+    public Boolean getConfirm() {
+        return isConfirm;
+    }
+
+    public void setConfirm(Boolean confirm) {
+        isConfirm = confirm;
     }
 
     private Integer participantId;
@@ -91,4 +108,5 @@ public class JoinConference {
     private String toTime; //参会往时间
     private String returnTime; //参会返时间
     private String trainNumber; //车次或航班号
+    private Boolean isConfirm;//是否已确认
 }
