@@ -35,6 +35,6 @@ public class ConferenceDaoTest {
 //        System.out.println(conferenceDao.addConference(new Conference(null ,1,2,1,"左海余3", Timestamp.valueOf("2009-08-08 12:10:00") ,Timestamp.valueOf("2008-08-10 12:10:00"),"信工e224","add操作测试")));
 //  System.out.println(conferenceDao.deleteConference(6));
 //        System.out.println(joinConferenceDao.confirmAJoinedConferenceById(29,13));
-        System.out.println(js.confirmAJoinedConferenceById(1,1));
+        System.out.println(js.addAJoinedConferenceToRoom(1,1,1));
     }
 }

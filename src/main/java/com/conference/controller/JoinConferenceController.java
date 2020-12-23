@@ -1,11 +1,7 @@
 package com.conference.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.conference.dao.ConferenceDao;
-import com.conference.dao.JoinConferenceDao;
 import com.conference.entity.Conference;
 import com.conference.entity.JoinConference;
-import com.conference.entity.Participant;
 import com.conference.service.ConferenceService;
 import com.conference.service.JoinConferenceService;
 import com.conference.service.TokenService;
@@ -130,8 +126,10 @@ public class JoinConferenceController {
         }
     }
     @GetMapping("/confirmAConference")
-    public Result confirmAJoinedConferenceById(@RequestParam Integer participantId,@RequestParam Integer conferenceId){
+    public Result confirmAJoinedConferenceById(@RequestParam Integer participantId, @RequestParam Integer conferenceId){
         int confirmNumber = joinConferenceService.confirmAJoinedConferenceById(participantId,conferenceId);
+        Integer hotelId = conferenceService.queryConferenceByConferenceId(conferenceId).getHotelId();
+        joinConferenceService.addAJoinedConferenceToRoom(participantId, hotelId,conferenceId);
         if (confirmNumber > 0) {
             return Result.success("confirmAConference","审核成功");
         } else {

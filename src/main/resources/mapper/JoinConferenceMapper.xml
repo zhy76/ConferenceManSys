@@ -19,6 +19,11 @@
         update join_conference set is_confirm=1 where participant_id = #{participantId} and conference_id = #{conferenceId};
     </update>
 
+    <insert id="addAJoinedConferenceToRoom">
+        insert into live_room(participant_id, hotel_id, conference_id, room_id)
+        values(#{participantId}, #{hotelId}, #{conferenceId}, null)
+    </insert>
+
     <select id="queryConferenceByParticipantId" resultType="JoinConference">
         select * from join_conference where participant_id = #{participantId} and is_confirm = true;
     </select>
