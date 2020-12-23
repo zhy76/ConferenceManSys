@@ -1,23 +1,23 @@
-#spring:
-#  datasource:
-#    username: admin
-#    password: admin
-#    #?serverTimezone=UTC解决时区的报错
-#    #要设置亚洲时间serverTimezone=Asia/Shanghai
-#    url: jdbc:mysql://47.96.234.116:3306/conference?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#  #
-#  mvc:
-#    hiddenmethod:
-#      filter:
-#        enabled: true
-#
-##整合mybatis
-#mybatis:
-#  type-aliases-package: com.conference.entity
-#  mapper-locations: classpath:mapper/*.xml
-#  configuration:
-#    map-underscore-to-camel-case: true
-#
-#
-#
+spring:
+  datasource:
+    username: admin
+    password: admin
+    #?serverTimezone=UTC解决时区的报错
+    #要设置亚洲时间serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://47.96.234.116:3306/conference?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  #
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+#整合mybatis
+mybatis:
+  type-aliases-package: com.conference.entity
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+

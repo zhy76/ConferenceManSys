@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -137,5 +138,28 @@ public class JoinConferenceController {
         return Result.success("joinConferenceList",joinConferenceList);
     }
 
+    @GetMapping("/queryUnConfirmConference")
+    public Result queryUnConfirmConferenceByParticipantId(@RequestParam Integer participantId){
+        List<JoinConference> unConfirmConferenceList = joinConferenceService.queryUnConfirmConferenceByParticipantId(participantId);
+        return Result.success("unConfirmConferenceList",unConfirmConferenceList);
+    }
 
+    @GetMapping("/queryJoinConferenceByConferenceId")
+    public Result queryJoinConferenceByConferenceId(@RequestParam Integer conferenceId) {
+        List<JoinConference> joinConferences = joinConferenceService.queryJoinConferenceByConferenceId(conferenceId);
+        List<JoinConference> joinConference = new ArrayList<>();
+        for (JoinConference it : joinConferences) {
+            if (it.getPickup()) {
+                joinConference.add(it);
+            }
+        }
+        return Result.success("joinConference", joinConference);
+    }
+
+    @GetMapping("/queryJoinedConferenceByParticipantIdAndConferenceId")
+    public Result queryJoinedConferenceByParticipantIdAndConferenceId(@RequestParam Integer participantId,
+                                                                      @RequestParam Integer conferenceId){
+        JoinConference joinConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(participantId, conferenceId);
+        return Result.success("joinConference",joinConference);
+    }
 }

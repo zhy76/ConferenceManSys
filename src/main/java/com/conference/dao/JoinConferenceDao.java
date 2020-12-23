@@ -28,4 +28,24 @@ public interface JoinConferenceDao {
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
 
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
+
+
+
+    /**
+     * 给车队用的
+     * @param conferenceId
+     * @return
+     */
+    public List<JoinConference> queryJoinConferenceByConferenceId(Integer conferenceId);
+
+    /**
+     * 给车队用的
+     * @param participantId
+     * @param conferenceId
+     * @return
+     */
+    public JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId,
+                                                                              Integer conferenceId);
+
+    public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId);
 }
