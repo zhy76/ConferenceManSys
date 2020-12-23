@@ -39,15 +39,22 @@ public class AdminController {
         String adminAccount = loginAdmin.getAdminAccount();
         String adminPass = loginAdmin.getAdminPass();
         System.out.println(adminAccount + adminPass);
-
-        if( !StringUtils.isEmpty(adminAccount) && !StringUtils.isEmpty(adminPass) && adminService.login(adminAccount,adminPass) != null )
-        {//登录成功
-            Admin admin = adminService.login(adminAccount,adminPass);
-            //生成token令牌
-            String token = tokenService.getToken(admin);
-            return Result.success("token",token);
+        if (loginAdmin.getAdminAccount() == null || loginAdmin.getAdminPass() == null) {
+            return new Result(ResultCode.IllegalArgumentException);
         }
-        else return new Result(111,"登录失败",null);
+        Admin adminForBase = adminService.queryAdminByAccountAndPass(adminAccount,adminPass);
+        System.out.println(adminForBase);
+        if(adminForBase == null){
+            System.out.println("账号不存在");
+            return new Result(ResultCode.UnknownAccountException);
+        }else {
+            if (!adminForBase.getAdminPass().equals(loginAdmin.getAdminPass())){
+                return new Result(ResultCode.IncorrectCredentialsException);
+            }else {
+                String token = tokenService.getToken(adminForBase);
+                return Result.success("token", token);
+            }
+        }
     }
 
     //进入管理员个人中心

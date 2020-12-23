@@ -15,6 +15,7 @@ public class CorsConfig {
      * 配置了跨域 Fileter
      * @return
      */
+
     @Bean
     public FilterRegistrationBean corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -27,5 +28,16 @@ public class CorsConfig {
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(0);
         return bean;
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("*");//允许域名访问，如果*，代表所有域名
+            }
+        };
     }
 }

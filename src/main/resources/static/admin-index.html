@@ -16,7 +16,7 @@
     <script src="admin/deleteURL.js"></script>
     <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
     <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
-
+    <script src = "admin/admin-index.js"> </script>
     <script>
 
         // 参加者模块
@@ -27,6 +27,7 @@
                 url: "/participant/queryParticipantByParticipantId?participantId=" + participantId,
                 data: "",
                 dataType:"json",
+                headers:{"conNCU": localStorage.conNCU},
                 processData:false,
                 contentType:false,
                 success:function (result) {
@@ -69,6 +70,7 @@
                             type:"post",
                             url: "/participant/deleteParticipantByAdmin/" + participantId,
                             data: {},
+                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -105,6 +107,7 @@
                 type:"post",
                 url: "/participant/showParticipants",
                 data: "",
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -158,6 +161,7 @@
                 type:"post",
                 url: "/participant/updateParticipantByAdmin",
                 data: form,
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -181,6 +185,7 @@
                 type:"post",
                 url: "/organizer/showOrganizers",
                 data: "",
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -230,6 +235,7 @@
                             type:"post",
                             url: "/organizer/deleteOrganizerByAdmin/" + organizerId,
                             data: {},
+                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -265,6 +271,7 @@
                 type:"post",
                 url: "/organizer/queryOrganizerByOrganizerId?organizerId=" + organizerId,
                 data: "",
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -291,6 +298,7 @@
                 type:"post",
                 url: "/organizer/updateOrganizerByAdmin",
                 data: form,
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -304,13 +312,14 @@
         }
         //组织者模块
 
-        //会议模块
 
+        //会议模块
         function conferences() {
             $.ajax({
                 type:"post",
                 url: "/conference/showConferencesByAdmin",
                 data: "",
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -355,6 +364,7 @@
                             type:"get",
                             url: "/conference/deleteConference/" + conferenceId,
                             data: {},
+                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -394,6 +404,7 @@
                 type:"post",
                 url: "/conference/updateConferenceByAdmin/" + conferenceId + "/" + organizerId + "/" + hotelId + "/" + fleetId,
                 data: "",
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -424,12 +435,12 @@
 
         function submitUpdateConference(){
             var form = new FormData(document.getElementById("updateConferenceForm"));//把表单的对象作为一个参数
-
             $.ajax({
                 async: false,
                 type:"post",
                 url: "/conference/submitUpdateConferenceByAdmin",
                 data: form,
+                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -444,8 +455,16 @@
                 }
             })
         }
-
         //会议模块
+
+        //注销登录模块
+        function logout(){
+           //将localstorage中的token删除
+            localStorage.removeItem("token");
+            //跳转到登录页面
+            location.href = "login.html";
+        }
+        //注销登录模块
     </script>
 </head>
 
@@ -489,7 +508,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="管理员个人信息.html">个人信息</a></li>
                             <li class="divider"></li>
-                            <li><a href="../登录New.html">退出登录</a> </li>
+                            <li><a href="javascript:void(0);" onclick = "logout();">退出登录</a> </li>
                         </ul>
                     </li>
 

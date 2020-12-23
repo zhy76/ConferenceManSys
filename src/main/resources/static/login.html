@@ -184,15 +184,15 @@
 						contentType: "application/json",
 						data: JSON.stringify(json),// 方法将一个 JavaScript 对象或值转换为 JSON 字符串
 						success: function (jsonData, result) {
-							// console.dir("data is :" + result);
-							// console.dir(jsonData);
+							console.dir("data is :" + result);
+							console.dir(jsonData);
 							if(jsonData["code"]!=200){
 								alert(jsonData["message"]);
 							}
 							else if (jsonData["data"]["token"]!=null) {
 								localStorage.setItem("conNCU", jsonData["data"]["token"]);
+								// redirect(role + "-index");
 								window.location.href = role + "-index.html";
-								return false;
 							} else {
 								console.log(jsonData["data"]["token"]);
 								alert("登录失败，请重试");
