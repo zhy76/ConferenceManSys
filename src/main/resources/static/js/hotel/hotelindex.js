@@ -28,10 +28,18 @@ $(function () {
         alert("请先登录！");
         window.location.href = "登录New.html";
     }
+    if (localStorage.getItem("function") !== "null" && localStorage.getItem("function") !== null) {
+        eval(localStorage.getItem("function"));
+        localStorage.setItem("function", null);
+    }
 //获取酒店信息
     $("#get-hotel a").click(function () {
             console.log("信息获取");
             showHotelInfo();
+    })
+    $("#get-hotel-up").click(function () {
+        console.log("信息获取");
+        showHotelInfo();
     })
 //安排住宿
     $("#to-wait-live a").click(function () {
@@ -162,17 +170,18 @@ function doLiveRoom(){
         "                            </thead>\n" +
         "\n" +
         "                            <tbody>\n"
-    for (let i of liveRoom) {
-        if (i.roomId==null){
-            $participantId=i.participantId;
+    for (let i in liveRoom) {
+        if (liveRoom[i].roomId==null){
+            console.log(i);
+            $participantId=liveRoom[i].participantId;
             queryParticipantByParticipantId($participantId);
             $html +=
                 "                                                <tr>\n" +
                 "                                                    <td>" + participant.participantName + "</td>\n" +
                 "                                                    <td>" + participant.participantPhone + "</td>\n" +
-                "                                                    <td>" + i.conferenceId + "</td>\n" +
-                "                                    <td><input type=\"text\" size=\"5px\" id=\"roomId\"></td>\n" +
-                "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"updateLiveRoom(this)\">提交</button></td>\n" +
+                "                                                    <td>" + liveRoom[i].conferenceId + "</td>\n" +
+                '                                   <td><input type="text" size="5px" id="roomId'+ i + '"></td>\n' +
+                '                                   <td><button type="button" class="btn btn-info" onclick="updateLiveRoom( this ,' + i + ')">提交</button></td>\n'+
                 "                                                </tr>\n";
         }
     }
@@ -188,10 +197,39 @@ function doLiveRoom(){
     $(".jumbotron").append($html+$htmlEnd);
     $('#datatable').dataTable();
 }
-
-function updateLiveRoom(liveTable){
+//给参会者分配房间
+function updateLiveRoom(liveTable,i){
     getBothId(liveTable);
-    if (1) {
+    var roomId = $("#roomId"+i).val();
+    console.log(roomId);
+    //检验输入房间是否存在
+    $.ajax({
+        async: false,
+        // headers: {
+        //     'token': token,
+        // },
+        url: "/room/getRoomByRoomId",
+        type: "get",
+        dataType: "json",
+        data: {
+            'hotelId': $hotelId,
+            'roomId':roomId
+        },
+        success: function (data) {
+            //console.log(data);
+            if (data["code"] === 200) {
+                Room = data["data"]["getRoomByRoomId"];
+                console.log(Room);
+            } else {
+                alert("获取用户数据失败");
+            }
+        },
+        error: function () {
+            alert("获取用户数据失败!");
+        },
+    });
+    //房间存在且没有安排
+    if (Room!=null&&Room.isLive==0) {
         $.ajax({
             async: false,
             type: "POST",
@@ -202,28 +240,52 @@ function updateLiveRoom(liveTable){
                 "participantId": $participantId,
                 "hotelId":$hotelId,
                 "conferenceId": $conferenceId,
-                "roomId": $("#roomId").val()
+                "roomId": roomId
             }),
             success: function (jsonData, result) {
                 console.log(jsonData);
                 console.log(result);
                 if (jsonData['code'] === 200) {
-                    alert("修改成功");
+                    //alert("设置成功");
+                    //将房间设置为已经安排
+                    $.ajax({
+                        async: false,
+                        type: "POST",
+                        url: '/room/updateRoom',
+                        contentType: "application/json",
+                        // headers: { 'token': localStorage.getItem("conNCU") },
+                        data: JSON.stringify({
+                            "roomId": roomId,
+                            "hotelId":$hotelId,
+                            "isLive": 1
+                        }),
+                        success: function (jsonData, result) {
+                            console.log(jsonData);
+                            console.log(result);
+                            if (jsonData['code'] === 200) {
+                                alert("设置成功");
 
-                    // showDriverInfo(driver)
+                            } else {
+                                alert("设置失败");
+                                //location.reload();
+                            }
+                        },
+                    });
                     //location.reload();
                 } else {
-                    alert("修改失败");
+                    alert("设置失败");
                     //location.reload();
                 }
             },
         });
-        for (let i=0;i<100000000;i++){
-
-        }
+        findAllLiveRoomByHotelId();
         doLiveRoom();
-    } else {
-        alert("信息格式有误，请重新填写！");
+    }
+    else if (Room!=null&&Room.isLive==1){
+        alert("房间已经安排，请检查！");
+    }
+    else {
+        alert("输入房间号不存在！");
     }
 }
 
@@ -408,7 +470,7 @@ function submitChange() {
         return;
     }
         $.ajax({
-            // async: false,
+             async: false,
             type: "POST",
             url: '/hotel/updateHotel',
             contentType: "application/json",
@@ -425,18 +487,18 @@ function submitChange() {
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("修改成功");
-                    // showDriverInfo(driver)
-                    //location.reload();
+                    // localStorage.setItem("function", "showHotelInfo()");
+                    // location.reload();
                 } else {
                     alert("修改失败");
                     //location.reload();
                 }
             },
         });
-    for (let i = 0; i < 500000000; i++) {
-
-    }
-        showHotelInfo();
+    // for (let i = 0; i < 500000000; i++) {
+    //
+    // }
+    //     showHotelInfo();
 }
 /*base 64 加密字符串*/
 function encodeStr(str) {

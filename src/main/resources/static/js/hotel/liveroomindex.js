@@ -8,6 +8,31 @@ function getBothId(liveTable){
 //重新设置房间号
 function resetLiveRoom(liveTable){
     getBothId(liveTable);
+    var resetRoom=$(liveTable).parent().parent("tr").children('td').eq(3).html();
+    //将房间设置为未安排
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: '/room/updateRoom',
+        contentType: "application/json",
+        // headers: { 'token': localStorage.getItem("conNCU") },
+        data: JSON.stringify({
+            "roomId": resetRoom,
+            "hotelId":$hotelId,
+            "isLive": 0
+        }),
+        success: function (jsonData, result) {
+            console.log(jsonData);
+            console.log(result);
+            if (jsonData['code'] === 200) {
+                //alert("设置成功");
+                //location.reload();
+            } else {
+                //alert("设置失败");
+                //location.reload();
+            }
+        },
+    });
     if (1) {
         $.ajax({
             async: false,
@@ -35,12 +60,13 @@ function resetLiveRoom(liveTable){
                 }
             },
         });
-        for (let i=0;i<500000000;i++){
-
-        }
+        // for (let i=0;i<500000000;i++){
+        //
+        // }
+        findAllLiveRoomByHotelId();
         showLiveRoomTable();
     } else {
-        alert("信息格式有误，请重新填写！");
+        alert("重置出错！");
     }
 }
 
@@ -48,6 +74,32 @@ function resetLiveRoom(liveTable){
 function deleteLiveRoomByAll(liveTable){
     if(confirm("确定删除吗？")){
         getBothId(liveTable);
+        var resetRoom=$(liveTable).parent().parent("tr").children('td').eq(3).html();
+        //将房间设置为未安排
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: '/room/updateRoom',
+            contentType: "application/json",
+            // headers: { 'token': localStorage.getItem("conNCU") },
+            data: JSON.stringify({
+                "roomId": resetRoom,
+                "hotelId":$hotelId,
+                "isLive": 0
+            }),
+            success: function (jsonData, result) {
+                console.log(jsonData);
+                console.log(result);
+                if (jsonData['code'] === 200) {
+                    //alert("设置成功");
+                    //location.reload();
+                } else {
+                    //alert("设置失败");
+                    //location.reload();
+                }
+            },
+        });
+        //删除房间记录
         $.ajax({
             async: false,
             headers: {
@@ -66,13 +118,15 @@ function deleteLiveRoomByAll(liveTable){
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("删除成功");
-                    location.reload();
+                   // location.reload();
                 } else {
                     alert("删除失败");
                     //location.reload();
                 }
             },
         });
+        findAllLiveRoomByHotelId();
+        showLiveRoomTable();
     }
 
 }
@@ -265,25 +319,22 @@ function updateRoom(a,roomTable){
             data: JSON.stringify({
                 "roomId": $roomId,
                 "hotelId":$hotelId,
-                "isLive": a,
-                "roomType":$roomType
+                "isLive": a
             }),
             success: function (jsonData, result) {
                 console.log(jsonData);
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("设置成功");
-                    location.reload();
+                    //location.reload();
                 } else {
                     alert("设置失败");
                     //location.reload();
                 }
             },
         });
-        // for (let i=0;i<500000000;i++){
-        //
-        // }
-        // showRoom();
+        getRoomByHotelId();
+        showRoom();
     } else {
         alert("信息格式有误！");
     }
@@ -305,13 +356,15 @@ function deleteRoomById(roomTable){
                 console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("删除成功");
-                    location.reload();
+                    //location.reload();
                 } else {
                     alert("删除失败");
                     //location.reload();
                 }
             },
         });
+        getRoomByHotelId();
+        showRoom();
     }
 }
 function addRoom(){
@@ -336,11 +389,13 @@ function addRoom(){
             console.log(result);
             if (jsonData['code'] === 200) {
                 alert("设置成功");
-                location.reload();
+                //location.reload();
             } else {
                 alert("设置失败");
                 //location.reload();
             }
         },
     });
+    // getRoomByHotelId();
+    // showRoom();
 }

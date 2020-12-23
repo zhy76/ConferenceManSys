@@ -33,6 +33,13 @@ public class RoomController {
         List<Room> getRoomByHotelId = roomService.getRoomByHotelId(hotelId);
         return Result.success("getRoomByHotelId",getRoomByHotelId);
     }
+
+    @GetMapping("/getRoomByRoomId")
+    public Result getRoomByRoomId(@RequestParam String roomId,@RequestParam int hotelId){
+        Room getRoomByRoomId = roomService.getRoomByRoomId(roomId,hotelId);
+        return Result.success("getRoomByRoomId",getRoomByRoomId);
+    }
+
     @PostMapping("/addRoom")
     public Result addRoom(@RequestBody Room room){
         int addRoom = roomService.addRoom(room);

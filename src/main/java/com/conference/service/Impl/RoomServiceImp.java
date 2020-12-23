@@ -24,6 +24,11 @@ public class RoomServiceImp implements RoomService {
     }
 
     @Override
+    public Room getRoomByRoomId(String roomId, int hotelId) {
+        return roomDao.getRoomByRoomId(roomId,hotelId);
+    }
+
+    @Override
     public int addRoom(Room room) {
         return roomDao.addRoom(room.getRoomId(),room.getHotelId(),room.getIsLive(),room.getRoomType());
     }
@@ -35,6 +40,6 @@ public class RoomServiceImp implements RoomService {
 
     @Override
     public int updateRoom(Room room) {
-        return roomDao.updateRoom(room.getIsLive(),room.getRoomType(),room.getHotelId(),room.getRoomId());
+        return roomDao.updateRoom(room.getIsLive(),room.getHotelId(),room.getRoomId());
     }
 }
