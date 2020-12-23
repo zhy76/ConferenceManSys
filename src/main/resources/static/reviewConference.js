@@ -62,7 +62,7 @@ function showJoinParticipant(i){
             $html +="                                                    <td>" + '是' + "</td>\n"
         }
         $html += "                                    <td>" +
-                "                                       <button type='button' class=\"btn btn-success\" onclick=\"\">同意加入</button>"+
+                '                                     <button type="button" class="btn btn-success" onclick=\"confirmAJoinedConferenceById(' + i.participantId + ',' + i.conferenceId + ')\">同意加入</button>'+
                 '                                     <button type="button" class="btn btn-danger" onclick=\"cancelAJoinedConferenceById(' + i.participantId + ',' + i.conferenceId + ')\">移出会议</button>'+
                 "                                                   </td>\n" +
                 "                                                </tr>\n";
@@ -142,6 +142,35 @@ function cancelAJoinedConferenceById(participantId,conferenceId){
                     location.reload();
                 } else {
                     alert("移除失败");
+                    //location.reload();
+                }
+            },
+        });
+    }
+}
+
+function confirmAJoinedConferenceById(participantId,conferenceId){
+    if(confirm("确定同意吗？")){
+        $.ajax({
+            async: false,
+            headers: {
+                'token': token,
+            },
+            url: "/joinConference/confirmAConference",
+            type: "get",
+            dataType: "json",
+            data: {
+                "participantId": participantId,
+                "conferenceId": conferenceId
+            },
+            success: function (jsonData, result) {
+                console.log(jsonData);
+                console.log(result);
+                if (jsonData['code'] === 200) {
+                    alert("审核成功");
+                    location.reload();
+                } else {
+                    alert("审核失败");
                     //location.reload();
                 }
             },

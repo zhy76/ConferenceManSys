@@ -129,6 +129,16 @@ public class JoinConferenceController {
             return new Result(ResultCode.FAIL);
         }
     }
+    @GetMapping("/confirmAConference")
+    public Result confirmAJoinedConferenceById(@RequestParam Integer participantId,@RequestParam Integer conferenceId){
+        int confirmNumber = joinConferenceService.confirmAJoinedConferenceById(participantId,conferenceId);
+        if (confirmNumber > 0) {
+            return Result.success("confirmAConference","审核成功");
+        } else {
+            return new Result(ResultCode.FAIL);
+        }
+    }
+
     @GetMapping("/queryJoinedConference")
     public Result queryJoinedConferenceByParticipantId(@RequestParam Integer participantId){
         List<JoinConference> joinConferenceList = joinConferenceService.queryConferenceByParticipantId(participantId);
