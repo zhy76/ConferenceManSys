@@ -173,10 +173,10 @@ public class OrganizerController {
         return Result.success("getOrganizerInfo", getOrganizerInfo);
     }
 
-    @PostMapping("/showOrganizerPersonal")
+    @GetMapping("/showOrganizerPersonal")
     public Result showOrganizerPersonal(HttpServletRequest request){
         //根据登录时的账号和密码来返回完整的信息
-        String token = request.getHeader("zhy");
+        String token = request.getHeader("token");
         Claims claims = tokenService.parseToken(token);
         Integer organizerId = (Integer) claims.get("organizerId");
         Organizer organizer = organizerService.findOrganizerById(organizerId);

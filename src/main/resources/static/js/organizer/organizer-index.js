@@ -10,7 +10,7 @@ $(function () {
 
     let $organizerPhone;
     /*获取token*/
-    token = localStorage.getItem("zhy");
+    token = localStorage.getItem("conNCU");
     console.log(typeof (token));
     console.log(token);
     if (token == null || token === "null" || token === "undefined") {
@@ -42,9 +42,9 @@ $(function () {
     $("#login-out").click(function () {
         clearOrganizerInfo();
         //localStorage.clear();
-        localStorage.setItem("zhy", null);
+        localStorage.setItem("conNCU", null);
         alert("退出成功");
-        window.location.href = "登录.html";
+        window.location.href = "login.html";
     })
 })
 
@@ -242,7 +242,7 @@ function submitChange() {
             type: "POST",
             url: '/organizer/updateOrganizer',
             contentType: "application/json",
-            headers: {'token': localStorage.getItem("zhy")},
+            headers: {'token': localStorage.getItem("conNCU")},
             data: JSON.stringify({
                 "organizerUnit": $("#organizerUnit").val(),
                 "organizerEmail": $("#organizerEmail").val(),

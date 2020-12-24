@@ -20,7 +20,7 @@
                     type:"POST",
                     url:"/file/headPhotoUpload",
                     data:form,
-                    headers:{"zhy": localStorage.zhy},
+                    headers:{"token": localStorage.conNCU},
                     dataType:"json",
                     processData:false,
                     contentType:false,
@@ -40,11 +40,11 @@
 
         function showOrganizer(){
             $.ajax({
-                type:"post",
+                type:"get",
                 url: "/organizer/showOrganizerPersonal",
                 data: "",
                 dataType:"json",
-                headers:{"zhy": localStorage.zhy},
+                headers:{"token": localStorage.conNCU},
                 processData:false,
                 contentType:false,
                 success:function (result) {
@@ -72,7 +72,7 @@
                 type:"post",
                 url: "/organizer/updateOrganizer",
                 data: form,
-                headers:{"zhy": localStorage.zhy},
+                headers:{"token": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
