@@ -177,11 +177,7 @@ public class JoinConferenceController {
     }
 
 
-    @GetMapping("/queryUnConfirmConference")
-    public Result queryUnConfirmConferenceByParticipantId(@RequestParam Integer participantId){
-        List<JoinConference> unConfirmConferenceList = joinConferenceService.queryUnConfirmConferenceByParticipantId(participantId);
-        return Result.success("unConfirmConferenceList",unConfirmConferenceList);
-    }
+
 
     @GetMapping("/queryConferenceByConferenceId")
     public Result queryConferenceByConferenceId(@RequestParam int conferenceId){

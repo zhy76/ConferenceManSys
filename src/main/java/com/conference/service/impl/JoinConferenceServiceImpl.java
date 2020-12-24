@@ -40,6 +40,11 @@ public class JoinConferenceServiceImpl implements JoinConferenceService {
     }
 
     @Override
+    public List<JoinConference> queryConferenceByConferenceId(Integer conferenceId) {
+        return joinConferenceDao.queryConferenceByConferenceId(conferenceId);
+    }
+
+    @Override
     public List<JoinConference>  queryJoinConferenceByConferenceId(Integer conferenceId) {
         return joinConferenceDao.queryJoinConferenceByConferenceId(conferenceId);
     }
