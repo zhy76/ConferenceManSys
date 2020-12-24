@@ -2,6 +2,7 @@ package com.conference.dao;
 
 import com.conference.entity.Participant;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface ParticipantDao {
      * 3、修改指定的参会人员的账号信息
      * 4、删除指定ID的参会人
      * 5、查询出指定ID的参会人
+     * 6、通过参会者电话查找参会者
+     * 7、更新参会者头像
      */
     public List<Participant> queryParticipants();
 
@@ -32,17 +35,11 @@ public interface ParticipantDao {
 
     Participant queryParticipantByParticipantId(Integer participantId);
 
-    /**
-     * 1.无账号注册成功时，往数据库中participant表中增加一个参会者(addAParticipant)
-     * 2.已有账号登录时，查询账号密码是否正确(queryParticipantByParticipantName)
-     * 3.修改自己的个人信息(updateParticipant)
-     *
-     **/
-
     public int addAParticipant(Participant participant);
 
     public Participant queryParticipantByParticipantPhone(String participantPhone);
 
+    public int updateParticipantPhoto(@Param("participantPhoto") String participantPhoto, @Param("participantId") Integer participantId);
 
 
 }

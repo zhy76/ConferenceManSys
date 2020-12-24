@@ -70,7 +70,7 @@
                     <div class="col-xs-8">
                         <ul class="list-inline top-right-nav">
                             <li >
-                                <a href="参与者消息.html" >
+                                <a href="参与者查看接送信息.html" >
                                     <span class="glyphicon glyphicon-envelope"> 消息</span>
                                 </a>
                             </li>
@@ -80,7 +80,7 @@
                                 </a>
                             </li>
                             <li >
-                                <a href="participant-index.html" >
+                                <a href="参与者个人信息.html" >
                                     <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
                                 </a>
                             </li>
@@ -135,7 +135,7 @@
         <!--            </div>-->
                     <div class="col-sm-12 text-right">
                         <ol class="breadcrumb">
-                            <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                            <li><a href="participant-index.html"><i class="fa fa-home"></i></a></li>
                             <li>个人信息</li>
                         </ol>
                     </div>
@@ -156,6 +156,23 @@
                                     <li class="nav-item" id="to-info"> <a class="nav-link" data-toggle="tab" href="#个人信息" role="tab">个人信息</a> </li>
                                 </ul>
                                 <!-- Tab panes -->
+                                <div class="head_photo_container">
+                                    <img id="head_photo" class="img-responsive center-block" src="" style="width: 300px;height: 300px" >
+                                </div>
+                                <div align="center">
+                                    <form id="form_submit_photo" class="form-horizontal">
+                                        <input type="hidden" name="role" value="participant">
+                                        <input type="hidden" name="roleId" value="" id="roleId">
+                                        <label class="btn btn-default btn-file">
+                                            更新头像
+                                            <input id="ingredient_file" type="file" style="display: none;" name="file" required="" onchange="onLoadImage()">
+                                        </label>
+                                        <label class="btn btn-default btn-file">
+                                            确认更新
+                                            <input id = "submit_head_photo" type="button" style="display: none;" class="btn btn-primary" />
+                                        </label>
+                                    </form>
+                                </div>
                                 <div class="tab-content">
                                     <div class="tab-pane" id="个人信息" role="tabpanel">
                                         <div class="card-body">
@@ -309,19 +326,16 @@
         </script>
 <script type="text/javascript">
     let participant;
-    let token = localStorage.getItem("xj");
+    let token = localStorage.getItem("conNCU");
     let $participantId;
     $(function (){
-
-        //token = localStorage.getItem("xj");
-        // console.log(typeof (token));
-        // console.log(token);
         if (token == null || token === "null" || token === "undefined") {
-            // console.log("no token");
         } else {
             $participantId = parseJwt(token).participantId;/*获取用户信息*/
-            // console.log($participantId);
         }
+        getParticipantInfo($participantId);
+
+        $(".img-circle").attr("src",participant.participantPhoto)
 
 
         /**
@@ -330,22 +344,17 @@
         // onclickToInfo();
         $("#to-info a").click(function () {
             getParticipantInfo($participantId);
-            // console.log(participant.participantPhone)
-            // console.log($("#participantPhone").val())
+            $("#roleId").val($participantId)
+            // alert( $("#roleId").val())
             $("#participantName").val(participant.participantName);
             $("#participantJob").val(participant.participantJob);
             $("#participantWorkUnit").val(participant.participantWorkUnit);
-            // console.log(participant)
-            // console.log(participant.participantEmail)
             $("#participantEmail").val(participant.participantEmail);
-
             $("#participantPass").val(participant.participantPass);
             $("#participantIdCard").val(participant.participantIdCard);
-            //$(name="participantSex").val(participant.participantSex);
             $("#participantPhone").val(participant.participantPhone);
-
             $("participantSex").val(participant.participantSex);
-            // console.log($("#participantPhone").val())
+            $("#head_photo").attr("src",participant.participantPhoto)
             if(participant.participantSex == "男"){
                 $("#male").prop("checked",true)
                 $("#female").prop("checked",false)
@@ -354,17 +363,37 @@
                 $("#male").prop("checked",false)
                 $("#female").prop("checked",true)
             }
-            // console.log(participant.participantSex)
         })
-
         $("#update").click(function (){
             if(valiForm().form()){
                 updateParticipantInfo();
             }
-            // console.log(token);
-
         })
-
+        $("#submit_head_photo").click(function () {
+            var form = new FormData(document.getElementById("form_submit_photo"));//把表单的对象作为一个参数
+            console.log(form)
+            $.ajax({
+                type:"POST",
+                url:"/file/headPhotoUpload",
+                data:form,
+                headers:{"conNCU": localStorage.conNCU},
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function(result) {
+                    if (result.message == "成功") {
+                        alert('更新头像成功!');
+                        window.location.reload();
+                    } else {
+                        alert('更新头像失败!');
+                    }
+                },
+                error:function() {
+                    alert('更新异常!');
+                }
+            });
+        })
+        $("#to-info a").click();
     })
 
     function updateParticipantInfo(){
@@ -377,14 +406,6 @@
         let participantPhone = $("#participantPhone").val();
         let participantSex = $("input:radio:checked").val();
         let participantIdCard = $("#participantIdCard").val();
-        // alert(participantName)
-        // alert(participantJob)
-        // alert(participantWorkUnit)
-        // alert(participantEmail)
-        // alert(participantPass)
-        // alert(participantPhone)
-        // alert(participantSex)
-        // alert(participantIdCard)
 
         $.ajax({
             beforeSend: function(request) {      //使用beforeSend
@@ -406,26 +427,15 @@
                 "participantIdCard":""+participantIdCard
             }),
             success: function (jsonData, result) {
-
-                // console.log("data is :" + result);
-                // console.log(jsonData);
-                // console.log(typeof (jsonData));
                 jsonData = JSON.parse(jsonData)
-                // console.log(typeof (jsonData));
-                // console.log(jsonData['code']);
-                // alert("修改成功！");
-                // window.location.href = "参与者个人信息.html";
                 if (jsonData['code'] === 200) {
-
                    alert("修改成功！")
-                    // window.location.href = "参与者个人信息.html";
+                    window.location.reload();
                 } else {
-
                     alert("登录失败，请重试");
                 }
             },
         });
-        // console.log(1111111111)
     }
 
     function getParticipantInfo($participantId) {
@@ -441,10 +451,8 @@
                 'participantId': $participantId,
             },
             success: function (data) {
-                // console.log(data);
                 if (data["code"] === 200) {
                     participant = data["data"]["getParticipantInfo"];
-                    // console.log(participant);
                 } else {
                     alert("获取用户数据失败");
                 }
@@ -523,6 +531,18 @@
                 participantWorkUnit: "请输入工作单位"
             }
         });
+    }
+
+    //预览图片
+    function onLoadImage() {
+        var file = $('#ingredient_file').get(0).files[0];
+        var reader = new FileReader();
+        //将文件以Data URL形式读入页面
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            //显示文件
+            $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result + '" alt="" style="width: 300px;height: 300px"/>');
+        }
     }
 </script>
 

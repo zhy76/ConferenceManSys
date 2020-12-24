@@ -123,15 +123,15 @@
                 if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
                 else $('.back-to-top').fadeOut('slow');
             })
-            token = localStorage.getItem("xj");
-            // console.log(typeof (token));
-            // console.log(token);
+            token = localStorage.getItem("conNCU");
+
             if (token == null || token === "null" || token === "undefined") {
                 // console.log("no token");
             } else {
                 $participantId = parseJwt(token).participantId;/*获取用户信息*/
-                // console.log($participantId);
-                }
+                getParticipantInfo($participantId);
+                $(".img-circle").attr("src", participant.participantPhoto);
+            }
             $.ajax({
                 async: false,
                 url: "/joinConference/queryJoinedConference",
@@ -284,9 +284,7 @@
                     },
                 });
             }
-
             function getOrganizerInfo(organizerId) {
-
                 $.ajax({
                     async: false,
                     url: "/organizer/getOrganizerInfo",
@@ -302,6 +300,30 @@
                     },
                     error: function () {
                         alert("获取用户数据失败2");
+                    },
+                });
+            }
+            function getParticipantInfo($participantId) {
+                $.ajax({
+                    async: false,
+                    headers: {
+                        'token': token,
+                    },
+                    url: "/participant/getParticipantInfo",
+                    type: "post",
+                    dataType: "json",
+                    data: {
+                        'participantId': $participantId,
+                    },
+                    success: function (data) {
+                        if (data["code"] === 200) {
+                            participant = data["data"]["getParticipantInfo"];
+                        } else {
+                            alert("获取用户数据失败");
+                        }
+                    },
+                    error: function () {
+                        alert("获取用户数据失败");
                     },
                 });
             }
@@ -328,7 +350,7 @@
             <div class="col-xs-8">
                 <ul class="list-inline top-right-nav">
                     <li >
-                        <a href="参与者消息.html" >
+                        <a href="参与者查看接送信息.html" >
                             <span class="glyphicon glyphicon-envelope"> 消息</span>
                         </a>
                     </li>
@@ -338,7 +360,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="participant-index.html">
+                        <a href="参与者个人信息.html">
                             <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
                         </a>
                     </li>

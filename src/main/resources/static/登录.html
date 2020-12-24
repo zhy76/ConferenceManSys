@@ -183,7 +183,7 @@
 					success: function (jsonData, result) {
 						// console.log("data is :" + result);
 						if (jsonData["data"]["token"]) {
-							localStorage.setItem("xj", jsonData["data"]["token"]);
+							localStorage.setItem("conNCU", jsonData["data"]["token"]);
 							window.location.href = "participant-index.html";
 						} else {
 							// console.log(jsonData["data"]["token"]);

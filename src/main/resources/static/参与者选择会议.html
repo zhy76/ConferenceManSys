@@ -113,14 +113,27 @@
         let token;
         let $participantId;
         let conference;
+        let participant;
+        /**
+         * 数字+位数
+         * @param num
+         * @param length
+         * @returns {string}
+         */
+        function fix(num, length) {
+            return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+        }
         $(function (){
             $(window).scroll(function() {
                 if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
                 else $('.back-to-top').fadeOut('slow');
             });
-            token = localStorage.getItem("xj");
+            token = localStorage.getItem("conNCU");
             console.log(token);
             $participantId = parseJwt(token).participantId
+            getParticipantInfo($participantId)
+            $(".img-circle").attr("src", participant.participantPhoto);
+
             $.ajax({
                 async: false,
                 url: "/conference/showConferences",
@@ -130,29 +143,22 @@
                 },
                 success: function (data) {
                     var listConference = "";
-                    // console.log(data);
-                    // console.log(typeof data)
                     data = JSON.parse(data)
-                    // console.log(typeof data)
-                    // console.log(data['data']['conferencesList'])
                     var conferences = data['data']['conferencesList'];
-
-                    // console.log(conferences);
                     for(var i = 0 ; i < conferences.length ; i ++ ){
-                        // console.log(conferences[i]);
                         var conferenceName = conferences[i].conferenceName;
                         var conferenceLocation = conferences[i].conferenceLocation;
                         var conferenceStart = conferences[i].conferenceStart;
                         var conferenceEnd = conferences[i].conferenceEnd;
                         var conferenceId = conferences[i].conferenceId;
                         var conferenceInfo = conferences[i].conferenceInfo;
-                        // console.log(conferenceId);
                         var organizerId = conferences[i].organizerId;
 
                         getOrganizerInfo(organizerId);
 
                         var organizerUnit = organizer.organizerUnit;
-
+                        var newDate = new Date();
+                        let dateToday = "" + newDate.getFullYear() + '-' + fix((newDate.getMonth() + 1), 2) + '-'  + fix(newDate.getDate(), 2) + 'T' + fix(newDate.getHours(),2) + ':' + fix(newDate.getMinutes(), 2);
                         listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
                             '                        <a href = "#">' +
                             '                            <div class="items">' +
@@ -195,11 +201,11 @@
                             '                                </tr>' +
                             '                                <tr>' +
                             '                                    <td class="tb_bg"><label for="">到达时间</label></td>' +
-                            '                                    <td><input type="text" name="toTime" id="toTime'+i+'" placeholder="2020-12-10 09:00:00" value="2020-12-09 09:00:00"></td>' +
+                            '                                    <td><input type="datetime-local" name="toTime" id="toTime'+i+'"  value="' + dateToday + '"></td>' +
                             '                                </tr>' +
                             '                                <tr>' +
                             '                                    <td class="tb_bg"><label for="">离开时间</label></td>' +
-                            '                                    <td><input type="text" name="returnTime" id="returnTime'+i+'" placeholder="2020-12-12 12:00:00" value="2020-12-10 09:00:00"></td>' +
+                            '                                    <td><input type="datetime-local" name="returnTime" id="returnTime'+i+'" value="' + dateToday + '"></td>' +
                             '                                </tr>' +
                             '                                <tr>'+
                             '                                      <td class="tb_bg"><label for="">车次/航班号</label></td>'+
@@ -268,11 +274,6 @@
                             '                   </div>'
                     }
                     $('#mainContent').html(listConference);
-                    // if (data["code"] === 200) {
-                    //     alert("获取会议数据成功");
-                    // } else {
-                    //     alert("获取数据失败1");
-                    // }
                 },
                 error: function () {
                     alert("获取会议数据失败");
@@ -304,7 +305,6 @@
             // alert(1)
             let message = "";
             getConferenceInfo(conferenceId)
-            // let conferenceId = conference.conferenceId;
             let conferenceStart = conference.conferenceStart;
             let conferenceEnd = conference.conferenceEnd;
             let putup = $("input[name='isPutup']:checked").val();
@@ -354,12 +354,6 @@
                 alert(message);
                 return
             }
-
-            alert(putup)
-            alert(pickup)
-            alert(toTime)
-            alert(returnTime)
-            alert(trainNumber)
             $.ajax({
                 async: false,
                 type: "POST",
@@ -377,7 +371,6 @@
                     "isConfirm":false,
                 }),
                 success: function (data) {
-                    //data = JSON.parse(data)
                     if(data['code']==200){
                         alert("申请成功！等待组织者审核！");
                         window.location.href = "参与者待审核会议.html";
@@ -417,6 +410,30 @@
                 },
             });
         }
+        function getParticipantInfo($participantId) {
+            $.ajax({
+                async: false,
+                headers: {
+                    'token': token,
+                },
+                url: "/participant/getParticipantInfo",
+                type: "post",
+                dataType: "json",
+                data: {
+                    'participantId': $participantId,
+                },
+                success: function (data) {
+                    if (data["code"] === 200) {
+                        participant = data["data"]["getParticipantInfo"];
+                    } else {
+                        alert("获取用户数据失败");
+                    }
+                },
+                error: function () {
+                    alert("获取用户数据失败");
+                },
+            });
+        }
     </script>
 </head>
 <body>
@@ -440,7 +457,7 @@
             <div class="col-xs-8">
                 <ul class="list-inline top-right-nav">
                     <li >
-                        <a href="参与者消息.html" >
+                        <a href="参与者查看接送信息.html" >
                             <span class="glyphicon glyphicon-envelope"> 消息</span>
                         </a>
                     </li>
@@ -450,7 +467,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="participant-index.html">
+                        <a href="参与者个人信息.html">
                             <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
                         </a>
                     </li>

@@ -18,20 +18,23 @@ public class Participant {
     private String participantPass;
     private String participantPhone;
     private String participantSex;
+    private String participantIdCard; //参加者身份证
+    private String participantPhoto = "/headphoto/participantDefault.jpg";
 
-    @Override
-    public String toString() {
-        return "Participant{" +
-                "participantId=" + participantId +
-                ", participantName='" + participantName + '\'' +
-                ", participantJob='" + participantJob + '\'' +
-                ", participantWorkUnit='" + participantWorkUnit + '\'' +
-                ", participantEmail='" + participantEmail + '\'' +
-                ", participantPass='" + participantPass + '\'' +
-                ", participantPhone='" + participantPhone + '\'' +
-                ", participantSex='" + participantSex + '\'' +
-                ", participantIdCard='" + participantIdCard + '\'' +
-                '}';
+    public Participant() {
+    }
+
+    public Participant(Integer participantId, String participantName, String participantJob, String participantWorkUnit, String participantEmail, String participantPass, String participantPhone, String participantSex, String participantIdCard, String participantPhoto) {
+        this.participantId = participantId;
+        this.participantName = participantName;
+        this.participantJob = participantJob;
+        this.participantWorkUnit = participantWorkUnit;
+        this.participantEmail = participantEmail;
+        this.participantPass = participantPass;
+        this.participantPhone = participantPhone;
+        this.participantSex = participantSex;
+        this.participantIdCard = participantIdCard;
+        this.participantPhoto = participantPhoto;
     }
 
     public Integer getParticipantId() {
@@ -106,5 +109,11 @@ public class Participant {
         this.participantIdCard = participantIdCard;
     }
 
-    private String participantIdCard; //参加者身份证
+    public String getParticipantPhoto() {
+        return participantPhoto;
+    }
+
+    public void setParticipantPhoto(String participantPhoto) {
+        this.participantPhoto = participantPhoto;
+    }
 }
