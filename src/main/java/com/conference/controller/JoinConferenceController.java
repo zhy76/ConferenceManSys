@@ -1,8 +1,5 @@
 package com.conference.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.conference.dao.ConferenceDao;
-import com.conference.dao.JoinConferenceDao;
 import com.conference.entity.Conference;
 import com.conference.entity.JoinConference;
 import com.conference.service.ConferenceService;
@@ -134,6 +131,17 @@ public class JoinConferenceController {
             return new Result(ResultCode.FAIL);
         }
     }
+    @GetMapping("/confirmAConference")
+    public Result confirmAJoinedConferenceById(@RequestParam Integer participantId, @RequestParam Integer conferenceId){
+        int confirmNumber = joinConferenceService.confirmAJoinedConferenceById(participantId,conferenceId);
+        Integer hotelId = conferenceService.queryConferenceByConferenceId(conferenceId).getHotelId();
+        joinConferenceService.addAJoinedConferenceToRoom(participantId, hotelId,conferenceId);
+        if (confirmNumber > 0) {
+            return Result.success("confirmAConference","审核成功");
+        } else {
+            return new Result(ResultCode.FAIL);
+        }
+    }
 
 
 
@@ -168,4 +176,12 @@ public class JoinConferenceController {
         return Result.success("joinConferenceList",joinConferenceList);
     }
 
+
+
+
+    @GetMapping("/queryConferenceByConferenceId")
+    public Result queryConferenceByConferenceId(@RequestParam int conferenceId){
+        List<JoinConference> queryConferenceByConferenceId = joinConferenceService.queryConferenceByConferenceId(conferenceId);
+        return Result.success("queryConferenceByConferenceId",queryConferenceByConferenceId);
+    }
 }

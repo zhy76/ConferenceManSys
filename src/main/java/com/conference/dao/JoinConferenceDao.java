@@ -26,17 +26,12 @@ public interface JoinConferenceDao {
     public int joinAConference(JoinConference joinConference);
 
     public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
-
+    public int confirmAJoinedConferenceById(Integer participantId,Integer conferenceId);
+    public int addAJoinedConferenceToRoom(Integer participantId,Integer hotelId,Integer conferenceId);
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
 
-
-
-    /**
-     * 给车队用的
-     * @param conferenceId
-     * @return
-     */
-    public List<JoinConference> queryJoinConferenceByConferenceId(Integer conferenceId);
+    public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId);
+    public List<JoinConference> queryConferenceByConferenceId(Integer conferenceId);
 
     /**
      * 给车队用的
@@ -46,6 +41,10 @@ public interface JoinConferenceDao {
      */
     public JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId,
                                                                               Integer conferenceId);
-
-    public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId);
+    /**
+     * 给车队用的
+     * @param conferenceId
+     * @return
+     */
+    public List<JoinConference> queryJoinConferenceByConferenceId(Integer conferenceId);
 }

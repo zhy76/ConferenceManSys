@@ -7,13 +7,24 @@
 <mapper namespace="com.conference.dao.JoinConferenceDao">
 
     <insert id="joinAConference" parameterType="JoinConference">
-        insert into join_conference(participant_id,conference_id,is_putup,is_pickup,to_time,return_time,Train_number,is_confirm)
-        values (#{participantId},#{conferenceId},#{isPutup},#{isPickup},#{toTime},#{returnTime},#{trainNumber},#{isConfirm});
+        insert into join_conference(participant_id,conference_id,is_putup,is_pickup,to_time,return_time,Train_number)
+        values (#{participantId},#{conferenceId},#{isPutup},#{isPickup},#{toTime},#{returnTime},#{trainNumber});
     </insert>
-
+    <select id="queryJoinConferenceByConferenceId" resultType="JoinConference">
+    select * from join_conference where conference_id = #{conferenceId}
+    </select>
     <delete id="cancelAJoinedConferenceById">
         delete from join_conference where participant_id = #{participantId} and conference_id = #{conferenceId};
     </delete>
+
+    <update id="confirmAJoinedConferenceById">
+        update join_conference set is_confirm=1 where participant_id = #{participantId} and conference_id = #{conferenceId};
+    </update>
+
+    <insert id="addAJoinedConferenceToRoom">
+        insert into live_room(participant_id, hotel_id, conference_id, room_id)
+        values(#{participantId}, #{hotelId}, #{conferenceId}, null)
+    </insert>
 
     <select id="queryConferenceByParticipantId" resultType="JoinConference">
         select * from join_conference where participant_id = #{participantId} and is_confirm = true;
@@ -23,10 +34,9 @@
         select * from join_conference where participant_id = #{participantId} and is_confirm = false ;
     </select>
 
-    <select id="queryJoinConferenceByConferenceId" resultType="JoinConference">
-        select * from join_conference where conference_id = #{conferenceId}
+    <select id="queryConferenceByConferenceId" resultType="JoinConference">
+    select * from join_conference where conference_id = #{conferenceId}
     </select>
-
     <select id="queryJoinedConferenceByParticipantIdAndConferenceId" resultType="JoinConference">
         select * from join_conference where conference_id = #{conferenceId} and participant_id = #{participantId};
     </select>

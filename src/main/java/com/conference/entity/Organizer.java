@@ -19,13 +19,14 @@ public class Organizer {
     @NotNull(message = "电话号码必须存在")
     @Pattern(regexp = "^1[3456789]\\d{9}$", message = "请输入正确的电话号码格式")
     private String organizerPhone; //组织单位电话
-
-    public Organizer(Integer organizerId, String organizerEmail, @NotNull(message = "组织名必须存在") String organizerUnit, @NotNull(message = "密码必须存在") @Length(min = 6, max = 26, message = "密码长度应该在6至26之间") @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符") String organizerPass, @NotNull(message = "电话号码必须存在") @Pattern(regexp = "^1[3456789]\\d{9}$", message = "请输入正确的电话号码格式") String organizerPhone) {
+    private String organizerPhoto = "headphoto/default.jpg";
+    public Organizer(Integer organizerId, String organizerEmail, @NotNull(message = "组织名必须存在") String organizerUnit, @NotNull(message = "密码必须存在") @Length(min = 6, max = 26, message = "密码长度应该在6至26之间") @Pattern(regexp = "^[^\\s]+$", message = "密码不能包含空白字符") String organizerPass, @NotNull(message = "电话号码必须存在") @Pattern(regexp = "^1[3456789]\\d{9}$", message = "请输入正确的电话号码格式") String organizerPhone,String organizerPhoto) {
         this.organizerId = organizerId;
         this.organizerEmail = organizerEmail;
         this.organizerUnit = organizerUnit;
         this.organizerPass = organizerPass;
         this.organizerPhone = organizerPhone;
+        this.organizerPhoto = organizerPhoto;
     }
 
     @Override
@@ -36,7 +37,16 @@ public class Organizer {
                 ", organizerUnit='" + organizerUnit + '\'' +
                 ", organizerPass='" + organizerPass + '\'' +
                 ", organizerPhone='" + organizerPhone + '\'' +
+                ", organizerPhoto='" + organizerPhoto + '\'' +
                 '}';
+    }
+
+    public String getOrganizerPhoto() {
+        return organizerPhoto;
+    }
+
+    public void setOrganizerPhoto(String organizerPhoto) {
+        this.organizerPhoto = organizerPhoto;
     }
 
     public Integer getOrganizerId() {

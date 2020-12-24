@@ -36,7 +36,7 @@ public interface OrganizerDao {
     Organizer findOrganizerById(@Param("organizerId") Integer organizerId);
 
     /**
-     * 按照电话查询司机
+     * 按照电话查询组织者
      */
     Organizer findOrganizerByPhone(@Param("organizerPhone") String organizerPhone);
 
@@ -50,6 +50,6 @@ public interface OrganizerDao {
     /**
      * 删除组织者
      */
-    int deleteOrganizerById(@Param("organizerId") Integer driverId);
-
+    int deleteOrganizerById(@Param("organizerId") Integer organizerId);
+    int updateOrganizerPhoto(@Param("organizerPhoto") String organizerPhoto, @Param("organizerId") Integer organizerId);
 }

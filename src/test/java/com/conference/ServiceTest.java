@@ -10,7 +10,7 @@ import com.conference.entity.PickUp;
 import com.conference.service.PickUpService;
 import com.conference.service.impl.DriverServiceImpl;
 import com.conference.service.impl.FleetServiceImpl;
-import com.conference.service.impl.PickUpServiceImpl;
+import com.conference.service.Impl.PickUpServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

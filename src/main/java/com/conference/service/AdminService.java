@@ -33,7 +33,7 @@ public interface AdminService {
      * 登录管理员
      * @return 返回null，表示登录失败，返回有值，则表示登录成功
      */
-    public Admin login(String adminAccount , String adminPass);
+    public Admin login(String adminAccount, String adminPass);
 
     /**
      * 注册管理员

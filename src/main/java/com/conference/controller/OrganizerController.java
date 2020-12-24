@@ -1,7 +1,6 @@
 package com.conference.controller;
 
 import com.conference.entity.Organizer;
-import com.conference.entity.Organizer;
 import com.conference.service.OrganizerService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
@@ -17,13 +16,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 /**
-
- * @author 左海余 / 刘涔宇
+ * @author 左海余
  * @description
- * @date 2020/12/16 21:10   2020/12/20 16:23
+ * @date 2020/12/16 21:10
  * @stuid 6109118041
  */
-
 @RestController
 @RequestMapping("/organizer")
 public class OrganizerController {
@@ -33,23 +30,6 @@ public class OrganizerController {
 
     @Autowired
     private OrganizerService organizerService;
-
-//    /**
-//     * 删除司机 Api
-//     * /driver/deleteDriver
-//     *
-//     * @param driverId (the driver id),
-//     * @return {
-//     * "code": 200,
-//     * "message": "成功"
-//     * }
-//     */
-//    @GetMapping("/deleteDriver")
-//    public Result deleteDriver(@RequestParam Integer driverId) {
-//        int driverNum = driverService.deleteDriverById(driverId);
-////        if (driverNum < 1) return new Result(ResultCode.FAIL);
-//        return Result.success();
-//    }
 
     /**
      * 组织者注册 Api
@@ -102,19 +82,6 @@ public class OrganizerController {
     }
 
 
-//    /**
-//     * 管理员修改司机的信息 Api
-//     * /driver/adminUpdateDriver
-//     *
-//     * @param driver {}
-//     * @return result {}
-//     */
-//    @PostMapping("/adminUpdateDriver")
-//    public Result adminUpdateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver) {
-//        driverService.updateDriver(driver);
-//        return Result.success();
-//    }
-
     /**
      * 组织者自己修改自己的信息 Api
      * /organizer/updateOrganizer
@@ -128,6 +95,7 @@ public class OrganizerController {
         organizerService.updateOrganizer(organizer);
         return Result.success();
     }
+
 
     /**
      * 查找登入组织者的所有信息
@@ -153,6 +121,26 @@ public class OrganizerController {
         return Result.success("getOrganizerInfoById", getOrganizerInfo);
     }
 
+    /**
+     * 管理员管理组织者模块
+     */
+
+
+
+
+    @GetMapping("/showOrganizerPersonal")
+    public Result showOrganizerPersonal(HttpServletRequest request){
+        //根据登录时的账号和密码来返回完整的信息
+        String token = request.getHeader("token");
+        System.out.println(token);
+        Claims claims = tokenService.parseToken(token);
+        Integer organizerId = (Integer) claims.get("organizerId");
+        System.out.println(organizerId);
+        Organizer organizer = organizerService.findOrganizerById(organizerId);
+        System.out.println("--------------------------");
+        System.out.println(organizer);
+        return Result.success(organizer);
+    }
     /**
      * 管理员管理组织者模块
      */

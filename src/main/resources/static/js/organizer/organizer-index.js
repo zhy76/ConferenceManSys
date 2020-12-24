@@ -2,7 +2,6 @@
 // Object.defineProperty(exports, "__esModule", { value: true });
 // var jquery_1 = require("jquery");
 let organizer;
-let pickUp;
 let token;
 let mes;
 let $organizerId;
@@ -11,7 +10,7 @@ $(function () {
 
     let $organizerPhone;
     /*获取token*/
-    token = localStorage.getItem("zhy");
+    token = localStorage.getItem("conNCU");
     console.log(typeof (token));
     console.log(token);
     if (token == null || token === "null" || token === "undefined") {
@@ -25,7 +24,7 @@ $(function () {
     /**
      * 点击->个人信息
      */
-    $("#to-info a").click(function () {
+    $("#to-info a").ready(function () {
 
             showOrganizerInfo();
 
@@ -43,9 +42,9 @@ $(function () {
     $("#login-out").click(function () {
         clearOrganizerInfo();
         //localStorage.clear();
-        localStorage.setItem("zhy", null);
+        localStorage.setItem("conNCU", null);
         alert("退出成功");
-        window.location.href = "登录.html";
+        window.location.href = "login.html";
     })
 })
 
@@ -152,6 +151,7 @@ function showOrganizerInfo() {
         "                                            <br />\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <div class=\"col-sm-12 text-center\">\n" +
+        "<br>"+
         "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新信息'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
@@ -242,7 +242,7 @@ function submitChange() {
             type: "POST",
             url: '/organizer/updateOrganizer',
             contentType: "application/json",
-            headers: {'token': localStorage.getItem("zhy")},
+            headers: {'token': localStorage.getItem("conNCU")},
             data: JSON.stringify({
                 "organizerUnit": $("#organizerUnit").val(),
                 "organizerEmail": $("#organizerEmail").val(),

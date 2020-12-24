@@ -1,4 +1,4 @@
-package com.conference.service.impl;
+package com.conference.service.Impl;
 
 import com.conference.dao.ParticipantDao;
 import com.conference.entity.Participant;
@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Author: liuCenYu
- * @Date: 2020/12/6 10:43
- **/
+ * @Description
+ * @Author 谢 娇
+ * @Date 2020/12/6 23:09
+ * @sno 6109118015
+ */
+
 @Service("participantService")
 public class ParticipantServiceImpl implements ParticipantService {
 

@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>组织者单位信息</title>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/messages_zh.js"></script>
+    <script src="js/organizer/organizer-index.js"></script>
     <!-- Common plugins -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/simple-line-icons.css" rel="stylesheet">
@@ -16,6 +20,7 @@
     <link rel="stylesheet" href="css/metismenu.min.css">
     <link href="css/c3.min.css" rel="stylesheet">
     <link href="css/blue.css" rel="stylesheet">
+
     <!-- dataTables -->
     <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
     <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -27,7 +32,106 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+
     <![endif]-->
+    <script>
+        //进来时显示个人信息
+        $(function () {
+            showOrganizer();
+
+            $("#submit_head_photo").click(function () {
+                var form = new FormData(document.getElementById("form_submit_photo"));//把表单的对象作为一个参数
+                $.ajax({
+                    type:"POST",
+                    url:"/file/headPhotoUpload",
+                    data:form,
+                    headers:{"token": localStorage.conNCU},
+                    dataType:"json",
+                    processData:false,
+                    contentType:false,
+                    success:function(result) {
+                        if (result.message == "成功") {
+                            alert('更新头像成功!');
+                        } else {
+                            alert('更新头像失败!');
+                        }
+                    },
+                    error:function() {
+                        alert('更新异常!');
+                    }
+                });
+
+            location.reload();
+            })
+        })
+
+        function showOrganizer(){
+            $.ajax({
+                type:"get",
+                url: "/organizer/showOrganizerPersonal",
+                data: "",
+                dataType:"json",
+                headers:{"token": localStorage.conNCU},
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    // console.log(result);
+                    // console.dir(result);
+                    $("#organizerId").val(result.data.organizerId);
+                    $("#organizerPass").val(result.data.organizerPass);
+                    $("#organizerPhone").val(result.data.organizerPhone);
+                    $("#organizerUnit").val(result.data.organizerUnit);
+                    $("#organizerEmail").val(result.data.organizerEmail);
+                    $("#roleId").val(result.data.organizerId);
+                    $("#head_photo").attr("src",result.data.organizerPhoto);
+                    $("#nav-head-photo").attr("src",result.data.organizerPhoto);
+                },
+                error:function () {
+                    alert('请求异常!');
+                }
+            })
+        }
+
+        function submitUpdateOrganizer(){
+            var form = new FormData(document.getElementById("updateOrganizerForm"));//把表单的对象作为一个参数
+            console.dir(form);
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/organizer/updateOrganizer",
+                data: form,
+                headers:{"token": localStorage.conNCU},
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    // console.dir(result);
+                    if( result.message == "成功"){
+                        alert("修改成功!");
+                    }else {
+                        alert("修改失败!");
+                    }
+                    showOrganizer();
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        //预览图片
+        function onLoadImage() {
+            var file=$('#ingredient_file').get(0).files[0];
+            var reader = new FileReader();
+            //将文件以Data URL形式读入页面
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                //显示文件
+                $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result +'" alt="" />');
+            }
+        }
+
+    </script>
 </head>
 <body>
 
@@ -36,7 +140,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4">
-                <a href="组织者主页面.html" class="admin-logo">
+                <a href="organizer-index.html" class="organizer-logo">
                     <h1><img src="assets/picture/meeting.jpg" alt=""></h1>
                 </a>
                 <!-- 以下div为页面缩小后出现左边导航栏的按钮  -->
@@ -49,19 +153,15 @@
             <!--以下div为顶部导航栏-->
             <div class="col-xs-8">
                 <ul class="list-inline top-right-nav">
+
                     <li >
-                        <a href="组织者消息.html" >
-                            <span class="glyphicon glyphicon-envelope"> 消息</span>
-                        </a>
-                    </li>
-                    <li >
-                        <a href="登录.html" >
+                        <a href="javascript:void(0)" id="login-out">
                             <span class="glyphicon glyphicon-log-out"> 退出登录</span>
                         </a>
                     </li>
                     <li>
-                        <a href="组织者主页面.html">
-                            <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
+                        <a href="组织者单位信息.html">
+                            <img id = "nav-head-photo" src="" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;
                         </a>
                     </li>
                 </ul>
@@ -77,23 +177,21 @@
         <div class="nano-content">
             <ul class="metisMenu nav" id="menu">
                 <!--                        <li class="nav-heading"><span>Navigation</span></li>-->
-                <li>
-                    <a href="组织者主页面.html"><i class="icon-home"></i> 主页 </a>
+                <li id="to-index">
+                    <a href="organizer-index.html"><i class="icon-home"></i> 主页 </a>
                 </li>
-                <li>
-                    <a href="组织者单位信息.html"><i class="icon-user"></i> 单位信息 </a>
+                <li id="to-info">
+                    <a href="javascript:void(0)"><i class="icon-user"></i> 单位信息 </a>
                 </li>
                 <li>
                     <a href="javascript: void(0);" aria-expanded="true"><i class="icon-note"></i> 会议 <span class="fa arrow"></span></a>
                     <ul class="nav-second-level nav" aria-expanded="true">
                         <li><a href="组织者生成会议.html">生成会议</a></li>
-                        <li><a href="组织者查看会议.html">查看会议</a></li>
+                        <li id="show-conference"><a href="组织者查看会议.html">查看会议</a></li>
                         <li><a href="组织者审核会议.html">审核会议</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="组织者消息.html"><i class="icon-envelope-letter"></i> 消息 </a>
-                </li>
+
             </ul>
         </div><!--nano content-->
     </div><!--nano scroll end-->
@@ -110,7 +208,7 @@
             <div class="col-sm-12 text-right">
                 <ol class="breadcrumb">
                     <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
-                    <li>单位信息</li>
+                    <li>主页</li>
                 </ol>
             </div>
         </div>
@@ -118,68 +216,52 @@
     <!--主体页面头部结束-->
 
     <!--页面主体内容部分开始-->
-    <div class="page-wrapper">
-        <div class="container-fluid">
-            <!-- Row -->
-            <div class="row">
-                <!-- Column -->
-                <div class="col-sm-11">
-                    <div class="card">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs profile-tab" role="tablist">
-                            <li class="nav-item" id="to-info"> <a class="nav-link" data-toggle="tab" href="#个人信息" role="tab">个人信息</a> </li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div class="tab-pane" id="个人信息" role="tabpanel">
-                                <div class="card-body">
-                                    <form class="form-horizontal form-material">
-                                        <br>
-                                        <div class="form-group">
-                                            <label class="col-md-12">单位名称</label>
-                                            <div class="col-md-12">
-                                                <input type="text" id="organizerUnit" class="form-control form-control-line" value="左海余大公司">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12">联系邮箱</label>
-                                            <div class="col-md-12">
-                                                <input type="text" id="organizerEmail" class="form-control form-control-line" value="958474674@qq.com">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12">联系电话</label>
-                                            <div class="col-md-12">
-                                                <input type="text" id=" organizerPhone" value="17770835165" class="form-control form-control-line">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-md-12">密码</label>
-                                            <div class="col-md-12">
-                                                <input type="password" id="organizerPass" value="password" class="form-control form-control-line">
-                                            </div>
-                                        </div>
 
-                                        <br/>
-                                        <br/>
-                                        <div class="form-group">
-                                            <div class="col-sm-12 text-center" >
-                                                <a type="submit" id="update" class="btn btn-info">修改信息</a>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <!--                        头像展示-->
+                        <div class="head_photo_container">
+                            <img id="head_photo" class="img-responsive center-block" src="" style="" >
                         </div>
+                        <hr>
+
+                        <!--                        换头像-->
+                        <div align="center">
+                            <form id="form_submit_photo" class="form-horizontal">
+                                <input type="hidden" name="role" value="organizer">
+                                <input type="hidden" name="roleId" value="" id = "roleId">
+                                <label class="btn btn-default btn-file">
+                                    更新头像
+                                    <input id="ingredient_file" type="file" style="display: none;" name="file" required="" onchange="onLoadImage()">
+                                </label>
+                                <label class="btn btn-default btn-file">
+                                    确认更新
+                                    <input id = "submit_head_photo" type="button" style="display: none;" class="btn btn-primary" />
+                                </label>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
-                <!-- Column -->
             </div>
-            <!-- Row -->
+            <div class="col-md-8 column">
+                <div class="jumbotron">
+                    <h1>
+                        欢迎!
+                    </h1>
+                    <!--                            <p>-->
+                    <!--                                <a class="btn btn-primary btn-large" href="#">Learn more</a>-->
+                    <!--                            </p>-->
+                </div>
+            </div>
+            <div class="col-md-4 column">
 
+            </div>
         </div>
     </div>
-
     <!--页面主体内容部分结束-->
 
 
@@ -196,7 +278,6 @@
 
 <!--Common plugins-->
 <script src="js/jquery.min.js"></script>
-<script src="js/popper.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/pace.min.js"></script>
 <script src="js/jasny-bootstrap.min.js"></script>
@@ -204,161 +285,15 @@
 <script src="js/jquery.nanoscroller.min.js"></script>
 <script src="js/metismenu.min.js"></script>
 <script src="js/float-custom.js"></script>
-<script src="js/waves.js"></script>
-<script src="js/custom.min.js"></script>
-<script src="js/sidebarmenu.js"></script>
-<!--stickey kit -->
-<script src="js/sticky-kit.min.js"></script>
-<script src="js/jquery.sparkline.min.js"></script>
-<!--jquery steps-->
-<script src="js/jQuery.style.switcher.js"></script>
-<script src="js/jquery.steps.min.js"></script>
-<script src="js/jquery.validate.min.js"></script>
-<script>
-    $("#example-basic").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-
-        autoFocus: true
-    });
-    //steps with form
-    var form = $("#example-form");
-    form.validate({
-        errorPlacement: function errorPlacement(error, element) {
-            element.before(error);
-        },
-        rules: {
-            confirm: {
-                equalTo: "#password"
-            }
-        }
-    });
-    form.children("div").steps({
-        headerTag: "h3",
-        bodyTag: "section",
-        transitionEffect: "slideLeft",
-        onStepChanging: function (event, currentIndex, newIndex)
-        {
-            form.validate().settings.ignore = ":disabled,:hidden";
-            return form.valid();
-        },
-        onFinishing: function (event, currentIndex)
-        {
-            form.validate().settings.ignore = ":disabled";
-            return form.valid();
-        },
-        onFinished: function (event, currentIndex)
-        {
-            alert("Submitted!");
-        }
-    });
-</script>
-
-<script type="text/javascript">
-    let organizer;
-    let token;
-    let $organizerId;
-    $(function (){
-
-        token = localStorage.getItem("zhy");
-        console.log(typeof (token));
-        console.log(token);
-        if (token == null || token === "null" || token === "undefined") {
-            console.log("no token");
-        } else {
-            $organizerId = parseJwt(token).organizerId;/*获取用户信息*/
-            console.log($organizerId);
-        }
-        /**
-         * 点击->个人信息
-         */
-        $("#to-info a").click(function () {
-
-            getOrganizerInfo()($organizerId);
-            console.log(organizer.organizerPhone)
-            console.log($("#organizerPhone").val())
-            $("#organierUnit").val(organizer.organizerUnit);
-            $("#organizerEmail").val(organizer.organizerEmail);
-            $("#organizerPhone").val(organizer.organizerPhone);
-            $("#organizerPass").val(organizer.organizerPass);
-
-            console.log($("#organizerPhone").val())
-        })
-
-        $("#update").click(function (){
-            let organizerUnit = $("#organizerUnit").val();
-            let organizerEmail = $("#organizerEmail").val();
-            let organizerPhone = $("#participantWorkUnit").val();
-            let organizerPass = $("#organizerPass").val();
-            $.ajax({
-                type: "POST",
-                dataType: "json",
-                url: '/organizer/updateOrganizer',
-                contentType: "application/json",
-                data:JSON.stringify({
-                    //"participantId":5,
-                    "organizerUnit":organizerUnit,
-                    "organizerEmail":organizerEmail,
-                    "organizerPhone":organizerPhone,
-                    "organizerPass": organizerPass,
-                }),
-                success: function (jsonData,result) {
-                    console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
-
-                        window.location.href = "组织者主页面.html";
-                    } else {
-                        console.log(jsonData["data"]["token"]);
-                        alert("登录失败，请重试");
-                    }
-                }
-            });
-            // return false;
-        })
-
-    })
-
-
-    function getOrganizerInfo($organizerId) {
-        $.ajax({
-            async: false,
-            headers: {
-                'token': token,
-            },
-            url: "/organizer/getOrganizerInfo",
-            type: "get",
-            dataType: "json",
-            data: {
-                'organizerId': $organzierId,
-            },
-            success: function (data) {
-                console.log(data);
-                if (data["code"] === 200) {
-                    organizer = data["data"]["getOrganizerInfo"];
-                    console.log(organizer);
-                } else {
-                    alert("获取用户数据失败");
-                }
-            },
-            error: function () {
-                alert("获取用户数据失败");
-            },
-        });
-    }
-    // function updateParticipantInfo(){
-    //
-    // }
-    /*获取token里面的用户数据*/
-    function parseJwt(token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-        return JSON.parse(jsonPayload);
-    }
-
-
-</script>
+<!--page script-->
+<script src="js/d3.min.js"></script>
+<script src="js/c3.min.js"></script>
+<!-- iCheck for radio and checkboxes -->
+<script src="js/icheck.min.js"></script>
+<!-- Datatables-->
+<script src="js/jquery.datatables.min.js"></script>
+<script src="js/datatables.responsive.min.js"></script>
+<script src="js/jquery.toast.min.js"></script>
+<script src="js/dashboard-alpha.js"></script>
 </body>
 </html>

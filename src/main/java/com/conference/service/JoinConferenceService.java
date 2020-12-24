@@ -30,13 +30,24 @@ public interface JoinConferenceService {
      * @return  JoinConference 的列表
      **/
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
+
+
     /*
      * @Description 通过参会者id查询他未审核的所有会议
      * @return  JoinConference 的列表
      **/
     public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId);
+    /*
+     * @Description 通过会议id查询所有会议
+     * @return  JoinConference 的列表
+     **/
+    public List<JoinConference> queryConferenceByConferenceId(Integer conferenceId);
     List<JoinConference> queryJoinConferenceByConferenceId(Integer conferenceId);
 
     JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId,
                                                                        Integer conferenceId);
+
+    int addAJoinedConferenceToRoom(Integer participantId, Integer hotelId, Integer conferenceId);
+
+    int confirmAJoinedConferenceById(Integer participantId, Integer conferenceId);
 }

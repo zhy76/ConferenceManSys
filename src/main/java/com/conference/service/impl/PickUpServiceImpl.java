@@ -1,4 +1,4 @@
-package com.conference.service.impl;
+package com.conference.service.Impl;
 
 import com.conference.dao.PickUpDao;
 import com.conference.entity.PickUp;
