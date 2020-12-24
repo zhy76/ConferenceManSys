@@ -20,6 +20,8 @@ import com.conference.service.OrganizerService;
 import com.conference.util.result.Result;
 import com.conference.util.vaild.OrganizerRegister;
 import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,34 +71,38 @@ public class ConferenceController {
      */
     //管理员展示所有会议
     @PostMapping("/showConferencesByAdmin")
-    public Result showConferencesByAdmin(){
-        List<Conference> conferencesList = conferenceService.queryConferences();
-        List <JSONObject> trueConferencesList = new LinkedList<>();
-        for( Conference conference :  conferencesList)
-        { //遍历每个会议，查询出各个ID对应的name属性
-            Organizer organizer = organizerService.findOrganizerById(conference.getOrganizerId());
-            Fleet fleet = fleetService.findFleetById(conference.getFleetId());
-            Hotel hotel = hotelService.getHotelById(conference.getHotelId());
-            JSONObject object = new JSONObject();
-            object.put("conferenceId",conference.getConferenceId());
-            object.put("conferenceName",conference.getConferenceName());
-
-            object.put("organizerId",conference.getOrganizerId());
-            object.put("organizerUnit",organizer.getOrganizerUnit());
-
-            object.put("conferenceStart",conference.getConferenceStart());
-            object.put("conferenceEnd",conference.getConferenceEnd());
-            object.put("conferenceLocation",conference.getConferenceLocation());
-
-            object.put("hotelId",conference.getHotelId());
-            object.put("hotelName",hotel.getHotelName());
-
-            object.put("fleetId",conference.getFleetId());
-            object.put("fleetName",fleet.getFleetName());
-
-            object.put("conferenceInfo",conference.getConferenceInfo());
-            trueConferencesList.add(object);
-        }
+    public Result showConferencesByAdmin(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
+//        PageHelper.startPage(pageNum,pageSize); //第1页个数为10
+//        List<Conference> conferencesList = conferenceService.queryConferences();
+//        System.out.println(conferencesList.size());
+        List<JSONObject> trueConferencesList = conferenceService.selectAll(pageNum,pageSize);
+//        for( Conference conference :  conferencesList)
+//        { //遍历每个会议，查询出各个ID对应的name属性
+//            Organizer organizer = organizerService.findOrganizerById(conference.getOrganizerId());
+//            Fleet fleet = fleetService.findFleetById(conference.getFleetId());
+//            Hotel hotel = hotelService.getHotelById(conference.getHotelId());
+//            JSONObject object = new JSONObject();
+//            object.put("conferenceId",conference.getConferenceId());
+//            object.put("conferenceName",conference.getConferenceName());
+//
+//            object.put("organizerId",conference.getOrganizerId());
+//            object.put("organizerUnit",organizer.getOrganizerUnit());
+//
+//            object.put("conferenceStart",conference.getConferenceStart());
+//            object.put("conferenceEnd",conference.getConferenceEnd());
+//            object.put("conferenceLocation",conference.getConferenceLocation());
+//
+//            object.put("hotelId",conference.getHotelId());
+//            object.put("hotelName",hotel.getHotelName());
+//
+//            object.put("fleetId",conference.getFleetId());
+//            object.put("fleetName",fleet.getFleetName());
+//
+//            object.put("conferenceInfo",conference.getConferenceInfo());
+//            trueConferencesList.add(object);
+//        }
+//        PageInfo<JSONObject> pi  = new PageInfo<>(trueConferencesList);
+//        System.out.println(pi.getTotal());
         return Result.success("trueConferencesList",trueConferencesList);
     }
 

@@ -5,40 +5,40 @@
 <mapper namespace="com.conference.dao.LiveRoomDao">
 <!--    查看全部住宿表-->
     <select id="findAllLiveRoom" resultType="LiveRoom">
-        SELECT * FROM live_room;
+        SELECT * FROM live_room
     </select>
 <!--    根据会议查看住宿表-->
     <select id="findAllLiveRoomByConferenceId" resultType="LiveRoom">
-        SELECT * FROM live_room WHERE conference_id=#{conferenceId};
+        SELECT * FROM live_room WHERE conference_id=#{conferenceId}
     </select>
 <!--    根据人员查看住宿-->
     <select id="findAllLiveRoomByParticipantId" resultType="LiveRoom">
-        SELECT * FROM live_room WHERE participant_id=#{participantId};
+        SELECT * FROM live_room WHERE participant_id=#{participantId}
     </select>
 <!--    通过酒店查看-->
     <select id="findAllLiveRoomByHotelId" resultType="LiveRoom">
-        SELECT * FROM live_room WHERE hotel_id=#{hotelId};
+        SELECT * FROM live_room WHERE hotel_id=#{hotelId}
     </select>
 <!--    精确查找-->
     <select id="findAllLiveRoomByAll" resultType="LiveRoom">
         SELECT * FROM live_room WHERE participant_id=#{participantId} AND
-                            conference_id=#{conferenceId} AND hotel_id=#{hotelId};
+                            conference_id=#{conferenceId} AND hotel_id=#{hotelId}
     </select>
 <!--    插入住宿信息-->
     <insert id="addLiveRoom">
         INSERT INTO live_room
-        VALUES(#{participantId}, #{hotelId}, #{conferenceId}, #{roomId});
+        VALUES(#{participantId}, #{hotelId}, #{conferenceId}, #{roomId})
     </insert>
 <!--    删除住宿信息-->
     <delete id="deleteLiveRoom">
-        DELETE from live_room where participant_id=#{participantId} AND conference_id=#{conferenceId};
+        DELETE from live_room where participant_id=#{participantId} AND conference_id=#{conferenceId}
     </delete>
 <!--    精准删除-->
     <delete id="deleteLiveRoomByAll">
-        DELETE from live_room where participant_id=#{participantId} AND conference_id=#{conferenceId} AND hotel_id=#{hotelId};
+        DELETE from live_room where participant_id=#{participantId} AND conference_id=#{conferenceId} AND hotel_id=#{hotelId}
     </delete>
 <!--    更新房间-->
     <update id="updateLiveRoom">
-        UPDATE live_room SET room_id=#{roomId} WHERE participant_id=#{participantId} AND hotel_id=#{hotelId} AND conference_id=#{conferenceId};
+        UPDATE live_room SET room_id=#{roomId} WHERE participant_id=#{participantId} AND hotel_id=#{hotelId} AND conference_id=#{conferenceId}
     </update>
 </mapper>

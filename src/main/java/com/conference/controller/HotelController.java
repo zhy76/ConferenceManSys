@@ -3,12 +3,15 @@ package com.conference.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.conference.dao.HotelDao;
 import com.conference.entity.Driver;
+import com.conference.entity.Fleet;
 import com.conference.entity.Hotel;
 import com.conference.service.HotelService;
-import com.conference.service.TokenService;
 import com.conference.service.impl.TokenServiceImpl;
+import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +24,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/hotel")
 public class HotelController {
-    @Autowired
-    private TokenServiceImpl tokenServiceImpl;
+    //    @Autowired
+//    private TokenServiceImpl tokenServiceImpl;
     @Autowired
     private HotelDao hotelDao;
     @Autowired
@@ -47,7 +50,7 @@ public class HotelController {
         int addNumber = hotelService.addHotel(hotel);
         Hotel hotelForBase = hotelService.getHotelByPhone(hotel.getHotelPhone());
         if(addNumber>0){
-            String token = tokenServiceImpl.getToken(hotelForBase);
+            String token = tokenService.getToken(hotelForBase);
             return Result.success("token", token);
         }else{
             return new Result(ResultCode.FAIL);
@@ -68,25 +71,30 @@ public class HotelController {
             if (!hotelForBase.getHotelPass().equals(hotel.getHotelPass())){
                 return new Result(ResultCode.IncorrectCredentialsException);
             }else {
-                String token = tokenServiceImpl.getToken(hotelForBase);
+                String token = tokenService.getToken(hotelForBase);
                 return Result.success("token", token);
             }
         }
     }
-
+    @GetMapping("/getHotelById")
+    public Result getHotelById(@RequestParam int hotelId){
+        Hotel getHotelById = hotelService.getHotelById(hotelId);
+        return Result.success("getHotelById", getHotelById);
+    }
     @PostMapping("/getHotelInfo")
     public Result getHotelInfo(HttpServletRequest request) {
-       // System.out.println(request.getHeader("token"));
+        // System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         Hotel getHotelInfo=hotelService.getHotelById((Integer) claims.get("hotelId"));
         //System.out.println(getHotelInfo);
         return Result.success("getHotelInfo", getHotelInfo);
     }
     @GetMapping("/getAllHotel")
-        public Result getAllHotel() {
+    public Result getAllHotel() {
         List<Hotel> getAllHotel = hotelService.findAllHotel();
         return Result.success("getAllHotel", getAllHotel);
     }
+
     @PostMapping("/updateHotel")//??
     public Result updateHotel(@Valid @RequestBody Hotel hotel, HttpServletRequest request) {
         System.out.println(request.getHeader("token"));
@@ -102,4 +110,38 @@ public class HotelController {
 //                             @PathVariable String hotelInfo, @PathVariable int hotelId) {
 //        hotelDao.updateHotel(hotelName,hotelLocation,hotelPhone,hotelPass,hotelInfo,hotelId);
 //    }
+
+    /**
+     * 管理员获取全部酒店
+     * @return
+     */
+    @PostMapping("/getAllHotelByAdmin")
+    public Result getAllHotelByAdmin(@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Hotel> getAllHotel = hotelService.findAllHotel();
+        PageInfo<Hotel> pi = new PageInfo<>(getAllHotel);
+        return Result.success("getAllHotel", pi.getList());
+    }
+
+    /**
+     * 管理员根据酒店id查询出酒店信息
+     * @param hotelId
+     * @return
+     */
+    @PostMapping("/updateHotelByAdmin")
+    public Result updateHotelByAdmin(@RequestParam Integer hotelId){
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        return Result.success(hotel);
+    }
+
+    /**
+     * 管理员提交修改表单
+     * @param hotel
+     * @return
+     */
+    @PostMapping("/submitUpdateHotelByAdmin")
+    public Result submitUpdateHotelByAdmin(Hotel hotel){
+        hotelService.updateHotel(hotel);
+        return Result.success();
+    }
 }
