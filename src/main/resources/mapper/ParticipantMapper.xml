@@ -42,4 +42,12 @@
     <select id="queryParticipantByParticipantPhone" resultType="Participant">
         select * from participant where participant_phone = #{participantPhone}
     </select>
+
+    <select id = "fuzzyQueryParticipantByParticipantName" resultType="Participant">
+        select * from participant where participant_name like concat(concat('%',#{participantName}),'%')
+    </select>
+
+    <select id = "fuzzyQueryParticipantByParticipantPhone" resultType="Participant">
+        select * from participant where participant_phone like concat(concat('%',#{participantPhone}),'%')
+    </select>
 </mapper>

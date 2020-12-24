@@ -28,6 +28,10 @@ public interface ParticipantService {
      **/
     public Participant queryParticipantByParticipantName(String participantName);
 
+    public List<Participant>  fuzzyQueryParticipantByParticipantName(String participantName);
+
+    public List<Participant>  fuzzyQueryParticipantByParticipantPhone(String participantPhone);
+
     /**
      * @Description 修改参会者Participant个人信息
      * @return 返回受影响行数

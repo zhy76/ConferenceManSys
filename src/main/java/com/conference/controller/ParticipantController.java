@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -121,6 +122,22 @@ public class ParticipantController {
         List<Participant> ParticipantList = participantService.queryParticipants();
         PageInfo<Participant> pi = new PageInfo<>(ParticipantList);
         return  Result.success(pi.getList());
+    }
+
+    //管理员根据姓名查找所有的参加者
+    @PostMapping("/queryParticipantsByParticipantName")
+    @ResponseBody
+    public Result queryParticipantsByParticipantName(@RequestParam("participantName") String participantName){
+        List<Participant> participantList = participantService.fuzzyQueryParticipantByParticipantName(participantName);
+        return  Result.success(participantList);
+    }
+
+    //管理员根据联系电话查找所有的参加者
+    @PostMapping("/queryParticipantsByParticipantPhone")
+    @ResponseBody
+    public Result queryParticipantsByParticipantPhone(@RequestParam("participantPhone") String participantPhone){
+        List<Participant> participantList = participantService.fuzzyQueryParticipantByParticipantPhone(participantPhone);
+        return  Result.success(participantList);
     }
 
     /*

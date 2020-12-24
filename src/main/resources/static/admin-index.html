@@ -622,7 +622,7 @@
         //车队模块
 
         //司机模块
-        function drivers(pageNum,pageSize) {
+        function drivers() {
             $.ajax({
                 type:"get",
                 url: "/driver/getAllDriverByAdmin",
@@ -631,7 +631,8 @@
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    //获取到所有车队
+                    //获取到所有司机
+                    console.dir(result);
                     var listDrivers = "";
                     result = result["data"]["getAllDriver"];
                     console.dir(result);
@@ -943,7 +944,7 @@
                         </span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="管理员个人信息.html">个人信息</a></li>
+                            <li><a href="admin-perInfo.html">个人信息</a></li>
                             <li class="divider"></li>
                             <li><a href="javascript:void(0);" onclick = "logout();">退出登录</a> </li>
                         </ul>
@@ -1000,8 +1001,8 @@
                                     <div class="panel-body">
 <!--                                        nav list-group  nav-tap   class="list-group-item"-->
                                         <ul class="nav list-group  nav-tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;"><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员参加者人员管理.html'); participants(1,10); })()" >参加者</a></li>
-                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)"  onclick="(function(){$('#main').load('管理员组织者单位管理.html'); organizers(1,10); })()">组织者</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;"><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-participantMan.html'); participants(1,10); })()" >参加者</a></li>
+                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)"  onclick="(function(){$('#main').load('admin-organizerMan.html'); organizers(1,10); })()">组织者</a></li>
 
                                         </ul>
                                     </div>
@@ -1021,7 +1022,7 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员会议管理.html'); conferences(1,10)})()">会议列表</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-conferenceMan.html'); conferences(1,10)})()">会议列表</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1041,8 +1042,8 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员车队管理.html'); fleets(1,10); })()">车队</a></li>
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员司机管理.html'); drivers(1,10); })()">司机</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-fleetMan.html'); fleets(1,10); })()">车队</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-driverMan.html'); drivers(); })()">司机</a></li>
 
                                         </ul>
                                     </div>
@@ -1062,7 +1063,7 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员酒店管理.html'); hotels(1,10); })()">酒店</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-hotelMan.html'); hotels(1,10); })()">酒店</a></li>
 
                                         </ul>
                                     </div>

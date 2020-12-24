@@ -236,12 +236,13 @@ public class DriverController {
      */
     @GetMapping("/getAllDriverByAdmin")
     public Result getAllDriverByAdmin() {
+        System.out.print("caozuozhong....");
         List<Driver> getAllDriver = driverService.findAllDriver();
         Map<Integer,List<Object>> map = new HashMap<>(); //找到对应的Map
         for(int i = 0 ; i < getAllDriver.size() ; i ++)
         {
             Fleet fleet = fleetService.findFleetById(getAllDriver.get(i).getFleetId());
-            map.put(i,new ArrayList<>(Arrays.asList(getAllDriver.get(i),fleet)));
+            map.put(i , new ArrayList<>(Arrays.asList(getAllDriver.get(i),fleet)));
         }
         return Result.success("getAllDriver", map);
     }
