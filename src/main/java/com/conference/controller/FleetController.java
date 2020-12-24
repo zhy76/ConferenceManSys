@@ -132,6 +132,7 @@ public class FleetController {
      */
     @GetMapping("/deleteFleet")
     public Result deleteFleet(@RequestParam("fleetId") Integer fleetId) {
+        System.out.println(fleetId);
         fleetService.deleteFleetById(fleetId);
         return Result.success();
     }
@@ -175,6 +176,26 @@ public class FleetController {
      */
     @GetMapping("/findFleetById")
     public Result findFleetById(@RequestParam int fleetId){
+        Fleet findFleetById =fleetService.findFleetById(fleetId);
+        return Result.success("findFleetById", findFleetById);
+    }
+
+    /**
+     * 管理员修改车队信息
+     */
+    @PostMapping("/updateFleetByAdmin")
+    public Result updateFleetByAdmin(Fleet fleet) {
+        fleetService.updateFleet(fleet);
+        return Result.success();
+    }
+
+    /**
+     *根据id查找fleet！！！
+     * @param fleetId
+     * @return
+     */
+    @GetMapping("/findFleetById")
+    public Result findFleetById(@RequestParam Integer fleetId){
         Fleet findFleetById =fleetService.findFleetById(fleetId);
         return Result.success("findFleetById", findFleetById);
     }

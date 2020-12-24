@@ -28,7 +28,8 @@ import java.util.List;
 @RequestMapping("/organizer")
 public class OrganizerController {
 
-    @Autowired private TokenService tokenService;
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
     private OrganizerService organizerService;
@@ -159,13 +160,13 @@ public class OrganizerController {
     /**
      * 查找登入组织者的所有信息
      * /organizer/getOrganizerInfo
-     * @param
+     * @param request
      * @return
      */
     @GetMapping("/getOrganizerInfo")
-    public Result getOrganizerInfo(@RequestParam Integer organizerId) {
-        Organizer getOrganizerInfo = organizerService.findOrganizerById(organizerId);
-        System.out.println(getOrganizerInfo);
+    public Result getOrganizerInfo(HttpServletRequest request) {
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        Organizer getOrganizerInfo = organizerService.findOrganizerById((Integer) claims.get("organizerId"));
         return Result.success("getOrganizerInfo", getOrganizerInfo);
     }
 

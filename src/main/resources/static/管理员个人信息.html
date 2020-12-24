@@ -1,3 +1,4 @@
+
 <!--管理员个人消息页面-->
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,7 @@
     <script src="admin/deleteURL.js"></script>
     <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
     <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
-<!--    <script src = "admin/admin-index.js"> </script>-->
+    <script src = "admin/admin-index.js"> </script>
 
     <script>
         //进来时显示管理员个人信息
@@ -74,6 +75,7 @@
                     $("#adminPass").val(result.data.adminPass);
                     $("#roleId").val(result.data.adminId);
                     $("#head_photo").attr("src",result.data.adminPhoto);
+                    $("#nav-head-photo").attr("src",result.data.adminPhoto);
                 },
                 error:function () {
                     $.alert({
@@ -119,23 +121,21 @@
 
         //预览图片
         function onLoadImage() {
-            var file=$('#ingredient_file').get(0).files[0];
-            var reader = new FileReader();
-            //将文件以Data URL形式读入页面
-            reader.readAsDataURL(file);
-            reader.onload = function(e){
-                //显示文件
-                $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result +'" alt="" />');
+                var file=$('#ingredient_file').get(0).files[0];
+                var reader = new FileReader();
+                //将文件以Data URL形式读入页面
+                reader.readAsDataURL(file);
+                reader.onload = function(e){
+                    //显示文件
+                    $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result +'" alt="" />');
+                }
             }
-        }
-
-
 
     </script>
 </head>
 
 <body>
-    <!--顶部导航栏-->
+<!--顶部导航栏-->
     <nav class="navbar navbar-inverse"><!--by default top bar is dark, add .light-top-bar class to make it light-->
         <div class="container-fluid">
             <div class="navbar-header">
@@ -166,7 +166,7 @@
                         <a href="#"  class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                             <span>
                                 <!-- 头像 size要求：128*128尺寸-->
-                                <img src="picture/noLogin.jpg" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;<b class="caret"></b>
+                                <img id = "nav-head-photo" src="" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;<b class="caret"></b>
                             </span>
                         </a>
                         <ul class="dropdown-menu">
@@ -181,39 +181,39 @@
 
         </div>
     </nav>
-    <!--顶部导航栏-->
+<!--顶部导航栏-->
     <div class="container">
         <!--        页面内容-->
         <div class="row" style="margin-top:30px;">
 
             <div class="col-sm-3">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <!--                        头像展示-->
-                    <div class="head_photo_container">
-                        <img id="head_photo" class="img-responsive center-block" src="" style="" >
-                    </div>
-                    <hr>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+<!--                        头像展示-->
+                        <div class="head_photo_container">
+                            <img id="head_photo" class="img-responsive center-block" src="" style="" >
+                        </div>
+                        <hr>
 
-                    <!--                        换头像-->
-                    <div align="center">
-                        <form id="form_submit_photo" class="form-horizontal">
-                            <input type="hidden" name="role" value="admin">
-                            <input type="hidden" name="roleId" value="" id = "roleId">
-                            <label class="btn btn-default btn-file">
-                                更新头像
-                                <input id="ingredient_file" type="file" style="display: none;" name="file" required="" onchange="onLoadImage()">
-                            </label>
-                            <label class="btn btn-default btn-file">
-                                确认更新
-                                <input id = "submit_head_photo" type="button" style="display: none;" class="btn btn-primary" />
-                            </label>
-                        </form>
-                    </div>
+<!--                        换头像-->
+                        <div align="center">
+                            <form id="form_submit_photo" class="form-horizontal">
+                                <input type="hidden" name="role" value="admin">
+                                <input type="hidden" name="roleId" value="" id = "roleId">
+                                <label class="btn btn-default btn-file">
+                                    更新头像
+                                    <input id="ingredient_file" type="file" style="display: none;" name="file" required="" onchange="onLoadImage()">
+                                </label>
+                                <label class="btn btn-default btn-file">
+                                    确认更新
+                                    <input id = "submit_head_photo" type="button" style="display: none;" class="btn btn-primary" />
+                                </label>
+                            </form>
+                        </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
 
             <div class="col-sm-9">
                 <div class="panel panel-default">

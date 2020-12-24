@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Description
- * @Author 谢 娇
- * @Date 2020/12/5 22:31
- * @sno 6109118015
- */
+ * @Author: liuCenYu
+ * @Date: 2020/12/4 23:30
+ **/
 @Service("conferenceService")
 public class ConferenceServiceImpl implements ConferenceService {
 
@@ -55,5 +53,13 @@ public class ConferenceServiceImpl implements ConferenceService {
         return conferenceDao.queryConferenceByConferenceId(conferenceId);
     }
 
+    @Override
+    public int addConference(Conference conference) {
+        return 0;
+    }
 
+    @Override
+    public List<Conference> queryConferenceByOrganizerId(Integer organizerId) { //用于修改
+        return conferenceDao.queryConferenceByOrganizerId(organizerId);
+    }
 }

@@ -39,6 +39,9 @@ public class DriverController {
     @Autowired
     private PickUpService pickUpService;
 
+    @Autowired
+    private FleetService fleetService;
+
 
     /**
      * 删除司机 Api
@@ -120,10 +123,9 @@ public class DriverController {
 
     /**
      * 司机登出 Api
-     *
-     * @return
      * @TODO 登出
      * /driver/logout
+     * @return
      */
     @PostMapping("/logout")
     public Result logout() {
@@ -142,6 +144,8 @@ public class DriverController {
      */
     @PostMapping("/adminUpdateDriver")
     public Result adminUpdateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver) {
+        System.out.println("修改中...");
+        System.out.println(driver);
         driverService.updateDriver(driver);
         return Result.success();
     }
@@ -149,8 +153,7 @@ public class DriverController {
     /**
      * 司机自己修改自己的信息 Api
      * /driver/updateDriver
-     *
-     * @param driver  {}
+     * @param driver {}
      * @param request
      * @return result {}
      */
@@ -160,7 +163,6 @@ public class DriverController {
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         driver.setDriverId((Integer) claims.get("driverId"));
-        System.out.println(driver.getDriverId());
         driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
         driverService.updateDriver(driver);
         return Result.success();
@@ -195,9 +197,8 @@ public class DriverController {
     }
 
     /**
-     * 司机自己查找登入司机的所有信息
+     * 查找登入司机的所有信息
      * /driver/getDriverInfo
-     *
      * @param request
      * @return
      */
@@ -223,3 +224,63 @@ public class DriverController {
         return Result.success("getDriverInfoById", getDriverInfo);
     }
 }
+    /**
+     * 司机自己查找登入司机的所有信息
+     * /driver/getDriverInfo
+     * @param driverId
+     * @return
+     */
+    @GetMapping("/getDriverInfoById")
+    public Result getDriverInfoById(@RequestParam("driverId") Integer driverId) {
+        Driver getDriverInfo = driverService.findDriverById(driverId);
+        System.out.println("/getDriverInfoById");
+        return Result.success("getDriverInfoById", getDriverInfo);
+    }
+
+    /**
+     * 管理员查找所有的司机 Api
+     * /driver/getAllDriver
+     *
+     * @return result {}
+     */
+    @GetMapping("/getAllDriverByAdmin")
+    public Result getAllDriverByAdmin() {
+        List<Driver> getAllDriver = driverService.findAllDriver();
+        Map<Integer,List<Object>> map = new HashMap<>(); //找到对应的Map
+        for(int i = 0 ; i < getAllDriver.size() ; i ++)
+        {
+            Fleet fleet = fleetService.findFleetById(getAllDriver.get(i).getFleetId());
+            map.put(i,new ArrayList<>(Arrays.asList(getAllDriver.get(i),fleet)));
+        }
+        return Result.success("getAllDriver", map);
+    }
+
+    /**
+     * 管理员查找指定id的司机 Api
+     * /driver/getAllDriver
+     *
+     * @return result {}
+     */
+    @PostMapping("/updateDriverByAdmin")
+    public Result updateDriverByAdmin(@RequestParam Integer driverId) {
+        Driver driver = driverService.findDriverById(driverId);
+        System.out.println(driver);
+        Map<String,List<Object>> map = new HashMap<>(); //找到对应的Map
+        Fleet fleet = fleetService.findFleetById(driver.getFleetId());
+        map.put("getDriverById",new ArrayList<>(Arrays.asList(driver,fleet)));
+        return Result.success(map);
+    }
+
+    /**
+     * 管理员修改司机的信息
+     * /driver/updateDriverByAdmin
+     *
+     * @param driver {}
+     * @return result {}
+     */
+    @PostMapping("/submitDriverByAdmin")
+    public Result submitDriverByAdmin(@RequestBody Driver driver) {
+//        System.out.println(driver);
+        driverService.updateDriver(driver);
+        return Result.success();
+    }

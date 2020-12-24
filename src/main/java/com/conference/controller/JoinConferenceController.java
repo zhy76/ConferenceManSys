@@ -166,4 +166,11 @@ public class JoinConferenceController {
         JoinConference joinConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(participantId, conferenceId);
         return Result.success("joinConference",joinConference);
     }
+
+    @GetMapping("/queryJoinedConference")
+    public Result queryJoinedConferenceByParticipantId(@RequestParam Integer participantId){
+        List<JoinConference> joinConferenceList = joinConferenceService.queryConferenceByParticipantId(participantId);
+        return Result.success("joinConferenceList",joinConferenceList);
+    }
+
 }

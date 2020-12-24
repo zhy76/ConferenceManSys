@@ -1,0 +1,111 @@
+<!--            管理员主页中心内容-->
+<!--            绑定左侧选择内容-->
+
+<h2 style="font-weight: bold; padding: 0px; margin:0px;">&nbsp;&nbsp;用户管理</h2><br>
+<div class="col-sm-9">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li id = "participantLi" class = "active"><a href="#participant" data-toggle="tab" onclick="participants();" >参加者</a></li>
+        <li id = "organizerLi"><a href="#organizer" data-toggle="tab"  onclick="organizers();">组织者</a></li>
+    </ul>
+    <!--                对应面板-->
+    <div class="panel panel-default">
+
+        <div class="tab-content">
+            <!--                    参加者表格-->
+            <!--                        搜索模块-->
+            <div class="tab-pane fade in active" id="participant">
+                <div class="panel-body">
+                    <form class="form-inline text-center" >
+                        <div class="form-group">
+                            <label for="searchParticipantName">姓名</label>
+                            <input type="text" class="form-control" id="searchParticipantName" placeholder="姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchParticipantPhone">手机号码</label>
+                            <input type="email" class="form-control" id="searchParticipantPhone" placeholder="手机号码">
+                        </div>
+                        <button id="submitParticipantSearch" class="btn btn-default">查询</button>
+                    </form>
+                </div>
+                <!--                        表格展示-->
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>姓名</th>
+                        <th>职业</th>
+                        <th>工作单位</th>
+                        <th>手机号码</th>
+                        <th>电子邮箱</th>
+                        <th>密码</th>
+                        <th>性别</th>
+                        <th>身份证</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!--                    组织者表格-->
+            <div class="tab-pane fade in" id="organizer">
+                <!--                        搜索模块-->
+                <div class="panel-body">
+                    <form class="form-inline text-center" >
+                        <div class="form-group">
+                            <label for="searchOrganizerUnit">组织单位</label>
+                            <input type="text" class="form-control" id="searchOrganizerUnit" placeholder="组织单位">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchOrganizerPhone">联系电话</label>
+                            <input type="email" class="form-control" id="searchOrganizerPhone" placeholder="联系电话">
+                        </div>
+                        <button id="submitOrganizerSearch" class="btn btn-default">查询</button>
+                    </form>
+                </div>
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>组织单位</th>
+                        <th>联系电话</th>
+                        <th>电子邮箱</th>
+                        <th>密码</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!--                分页-->
+            <nav class = "pull-right" >
+                <ul class="pagination">
+                    <li class="disabled">
+                        <a href="#" id="previous">
+                            <span>&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" id="next">
+                            <span>&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </div>
+
+</div>

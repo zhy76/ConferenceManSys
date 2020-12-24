@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    //    @ResponseBody
+//    @ResponseBody
 //    @ExceptionHandler
 //    public Result handleException(Exception e, HttpServletResponse response){
 //        String msg = e.getMessage();

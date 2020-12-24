@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "7567217",
+      "name": "住宿",
+      "font_class": "zhusu",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "8581297",
+      "name": "住宿",
+      "font_class": "zhusu1",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "18170573",
+      "name": "小轿车,小汽车,交通,出行",
+      "font_class": "compact-car-full",
+      "unicode": "e9d8",
+      "unicode_decimal": 59864
+    },
+    {
       "icon_id": "15942527",
       "name": "会议",
       "font_class": "huiyi",

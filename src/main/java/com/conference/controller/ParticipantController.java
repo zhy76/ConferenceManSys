@@ -45,13 +45,9 @@ public class ParticipantController {
     @PostMapping("/register")
     public Result register(@Valid @RequestBody Participant participant) {
         int addNumber = participantService.addAParticipant(participant);
-
         //System.out.println(addNumber);
         if (addNumber > 0) {
-            Participant newParticipant = participantService.queryParticipantByParticipantPhone(participant.getParticipantPhone());
-            //String token = tokenService.getToken(addNumber);
-            System.out.println(newParticipant);
-            String token = tokenService.getToken(newParticipant);
+            String token = tokenService.getToken(addNumber);
            // System.out.println(token);
             return Result.success("token", token);
         } else {
@@ -83,7 +79,6 @@ public class ParticipantController {
     public Result updateParticipant(@Valid @RequestBody  Participant participant, HttpServletRequest request) {
 //        JSONObject result=new JSONObject();
         System.out.println(request.getHeader("token"));
-        System.out.println(participant);
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         participant.setParticipantId((Integer) claims.get("participantId"));
         System.out.println(participant.getParticipantId());
@@ -149,4 +144,34 @@ public class ParticipantController {
         List<Participant> participantsList = participantService.queryParticipants();
         return Result.success(participantsList);
     }
+
+    /*
+     * @Description 返回参会者已有的所有信息
+     * @return
+     **/
+    @GetMapping("/getParticipantInfo")
+    public Result getParticipantInfo(HttpServletRequest request){
+        Claims claims = tokenService.parseToken(request.getHeader("token"));
+        System.out.println("getParticipantInfo");
+        Participant getParticipantInfo = participantService.queryParticipantByParticipantId((Integer) claims.get("participantId"));
+        return Result.success("getParticipantInfo",getParticipantInfo);
+    }
+
+    @PostMapping("/queryParticipantByParticipantId")
+    public Result queryParticipantByParticipantId(@RequestParam int participantId){
+        //System.out.println("getParticipantInfo");
+        Participant queryParticipantByParticipantId = participantService.queryParticipantByParticipantId(participantId);
+        //System.out.println(queryParticipantByParticipantId);
+        return Result.success("queryParticipantByParticipantId",queryParticipantByParticipantId);
+    }
+
+    @GetMapping("/queryParticipantByParticipantPhone")
+    public Result queryParticipantByParticipantPhone(@RequestParam String participantPhone){
+
+        //System.out.println("getParticipantInfo");
+        Participant queryParticipantByParticipantPhone = participantService.queryParticipantByParticipantPhone(participantPhone);
+        //System.out.println(queryParticipantByParticipantPhone);
+        return Result.success("queryParticipantByParticipantPhone",queryParticipantByParticipantPhone);
+    }
+
 }
