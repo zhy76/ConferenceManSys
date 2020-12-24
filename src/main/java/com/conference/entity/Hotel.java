@@ -25,7 +25,7 @@ public class Hotel {
     private String hotelPass;
 
     private String hotelInfo;
-
+    private String hotelPhoto="headphoto/default.jpg";
     public Hotel() {
     }
 
@@ -38,17 +38,7 @@ public class Hotel {
         this.hotelInfo = hotelInfo;
     }
 
-    @Override
-    public String toString() {
-        return "Hotel{" +
-                "hotelId=" + hotelId +
-                ", hotelName='" + hotelName + '\'' +
-                ", hotelLocation='" + hotelLocation + '\'' +
-                ", hotelPhone='" + hotelPhone + '\'' +
-                ", hotelPass='" + hotelPass + '\'' +
-                ", hotelInfo='" + hotelInfo + '\'' +
-                '}';
-    }
+
 
     public int getHotelId() {
         return hotelId;
@@ -96,5 +86,26 @@ public class Hotel {
 
     public void setHotelInfo(String hotelInfo) {
         this.hotelInfo = hotelInfo;
+    }
+
+    public String getHotelPhoto() {
+        return hotelPhoto;
+    }
+
+    public void setHotelPhoto(String hotelPhoto) {
+        this.hotelPhoto = hotelPhoto;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "hotelId=" + hotelId +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelLocation='" + hotelLocation + '\'' +
+                ", hotelPhone='" + hotelPhone + '\'' +
+                ", hotelPass='" + hotelPass + '\'' +
+                ", hotelInfo='" + hotelInfo + '\'' +
+                ", hotelPhoto='" + hotelPhoto + '\'' +
+                '}';
     }
 }

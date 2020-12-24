@@ -29,4 +29,8 @@
         UPDATE hotel SET hotel_name=#{hotelName}, hotel_location=#{hotelLocation}, hotel_phone=#{hotelPhone},
         hotel_pass=#{hotelPass}, hotel_info=#{hotelInfo} WHERE hotel_id=#{hotelId};
     </update>
+    <!--    更新酒店头像-->
+    <update id="updateHotelPhoto">
+        UPDATE hotel SET hotel_photo=#{hotelPhoto} WHERE hotel_id=#{hotelId};
+    </update>
 </mapper>

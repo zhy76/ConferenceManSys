@@ -17,6 +17,8 @@ $(function () {
         console.log("no token");
     } else {
         $hotelId = parseJwt(token).hotelId;/*获取用户信息*/
+        getHotelInfo($hotelId);
+        $(".img-circle").attr("src",hotel.hotelPhoto);
         console.log(parseJwt(token));
         console.log($hotelId);
     }
@@ -67,7 +69,54 @@ $(function () {
         window.location.href = "登录New.html";
     })
 
+
 });
+function headPhotoUpload() {
+    var form = new FormData(document.getElementById("form_submit_photo"));//把表单的对象作为一个参数
+    $.ajax({
+        type:"POST",
+        url:"/file/headPhotoUpload",
+        data:form,
+        headers:{"conNCU": localStorage.conNCU},
+        dataType:"json",
+        processData:false,
+        contentType:false,
+        success:function(result) {
+
+            if (result.message == "成功") {
+                alert("更新头像成功!");
+                // $.alert({
+                //     title: '提示信息',
+                //     content: '更新头像成功!',
+                // });
+            } else {
+                alert("更新头像失败!");
+                // $.alert({
+                //     title: '提示信息',
+                //     content: '更新头像失败!',
+                // });
+            }
+        },
+        error:function() {
+            alert("更新异常!");
+            // $.alert({
+            //     title: '提示信息',
+            //     content: '更新异常!',
+            // });
+        }
+    });
+}
+//预览图片
+function onLoadImage() {
+    var file=$('#ingredient_file').get(0).files[0];
+    var reader = new FileReader();
+    //将文件以Data URL形式读入页面
+    reader.readAsDataURL(file);
+    reader.onload = function(e){
+        //显示文件
+        $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result +'" alt="" />');
+    }
+}
 
 function  findAllLiveRoomByHotelId(){
     $.ajax({
@@ -306,6 +355,7 @@ function getHotelInfo($hotelId) {
             if (data["code"] === 200) {
                 hotel = data["data"]["getHotelInfo"];
                 console.log(hotel);
+                $("#head_photo").attr("src",hotel.hotelPhoto);
             } else {
                 alert("获取信息失败！");
             }
@@ -318,81 +368,114 @@ function getHotelInfo($hotelId) {
 
 function  showHotelInfo(){
     getHotelInfo($hotelId);
-    let $html=" <div class=\"page-wrapper\">\n"+"<div class=\"container-fluid\">\n" +
-        "                <!-- Row -->\n" +
-        "                <div class=\"row\">\n" +
-        "                    <!-- Column -->\n" +
-        "                    <div class=\"col-sm-11\">\n" +
-        "                        <div class=\"card\">\n" +
-        "                            <!-- Nav tabs -->\n" +
-        "                            <ul class=\"nav nav-tabs profile-tab\" role=\"tablist\">\n" +
-        "                                <li class=\"nav-item \"> <a class=\"nav-link\" data-toggle=\"tab\" href=\"#酒店信息\"\n" +
-        "                                        role=\"tab\">酒店信息</a> </li>\n" +
-        "                            </ul>\n" +
-        "                            <!-- Tab panes -->\n" +
-        "                            <div class=\"tab-content\">\n" +
-        "                                <div class=\"tab-pane\" id=\"酒店信息\" role=\"tabpanel\">\n" +
-        "                                    <div class=\"card-body\">\n" +
-        "                                        <form class=\"form-horizontal form-material\" id=\"hotelForm\">\n" +
-        "                                            <br>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">酒店名</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" class=\"form-control form-control-line\" id=\"hotelName\" name=\"hotelName\" value=\""+hotel.hotelName+"\">\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">电话号码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" class=\"form-control form-control-line\" id=\"hotelPhone\" name=\"hotelPhone\" value=\""+hotel.hotelPhone+"\">\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">地址</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" class=\"form-control form-control-line\" id=\"hotelLocation\" name=\"hotelLocation\" value=\""+hotel.hotelLocation+"\">\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" id=\"hotelPass\"  name=\"hotelPass\" value=\""+hotel.hotelPass+"\"\n" +
-        "                                                        class=\"form-control form-control-line\">\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">重复密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                               <input type=\"password\" value=\""+hotel.hotelPass+"\"\n" +
-        "                                                   class=\"form-control form-control-line\" id=\"repeatHotelPass\" name=\"repeatHotelPass\">\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">酒店介绍</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <textarea rows=\"5\" class=\"form-control form-control-line\"id=\"hotelInfo\" name=\"hotelInfo\">\n" +
-                                                            "\n" +hotel.hotelInfo+
-        "                                                </textarea>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <br />\n" +
-        "                                            <br />\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <div class=\"col-sm-12 text-center\">\n" +
-        "                                                   <button type=\"button\" class=\"btn btn-info\" onclick='submitChange()'>更新</button>" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                        </form>\n" +
+    let $html= " <div class=\"container\">\n" +
+        "            <!--        页面内容-->\n" +
+        "            <div class=\"row\" style=\"margin-top:30px;\">\n" +
+        "\n" +
+        "                <div class=\"col-sm-3\">\n" +
+        "                    <div class=\"panel panel-default\">\n" +
+        "                        <div class=\"panel-body\">\n" +
+        "                            <!--                        头像展示-->\n" +
+        "                            <div class=\"head_photo_container\">\n" +
+        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\"../../headphoto/default.jpg\" style=\"\">\n" +
+        "                            </div>\n" +
+        "                            <hr>\n" +
+        "\n" +
+        "                            <!--                        换头像-->\n" +
+        "                            <div align=\"center\">\n" +
+        "                                <form id=\"form_submit_photo\" class=\"form-horizontal\">\n" +
+        "                                    <input type=\"hidden\" name=\"role\" value=\"hotel\">\n" +
+        "                                    <input type=\"hidden\" name=\"roleId\" value=\"" + hotel.hotelId + "\" id=\"roleId\">\n" +
+        "                                    <label class=\"btn btn-default btn-file\">\n" +
+        "                                        更新头像\n" +
+        "                                        <input id=\"ingredient_file\" type=\"file\" style=\"display: none;\" name=\"file\"\n" +
+        "                                            required=\"\" onchange=\"onLoadImage()\">\n" +
+        "                                    </label>\n" +
+        "                                    <label class=\"btn btn-default btn-file\">\n" +
+        "                                        确认更新\n" +
+        "                                        <input id=\"submit_head_photo\" type=\"button\" style=\"display: none;\"\n" +
+        "                                            class=\"btn btn-primary\" onclick='headPhotoUpload()' />\n" +
+        "                                    </label>\n" +
+        "                                </form>\n" +
+        "                            </div>\n" +
+        "\n" +
+        "                        </div>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        getHotelInfo($hotelId);
+        $html+="                <div class=\"col-sm-8\">\n" +
+        "                    <div class=\"panel panel-default\">\n" +
+        "                        <div class=\"panel-body\">\n" +
+        "                            <div class=\"row\" style=\"margin-left: 20px; margin-right: 20px;\">\n" +
+        "                                <h3>酒店信息</h3>\n" +
+        "                                <hr>\n" +
+        "                                <form id=\"hotelForm\" class=\"form-horizontal\" action=\"\">\n" +
+           " <input type=\"hidden\" name=\"hotelId\" id=\"hotelId\" value=\"\">"+
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"hotelName\">酒店名：</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"hotelName\" value=\"" + hotel.hotelName + "\"\n" +
+        "                                                class=\"form-control\" maxlength=\"40\" required=\"\" id=\"hotelName\"\n" +
+        "                                                placeholder=\"酒店名\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
         "                                    </div>\n" +
-        "                                </div>\n" +
+        "\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"hotelPhone\">电话号码:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"hotelPhone\" value=\"" + hotel.hotelPhone + "\"\n" +
+        "                                                class=\"form-control\" style=\"margin-top: 0;\" maxlength=\"50\" required=\"\"\n" +
+        "                                                id=\"hotelPhone\" placeholder=\"电话号码\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"hotelLocation\">地址:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"hotelLocation\" value=\"" + hotel.hotelLocation + "\"\n" +
+        "                                                class=\"form-control\" style=\"margin-top: 0;\" maxlength=\"50\" required=\"\"\n" +
+        "                                                id=\"hotelLocation\" placeholder=\"地址\" ></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label for=\"hotelPass\">密码:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"password\" name=\"hotelPass\" class=\"form-control\"\n" +
+        "                                                maxlength=\"40\" id=\"hotelPass\" value=\"" + hotel.hotelPass + "\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"repeatHotelPass\">重复密码:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"password\" name=\"repeatHotelPass\"\n" +
+        "                                                class=\"form-control\" maxlength=\"40\" id=\"repeatHotelPass\" value=\"" + hotel.hotelPass + "\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"hotelInfo\">酒店介绍:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><textarea name=\"hotelInfo\" cols=\"40\" rows=\"4\"\n" +
+        "                                                class=\"form-control\" maxlength=\"500\" id=\"hotelInfo\">" +hotel.hotelInfo+ "</textarea></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "\n" +
+        "                                    <div class=\"col-xs-offset-5\">\n" +
+        "                                        <button type=\"button\" class=\"btn btn-info\" style=\"border-radius: 5px\"\n" +
+        "                                            onclick=submitChange(); return false;>更新信息</button>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "                                </form>\n" +
+        "\n" +
         "                            </div>\n" +
         "                        </div>\n" +
         "                    </div>\n" +
-        "                    <!-- Column -->\n" +
         "                </div>\n" +
-        "                <!-- Row -->\n" +
         "\n" +
-        "            </div>"+"</div>"
+        "            </div>\n" +
+        "        </div>"
     // 清空节点
     $(".jumbotron").empty();
     $(".jumbotron").append($html);
