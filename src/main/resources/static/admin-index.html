@@ -17,7 +17,34 @@
     <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
     <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
     <script src = "admin/admin-index.js"> </script>
+    <script src="https://cdn.bootcss.com/jquery.serializeJSON/2.9.0/jquery.serializejson.min.js"></script>
     <script>
+        //进来时显示管理员对应管理员头像
+        $(function () {
+            showAdmin();
+        })
+
+        function showAdmin(){
+            $.ajax({
+                type:"post",
+                url: "/admin/showAdminPersonal",
+                data: "",
+                dataType:"json",
+                headers:{"conNCU": localStorage.conNCU},
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    // console.dir(result);
+                    $("#nav-head-photo").attr("src",result.data.adminPhoto);
+                },
+                error:function () {
+                    $.alert({
+                        title: '提示信息',
+                        content: '请求异常!',
+                    });
+                }
+            })
+        }
 
         // 参加者模块
         // 修改参加者
@@ -457,6 +484,410 @@
         }
         //会议模块
 
+        //车队模块
+        function fleets() {
+            $.ajax({
+                type:"get",
+                url: "/fleet/getAllFleet",
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到所有车队
+                    // console.dir(result);
+                    var listFleets = "";
+                    console.dir(result["data"]["getAllFleet"]);
+                    result["data"]["getAllFleet"].forEach( (fleet) => {
+
+                        listFleets +=' <tr>\n' +
+                            '                                        <td hidden>'+ fleet.fleetId +'</td>\n' +
+                            '                                        <td>'+ fleet.fleetName +'</td>\n' +
+                            '                                        <td>'+fleet.fleetPhone +'</td>\n' +
+                            '                                        <td>'+ fleet.fleetPass+'</td>\n' +
+                            '                                        <td>\n' +
+                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateFleet" data-backdrop="false" onclick = "javascript:updateFleet('+  fleet.fleetId + ')"> 修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteFleet('+ fleet.fleetId +')">删除</button>\n' +
+                            '                                        </td>\n' +
+                            '                                    </tr>'
+                    });
+                    $('#fleet table tbody').html(listFleets);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function deleteFleet(fleetId){
+            $.confirm({
+                title: '提示信息',
+                content: '确认要删除吗?',
+                buttons: {
+                    "确认": function () {
+                        $.ajax({
+                            async: false,
+                            type:"get",
+                            url: "/fleet/deleteFleet?fleetId=" + fleetId,
+                            data: "",
+                            dataType:"json",
+                            processData:false,
+                            contentType:false,
+                            success:function (result) {
+                                console.dir(result);
+                                console.dir(result["message"]);
+                                if( result["message"] == "成功" )
+                                {
+                                    fleets();
+                                }
+                                else
+                                {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除失败',
+                                    });
+                                }
+                            },
+                            error:function () {
+                                alert("请求异常");
+                            }
+                        })
+                    },
+                    "取消": function () {
+
+                    },
+                }
+            });
+        }
+
+        function updateFleet(fleetId){
+            console.dir(fleetId);
+            // console.dir(organizerId);
+            // console.dir(hotelId);
+            // console.dir(fleetId);
+            $.ajax({
+                type:"get",
+                url: "/fleet/findFleetById?fleetId=" + fleetId,
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到车队信息
+                    console.dir(result);
+                    var fleet = result.data.findFleetById;
+                    $("#fleet-Id").val(fleet.fleetId);
+                    $("#fleet-Name").val(fleet.fleetName);
+                    $("#fleetPass").val(fleet.fleetPass);
+                    $("#fleetPhone").val(fleet.fleetPhone);
+                    $("#fleetPhoto").attr("src",fleet.fleetPhoto);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function submitUpdateFleet(){
+            var form = new FormData(document.getElementById("updateFleetForm"));//把表单的对象作为一个参数
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/fleet/updateFleetByAdmin",
+                data: form,
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    console.dir(result);
+                },
+                error:function () {
+                    $.alert({
+                        title: '提示信息',
+                        content: '请求异常!',
+                    });
+                }
+            })
+        }
+        //车队模块
+
+        //司机模块
+        function drivers() {
+            $.ajax({
+                type:"get",
+                url: "/driver/getAllDriverByAdmin",
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到所有车队
+                    var listDrivers = "";
+                    result = result["data"]["getAllDriver"];
+                    console.dir(result);
+                    for(var i in result)
+                     {
+                        listDrivers +=' <tr>\n' +
+                            '                                        <td hidden>'+ result[i][0].driverId +'</td>\n' +
+                            '                                        <td>'+ result[i][0].driverName +'</td>\n' +
+                            '                                        <td>'+result[i][0].driverPhone +'</td>\n' +
+                            '                                        <td>'+ result[i][0].driverPass+'</td>\n' +
+                            '                                        <td>'+ result[i][0].carNumber+'</td>\n' +
+                            '                                        <td>'+ result[i][1].fleetName+'</td>\n' +
+                            '                                        <td hidden>'+ result[i][1].assign+'</td>\n' +
+                            '                                        <td>\n' +
+                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateDriver" data-backdrop="false" onclick = "javascript:updateDriver('+ result[i][0].driverId +')"> 修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteDriver('+ result[i][0].driverId  +')">删除</button>\n' +
+                            '                                        </td>\n' +
+                            '                                    </tr>'
+                    };
+                    $('#driver table tbody').html(listDrivers);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function deleteDriver(driverId){
+            $.confirm({
+                title: '提示信息',
+                content: '确认要删除吗?',
+                buttons: {
+                    "确认": function () {
+                        $.ajax({
+                            async: false,
+                            type:"get",
+                            url: "/driver/deleteDriver?driverId=" + driverId,
+                            data: {},
+                            dataType:"json",
+                            processData:false,
+                            contentType:false,
+                            success:function (result) {
+                                // console.dir(result);
+                                // console.dir(result["message"]);
+                                if( result["message"] == "成功" )
+                                {
+                                    drivers();
+                                }
+                                else
+                                {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除失败',
+                                    });
+                                }
+                            },
+                            error:function () {
+                                alert("请求异常");
+                            }
+                        })
+                    },
+                    "取消": function () {
+
+                    },
+                }
+            });
+        }
+
+        // 需要修改的
+        //  bug
+        //  错误
+        function updateDriver(driverId){
+            // console.dir(driverId);
+            $.ajax({
+                type:"post",
+                url: "/driver/updateDriverByAdmin?driverId=" + driverId,
+                data: "",
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到司机信息
+                    result = result.data.getDriverById;
+                   console.dir(result);
+                   $("#driverId").val(result[0].driverId);
+                   $("#driverName").val(result[0].driverName);
+                   $("#driverPhone").val(result[0].driverPhone);
+                   $("#driverPass").val(result[0].driverPass);
+                   $("#carNumber").val(result[0].carNumber);
+                   $("#driverPhoto").attr("src",result[0].driverPhoto);
+                   // 需要修改的
+                   //  bug
+                   //  错误
+                    $("#driver-fleet-Id").val(result[0].fleetId);
+                   // $("#driver-fleet-Id").val(result[1].fleetName);
+                    $("#assign").val(result[0].assign);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function submitUpdateDriver(){
+            // var form = new FormData(document.getElementById("updateDriverForm"));//把表单的对象作为一个参数
+            var form = $('#updateDriverForm').serializeJSON();
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/driver/submitDriverByAdmin?assign=" + $("#assign").val(),
+                data: JSON.stringify(form),
+                dataType:"json",
+                processData:false,
+                contentType: "application/json;charset=UTF-8",
+                success:function (result) {
+                    console.dir(result);
+                },
+                error:function () {
+                    $.alert({
+                        title: '提示信息',
+                        content: '请求异常!',
+                    });
+                }
+            })
+        }
+        //司机模块
+
+        //酒店模块
+        function hotels() {
+            $.ajax({
+                type:"post",
+                url: "/hotel/getAllHotel",
+                data: "",
+                headers:{"conNCU": localStorage.conNCU},
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到所有车队
+                    var listHotels = "";
+                    console.dir(result["data"]["trueHotelsList"]);
+                    result["data"]["trueHotelsList"].forEach( (hotel) => {
+
+                        listHotels +=' <tr>\n' +
+                            '                                        <td hidden>'+ hotel.hotelId +'</td>\n' +
+                            '                                        <td>'+ hotel.hotelName +'</td>\n' +
+                            '                                        <td>'+hotel.hotelPhone +'</td>\n' +
+                            '                                        <td>'+ hotel.hotelPass+'</td>\n' +
+                            '                                        <td>\n' +
+                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateHotel" data-backdrop="false" onclick = "javascript:updateHotel('+  hotel.hotelId + ',' + hotel.organizerId + ',' + hotel.hotelId + ',' + hotel.hotelId +')"> 修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteHotel('+ hotel.hotelId +')">删除</button>\n' +
+                            '                                        </td>\n' +
+                            '                                    </tr>'
+                    });
+                    $('#hotel table tbody').html(listHotels);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function deleteHotel(hotelId){
+            $.confirm({
+                title: '提示信息',
+                content: '确认要删除吗?',
+                buttons: {
+                    "确认": function () {
+                        $.ajax({
+                            async: false,
+                            type:"get",
+                            url: "/hotel/deleteHotel/" + hotelId,
+                            data: {},
+                            headers:{"conNCU": localStorage.conNCU},
+                            dataType:"json",
+                            processData:false,
+                            contentType:false,
+                            success:function (result) {
+                                console.dir(result);
+                                console.dir(result["message"]);
+                                if( result["message"] == "成功" )
+                                {
+                                    hotels();
+                                }
+                                else
+                                {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除失败',
+                                    });
+                                }
+                            },
+                            error:function () {
+                                alert("请求异常");
+                            }
+                        })
+                    },
+                    "取消": function () {
+
+                    },
+                }
+            });
+        }
+
+        function updateHotel(hotelId,organizerId,hotelId,hotelId){
+            // console.dir(hotelId);
+            // console.dir(organizerId);
+            // console.dir(hotelId);
+            // console.dir(hotelId);
+            $.ajax({
+                type:"post",
+                url: "/hotel/updateHotelByAdmin/" + hotelId + "/" + organizerId + "/" + hotelId + "/" + hotelId,
+                data: "",
+                headers:{"conNCU": localStorage.conNCU},
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    //获取到会议信息
+                    var hotel = result.data.hotel;
+                    var hotel = result.data.hotel;
+                    var hotel = result.data.hotel;
+                    var organizer = result.data.organizer;
+                    $("#hotelId").val(hotel.hotelId);
+                    $("#hotelName").val(hotel.hotelName);
+                    $("#hotelOrganizerUnitId").val(hotel.organizerId);
+                    $("#hotelOrganizerUnit").val(organizer.organizerUnit);
+                    $("#hotelStart").val(hotel.hotelStart);
+                    $("#hotelEnd").val(hotel.hotelEnd);
+                    $("#hotelLocation").val(hotel.hotelLocation);
+                    $("#hotelId").val(hotel.hotelId);
+                    $("#hotelName").val(hotel.hotelName);
+                    $("#hotelId").val(hotel.hotelId);
+                    $("#hotelName").val(hotel.hotelName);
+                    $("#hotelInfo").val(hotel.hotelInfo);
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        function submitUpdateHotel(){
+            var form = new FormData(document.getElementById("updateHotelForm"));//把表单的对象作为一个参数
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/hotel/submitUpdateHotelByAdmin",
+                data: form,
+                headers:{"conNCU": localStorage.conNCU},
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    console.dir(result);
+                },
+                error:function () {
+                    $.alert({
+                        title: '提示信息',
+                        content: '请求异常!',
+                    });
+                }
+            })
+        }
+        //酒店模块
+
     </script>
 </head>
 
@@ -494,7 +925,7 @@
                         <a href="#"  class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                         <span>
                             <!-- 头像 size要求：128*128尺寸-->
-                            <img src="picture/noLogin.jpg" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;<b class="caret"></b>
+                            <img src="" id = "nav-head-photo" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;<b class="caret"></b>
                         </span>
                         </a>
                         <ul class="dropdown-menu">
@@ -537,6 +968,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingTwo">
                                     <h4 class="panel-title">
@@ -558,9 +990,9 @@
 
                                         </ul>
                                     </div>
-
                                 </div>
                             </div>
+
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="conferenceManage">
                                     <h4 class="panel-title">
@@ -575,6 +1007,48 @@
 
                                         <ul class="nav list-group  nav- tap">
                                             <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员会议管理.html'); conferences(); })()">会议列表</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="travelManage">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#travelContent">
+<!--                                            <span class="glyphicon iconfont icon-huiyi" style="font-weight: bold"> </span>-->
+                                            <span class="glyphicon iconfont icon-compact-car-full"  style="font-weight: bold"></span>
+                                            出行管理
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="travelContent" class="panel-collapse collapse">
+                                    <div class="panel-body">
+
+                                        <ul class="nav list-group  nav- tap">
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员车队管理.html'); fleets(); })()">车队</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员司机管理.html'); drivers(); })()">司机</a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="dormitoryManage">
+                                    <h4 class="panel-title">
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#dormitoryContent" >
+<!--                                            <span class="glyphicon iconfont icon-huiyi" style="font-weight: bold"> </span>-->
+                                            <span class="glyphicon iconfont icon-zhusu" style="font-weight: bold"></span>住宿管理
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="dormitoryContent" class="panel-collapse collapse">
+                                    <div class="panel-body">
+
+                                        <ul class="nav list-group  nav- tap">
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员酒店管理.html'); hotels(); })()">酒店</a></li>
 
                                         </ul>
                                     </div>
@@ -789,6 +1263,172 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+    <!--        修改车队信息的模态框-->
+    <div class="modal fade" id = "updateFleet" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">车队信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form id = "updateFleetForm">
+                        <div class = "row">
+                            <div class="col-sm-4" style="margin-top:0px;">
+                                <h5 class ="text-center" style="font-weight: bold;">车队头像</h5>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <img id="fleetPhoto" class="img-responsive center-block" src="" alt="" style="vertical-align: middle" >
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class = "col-sm-8">
+                                <div class="form-group" hidden>
+                                    <label for="fleet-Id">ID</label>
+                                    <input type="hidden" class="form-control" name="fleetId" id="fleet-Id" placeholder="id" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fleet-Name">车队名</label>
+                                    <input type="text" class="form-control"  name="fleetName" id="fleet-Name" placeholder="车队名"  value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fleetPhone">联系电话</label>
+                                    <input type="text" class="form-control" name="fleetPhone" id="fleetPhone" placeholder="联系电话" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fleetPass">密码</label>
+                                    <input type="text" class="form-control" name = "fleetPass" id="fleetPass" placeholder="密码" value="">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
+                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdateFleet(); $('#updateFleet').modal('hide'); fleets();
+">保存修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--        修改司机信息的模态框-->
+    <div class="modal fade" id = "updateDriver" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">司机信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form id = "updateDriverForm">
+                        <div class = "row">
+                            <div class="col-sm-4" style="margin-top:72px;">
+                                <h5 class ="text-center" style="font-weight: bold;">司机头像</h5>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <img id="driverPhoto" class="img-responsive center-block" src="" alt="" style="vertical-align: middle" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class = "col-sm-8">
+                                <div class="form-group" hidden>
+                                    <label for="driverId">ID</label>
+                                    <input type="hidden" class="form-control" name="driverId" id="driverId" placeholder="id" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="driverName">司机名</label>
+                                    <input type="text" class="form-control"  name="driverName" id="driverName" placeholder="司机名"  value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="driverPhone">联系电话</label>
+                                    <input type="text" class="form-control" name="driverPhone" id="driverPhone" placeholder="联系电话" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="driverPass">密码</label>
+                                    <input type="text" class="form-control" name = "driverPass" id="driverPass" placeholder="密码" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="carNumber">车牌号</label>
+                                    <input type="text" class="form-control" name = "carNumber" id="carNumber" placeholder="车牌号" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="driver-fleet-Id">所属车队</label>
+                                    <input type="text" class="form-control" name = "fleetId" id="driver-fleet-Id" placeholder="所属车队" value="">
+                                </div>
+                                <div class="form-group hidden" hidden>
+                                    <label for="assign" >isAssign</label>
+                                    <input type="hidden" class="form-control" name = "assign" id="assign" placeholder="isAssign" value="" >
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
+                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdateDriver(); $('#updateDriver').modal('hide'); drivers();
+">保存修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!--        修改酒店信息的模态框-->
+    <div class="modal fade" id = "updateHotel" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">酒店信息修改</h4>
+                </div>
+                <div class="modal-body">
+                    <form id = "updateHotelForm">
+                        <div class = "row">
+                            <div class="col-sm-4" style="margin-top:0px;">
+                                <h5 class ="text-center" style="font-weight: bold;">车队头像</h5>
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <img id="hotelPhoto" class="img-responsive center-block" src="headphoto/default.jpg" alt="" style="vertical-align: middle" >
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class = "col-sm-8">
+                                <div class="form-group" hidden>
+                                    <label for="hotel-Id">ID</label>
+                                    <input type="hidden" class="form-control" name="hotelId" id="hotel-Id" placeholder="id" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotel-Name">车队名</label>
+                                    <input type="text" class="form-control"  name="hotelName" id="hotel-Name" placeholder="车队名"  value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotelPhone">联系电话</label>
+                                    <input type="text" class="form-control" name="hotelPhone" id="hotelPhone" placeholder="联系电话" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotelPass">密码</label>
+                                    <input type="text" class="form-control" name = "hotelPass" id="hotelPass" placeholder="密码" value="">
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消修改</button>
+                    <button type="button" class="btn btn-primary btn-danger" onclick="submitUpdateHotel(); $('#updateHotel').modal('hide'); hotels();
+">保存修改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 </body>
 </html>

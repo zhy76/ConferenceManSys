@@ -47,7 +47,6 @@ public class FileController {
             file.transferTo(newFile);
             String url="headphoto/"+fileName;
             fileUploadService.headPhotoUpload(role,roleId,url);
-            System.out.println("dadsadsa");
             return Result.success("成功");
         } catch (Exception e) {
             e.printStackTrace();
