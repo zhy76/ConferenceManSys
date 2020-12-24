@@ -391,8 +391,8 @@
                         $.ajax({
                             async: false,
                             type:"get",
-                            url: "/conference/deleteConference/" + conferenceId,
-                            data: {},
+                            url: "/conference/deleteConference?conferenceId=" + conferenceId,
+                            data: "",
                             dataType:"json",
                             processData:false,
                             contentType:false,
