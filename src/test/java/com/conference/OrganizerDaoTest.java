@@ -31,7 +31,7 @@ public class OrganizerDaoTest {
         System.out.println(organizerDao.updateOrganizer(1,"132141","信工","22222","22222"));
         //System.out.println(organizerDao.findOrganizerById(4));
         //System.out.println(organizerDao.addOrganizer(null,"654646","左海余1","123","123456"));
-        Organizer organizer=new Organizer(null,"65464","左海余2","123","12345");
+//        Organizer organizer=new Organizer(null,"65464","左海余2","123","12345");
        //System.out.println(oimpl.addOrganizer(organizer));
 //        System.out.println(driverServiceImp.findDriverByPhone("12121212"));
       System.out.println(os.findAllOrganizer());

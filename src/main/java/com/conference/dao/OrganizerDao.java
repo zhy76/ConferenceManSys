@@ -51,5 +51,5 @@ public interface OrganizerDao {
      * 删除组织者
      */
     int deleteOrganizerById(@Param("organizerId") Integer organizerId);
-
+    int updateOrganizerPhoto(@Param("organizerPhoto") String organizerPhoto, @Param("organizerId") Integer organizerId);
 }

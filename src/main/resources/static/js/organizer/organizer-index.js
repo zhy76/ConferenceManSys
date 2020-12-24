@@ -151,6 +151,7 @@ function showOrganizerInfo() {
         "                                            <br />\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <div class=\"col-sm-12 text-center\">\n" +
+        "<br>"+
         "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新信息'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +

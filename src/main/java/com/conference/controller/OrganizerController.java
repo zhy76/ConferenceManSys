@@ -1,5 +1,6 @@
 package com.conference.controller;
 
+import com.conference.entity.Admin;
 import com.conference.entity.Organizer;
 import com.conference.entity.Organizer;
 import com.conference.service.OrganizerService;
@@ -76,6 +77,7 @@ public class OrganizerController {
     @RequestMapping("/login")
     public Result login(@Validated({OrganizerLogin.class}) @RequestBody Organizer organizer) {
         Organizer organizerForBase = organizerService.findOrganizerByPhone(organizer.getOrganizerPhone());
+
         if (organizerForBase == null) {
             return new Result(ResultCode.UnknownAccountException);
         } else {
@@ -83,6 +85,7 @@ public class OrganizerController {
                 return new Result(ResultCode.IncorrectCredentialsException);
             } else {
                 String token = tokenService.getToken(organizerForBase);
+                System.out.println(token);
                 return Result.success("token", token);
             }
         }
@@ -160,17 +163,25 @@ public class OrganizerController {
     /**
      * 查找登入组织者的所有信息
      * /organizer/getOrganizerInfo
-     * @param request
+     * @param
      * @return
      */
     @GetMapping("/getOrganizerInfo")
-    public Result getOrganizerInfo(HttpServletRequest request) {
-        Claims claims = tokenService.parseToken(request.getHeader("token"));
-        Organizer getOrganizerInfo = organizerService.findOrganizerById((Integer) claims.get("organizerId"));
+    public Result getOrganizerInfo(@RequestParam Integer organizerId) {
+        Organizer getOrganizerInfo = organizerService.findOrganizerById(organizerId);
+        System.out.println(getOrganizerInfo);
         return Result.success("getOrganizerInfo", getOrganizerInfo);
     }
 
-
+    @PostMapping("/showOrganizerPersonal")
+    public Result showOrganizerPersonal(HttpServletRequest request){
+        //根据登录时的账号和密码来返回完整的信息
+        String token = request.getHeader("zhy");
+        Claims claims = tokenService.parseToken(token);
+        Integer organizerId = (Integer) claims.get("organizerId");
+        Organizer organizer = organizerService.findOrganizerById(organizerId);
+        return Result.success(organizer);
+    }
     /**
      * 管理员管理组织者模块
      */

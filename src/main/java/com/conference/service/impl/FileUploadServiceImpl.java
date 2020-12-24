@@ -30,6 +30,9 @@ public class FileUploadServiceImpl implements FileUploadService {
         if( role.equals("admin")){
             adminDao.updateAdminPhoto(url,roleId);
         }
+        if( role.equals("organizer")){
+            organizerDao.updateOrganizerPhoto(url,roleId);
+        }
 
     }
 }

@@ -47,4 +47,7 @@ public interface JoinConferenceService {
     JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId,
                                                                        Integer conferenceId);
 
+    int addAJoinedConferenceToRoom(Integer participantId, Integer hotelId, Integer conferenceId);
+
+    int confirmAJoinedConferenceById(Integer participantId, Integer conferenceId);
 }

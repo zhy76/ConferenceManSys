@@ -27,6 +27,101 @@
     <!--[if lt IE 9]>
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+    <script>
+        //进来时显示个人信息
+        $(function () {
+            showOrganizer();
+
+            $("#submit_head_photo").click(function () {
+                var form = new FormData(document.getElementById("form_submit_photo"));//把表单的对象作为一个参数
+                $.ajax({
+                    type:"POST",
+                    url:"/file/headPhotoUpload",
+                    data:form,
+                    headers:{"zhy": localStorage.zhy},
+                    dataType:"json",
+                    processData:false,
+                    contentType:false,
+                    success:function(result) {
+                        if (result.message == "成功") {
+                            alert('更新头像成功!');
+                        } else {
+                            alert('更新头像失败!');
+                        }
+                    },
+                    error:function() {
+                        alert('更新异常!');
+                    }
+                });
+            })
+        })
+
+        function showOrganizer(){
+            $.ajax({
+                type:"post",
+                url: "/organizer/showOrganizerPersonal",
+                data: "",
+                dataType:"json",
+                headers:{"zhy": localStorage.zhy},
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    // console.dir(result);
+                    $("#organizerId").val(result.data.organizerId);
+                    $("#organizerPass").val(result.data.organizerPass);
+                    $("#organizerPhone").val(result.data.organizerPhone);
+                    $("#organizerUnit").val(result.data.organizerUnit);
+                    $("#organizerEmail").val(result.data.organizerEmail);
+                    $("#roleId").val(result.data.organizerId);
+                    $("#head_photo").attr("src",result.data.organizerPhoto);
+                    $("#nav-head-photo").attr("src",result.data.organizerPhoto);
+                },
+                error:function () {
+                    alert('请求异常!');
+                }
+            })
+        }
+
+        function submitUpdateOrganizer(){
+            var form = new FormData(document.getElementById("updateOrganizerForm"));//把表单的对象作为一个参数
+            console.dir(form);
+            $.ajax({
+                async: false,
+                type:"post",
+                url: "/organizer/updateOrganizer",
+                data: form,
+                headers:{"zhy": localStorage.zhy},
+                dataType:"json",
+                processData:false,
+                contentType:false,
+                success:function (result) {
+                    // console.dir(result);
+                    if( result.message == "成功"){
+                        alert("修改成功!");
+                    }else {
+                        alert("修改失败!");
+                    }
+                    showOrganizer();
+                },
+                error:function () {
+                    alert("请求异常");
+                }
+            })
+        }
+
+        //预览图片
+        function onLoadImage() {
+            var file=$('#ingredient_file').get(0).files[0];
+            var reader = new FileReader();
+            //将文件以Data URL形式读入页面
+            reader.readAsDataURL(file);
+            reader.onload = function(e){
+                //显示文件
+                $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result +'" alt="" />');
+            }
+        }
+
+    </script>
     <![endif]-->
 </head>
 <body>
@@ -60,8 +155,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="组织者主页面.html">
-                            <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
+                        <a href="组织者单位信息.html">
+                            <img id = "nav-head-photo" src="" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;
                         </a>
                     </li>
                 </ul>

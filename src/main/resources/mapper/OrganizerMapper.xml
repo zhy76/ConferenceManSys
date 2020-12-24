@@ -33,4 +33,7 @@
     <delete id="deleteOrganizerById">
         DELETE FROM organizer WHERE organizer_id=#{organizerId};
     </delete>
+    <update id = "updateOrganizerPhoto">
+        update organizer set organizer_photo=#{organizerPhoto} where organizer_id=#{organizerId};
+    </update>
 </mapper>
