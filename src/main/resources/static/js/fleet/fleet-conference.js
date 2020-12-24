@@ -14,7 +14,7 @@ function fleetConference() {
         else $('.back-to-top').fadeOut('slow');
     });
 
-    token = localStorage.getItem("hcs");
+    token = localStorage.getItem("conNCU");
     console.log(token);
     $fleetId = parseJwt(token).fleetId;
     getAllFleetDriver($fleetId);
@@ -190,7 +190,7 @@ function fleetConference() {
 function getOrganizerInfo(organizerId) {
     $.ajax({
         async: false,
-        url: "/organizer/getOrganizerInfo",
+        url: "/organizer/getOrganizerInfoById",
         type: "get",
         dataType: "json",
         data: {
@@ -198,7 +198,7 @@ function getOrganizerInfo(organizerId) {
         },
         success: function (data) {
             // data = JSON.parse(data)
-            organizer = data['data']['getOrganizerInfo'];
+            organizer = data['data']['getOrganizerInfoById'];
             // alert(organizer);
             console.log(organizer);
         },

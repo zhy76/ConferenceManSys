@@ -107,12 +107,12 @@ public class ConferenceController {
 //    @PostMapping("/updateConferenceByAdmin/{conferenceId}/{organizerId}/{hotelId}/{fleetId}")
 //    public Result updateConferenceByAdmin(@PathVariable Integer conferenceId,@PathVariable Integer organizerId,@PathVariable Integer hotelId,@PathVariable Integer fleetId){}
 
-//    @GetMapping("/showConferenceById")
-//    public Result showConference(@RequestParam Integer conferenceId){
-//        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
-//        System.out.println(conference);
-//        return Result.success("conference",conference);
-//    }
+    @GetMapping("/showConferenceById")
+    public Result showConference(@RequestParam Integer conferenceId){
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        System.out.println(conference);
+        return Result.success("conference",conference);
+    }
 
 //    /**
 //     * 修改对应会议信息
@@ -199,17 +199,6 @@ public class ConferenceController {
         return Result.success();
     }
 
-    /**
-     * 查询指定id会议
-     * @param conferenceId
-     * @return
-     */
-    @RequestMapping("/showConference/{conferenceId}")
-    @ResponseBody
-    public Conference showConference(@PathVariable Integer conferenceId){
-        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
-        return conference;
-    }
 
 
     @GetMapping("/queryConferenceByOrganizerId")

@@ -20,6 +20,8 @@ $(function () {
     if (token == null || token === "null" || token === "undefined") {
         console.log("no token");
     } else {
+        // let str = "1".replace('1', ' ');
+        // alert(str);
         $fleetId = parseJwt(token).fleetId;/*获取用户信息*/
         console.log($fleetId);
     }
@@ -168,6 +170,7 @@ function clearFleetInfo() {
 /*获取token里面的用户数据*/
 function parseJwt(token) {
     var base64Url = token.split('.')[1];
+    // alert(token);
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);

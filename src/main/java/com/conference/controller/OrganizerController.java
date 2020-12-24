@@ -129,34 +129,6 @@ public class OrganizerController {
         return Result.success();
     }
 
-//    /**
-//     * 根据id查找车队所有的司机 Api
-//     * /driver/getAllFleetDriver
-//     *
-//     * @param fleetId
-//     * @return result {}
-//     */
-//    @GetMapping("/getAllFleetDriver")
-//    public Result getAllFleetDriver(@RequestParam("fleetId") Integer fleetId) {
-//        List<Driver> getAllFleetDriver = driverService.findFleetAllDriver(fleetId);
-//        if (fleetId == null)
-//            return new Result(ResultCode.IllegalArgumentException);
-//        return Result.success("getAllFleetDriver", getAllFleetDriver);
-//    }
-//
-//    /**
-//     * 查找所有的司机 Api
-//     * /driver/getAllDriver
-//     *
-//     * @return result {}
-//     */
-//    @GetMapping("/getAllDriver")
-//    public Result getAllDriver() {
-//        List<Driver> getAllDriver = driverService.findAllDriver();
-//        return new Result(2, "时间冲突");
-////        return Result.success("getAllDriver", getAllDriver);
-//    }
-//
     /**
      * 查找登入组织者的所有信息
      * /organizer/getOrganizerInfo
@@ -169,7 +141,17 @@ public class OrganizerController {
         Organizer getOrganizerInfo = organizerService.findOrganizerById((Integer) claims.get("organizerId"));
         return Result.success("getOrganizerInfo", getOrganizerInfo);
     }
-
+    /**
+     * 查找登入组织者的所有信息
+     * /organizer/getOrganizerInfo
+     * @param
+     * @return
+     */
+    @GetMapping("/getOrganizerInfoById")
+    public Result getOrganizerInfoById(@RequestParam int organizerId) {
+        Organizer getOrganizerInfo = organizerService.findOrganizerById(organizerId);
+        return Result.success("getOrganizerInfoById", getOrganizerInfo);
+    }
 
     /**
      * 管理员管理组织者模块
