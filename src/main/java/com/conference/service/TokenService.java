@@ -17,6 +17,7 @@ public interface TokenService {
     String getToken(Admin admin);
     String getToken(Participant participant);
     String getToken(Organizer organizerForBase);
+    public String getToken(Hotel hotel);
     //将增加用户的人数写入token
 
     String getToken(int i);

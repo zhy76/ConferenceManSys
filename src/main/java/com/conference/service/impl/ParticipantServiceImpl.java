@@ -1,4 +1,4 @@
-package com.conference.service.Impl;
+package com.conference.service.impl;
 
 import com.conference.dao.ParticipantDao;
 import com.conference.entity.Participant;
@@ -45,11 +45,11 @@ public class ParticipantServiceImpl implements ParticipantService {
 
     @Override
     public int addAParticipant(Participant participant) {
-        return 0;
+        return participantDao.addAParticipant(participant);
     }
 
     @Override
     public Participant queryParticipantByParticipantPhone(String participantPhone) {
-        return null;
+        return participantDao.queryParticipantByParticipantPhone(participantPhone);
     }
 }

@@ -70,7 +70,7 @@ $(function () {
             title: '提示信息',
             content: '退出成功',
         });
-        window.location.href = "popupsignin.html";
+        window.location.href = "login.html";
     })
 
     // $('#driverInfo').submit(function () {	//这次我们这么绑定

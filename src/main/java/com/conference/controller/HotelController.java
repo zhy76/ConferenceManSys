@@ -5,7 +5,7 @@ import com.conference.dao.HotelDao;
 import com.conference.entity.Driver;
 import com.conference.entity.Hotel;
 import com.conference.service.HotelService;
-import com.conference.service.Impl.TokenServiceImpl;
+import com.conference.service.impl.TokenServiceImpl;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;

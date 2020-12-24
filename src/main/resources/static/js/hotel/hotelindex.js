@@ -66,7 +66,7 @@ $(function () {
         //localStorage.clear();
         localStorage.setItem("conNCU", null);
         alert("退出成功");
-        window.location.href = "登录New.html";
+        window.location.href = "login.html";
     })
 
 

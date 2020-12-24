@@ -385,7 +385,9 @@ public class PickUpController {
         List<PickUp> pickUpList = pickUpService.findAllDriverPickUp(driverId);
         // 2020-10-10 14:14:00
         //
-        if (pickUp.getToTime().compareTo(returnTime) < 0) {
+        if (pickUp.getToTime().compareTo(returnTime) > 0) {
+            System.out.println(pickUp.getToTime());
+            System.out.println(returnTime);
             return new Result(1, "接送时间不应小于到达时间");
         }
         if (!pickUp.getToTime().substring(0, 10).equals(returnTime.substring(0,10))) {

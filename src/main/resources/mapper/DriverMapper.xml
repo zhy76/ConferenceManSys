@@ -26,7 +26,7 @@
 
 
     <insert id="addDriver">
-        INSERT INTO driver
+        INSERT INTO driver(driver_id, driver_name, car_number, fleet_id, driver_pass, driver_phone, is_assign)
         VALUES(null,#{driverName}, #{carNumber}, #{fleetId}, #{driverPass}, #{driverPhone}, false)
     </insert>
     <!--    INSERT INTO driver-->

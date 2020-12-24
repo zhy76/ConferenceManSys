@@ -1,4 +1,4 @@
-package com.conference.service.Impl;
+package com.conference.service.impl;
 
 import com.conference.dao.LiveRoomDao;
 import com.conference.entity.LiveRoom;

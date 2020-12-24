@@ -31,12 +31,13 @@ $(function() {
                     "participantPhone": "" + phone,
                     "participantPass": "" + password,
                     "participantName": "" + participantName,
-                    "participantSex": "M"
+                    "participantSex": "男"
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
                     if(jsonData["code"]!=200){
                         alert(jsonData["message"]);
+                        console.log(jsonData);
                     }
                     else if (jsonData["data"]["token"]) {
 

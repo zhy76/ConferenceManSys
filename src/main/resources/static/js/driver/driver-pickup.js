@@ -36,11 +36,17 @@ function getDriverAllPickUp() {
                 pickUp = data["data"]["getDriverAllPickUp"];
                 console.log(pickUp);
             } else {
-                alert("获取用户数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取司机数据失败',
+                });
             }
         },
         error: function () {
-            alert("获取用户数据失败!");
+            $.alert({
+                title: '提示信息',
+                content: '获取司机数据失败',
+            });
         },
     });
 }
@@ -63,11 +69,17 @@ function queryParticipantByParticipantId($participantId) {
                 participant = data["data"]["queryParticipantByParticipantId"];
                 // console.log(participant);
             } else {
-                alert("获取用户数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取参会者数据失败',
+                });
             }
         },
         error: function () {
-            alert("获取用户数据失败");
+            $.alert({
+                title: '提示信息',
+                content: '获取参会者数据失败',
+            });
         },
     });
 }
@@ -240,27 +252,20 @@ function finish(btn) {
                 console.log(jsonData);
                 console.log(result);
                 if (jsonData['code'] === 200) {
-                    alert("接送成功");
+                    $.alert({
+                        title: '提示信息',
+                        content: '接送成功',
+                    });
                     showWaitPickUpTable(1);
                     // location.reload();
                 } else {
-                    alert("完成失败");
-                    // location.reload();
+                    $.alert({
+                        title: '提示信息',
+                        content: '完成失败',
+                    });
                 }
             },
         });
-        // for (let i = 0; i < 500000000; i++) {
-        //     /**
-        //      * 意义不明的代码，
-        //      * 不加会有bug
-        //      * 170000000
-        //      * 二分
-        //      */
-        // }
-        // showWaitPickUpTable(1);
-
-    } else {
-        alert("信息格式有误，请重新填写！");
     }
 }
 
@@ -272,7 +277,6 @@ function getDriverConfirmPickUp($driverId) {
             type: "GET",
             url: '/pickUp/getDriverConfirmPickUp',
             contentType: "json",
-            // headers: { 'token': localStorage.getItem("conNCU") },
             data: {
                 "driverId": $driverId
             },
@@ -283,7 +287,10 @@ function getDriverConfirmPickUp($driverId) {
                     pickUp = jsonData['data']['pickUp'];
                     // location.reload();
                 } else {
-                    alert("完成失败");
+                    $.alert({
+                        title: '提示信息',
+                        content: jsonData['message'],
+                    });
                     // location.reload();
                 }
             },
@@ -368,17 +375,26 @@ function confirm(btn) {
         // headers: { 'token': localStorage.getItem("conNCU") },
         data: {
             "pickUpId": pickUpId,
+            "driverId": $driverId,
             "returnTime": time
         },
         success: function (jsonData, result) {
             console.log(jsonData);
             console.log(result);
             if (jsonData['code'] === 200) {
-                alert("确认成功");
+                $.alert({
+                    title: '提示信息',
+                    content: '确认成功',
+                });
+                // alert("确认成功");
                 showDriverConfirmPickUp($driverId);
                 // location.reload();
             } else {
-                alert("确认失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '确认失败',
+                });
+                // alert("确认失败");
                 // location.reload();
             }
         },

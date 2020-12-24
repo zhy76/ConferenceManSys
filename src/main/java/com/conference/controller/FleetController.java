@@ -57,13 +57,31 @@ public class FleetController {
     public Result register(@Valid @RequestBody Fleet fleet) {
         int addNumber = fleetService.addFleet(fleet);
         if (addNumber > 0) {
-            String token = tokenService.getToken(addNumber);
+            Fleet fleetByPhone = fleetService.findFleetByPhone(fleet.getFleetPhone());
+            String token = tokenService.getToken(fleetByPhone);
+
             return Result.success("token", token);
         } else {
             return new Result(ResultCode.FAIL);
         }
     }
-
+//    //参加者注册
+//    @PostMapping("/register")
+//    public Result register(@Valid @RequestBody Participant participant) {
+//        int addNumber = participantService.addAParticipant(participant);
+//
+//        //System.out.println(addNumber);
+//        if (addNumber > 0) {
+//            Participant newParticipant = participantService.queryParticipantByParticipantPhone(participant.getParticipantPhone());
+//            //String token = tokenService.getToken(addNumber);
+//            System.out.println(newParticipant);
+//            String token = tokenService.getToken(newParticipant);
+//            // System.out.println(token);
+//            return Result.success("token", token);
+//        } else {
+//            return new Result(ResultCode.FAIL);
+//        }
+//    }
     /**
      * 车队登入 Api
      * /fleet/login

@@ -1,4 +1,4 @@
-package com.conference.service.Impl;
+package com.conference.service.impl;
 
 import com.conference.entity.*;
 import com.conference.service.TokenService;
@@ -54,7 +54,7 @@ public class TokenServiceImpl implements TokenService {
         String token = "";
         token = Jwts.builder()
                 .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("hotelId", participant.getParticipantId())
+                .claim("participantId", participant.getParticipantId())
                 .signWith(signatureAlgorithm, SECRET)
                 .compact();
         System.out.println(token);
@@ -95,20 +95,6 @@ public class TokenServiceImpl implements TokenService {
 
 
 
-    /**
-     * 登录成功后，将用户的用户id写入,
-     * organizer
-     */
-    public String getToken(Organizer organizer){
-        String token = "";
-        token = Jwts.builder()
-                .claim("timeExpiration", new Date(System.currentTimeMillis() + expiration * 1000))
-                .claim("organizerId", organizer.getOrganizerId())
-                .signWith(signatureAlgorithm, SECRET)
-                .compact();
-        System.out.println(token);
-        return token;
-    }
     //将增加用户的人数写入token
     public String getToken(int i){
         String token="";

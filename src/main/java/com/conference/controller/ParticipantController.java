@@ -45,10 +45,14 @@ public class ParticipantController {
     @PostMapping("/register")
     public Result register(@Valid @RequestBody Participant participant) {
         int addNumber = participantService.addAParticipant(participant);
+
         //System.out.println(addNumber);
         if (addNumber > 0) {
-            String token = tokenService.getToken(addNumber);
-           // System.out.println(token);
+            Participant newParticipant = participantService.queryParticipantByParticipantPhone(participant.getParticipantPhone());
+            //String token = tokenService.getToken(addNumber);
+            System.out.println(newParticipant);
+            String token = tokenService.getToken(newParticipant);
+            // System.out.println(token);
             return Result.success("token", token);
         } else {
             return new Result(ResultCode.FAIL);

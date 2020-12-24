@@ -7,13 +7,15 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>fleet-index</title>
         <!-- Common plugins -->
+        <script src="admin/jquery.min.js"></script>
+        <script src="admin/bootstrap.min.js"></script>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/simple-line-icons.css" rel="stylesheet">
         <link href="assets/css/font-awesome.min.css" rel="stylesheet">
         <link href="assets/css/pace.css" rel="stylesheet">
         <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">
-        <link href="css/nanoscroller.css" rel="stylesheet">
-        <link href="css/metismenu.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/nanoscroller.css">
+        <link rel="stylesheet" href="css/metismenu.min.css">
         <link href="css/c3.min.css" rel="stylesheet">
         <link href="css/blue.css" rel="stylesheet">
         <!-- dataTables -->
@@ -22,7 +24,43 @@
         <link href="css/jquery.toast.min.css" rel="stylesheet">
         <!--template css-->
         <link href="css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="fonts/font_byLCY/iconfont.css">
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
+
+        <!--    去除掉alert、confirm显示的URL-->
+
+        <script src="admin/deleteURL.js"></script>
+        <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+        <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
+
+
+
+        <script src="js/pace.min.js"></script>
+        <script src="js/jasny-bootstrap.min.js"></script>
+        <script src="js/jquery.slimscroll.min.js"></script>
+        <script src="js/jquery.nanoscroller.min.js"></script>
+        <script src="js/metismenu.min.js"></script>
+        <script src="js/float-custom.js"></script>
+        <!--page script-->
+        <script src="js/d3.min.js"></script>
+        <script src="js/c3.min.js"></script>
+        <!-- iCheck for radio and checkboxes -->
+        <script src="js/icheck.min.js"></script>
+        <!-- Datatables-->
+        <script src="js/jquery.datatables.min.js"></script>
+        <script src="js/datatables.responsive.min.js"></script>
+        <script src="js/jquery.toast.min.js"></script>
+        <script src="js/dashboard-alpha.js"></script>
+
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+
+        <script src="js/fleet/fleet-index.js"></script>
+        <script src="js/fleet/fleet-mange.js"></script>
+        <script src="js/fleet/fleet-conference.js"></script>
         <style>
             .error {
                 color: red;
@@ -225,30 +263,28 @@
         <!--end main content-->
 
 
-        <!--Common plugins-->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/pace.min.js"></script>
-        <script src="js/jasny-bootstrap.min.js"></script>
-        <script src="js/jquery.slimscroll.min.js"></script>
-        <script src="js/jquery.nanoscroller.min.js"></script>
-        <script src="js/metismenu.min.js"></script>
-        <script src="js/float-custom.js"></script>
-        <!--page script-->
-        <script src="js/d3.min.js"></script>
-        <script src="js/c3.min.js"></script>
-        <!-- iCheck for radio and checkboxes -->
-        <script src="js/icheck.min.js"></script>
-        <!-- Datatables-->
-        <script src="js/jquery.datatables.min.js"></script>
-        <script src="js/datatables.responsive.min.js"></script>
-        <script src="js/jquery.toast.min.js"></script>
-        <script src="js/dashboard-alpha.js"></script>
+<!--        &lt;!&ndash;Common plugins&ndash;&gt;-->
+<!--        <script src="js/jquery.min.js"></script>-->
+<!--        <script src="js/bootstrap.min.js"></script>-->
+<!--        <script src="js/pace.min.js"></script>-->
+<!--        <script src="js/jasny-bootstrap.min.js"></script>-->
+<!--        <script src="js/jquery.slimscroll.min.js"></script>-->
+<!--        <script src="js/jquery.nanoscroller.min.js"></script>-->
+<!--        <script src="js/metismenu.min.js"></script>-->
+<!--        <script src="js/float-custom.js"></script>-->
+<!--        &lt;!&ndash;page script&ndash;&gt;-->
+<!--        <script src="js/d3.min.js"></script>-->
+<!--        <script src="js/c3.min.js"></script>-->
+<!--        &lt;!&ndash; iCheck for radio and checkboxes &ndash;&gt;-->
+<!--        <script src="js/icheck.min.js"></script>-->
+<!--        &lt;!&ndash; Datatables&ndash;&gt;-->
+<!--        <script src="js/jquery.datatables.min.js"></script>-->
+<!--        <script src="js/datatables.responsive.min.js"></script>-->
+<!--        <script src="js/jquery.toast.min.js"></script>-->
+<!--        <script src="js/dashboard-alpha.js"></script>-->
 
-        <script src="js/jquery.validate.min.js"></script>
-        <script src="js/messages_zh.js"></script>
-        <script src="js/fleet/fleet-index.js"></script>
-        <script src="js/fleet/fleet-mange.js"></script>
-        <script src="js/fleet/fleet-conference.js"></script>
+<!--        <script src="js/jquery.validate.min.js"></script>-->
+<!--        <script src="js/messages_zh.js"></script>-->
+
     </body>
 </html>

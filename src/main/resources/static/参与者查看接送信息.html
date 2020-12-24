@@ -19,7 +19,9 @@
             if (token == null || token === "null" || token === "undefined") {}
             else {
                 $participantId = parseJwt(token).participantId;/*获取用户信息*/
+                console.log($participantId);
                 getParticipantInfo($participantId);
+
                 $(".img-circle").attr("src", participant.participantPhoto);
             }
             $.ajax({
@@ -140,6 +142,7 @@
                     'participantId': $participantId,
                 },
                 success: function (data) {
+                    console.log(data);
                     if (data["code"] === 200) {
                         participant = data["data"]["getParticipantInfo"];
                     } else {
@@ -206,7 +209,7 @@
                         </a>
                     </li>
                     <li >
-                        <a href="登录.html" >
+                        <a href="login.html" >
                             <span class="glyphicon glyphicon-log-out"> 退出登录</span>
                         </a>
                     </li>

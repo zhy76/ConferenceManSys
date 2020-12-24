@@ -80,7 +80,7 @@ $(function () {
         clearDriverInfo();
         localStorage.setItem("conNCU", null);
         alert("退出成功");
-        window.location.href = "../../popupsignin.html";
+        window.location.href = "login.html";
     })
     // submitChange();
 })
