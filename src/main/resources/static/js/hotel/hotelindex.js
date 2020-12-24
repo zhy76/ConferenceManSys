@@ -85,6 +85,7 @@ function headPhotoUpload() {
 
             if (result.message == "成功") {
                 alert("更新头像成功!");
+                location.reload();
                 // $.alert({
                 //     title: '提示信息',
                 //     content: '更新头像成功!',
@@ -377,7 +378,7 @@ function  showHotelInfo(){
         "                        <div class=\"panel-body\">\n" +
         "                            <!--                        头像展示-->\n" +
         "                            <div class=\"head_photo_container\">\n" +
-        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\"../../headphoto/default.jpg\" style=\"\">\n" +
+        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\""+hotel.hotelPhoto+"\" style=\"\">\n" +
         "                            </div>\n" +
         "                            <hr>\n" +
         "\n" +
@@ -401,8 +402,8 @@ function  showHotelInfo(){
         "\n" +
         "                        </div>\n" +
         "                    </div>\n" +
-        "                </div>\n" +
-        getHotelInfo($hotelId);
+        "                </div>\n" 
+        //getHotelInfo($hotelId);
         $html+="                <div class=\"col-sm-8\">\n" +
         "                    <div class=\"panel panel-default\">\n" +
         "                        <div class=\"panel-body\">\n" +
