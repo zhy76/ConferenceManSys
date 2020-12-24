@@ -28,8 +28,6 @@ public interface ConferenceDao {
      */
     public List<Conference> queryConferences();
 
-
-
     /**
      * 4、通过会议id查询会议（显示会议详情）
      *

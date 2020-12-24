@@ -31,6 +31,12 @@
 
     <select id = "queryConferenceByConferenceId" resultType="Conference">
        select * from conference where conference_id = #{conferenceId};
+    <select id = "queryConferenceById" resultType="Conference">
+       select * from conference where conference_id = #{conferenceId}
+    </select>
+
+    <select id="queryConferenceByConferenceId" resultType="Conference">
+        select * from conference where conference_id = #{conferenceId}
     </select>
 
     <select id="queryConferenceByOrganizerId" resultType="Conference">

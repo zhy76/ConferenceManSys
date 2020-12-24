@@ -1,5 +1,6 @@
 package com.conference.dao;
 
+import com.conference.entity.Organizer;
 import com.conference.entity.Participant;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -29,11 +30,15 @@ public interface ParticipantDao {
 
     public Participant queryParticipantByParticipantName(String participantName);
 
+    public List<Participant> fuzzyQueryParticipantByParticipantName(@Param("participantName") String participantName);
+
+    public List<Participant> fuzzyQueryParticipantByParticipantPhone(@Param("participantPhone") String participantPhone);
+
     public int updateParticipant(Participant participant);
 
     public int deleteParticipant(Integer participantId);
 
-    Participant queryParticipantByParticipantId(Integer participantId);
+    public Participant queryParticipantByParticipantId(Integer participantId);
 
     public int addAParticipant(Participant participant);
 

@@ -1,6 +1,7 @@
 package com.conference.dao;
 
 import com.conference.entity.Driver;
+import com.conference.entity.Hotel;
 import com.conference.entity.Organizer;
 import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.ibatis.annotations.Mapper;

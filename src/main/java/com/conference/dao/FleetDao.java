@@ -1,5 +1,6 @@
 package com.conference.dao;
 
+import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,6 +19,7 @@ import java.util.List;
 public interface FleetDao {
     /**查询所有车队*/
     List<Fleet> findAllFleet();
+
     /**按id查询车队*/
     Fleet findFleetById(@Param("fleetId") int fleetId);
 

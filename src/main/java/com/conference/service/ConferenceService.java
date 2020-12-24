@@ -7,7 +7,9 @@ package com.conference.service;
  * @stuid 6109118041
  */
 
+import com.alibaba.fastjson.JSONObject;
 import com.conference.entity.Conference;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -17,6 +19,8 @@ public interface ConferenceService {
      * @return 返回一个会议Conference列表
      **/
     public List<Conference> queryConferences();
+
+    public List<JSONObject> selectAll(Integer pageNum, Integer pageSize);
 
     /**
      * 修改会议

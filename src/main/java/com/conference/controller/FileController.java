@@ -44,6 +44,7 @@ public class FileController {
 
         try {
             File newFile = new File(realPath,fileName);
+            System.out.println(newFile);
             file.transferTo(newFile);
             String url="headphoto/"+fileName;
             fileUploadService.headPhotoUpload(role,roleId,url);

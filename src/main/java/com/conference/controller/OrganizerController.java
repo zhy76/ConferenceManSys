@@ -7,6 +7,8 @@ import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
 import com.conference.util.vaild.OrganizerLogin;
 import com.conference.util.vaild.OrganizerRegister;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -151,9 +153,11 @@ public class OrganizerController {
      */
     @PostMapping("/showOrganizers")
     @ResponseBody
-    public Result showOrganizers(){
+    public Result showOrganizers(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
         List<Organizer> organizersList = organizerService.findAllOrganizer();
-        return  Result.success(organizersList);
+        PageInfo<Organizer>pi = new PageInfo<>(organizersList);
+        return  Result.success(pi.getList());
     }
 
     /**

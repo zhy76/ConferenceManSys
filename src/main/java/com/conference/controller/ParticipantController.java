@@ -4,12 +4,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.conference.dao.JoinConferenceDao;
 import com.conference.dao.ParticipantDao;
 import com.conference.entity.JoinConference;
+import com.conference.entity.Organizer;
 import com.conference.entity.Participant;
 import com.conference.service.JoinConferenceService;
 import com.conference.service.ParticipantService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -144,9 +148,27 @@ public class ParticipantController {
     //管理员查看所有的参加者
     @RequestMapping("/showParticipants")
     @ResponseBody
-    public Result showParticipants(){
-        List<Participant> participantsList = participantService.queryParticipants();
-        return Result.success(participantsList);
+    public Result showParticipants(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+        List<Participant> ParticipantList = participantService.queryParticipants();
+        PageInfo<Participant> pi = new PageInfo<>(ParticipantList);
+        return  Result.success(pi.getList());
+    }
+
+    //管理员根据姓名查找所有的参加者
+    @PostMapping("/queryParticipantsByParticipantName")
+    @ResponseBody
+    public Result queryParticipantsByParticipantName(@RequestParam("participantName") String participantName){
+        List<Participant> participantList = participantService.fuzzyQueryParticipantByParticipantName(participantName);
+        return  Result.success(participantList);
+    }
+
+    //管理员根据联系电话查找所有的参加者
+    @PostMapping("/queryParticipantsByParticipantPhone")
+    @ResponseBody
+    public Result queryParticipantsByParticipantPhone(@RequestParam("participantPhone") String participantPhone){
+        List<Participant> participantList = participantService.fuzzyQueryParticipantByParticipantPhone(participantPhone);
+        return  Result.success(participantList);
     }
 
 

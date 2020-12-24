@@ -97,7 +97,6 @@
                             type:"post",
                             url: "/participant/deleteParticipantByAdmin/" + participantId,
                             data: {},
-                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -106,7 +105,11 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
-                                    participants();
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
+                                    participants(1,10);
                                 }
                                 else
                                 {
@@ -129,21 +132,16 @@
 
         }
         // 展示所有的参加者信息
-        function participants() {
+        function participants(pageNum,pageSize) {
             $.ajax({
                 type:"post",
-                url: "/participant/showParticipants",
+                url: "/participant/showParticipants?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
                     //获取到所有参加者
-                    // console.log(result);
-                    // console.log(result["code"]);
-                    // console.log(result["message"]);
-                    // console.log(result["data"])
                     var listParticipants = "";
                     for(var i = 0 ; i < result["data"].length ; i ++)
                     {
@@ -173,6 +171,7 @@
                             '                                    </tr>'
                     }
                     $("#participant table tbody").html(listParticipants);
+                    $("#nowPage").html(pageNum);
 
                 },
                 error:function () {
@@ -207,10 +206,10 @@
         // 参加者模块
 
         //组织者模块
-        function organizers(){
+        function organizers(pageNum,pageSize){
             $.ajax({
                 type:"post",
-                url: "/organizer/showOrganizers",
+                url: "/organizer/showOrganizers?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
                 headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
@@ -243,7 +242,7 @@
                             '                                    </tr>'
                     }
                     $("#organizer table tbody").html(listOrganizers);
-
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -262,7 +261,6 @@
                             type:"post",
                             url: "/organizer/deleteOrganizerByAdmin/" + organizerId,
                             data: {},
-                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -271,7 +269,11 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
-                                    organizers();
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
+                                    organizers(1,10);
                                 }
                                 else
                                 {
@@ -341,12 +343,11 @@
 
 
         //会议模块
-        function conferences() {
+        function conferences(pageNum,pageSize) {
             $.ajax({
                 type:"post",
-                url: "/conference/showConferencesByAdmin",
+                url: "/conference/showConferencesByAdmin?pageNum=" + pageNum + "&pageSize=" + pageSize,
                 data: "",
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
@@ -373,6 +374,7 @@
                             '                                    </tr>'
                     });
                     $('#conference table tbody').html(listConferences);
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -389,9 +391,8 @@
                         $.ajax({
                             async: false,
                             type:"get",
-                            url: "/conference/deleteConference/" + conferenceId,
-                            data: {},
-                            headers:{"conNCU": localStorage.conNCU},
+                            url: "/conference/deleteConference?conferenceId=" + conferenceId,
+                            data: "",
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -400,13 +401,17 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
-                                    conferences();
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
+                                    conferences(1,10);
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -485,10 +490,10 @@
         //会议模块
 
         //车队模块
-        function fleets() {
+        function fleets(pageNum,pageSize) {
             $.ajax({
-                type:"get",
-                url: "/fleet/getAllFleet",
+                type:"Post",
+                url: "/fleet/getAllFleetByAdmin?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
                 dataType:"json",
                 processData:false,
@@ -512,6 +517,7 @@
                             '                                    </tr>'
                     });
                     $('#fleet table tbody').html(listFleets);
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -538,13 +544,17 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
-                                    fleets();
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
+                                    fleets(1,10);
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -621,7 +631,8 @@
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    //获取到所有车队
+                    //获取到所有司机
+                    console.dir(result);
                     var listDrivers = "";
                     result = result["data"]["getAllDriver"];
                     console.dir(result);
@@ -668,13 +679,17 @@
                                 // console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
-                                    drivers();
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
+                                    drivers(1,10);
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -690,9 +705,6 @@
             });
         }
 
-        // 需要修改的
-        //  bug
-        //  错误
         function updateDriver(driverId){
             // console.dir(driverId);
             $.ajax({
@@ -712,9 +724,6 @@
                    $("#driverPass").val(result[0].driverPass);
                    $("#carNumber").val(result[0].carNumber);
                    $("#driverPhoto").attr("src",result[0].driverPhoto);
-                   // 需要修改的
-                   //  bug
-                   //  错误
                     $("#driver-fleet-Id").val(result[0].fleetId);
                    // $("#driver-fleet-Id").val(result[1].fleetName);
                     $("#assign").val(result[0].assign);
@@ -750,33 +759,37 @@
         //司机模块
 
         //酒店模块
-        function hotels() {
+        function hotels(pageNum,pageSize) {
             $.ajax({
                 type:"post",
-                url: "/hotel/getAllHotel",
+                url: "/hotel/getAllHotelByAdmin?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    //获取到所有车队
+                    //获取到所有酒店
+                    // console.dir(result);
                     var listHotels = "";
-                    console.dir(result["data"]["trueHotelsList"]);
-                    result["data"]["trueHotelsList"].forEach( (hotel) => {
-
+                    result = result["data"]["getAllHotel"];
+                    // console.dir(result);
+                    for(var i = 0 ; i < result.length ; i ++ )
+                    {
                         listHotels +=' <tr>\n' +
-                            '                                        <td hidden>'+ hotel.hotelId +'</td>\n' +
-                            '                                        <td>'+ hotel.hotelName +'</td>\n' +
-                            '                                        <td>'+hotel.hotelPhone +'</td>\n' +
-                            '                                        <td>'+ hotel.hotelPass+'</td>\n' +
+                            '                                        <td hidden>'+ result[i].hotelId +'</td>\n' +
+                            '                                        <td>'+ result[i].hotelName +'</td>\n' +
+                            '                                        <td>'+result[i].hotelPhone +'</td>\n' +
+                            '                                        <td>'+ result[i].hotelPass+'</td>\n' +
+                            '                                        <td>'+ result[i].hotelLocation+'</td>\n' +
+                            '                                        <td>'+ result[i].hotelInfo+'</td>\n' +
                             '                                        <td>\n' +
-                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateHotel" data-backdrop="false" onclick = "javascript:updateHotel('+  hotel.hotelId + ',' + hotel.organizerId + ',' + hotel.hotelId + ',' + hotel.hotelId +')"> 修改</button>&nbsp;&nbsp;\n' +
-                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteHotel('+ hotel.hotelId +')">删除</button>\n' +
+                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateHotel" data-backdrop="false" onclick = "javascript:updateHotel('+ result[i].hotelId +')"> 修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteHotel('+ result[i].hotelId  +')">删除</button>\n' +
                             '                                        </td>\n' +
                             '                                    </tr>'
-                    });
+                    };
                     $('#hotel table tbody').html(listHotels);
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -784,7 +797,7 @@
             })
         }
 
-        function deleteHotel(hotelId){
+        function deleteHotel(id){
             $.confirm({
                 title: '提示信息',
                 content: '确认要删除吗?',
@@ -793,9 +806,8 @@
                         $.ajax({
                             async: false,
                             type:"get",
-                            url: "/hotel/deleteHotel/" + hotelId,
-                            data: {},
-                            headers:{"conNCU": localStorage.conNCU},
+                            url: "/hotel/deleteHotel?id=" + id,
+                            data: "",
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -804,13 +816,17 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
-                                    hotels();
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
+                                    hotels(1,10);
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -826,37 +842,24 @@
             });
         }
 
-        function updateHotel(hotelId,organizerId,hotelId,hotelId){
-            // console.dir(hotelId);
-            // console.dir(organizerId);
-            // console.dir(hotelId);
-            // console.dir(hotelId);
+        function updateHotel(hotelId){
             $.ajax({
                 type:"post",
-                url: "/hotel/updateHotelByAdmin/" + hotelId + "/" + organizerId + "/" + hotelId + "/" + hotelId,
+                url: "/hotel/updateHotelByAdmin?hotelId=" + hotelId,
                 data: "",
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    //获取到会议信息
-                    var hotel = result.data.hotel;
-                    var hotel = result.data.hotel;
-                    var hotel = result.data.hotel;
-                    var organizer = result.data.organizer;
-                    $("#hotelId").val(hotel.hotelId);
-                    $("#hotelName").val(hotel.hotelName);
-                    $("#hotelOrganizerUnitId").val(hotel.organizerId);
-                    $("#hotelOrganizerUnit").val(organizer.organizerUnit);
-                    $("#hotelStart").val(hotel.hotelStart);
-                    $("#hotelEnd").val(hotel.hotelEnd);
-                    $("#hotelLocation").val(hotel.hotelLocation);
-                    $("#hotelId").val(hotel.hotelId);
-                    $("#hotelName").val(hotel.hotelName);
-                    $("#hotelId").val(hotel.hotelId);
-                    $("#hotelName").val(hotel.hotelName);
-                    $("#hotelInfo").val(hotel.hotelInfo);
+                    //获取到指定id酒店信息
+                    result = result.data;
+                   // console.dir(result);
+                    $("#hotel-Id").val(result.hotelId);
+                    $("#hotel-Name").val(result.hotelName);
+                    $("#hotelPhone").val(result.hotelPhone);
+                    $("#hotelPass").val(result.hotelPass);
+                    $("#hotelLocation").val(result.hotelLocation);
+                    $("#hotelInfo").val(result.hotelInfo);
                 },
                 error:function () {
                     alert("请求异常");
@@ -871,12 +874,25 @@
                 type:"post",
                 url: "/hotel/submitUpdateHotelByAdmin",
                 data: form,
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    console.dir(result);
+                    // console.dir(result);
+                    if( result.code == 200 )
+                    {
+                        $.alert({
+                            title: '提示信息',
+                            content: '修改成功!',
+                        });
+                    }
+                    else
+                    {
+                        $.alert({
+                            title: '提示信息',
+                            content: '修改失败!',
+                        });
+                    }
                 },
                 error:function () {
                     $.alert({
@@ -910,17 +926,16 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="管理员个人消息.html" >
-                            <span class="icon-envelope-letter"> 消息</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="admin-index.html" >
-                            <span class="icon-settings"> 设置</span>
-                        </a>
-                    </li>
-
+<!--                    <li>-->
+<!--                        <a href="管理员个人消息.html" >-->
+<!--                            <span class="icon-envelope-letter"> 消息</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="admin-index.html" >-->
+<!--                            <span class="icon-settings"> 设置</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
                     <li class="dropdown">
                         <a href="#"  class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                         <span>
@@ -929,7 +944,7 @@
                         </span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="管理员个人信息.html">个人信息</a></li>
+                            <li><a href="admin-perInfo.html">个人信息</a></li>
                             <li class="divider"></li>
                             <li><a href="javascript:void(0);" onclick = "logout();">退出登录</a> </li>
                         </ul>
@@ -949,6 +964,7 @@
             <div class="col-sm-3" style="padding:0px ">
                 <div class="col-sm-10 ">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="headingOne">
                                     <h4 class="panel-title">
@@ -985,8 +1001,8 @@
                                     <div class="panel-body">
 <!--                                        nav list-group  nav-tap   class="list-group-item"-->
                                         <ul class="nav list-group  nav-tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;"><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员参加者人员管理.html'); participants(); })()" >参加者</a></li>
-                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)"  onclick="(function(){$('#main').load('管理员组织者单位管理.html'); organizers(); })()">组织者</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;"><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-participantMan.html'); participants(1,10); })()" >参加者</a></li>
+                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)"  onclick="(function(){$('#main').load('admin-organizerMan.html'); organizers(1,10); })()">组织者</a></li>
 
                                         </ul>
                                     </div>
@@ -1006,8 +1022,7 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员会议管理.html'); conferences(); })()">会议列表</a></li>
-
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-conferenceMan.html'); conferences(1,10)})()">会议列表</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1027,8 +1042,8 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员车队管理.html'); fleets(); })()">车队</a></li>
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员司机管理.html'); drivers(); })()">司机</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-fleetMan.html'); fleets(1,10); })()">车队</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-driverMan.html'); drivers(); })()">司机</a></li>
 
                                         </ul>
                                     </div>
@@ -1048,7 +1063,7 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员酒店管理.html'); hotels(); })()">酒店</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('admin-hotelMan.html'); hotels(1,10); })()">酒店</a></li>
 
                                         </ul>
                                     </div>
@@ -1072,7 +1087,7 @@
         </div>
     </div>
 
-<!--    修改参加者信息的模态框-->
+    <!--    修改参加者信息的模态框-->
     <div class="modal fade" id = "updateParticipant" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1129,7 +1144,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-<!--        修改组织者信息的模态框-->
+    <!--        修改组织者信息的模态框-->
     <div class="modal fade" id = "updateOrganizer" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1390,8 +1405,8 @@
                 <div class="modal-body">
                     <form id = "updateHotelForm">
                         <div class = "row">
-                            <div class="col-sm-4" style="margin-top:0px;">
-                                <h5 class ="text-center" style="font-weight: bold;">车队头像</h5>
+                            <div class="col-sm-4" style="margin-top:72px;">
+                                <h5 class ="text-center" style="font-weight: bold;">酒店头像</h5>
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <img id="hotelPhoto" class="img-responsive center-block" src="headphoto/default.jpg" alt="" style="vertical-align: middle" >
@@ -1405,8 +1420,8 @@
                                     <input type="hidden" class="form-control" name="hotelId" id="hotel-Id" placeholder="id" value="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="hotel-Name">车队名</label>
-                                    <input type="text" class="form-control"  name="hotelName" id="hotel-Name" placeholder="车队名"  value="">
+                                    <label for="hotel-Name">酒店名</label>
+                                    <input type="text" class="form-control"  name="hotelName" id="hotel-Name" placeholder="酒店名"  value="">
                                 </div>
                                 <div class="form-group">
                                     <label for="hotelPhone">联系电话</label>
@@ -1415,6 +1430,14 @@
                                 <div class="form-group">
                                     <label for="hotelPass">密码</label>
                                     <input type="text" class="form-control" name = "hotelPass" id="hotelPass" placeholder="密码" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotelLocation">地址</label>
+                                    <input type="text" class="form-control" name = "hotelLocation" id="hotelLocation" placeholder="酒店地址" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotelInfo">其它</label>
+                                    <input type="text" class="form-control" name = "hotelInfo" id="hotelInfo" placeholder="其它信息" value="">
                                 </div>
                             </div>
                         </div>
@@ -1430,5 +1453,7 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
 </body>
 </html>
+

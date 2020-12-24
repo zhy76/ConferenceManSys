@@ -1,8 +1,12 @@
 package com.conference.service.Impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.conference.dao.ParticipantDao;
+import com.conference.entity.Conference;
 import com.conference.entity.Participant;
 import com.conference.service.ParticipantService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,27 @@ public class ParticipantServiceImpl implements ParticipantService {
     public List<Participant> queryParticipants() {
         return participantDao.queryParticipants();
     }
+
+    //分页查询
+    @Override
+    public  List<Participant> selectAll(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize); //第1页个数为10
+        List<Participant> participantsList = participantDao.queryParticipants();
+        PageInfo<Participant> pi  = new PageInfo<>(participantsList);
+        return pi.getList();
+    }
+
+    @Override
+    public List<Participant> fuzzyQueryParticipantByParticipantName(String participantName){
+        return participantDao.fuzzyQueryParticipantByParticipantName(participantName);
+
+    }
+
+    @Override
+    public List<Participant> fuzzyQueryParticipantByParticipantPhone(String participantPhone){
+        return participantDao.fuzzyQueryParticipantByParticipantPhone(participantPhone);
+    }
+
 
     @Override
     public Participant queryParticipantByParticipantName(String participantName) {
