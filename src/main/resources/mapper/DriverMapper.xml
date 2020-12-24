@@ -45,6 +45,11 @@
     <update id="updateDriverIsAssign">
         UPDATE driver SET is_assign=#{isAssign} WHERE driver_id=#{driverId};
     </update>
+
+    <update id = "updateDriverPhoto">
+        update admin set driver_photo=#{driverPhoto} where driver_id=#{driverId};
+    </update>
+
 <!--    <resultMap type="Driver" id="DriverResultMap" >-->
 <!--        <result property="driverId" column="driver_id"/>-->
 <!--    </resultMap>-->

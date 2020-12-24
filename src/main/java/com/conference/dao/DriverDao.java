@@ -61,5 +61,5 @@ public interface DriverDao {
      */
     int updateDriverIsAssign(@Param("driverId") Integer driverId, @Param("isAssign") Boolean isAssign);
 
-
+    public int updateDriverPhoto(@Param("driverPhoto") String driverPhoto, @Param("driverId") Integer driverId);
 }

@@ -14,12 +14,7 @@ $(function () {
         console.log("no token");
     } else {
         $driverId = parseJwt(token).driverId;/*获取用户信息*/
-        console.log($driverId);
     }
-    // $.alert({
-    //     title: '提示信息',
-    //     content: '请先登录！',
-    // });
     if (token == null || token == "null" || typeof ($driverId) == "undefined" || $driverId == undefined) {//未登录
         console.log("未登录");
         localStorage.setItem("conNCU", null);
@@ -29,14 +24,17 @@ $(function () {
             content: '请先登录！',
         });
         window.location.href = "popupsignin.html";
-    }
-    else if (parseJwt(token).role !== "driver") {
+    } else if (parseJwt(token).role !== "driver") {
         $.alert({
             title: '提示信息',
             content: 'token错误',
         });
         window.location.href = "popupsignin.html";
     }
+
+    getDriverInfo($driverId);
+    $(".img-circle").attr("src",driver.driverPhoto);
+    console.log($driverId);
     /**
      * 点击->个人信息
      */
@@ -246,7 +244,7 @@ function showDriverInfo() {
         "                        <div class=\"panel-body\">\n" +
         "                            <!--                        头像展示-->\n" +
         "                            <div class=\"head_photo_container\">\n" +
-        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\"../../headphoto/default.jpg\" style=\"\">\n" +
+        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\""+  driver.driverPhoto +"\" style=\"\">\n" +
         "                            </div>\n" +
         "                            <hr>\n" +
         "\n" +
@@ -307,8 +305,9 @@ function showDriverInfo() {
         "                                    </div>\n" +
         "                                    <div class=\"form-group\">\n" +
         "                                        <label class=\"control-label col-sm-3\"><label\n" +
-        "                                                for=\"repeatHotelPass\">车牌号码:</label></label>\n" +
-            "                                                        <select class=\"form-control form-control-line\" name=\"account\" id='fleetId'>\n"
+        "                                                for=\"repeatHotelPass\">车队:</label></label>\n" +
+        "                                                <div  class=\"col-sm-7\" >                  " +
+        "                                                        <select class='form-control'  name=\"account\" id='fleetId'>\n"
         if (driver.fleetId === null) {
             $html += "                                                            <option value='" + null + "'>" + "请选择您的车队" + "</option>\n";
             for (let it in allFleet) {
@@ -343,11 +342,8 @@ function showDriverInfo() {
 
         $html +=
             "                                                        </select>\n" +
-        // "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"carNumber\"\n" +
-        // "                                                class=\"form-control\" maxlength=\"40\" id=\"carNumber\" value=\"" + driver.carNumber + "\"></div>\n" +
-        // "                                        <span class=\"text-danger small\"></span>\n" +
+            "</div>\n"+
         "                                    </div>\n" +
-
         "                                    <div class=\"form-group\">\n" +
         "                                        <label class=\"control-label col-sm-3\"><label for=\"driverPass\">密码:</label></label>\n" +
         "                                        <div class=\"col-sm-7\"><input type=\"password\" name=\"driverPass\" class=\"form-control\"\n" +
@@ -362,16 +358,6 @@ function showDriverInfo() {
         "                                                class=\"form-control\" maxlength=\"40\" id=\"repeatDriverPass\" value=\"" + driver.driverPass + "\"></div>\n" +
         "                                        <span class=\"text-danger small\"></span>\n" +
         "                                    </div>\n" +
-        "\n" +
-        // "                                    <div class=\"form-group\">\n" +
-        // "                                        <label class=\"control-label col-sm-3\"><label\n" +
-        // "                                                for=\"hotelInfo\">酒店介绍:</label></label>\n" +
-        // "                                        <div class=\"col-sm-7\"><textarea name=\"hotelInfo\" cols=\"40\" rows=\"4\"\n" +
-        // "                                                class=\"form-control\" maxlength=\"500\" id=\"hotelInfo\">" +driver.driverInfo+ "</textarea></div>\n" +
-        // "                                        <span class=\"text-danger small\"></span>\n" +
-        // "                                    </div>\n" +
-        "\n" +
-        "\n" +
         "                                    <div class=\"col-xs-offset-5\">\n" +
         "                                        <button type=\"button\" class=\"btn btn-info\" style=\"border-radius: 5px\"\n" +
         "                                            onclick=submitChange(); return false;>更新信息</button>\n" +
@@ -603,14 +589,6 @@ function submitChange() {
             }
         },
     });
-    // for (let i = 0; i < 500000000; i++) {
-    //     /**
-    //      * 意义不明的代码，
-    //      * 不加会有bug
-    //      * 170000000
-    //      * 二分
-    //      */
-    // }
     showDriverInfo();
     // showDriverInfo();
 }

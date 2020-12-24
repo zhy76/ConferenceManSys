@@ -29,7 +29,9 @@ public class FileUploadServiceImpl implements FileUploadService {
     public void headPhotoUpload(String role,Integer roleId, String url) {
         if( role.equals("admin")){
             adminDao.updateAdminPhoto(url,roleId);
+        } else if (role.equals("driver")) {
+            driverDao.updateDriverPhoto(url, roleId);
         }
-
     }
+
 }
