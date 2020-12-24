@@ -181,7 +181,52 @@ function parseJwt(token) {
     }).join(''));
     return JSON.parse(jsonPayload);
 }
+function headPhotoUpload() {
+    var form = new FormData(document.getElementById("form_submit_photo"));//把表单的对象作为一个参数
+    $.ajax({
+        type:"POST",
+        url:"/file/headPhotoUpload",
+        data:form,
+        headers:{"conNCU": localStorage.conNCU},
+        dataType:"json",
+        processData:false,
+        contentType:false,
+        success:function(result) {
 
+            if (result.message == "成功") {
+                alert("更新头像成功!");
+                // $.alert({
+                //     title: '提示信息',
+                //     content: '更新头像成功!',
+                // });
+            } else {
+                alert("更新头像失败!");
+                // $.alert({
+                //     title: '提示信息',
+                //     content: '更新头像失败!',
+                // });
+            }
+        },
+        error:function() {
+            alert("更新异常!");
+            // $.alert({
+            //     title: '提示信息',
+            //     content: '更新异常!',
+            // });
+        }
+    });
+}
+//预览图片
+function onLoadImage() {
+    var file=$('#ingredient_file').get(0).files[0];
+    var reader = new FileReader();
+    //将文件以Data URL形式读入页面
+    reader.readAsDataURL(file);
+    reader.onload = function(e){
+        //显示文件
+        $(".head_photo_container").html('<img id="head_photo" class="img-responsive center-block" src="' + this.result +'" alt="" />');
+    }
+}
 
 /**
  * 司机信息
@@ -192,109 +237,258 @@ function showDriverInfo() {
     console.log(allFleet);
     getDriverInfo($driverId);
     console.log(driver);
-    let $html =
-        "                                <ul class=\"nav nav-tabs profile-tab\" role=\"tablist\">\n" +
-        "                                    <li class=\"nav-item active\"><a class=\"nav-link\" data-toggle=\"tab\" href=\"#个人信息\" role=\"tab\">个人信息</a>\n" +
-        "                                    </li>\n" +
-        "                                </ul>" +
-        "<br>" +
-
-        "                                        <form  class=\"form-horizontal form-material\" id='driverInfo'>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">姓名</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" class=\"form-control form-control-line\"\n" +
-        "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='driverPass' class=\"form-control form-control-line\" id='driverPass'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">重复密码</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
-        "                                                        name='repeatDriverPass' class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">电话</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.driverPhone + "\"\n" +
-        "                                                        name='driverPhone' class=\"form-control form-control-line\" id='driverPhone'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">车牌号</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <input type=\"text\" value=\"" + driver.carNumber + "\"\n" +
-        "                                                        name='carNumber' class=\"form-control form-control-line\" id='carNumber'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                                <div class=\"form-group\">\n" +
-        "                                                    <label class=\"col-md-12\">所属车队</label>\n" +
-        "<!--                                                    <label class=\"col-sm-2 control-label\">Select</label>-->\n" +
-        "                                                    <div class=\"col-md-12\">\n" +
-        "                                                        <select class=\"form-control form-control-line\" name=\"account\" id='fleetId'>\n"
-    if (driver.fleetId === null) {
-        $html += "                                                            <option value='" + null + "'>" + "请选择您的车队" + "</option>\n";
-        for (let it in allFleet) {
-            if (it === vis) continue;
-            $html += "                                                            <option value='" + allFleet[it].fleetId + "'>" + allFleet[it].fleetName + "</option>\n"
-        }
-    } else {
-        let fleetNameTem;
-        // console.log(driver.fleetId);
-        // console.log(typeof driver.fleetId);
-        // alert(driver.fleetId);
-
-        for (let it in allFleet) {
-            // alert(allFleet[it].fleetId);
-            // console.log(allFleet[it].fleetId);
-            // console.log(typeof allFleet[it].fleetId);
-            if (allFleet[it].fleetId == driver.fleetId) {
-                console.log(allFleet[it].fleetName);
-                fleetNameTem = allFleet[it].fleetName;
-                vis = it;
-                break;
-            }
-        }
-        $html += "                                                            <option value='" + driver.fleetId + "'>" + fleetNameTem + "</option>\n"
-        for (let it in allFleet) {
-            if (it === vis) continue;
-            $html += "                                                            <option value='" + allFleet[it].fleetId + "'>" + allFleet[it].fleetName + "</option>\n"
-        }
-        $html += "                                                            <option value='" + null + "'>" + "退出当前车队" + "</option>\n";
-    }
-
-
-    $html +=
-        "                                                        </select>\n" +
-        "                                                    </div>\n" +
-        "                                                </div>" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <label class=\"col-md-12\">个人介绍</label>\n" +
-        "                                                <div class=\"col-md-12\">\n" +
-        "                                                    <textarea rows=\"5\" class=\"form-control form-control-line\">\n" +
-        "                                                    啊哈！\n" +
-        "                                                </textarea>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                            <br />\n" +
-        "                                            <br />\n" +
-        "                                            <div class=\"form-group\">\n" +
-        "                                                <div class=\"col-sm-12 text-center\">\n" +
-        "<button type=\"submit\" id=\"submit\"  class=\"btn btn-info\" onclick='submitChange()'>更新</button>" +
-        // "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新'>\n" +
-        "                                                </div>\n" +
-        "                                            </div>\n" +
-        "                                        </form>\n" +
+    let $html= " <div class=\"container\">\n" +
+        "            <!--        页面内容-->\n" +
+        "            <div class=\"row\" style=\"margin-top:30px;\">\n" +
+        "\n" +
+        "                <div class=\"col-sm-3\">\n" +
+        "                    <div class=\"panel panel-default\">\n" +
+        "                        <div class=\"panel-body\">\n" +
+        "                            <!--                        头像展示-->\n" +
+        "                            <div class=\"head_photo_container\">\n" +
+        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\"../../headphoto/default.jpg\" style=\"\">\n" +
+        "                            </div>\n" +
+        "                            <hr>\n" +
+        "\n" +
+        "                            <!--                        换头像-->\n" +
+        "                            <div align=\"center\">\n" +
+        "                                <form id=\"form_submit_photo\" class=\"form-horizontal\">\n" +
+        "                                    <input type=\"hidden\" name=\"role\" value=\"hotel\">\n" +
+        "                                    <input type=\"hidden\" name=\"roleId\" value=\"" + driver.driverId + "\" id=\"roleId\">\n" +
+        "                                    <label class=\"btn btn-default btn-file\">\n" +
+        "                                        更新头像\n" +
+        "                                        <input id=\"ingredient_file\" type=\"file\" style=\"display: none;\" name=\"file\"\n" +
+        "                                            required=\"\" onchange=\"onLoadImage()\">\n" +
+        "                                    </label>\n" +
+        "                                    <label class=\"btn btn-default btn-file\">\n" +
+        "                                        确认更新\n" +
+        "                                        <input id=\"submit_head_photo\" type=\"button\" style=\"display: none;\"\n" +
+        "                                            class=\"btn btn-primary\" onclick='headPhotoUpload()' />\n" +
+        "                                    </label>\n" +
+        "                                </form>\n" +
+        "                            </div>\n" +
+        "\n" +
+        "                        </div>\n" +
+        "                    </div>\n" +
+        "                </div>\n"
+    getDriverInfo($driverId);
+    $html+=
+        "                <div class=\"col-sm-6\">\n" +
+        "                    <div class=\"panel panel-default\">\n" +
+        "                        <div class=\"panel-body\">\n" +
+        "                            <div class=\"row\" style=\"margin-left: 20px; margin-right: 20px;\">\n" +
+        "                                <h3>司机信息</h3>\n" +
+        "                                <hr>\n" +
+        "                                <form id=\"driverInfo\" class=\"form-horizontal\" action=\"\">\n" +
+        " <input type=\"hidden\" name=\"driverId\" id=\"driverId\" value=\"\">"+
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"driveName\">司机姓名：</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"driverName\" value=\"" + driver.driverName + "\"\n" +
+        "                                                class=\"form-control\" maxlength=\"40\" required=\"\" id=\"driverName\"\n" +
+        "                                                placeholder=\"酒店名\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
         "                                    </div>\n" +
-        "                                </div>"
+        "\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"hotelPhone\">电话号码:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"driverPhone\" value=\"" + driver.driverPhone + "\"\n" +
+        "                                                class=\"form-control\" style=\"margin-top: 0;\" maxlength=\"50\" required=\"\"\n" +
+        "                                                id=\"driverPhone\" placeholder=\"电话号码\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"repeatHotelPass\">车牌号码:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"carNumber\"\n" +
+        "                                                class=\"form-control\" maxlength=\"40\" id=\"carNumber\" value=\"" + driver.carNumber + "\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"repeatHotelPass\">车牌号码:</label></label>\n" +
+            "                                                        <select class=\"form-control form-control-line\" name=\"account\" id='fleetId'>\n"
+        if (driver.fleetId === null) {
+            $html += "                                                            <option value='" + null + "'>" + "请选择您的车队" + "</option>\n";
+            for (let it in allFleet) {
+                if (it === vis) continue;
+                $html += "                                                            <option value='" + allFleet[it].fleetId + "'>" + allFleet[it].fleetName + "</option>\n"
+            }
+        } else {
+            let fleetNameTem;
+            // console.log(driver.fleetId);
+            // console.log(typeof driver.fleetId);
+            // alert(driver.fleetId);
+
+            for (let it in allFleet) {
+                // alert(allFleet[it].fleetId);
+                // console.log(allFleet[it].fleetId);
+                // console.log(typeof allFleet[it].fleetId);
+                if (allFleet[it].fleetId == driver.fleetId) {
+                    console.log(allFleet[it].fleetName);
+                    fleetNameTem = allFleet[it].fleetName;
+                    vis = it;
+                    break;
+                }
+            }
+            $html += "                                                            <option value='" + driver.fleetId + "'>" + fleetNameTem + "</option>\n"
+            for (let it in allFleet) {
+                if (it === vis) continue;
+                $html += "                                                            <option value='" + allFleet[it].fleetId + "'>" + allFleet[it].fleetName + "</option>\n"
+            }
+            $html += "                                                            <option value='" + null + "'>" + "退出当前车队" + "</option>\n";
+        }
+
+
+        $html +=
+            "                                                        </select>\n" +
+        // "                                        <div class=\"col-sm-7\"><input type=\"text\" name=\"carNumber\"\n" +
+        // "                                                class=\"form-control\" maxlength=\"40\" id=\"carNumber\" value=\"" + driver.carNumber + "\"></div>\n" +
+        // "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label for=\"driverPass\">密码:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"password\" name=\"driverPass\" class=\"form-control\"\n" +
+        "                                                maxlength=\"40\" id=\"driverPass\" value=\"" + driver.driverPass + "\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "                                    <div class=\"form-group\">\n" +
+        "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        "                                                for=\"repeatHotelPass\">重复密码:</label></label>\n" +
+        "                                        <div class=\"col-sm-7\"><input type=\"password\" name=\"repeatDriverPass\"\n" +
+        "                                                class=\"form-control\" maxlength=\"40\" id=\"repeatDriverPass\" value=\"" + driver.driverPass + "\"></div>\n" +
+        "                                        <span class=\"text-danger small\"></span>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        // "                                    <div class=\"form-group\">\n" +
+        // "                                        <label class=\"control-label col-sm-3\"><label\n" +
+        // "                                                for=\"hotelInfo\">酒店介绍:</label></label>\n" +
+        // "                                        <div class=\"col-sm-7\"><textarea name=\"hotelInfo\" cols=\"40\" rows=\"4\"\n" +
+        // "                                                class=\"form-control\" maxlength=\"500\" id=\"hotelInfo\">" +driver.driverInfo+ "</textarea></div>\n" +
+        // "                                        <span class=\"text-danger small\"></span>\n" +
+        // "                                    </div>\n" +
+        "\n" +
+        "\n" +
+        "                                    <div class=\"col-xs-offset-5\">\n" +
+        "                                        <button type=\"button\" class=\"btn btn-info\" style=\"border-radius: 5px\"\n" +
+        "                                            onclick=submitChange(); return false;>更新信息</button>\n" +
+        "                                    </div>\n" +
+        "\n" +
+        "                                </form>\n" +
+        "\n" +
+        "                            </div>\n" +
+        "                        </div>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "\n" +
+        "            </div>\n" +
+        "        </div>"
+    // let $html =
+    //     "                                <ul class=\"nav nav-tabs profile-tab\" role=\"tablist\">\n" +
+    //     "                                    <li class=\"nav-item active\"><a class=\"nav-link\" data-toggle=\"tab\" href=\"#个人信息\" role=\"tab\">个人信息</a>\n" +
+    //     "                                    </li>\n" +
+    //     "                                </ul>" +
+    //     "<br>" +
+    //
+    //     "                                        <form  class=\"form-horizontal form-material\" id='driverInfo'>\n" +
+    //     "                                            <div class=\"form-group\">\n" +
+    //     "                                                <label class=\"col-md-12\">姓名</label>\n" +
+    //     "                                                <div class=\"col-md-12\">\n" +
+    //     "                                                    <input type=\"text\" class=\"form-control form-control-line\"\n" +
+    //     "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
+    //     "                                                </div>\n" +
+    //     "                                            </div>\n" +
+    //     "                                            <div class=\"form-group\">\n" +
+    //     "                                                <label class=\"col-md-12\">密码</label>\n" +
+    //     "                                                <div class=\"col-md-12\">\n" +
+    //     "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
+    //     "                                                        name='driverPass' class=\"form-control form-control-line\" id='driverPass'>\n" +
+    //     "                                                </div>\n" +
+    //     "                                            </div>\n" +
+    //     "                                            <div class=\"form-group\">\n" +
+    //     "                                                <label class=\"col-md-12\">重复密码</label>\n" +
+    //     "                                                <div class=\"col-md-12\">\n" +
+    //     "                                                    <input type=\"password\" value=\"" + driver.driverPass + "\"\n" +
+    //     "                                                        name='repeatDriverPass' class=\"form-control form-control-line\" id='repeatDriverPass'>\n" +
+    //     "                                                </div>\n" +
+    //     "                                            </div>\n" +
+    //     "                                            <div class=\"form-group\">\n" +
+    //     "                                                <label class=\"col-md-12\">电话</label>\n" +
+    //     "                                                <div class=\"col-md-12\">\n" +
+    //     "                                                    <input type=\"text\" value=\"" + driver.driverPhone + "\"\n" +
+    //     "                                                        name='driverPhone' class=\"form-control form-control-line\" id='driverPhone'>\n" +
+    //     "                                                </div>\n" +
+    //     "                                            </div>\n" +
+    //     "                                            <div class=\"form-group\">\n" +
+    //     "                                                <label class=\"col-md-12\">车牌号</label>\n" +
+    //     "                                                <div class=\"col-md-12\">\n" +
+    //     "                                                    <input type=\"text\" value=\"" + driver.carNumber + "\"\n" +
+    //     "                                                        name='carNumber' class=\"form-control form-control-line\" id='carNumber'>\n" +
+    //     "                                                </div>\n" +
+    //     "                                            </div>\n" +
+    //     "                                                <div class=\"form-group\">\n" +
+    //     "                                                    <label class=\"col-md-12\">所属车队</label>\n" +
+    //     "<!--                                                    <label class=\"col-sm-2 control-label\">Select</label>-->\n" +
+    //     "                                                    <div class=\"col-md-12\">\n" +
+    //     "                                                        <select class=\"form-control form-control-line\" name=\"account\" id='fleetId'>\n"
+    // if (driver.fleetId === null) {
+    //     $html += "                                                            <option value='" + null + "'>" + "请选择您的车队" + "</option>\n";
+    //     for (let it in allFleet) {
+    //         if (it === vis) continue;
+    //         $html += "                                                            <option value='" + allFleet[it].fleetId + "'>" + allFleet[it].fleetName + "</option>\n"
+    //     }
+    // } else {
+    //     let fleetNameTem;
+    //     // console.log(driver.fleetId);
+    //     // console.log(typeof driver.fleetId);
+    //     // alert(driver.fleetId);
+    //
+    //     for (let it in allFleet) {
+    //         // alert(allFleet[it].fleetId);
+    //         // console.log(allFleet[it].fleetId);
+    //         // console.log(typeof allFleet[it].fleetId);
+    //         if (allFleet[it].fleetId == driver.fleetId) {
+    //             console.log(allFleet[it].fleetName);
+    //             fleetNameTem = allFleet[it].fleetName;
+    //             vis = it;
+    //             break;
+    //         }
+    //     }
+    //     $html += "                                                            <option value='" + driver.fleetId + "'>" + fleetNameTem + "</option>\n"
+    //     for (let it in allFleet) {
+    //         if (it === vis) continue;
+    //         $html += "                                                            <option value='" + allFleet[it].fleetId + "'>" + allFleet[it].fleetName + "</option>\n"
+    //     }
+    //     $html += "                                                            <option value='" + null + "'>" + "退出当前车队" + "</option>\n";
+    // }
+    //
+    //
+    // $html +=
+    //     "                                                        </select>\n" +
+    //     "                                                    </div>\n" +
+    //     "                                                </div>" +
+    //     "                                            <div class=\"form-group\">\n" +
+    //     "                                                <label class=\"col-md-12\">个人介绍</label>\n" +
+    //     "                                                <div class=\"col-md-12\">\n" +
+    //     "                                                    <textarea rows=\"5\" class=\"form-control form-control-line\">\n" +
+    //     "                                                    啊哈！\n" +
+    //     "                                                </textarea>\n" +
+    //     "                                                </div>\n" +
+    //     "                                            </div>\n" +
+    //     "                                            <br />\n" +
+    //     "                                            <br />\n" +
+    //     "                                            <div class=\"form-group\">\n" +
+    //     "                                                <div class=\"col-sm-12 text-center\">\n" +
+    //     "<button type=\"submit\" id=\"submit\"  class=\"btn btn-info\" onclick='submitChange()'>更新</button>" +
+    //     // "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新'>\n" +
+    //     "                                                </div>\n" +
+    //     "                                            </div>\n" +
+    //     "                                        </form>\n" +
+    //     "                                    </div>\n" +
+    //     "                                </div>"
     // 清空节点
     $(".card").empty();
     $(".card").append($html);
