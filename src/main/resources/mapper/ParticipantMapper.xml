@@ -43,5 +43,7 @@
         select * from participant where participant_phone = #{participantPhone}
     </select>
 
-
+    <update id="updateParticipantPhoto">
+        update participant set participant_photo = #{participantPhoto} where participant_id = #{participantId}
+    </update>
 </mapper>

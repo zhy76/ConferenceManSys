@@ -11,7 +11,7 @@
     <script src="js/jquery.min.js"></script>
     <script type="text/javascript">
         let participant;
-        let token = localStorage.getItem("xj");
+        let token = localStorage.getItem("conNCU");
         let $participantId;
         let pickup;
         let driver;
@@ -19,6 +19,8 @@
             if (token == null || token === "null" || token === "undefined") {}
             else {
                 $participantId = parseJwt(token).participantId;/*获取用户信息*/
+                getParticipantInfo($participantId);
+                $(".img-circle").attr("src", participant.participantPhoto);
             }
             $.ajax({
                 async: false,
@@ -30,12 +32,7 @@
                 },
                 success: function (data) {
                     data = JSON.parse(data)
-                    // alert(data);
-                    // console.log(data['data']['getOrganizerInfo'])
                     pickup = data['data']['getParticipantAllPickUp'];
-
-                    // alert(pickup);
-
                     showPickupInfo();
                     },
                 error: function () {
@@ -114,8 +111,6 @@
                 },
                 success: function (data) {
                     data = JSON.parse(data)
-                    // alert(data);
-                    // console.log(data['data']['getOrganizerInfo'])
                     driver = data['data']['getDriverInfoById'];
                 },
                 error: function () {
@@ -131,6 +126,30 @@
                 return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
             }).join(''));
             return JSON.parse(jsonPayload);
+        }
+        function getParticipantInfo($participantId) {
+            $.ajax({
+                async: false,
+                headers: {
+                    'token': token,
+                },
+                url: "/participant/getParticipantInfo",
+                type: "post",
+                dataType: "json",
+                data: {
+                    'participantId': $participantId,
+                },
+                success: function (data) {
+                    if (data["code"] === 200) {
+                        participant = data["data"]["getParticipantInfo"];
+                    } else {
+                        alert("获取用户数据失败");
+                    }
+                },
+                error: function () {
+                    alert("获取用户数据失败");
+                },
+            });
         }
     </script>
     <!--    <script src="js/participant/participant-index.js"></script>-->
@@ -192,7 +211,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="participant-index.html">
+                        <a href="参与者个人信息.html">
                             <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
                         </a>
                     </li>

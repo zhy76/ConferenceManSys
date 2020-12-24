@@ -7,7 +7,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>参与者查看会议</title>
     <!-- Common plugins -->
-<!--    <script src="js/jquery.min.js"></script>-->
+    <script src="js/jquery.min.js"></script>
+
+
     <link href="会务管理系统样式1/css/bootstrap.min.css" rel="stylesheet">
     <link href="会务管理系统样式1/css/simple-line-icons.css" rel="stylesheet">
     <link href="会务管理系统样式1/css/font-awesome.min.css" rel="stylesheet">
@@ -45,15 +47,15 @@
     <link href="css/jquery.toast.min.css" rel="stylesheet">
     <!--template css-->
     <link href="css/style.css" rel="stylesheet">
-    <style>
-        .error {
-            color: red;
-        }
-    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
     <style type="text/css">
         *{
-            margin: 0;
-            padding: 0;
+            margin: 0px;
+            padding: 0px;
         }
         .container a .items{
             border: 1px solid#eeeeee;
@@ -102,13 +104,337 @@
             z-index: 99999;
         }
     </style>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="js/html5shiv.min.js"></script>
-    <script src="js/respond.min.js"></script>
     <![endif]-->
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
+    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+    <script>
+        let organizer;
+        let token;
+        let $participantId;
+        let conference;
+        let participant;
+        /**
+         * 数字+位数
+         * @param num
+         * @param length
+         * @returns {string}
+         */
+        function fix(num, length) {
+            return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
+        }
+        $(function (){
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
+                else $('.back-to-top').fadeOut('slow');
+            });
+            token = localStorage.getItem("conNCU");
+            console.log(token);
+            $participantId = parseJwt(token).participantId
+            getParticipantInfo($participantId)
+            $(".img-circle").attr("src", participant.participantPhoto);
 
+            $.ajax({
+                async: false,
+                url: "/conference/showConferences",
+                type: "get",
+                dataType: "text",
+                data: {
+                },
+                success: function (data) {
+                    var listConference = "";
+                    data = JSON.parse(data)
+                    var conferences = data['data']['conferencesList'];
+                    for(var i = 0 ; i < conferences.length ; i ++ ){
+                        var conferenceName = conferences[i].conferenceName;
+                        var conferenceLocation = conferences[i].conferenceLocation;
+                        var conferenceStart = conferences[i].conferenceStart;
+                        var conferenceEnd = conferences[i].conferenceEnd;
+                        var conferenceId = conferences[i].conferenceId;
+                        var conferenceInfo = conferences[i].conferenceInfo;
+                        var organizerId = conferences[i].organizerId;
+
+                        getOrganizerInfo(organizerId);
+
+                        var organizerUnit = organizer.organizerUnit;
+                        var newDate = new Date();
+                        let dateToday = "" + newDate.getFullYear() + '-' + fix((newDate.getMonth() + 1), 2) + '-'  + fix(newDate.getDate(), 2) + 'T' + fix(newDate.getHours(),2) + ':' + fix(newDate.getMinutes(), 2);
+                        listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
+                            '                        <a href = "#">' +
+                            '                            <div class="items">' +
+                            '                                <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
+                            '                                <h4>'+ conferenceName +'</h4>' +
+                            '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
+                            '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
+                            '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
+                            '                                <a id="info" type="button" class="btn btn-primary" data-toggle="modal" data-target="#lingchen'+conferenceId+'">会议详情</a>' +
+                            '                                <a id="new_add" type="button" class="btn btn-success" data-toggle="modal" data-target="#renyuan'+conferenceId+'">加入会议</a>' +
+                            '                            </div>' +
+                            '                        </a>' +
+                            '<div class="box">' +
+                            '    <div class="content">' +
+                            '        <!--添加按钮及bootstrap的模态框-->' +
+                            '        <div class="export">' +
+                            '            <div class="modal fade" id="renyuan'+conferenceId+'">' +
+                            '                <div class="modal-dialog modal-lg modal_position">' +
+                            '                    <div class="modal-content">' +
+                            '                        <div class="modal-header">' +
+                            '                            <h4 class="modal-title" id="">加入会议</h4>' +
+                            '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
+                            '                        </div>\n' +
+                            '                        <!-- 模态弹窗部分开始 -->' +
+                            '                        <div class="modal-body">' +
+                            '                            <table id="xztb" class="table">' +
+                            '                                <!--新修改弹窗的样式-->' +
+                            '                                <tbody>' +
+                            '                                <tr>' +
+                            '                                    <td class=""><label for=""><font style="font-size: 14px; color: red;">*</font>住宿</label>' +
+                            '                                    </td>' +
+                            '                                    <td><input  type="radio" name="isPutup" value="true" id="putup" />是&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '                                    <input  type="radio" name="isPutup"  value="false" id="unput"/>否</td>' +
+                            '                                </tr>' +
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for=""><font style="font-size: 14px; color: red;">*</font>接送</label>' +
+                            '                                    </td>' +
+                            '                                    <td><input  type="radio" name="isPickup" value="true" id="pick"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '                                    <input  type="radio" name="isPickup"  value="false" id="unpick"/>否</td>' +
+                            '                                </tr>' +
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for="">到达时间</label></td>' +
+                            '                                    <td><input type="datetime-local" name="toTime" id="toTime'+i+'"  value="' + dateToday + '"></td>' +
+                            '                                </tr>' +
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for="">离开时间</label></td>' +
+                            '                                    <td><input type="datetime-local" name="returnTime" id="returnTime'+i+'" value="' + dateToday + '"></td>' +
+                            '                                </tr>' +
+                            '                                <tr>'+
+                            '                                      <td class="tb_bg"><label for="">车次/航班号</label></td>'+
+                            '                                      <td><input type="text" name="trainNumber" id="trainNumber'+i+'" value="G1234" ></td>'+
+                            '                                </tr>'+
+                            '                                </tbody>' +
+                            '                            </table>' +
+                            '                        </div>' +
+                            '                        <div class="modal-footer">' +
+                            '                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>' +
+                            '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"attendConference('+ i + ','+ conferenceId + ')\">加入</button>' +
+                            '                        </div>' +
+                            '                        <!--模态弹窗部分结束 -->' +
+                            '                    </div>' +
+                            '                </div>' +
+                            '            </div>' +
+                            '            <div class="modal fade" id="lingchen'+conferenceId+'">' +
+                            '                <div class="modal-dialog modal-lg modal_position">' +
+                            '                    <div class="modal-content">' +
+                            '                        <div class="modal-header">' +
+                            '                            <h4 class="modal-title" id="">会议详情</h4>' +
+                            '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
+                            '                        </div>\n' +
+                            '                        <!-- 模态弹窗部分开始 -->' +
+                            '                        <div class="modal-body">' +
+                            '                            <table id="xztb" class="table">' +
+                            '                                <!--新修改弹窗的样式-->' +
+                            '                                <tbody>' +
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for="">会议名称</label></td>' +
+                            '                                    <td><input type="text" name="conferenceName" id="conferenceName'+i+'" readonly unselectable="on"  value="'+ conferenceName +'"></td>' +
+                            '                                </tr>' +
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for="">会议开始时间</label></td>' +
+                            '                                    <td><input type="text" name="conferenceStart" id="conferenceStart'+i+'" readonly unselectable="on" value="'+ conferenceStart +'"></td>' +
+                            '                                </tr>' +
+                            '                                <tr>'+
+                            '                                      <td class="tb_bg"><label for="">会议结束时间</label></td>'+
+                            '                                      <td><input type="text" name="conferenceEnd" id="conferenceEnd'+i+'" readonly unselectable="on" value="'+ conferenceEnd +'"></td>'+
+                            '                                </tr>'+
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for="">会议地点</label></td>' +
+                            '                                    <td><input type="text" name="conferenceLocation" id="conferenceLocation'+i+'" readonly unselectable="on" value="'+ conferenceLocation +'"></td>' +
+                            '                                </tr>' +
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for="">会议相关信息</label></td>' +
+                            '                                    <td><input type="text" name="conferenceInfo" id="conferenceInfo'+i+'" readonly unselectable="on" value="'+ conferenceInfo +'"></td>' +
+                            '                                </tr>' +
+                            '                                <tr>' +
+                            '                                    <td class="tb_bg"><label for="">会议主办单位</label></td>' +
+                            '                                    <td><input type="text" name="organizerUnit" id="organizerUnit'+i+'" readonly unselectable="on" value="'+ organizerUnit +'"></td>' +
+                            '                                </tr>' +
+                            '                                </tbody>' +
+                            '                            </table>' +
+                            '                        </div>' +
+                            '                        <div class="modal-footer">' +
+                            '                            <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>' +
+                            '                        </div>' +
+                            '                        <!--模态弹窗部分结束 -->' +
+                            '                    </div>' +
+                            '                </div>' +
+                            '            </div>' +
+                            '        </div>' +
+                            '    </div>' +
+                            '</div>'+
+                            '                   </div>'
+                    }
+                    $('#mainContent').html(listConference);
+                },
+                error: function () {
+                    alert("获取会议数据失败");
+                },
+            });
+        })
+
+        function getOrganizerInfo(organizerId) {
+
+            $.ajax({
+                async: false,
+                url: "/organizer/getOrganizerInfo",
+                type: "get",
+                dataType: "text",
+                data: {
+                    'organizerId': organizerId,
+                },
+                success: function (data) {
+                    data = JSON.parse(data)
+                    organizer = data['data']['getOrganizerInfo'];
+                },
+                error: function () {
+                    alert("获取用户数据失败2");
+                },
+            });
+        }
+
+        function attendConference(i,conferenceId){
+            // alert(1)
+            let message = "";
+            getConferenceInfo(conferenceId)
+            let conferenceStart = conference.conferenceStart;
+            let conferenceEnd = conference.conferenceEnd;
+            let putup = $("input[name='isPutup']:checked").val();
+            let pickup = $("input[name='isPickup']:checked").val();
+            let toTime = $("#toTime"+i).val();
+            let returnTime = $("#returnTime"+i).val();
+            let trainNumber = $("#trainNumber"+i).val();
+            if(typeof putup == "undefined"){
+                message += "是否住宿必选！\n";
+                // alert("是否住宿必选！")
+                // return
+            }
+            if(typeof pickup == "undefined"){
+                message += "是否接送必选！\n";
+                // alert("是否接送必选！")
+                // return
+            }
+            if(toTime ==""){
+                message += "到达时间不能为空！\n";
+                // alert("到达时间不能为空！")
+                // return
+            } else if(toTime >= conferenceStart){
+                message += "到达时间不能晚于会议开始时间: " + conferenceStart + "！\n";
+                // alert("到达时间不能晚于会议开始时间！"+conferenceStart)
+                // return
+            }
+            if(returnTime ==""){
+                message += "离开时间不能为空！\n";
+                // alert("离开时间不能为空！")
+                // return
+            } else if(returnTime < conferenceEnd){
+                message += "离开时间不能早于会议结束时间: " + conferenceEnd + "！\n";
+                // alert("离开时间不能早于会议结束时间！"+conferenceEnd)
+                // return
+            }
+            if(toTime > returnTime){
+                message += "到达时间不能晚于离开时间！\n";
+                // alert("到达时间不能晚于离开时间！")
+                // return
+            }
+            if(trainNumber ==""){
+                message += "车次/航班号不能为空！\n";
+                // alert("车次/航班号不能为空！")
+                // return
+            }
+            if(message != ""){
+                alert(message);
+                return
+            }
+            $.ajax({
+                async: false,
+                type: "POST",
+                dataType: "json",
+                url: "/joinConference/joinAConference",
+                contentType: "application/json",
+                data:JSON.stringify ({
+                    "participantId":""+$participantId,
+                    "conferenceId":""+conferenceId,
+                    "isPutup":""+putup,
+                    "isPickup":""+pickup,
+                    "toTime":""+toTime,
+                    "returnTime":""+returnTime,
+                    "trainNumber": ""+trainNumber,
+                    "isConfirm":false,
+                }),
+                success: function (data) {
+                    if(data['code']==200){
+                        alert("申请成功！等待组织者审核！");
+                        window.location.href = "参与者待审核会议.html";
+                    }else{
+                        alert("加入失败！"+ data['message'])
+                        window.location.href = "参与者选择会议.html";
+                    }
+                    console.log(data)
+                },
+                error: function () {
+                    alert("获取用户数据失败2");
+                },
+            });
+
+        }
+        /*获取token里面的用户数据*/
+        function parseJwt(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+        function getConferenceInfo(conferenceId){
+            $.ajax({
+                async: false,
+                url: "/conference/showConferenceById",
+                type: "get",
+                dataType: "text",
+                data: {
+                    'conferenceId':""+conferenceId
+                },
+                success: function (data) {
+                    data = JSON.parse(data)
+                    conference = data['data']['conference'];
+                },
+            });
+        }
+        function getParticipantInfo($participantId) {
+            $.ajax({
+                async: false,
+                headers: {
+                    'token': token,
+                },
+                url: "/participant/getParticipantInfo",
+                type: "post",
+                dataType: "json",
+                data: {
+                    'participantId': $participantId,
+                },
+                success: function (data) {
+                    if (data["code"] === 200) {
+                        participant = data["data"]["getParticipantInfo"];
+                    } else {
+                        alert("获取用户数据失败");
+                    }
+                },
+                error: function () {
+                    alert("获取用户数据失败");
+                },
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -141,7 +467,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="participant-index.html">
+                        <a href="参与者个人信息.html">
                             <span><img src="assets/picture/avtar-1.jpg" class="img-circle" width="30" alt=""></span>
                         </a>
                     </li>
@@ -224,330 +550,6 @@
 
 <!--Common plugins-->
 <script src="js/jquery.min.js"></script>
-    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
-    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
-    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
-    <script>
-        let organizer;
-        let token;
-        let $participantId;
-        let conference;
-        /**
-         * 数字+位数
-         * @param num
-         * @param length
-         * @returns {string}
-         */
-        function fix(num, length) {
-            return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
-        }
-        $(function (){
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 100)  $('.back-to-top').fadeIn('slow');
-                else $('.back-to-top').fadeOut('slow');
-            });
-            token = localStorage.getItem("xj");
-            console.log(token);
-            $participantId = parseJwt(token).participantId
-            $.ajax({
-                async: false,
-                url: "/conference/showConferences",
-                type: "get",
-                dataType: "text",
-                data: {
-                },
-                success: function (data) {
-                    var listConference = "";
-                    // console.log(data);
-                    // console.log(typeof data)
-                    data = JSON.parse(data)
-                    // console.log(typeof data)
-                    // console.log(data['data']['conferencesList'])
-                    var conferences = data['data']['conferencesList'];
-                    // console.log(conferences);
-                    for(var i = 0 ; i < conferences.length ; i ++ ){
-                        // console.log(conferences[i]);
-                        var conferenceName = conferences[i].conferenceName;
-                        var conferenceLocation = conferences[i].conferenceLocation;
-                        var conferenceStart = conferences[i].conferenceStart;
-                        var conferenceEnd = conferences[i].conferenceEnd;
-                        var conferenceId = conferences[i].conferenceId;
-                        var conferenceInfo = conferences[i].conferenceInfo;
-                        // console.log(conferenceId);
-                        var organizerId = conferences[i].organizerId;
-
-                        getOrganizerInfo(organizerId);
-
-                        var organizerUnit = organizer.organizerUnit;
-                        var newDate = new Date();
-                        let dateToday = "" + newDate.getFullYear() + '-' + fix((newDate.getMonth() + 1), 2) + '-'  + fix(newDate.getDate(), 2) + 'T' + fix(newDate.getHours(),2) + ':' + fix(newDate.getMinutes(), 2);
-                        // alert(dateToday);
-                        listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
-                            '                        <a href = "#">' +
-                            '                            <div class="items">' +
-                            '                                <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
-                            '                                <h4>'+ conferenceName +'</h4>' +
-                            '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
-                            '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
-                            '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
-                            '                                <a id="info" type="button" class="btn btn-primary" data-toggle="modal" data-target="#lingchen'+conferenceId+'">会议详情</a>' +
-                            '                                <a id="new_add" type="button" class="btn btn-success" data-toggle="modal" data-target="#renyuan'+conferenceId+'">加入会议</a>' +
-                            '                            </div>' +
-                            '                        </a>' +
-                            '<div class="box">' +
-                            '    <div class="content">' +
-                            '        <!--添加按钮及bootstrap的模态框-->' +
-                            '        <div class="export">' +
-                            '            <div class="modal fade" id="renyuan'+conferenceId+'">' +
-                            '                <div class="modal-dialog modal-lg modal_position">' +
-                            '                    <div class="modal-content">' +
-                            '                        <div class="modal-header">' +
-                            '                            <h4 class="modal-title" id="">加入会议</h4>' +
-                            '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
-                            '                        </div>\n' +
-                            '                        <!-- 模态弹窗部分开始 -->' +
-                            '                        <div class="modal-body">' +
-                            '                            <table id="xztb" class="table">' +
-                            '                                <!--新修改弹窗的样式-->' +
-                            '                                <tbody>' +
-                            '                                <tr>' +
-                            '                                    <td class=""><label for=""><font style="font-size: 14px; color: red;">*</font>住宿</label>' +
-                            '                                    </td>' +
-                            '                                    <td><input  type="radio" name="isPutup" value="true" id="putup" />是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                            '                                    <input  type="radio" name="isPutup"  value="false" id="unput"/>否</td>' +
-                            '                                </tr>' +
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for=""><font style="font-size: 14px; color: red;">*</font>接送</label>' +
-                            '                                    </td>' +
-                            '                                    <td><input  type="radio" name="isPickup" value="true" id="pick"/>是&nbsp;&nbsp;&nbsp;&nbsp;' +
-                            '                                    <input  type="radio" name="isPickup"  value="false" id="unpick"/>否</td>' +
-                            '                                </tr>' +
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for="">到达时间</label></td>' +
-                            '                                    <td><input type="datetime-local" name="toTime" id="toTime'+i+'" value="' + dateToday + '"></td>' +
-                            '                                </tr>' +
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for="">离开时间</label></td>' +
-                            '                                    <td><input type="datetime-local" name="returnTime" id="returnTime'+i+'" value="' + dateToday + '"></td>' +
-                            '                                </tr>' +
-                            '                                <tr>'+
-                            '                                      <td class="tb_bg"><label for="">车次/航班号</label></td>'+
-                            '                                      <td><input type="text" name="trainNumber" id="trainNumber'+i+'" value="G1234" ></td>'+
-                            '                                </tr>'+
-                            '                                </tbody>' +
-                            '                            </table>' +
-                            '                        </div>' +
-                            '                        <div class="modal-footer">' +
-                            '                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>' +
-                            '                            <button id="add_btn" type="button" class="btn btn-success" onclick=\"attendConference('+ i + ','+ conferenceId + ')\">加入</button>' +
-                            '                        </div>' +
-                            '                        <!--模态弹窗部分结束 -->' +
-                            '                    </div>' +
-                            '                </div>' +
-                            '            </div>' +
-                            '            <div class="modal fade" id="lingchen'+conferenceId+'">' +
-                            '                <div class="modal-dialog modal-lg modal_position">' +
-                            '                    <div class="modal-content">' +
-                            '                        <div class="modal-header">' +
-                            '                            <h4 class="modal-title" id="">会议详情</h4>' +
-                            '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
-                            '                        </div>\n' +
-                            '                        <!-- 模态弹窗部分开始 -->' +
-                            '                        <div class="modal-body">' +
-                            '                            <table id="xztb" class="table">' +
-                            '                                <!--新修改弹窗的样式-->' +
-                            '                                <tbody>' +
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for="">会议名称</label></td>' +
-                            '                                    <td><input type="text" name="conferenceName" id="conferenceName'+i+'" readonly unselectable="on"  value="'+ conferenceName +'"></td>' +
-                            '                                </tr>' +
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for="">会议开始时间</label></td>' +
-                            '                                    <td><input type="text" name="conferenceStart" id="conferenceStart'+i+'" readonly unselectable="on" value="'+ conferenceStart +'"></td>' +
-                            '                                </tr>' +
-                            '                                <tr>'+
-                            '                                      <td class="tb_bg"><label for="">会议结束时间</label></td>'+
-                            '                                      <td><input type="text" name="conferenceEnd" id="conferenceEnd'+i+'" readonly unselectable="on" value="'+ conferenceEnd +'"></td>'+
-                            '                                </tr>'+
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for="">会议地点</label></td>' +
-                            '                                    <td><input type="text" name="conferenceLocation" id="conferenceLocation'+i+'" readonly unselectable="on" value="'+ conferenceLocation +'"></td>' +
-                            '                                </tr>' +
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for="">会议相关信息</label></td>' +
-                            '                                    <td><input type="text" name="conferenceInfo" id="conferenceInfo'+i+'" readonly unselectable="on" value="'+ conferenceInfo +'"></td>' +
-                            '                                </tr>' +
-                            '                                <tr>' +
-                            '                                    <td class="tb_bg"><label for="">会议主办单位</label></td>' +
-                            '                                    <td><input type="text" name="organizerUnit" id="organizerUnit'+i+'" readonly unselectable="on" value="'+ organizerUnit +'"></td>' +
-                            '                                </tr>' +
-                            '                                </tbody>' +
-                            '                            </table>' +
-                            '                        </div>' +
-                            '                        <div class="modal-footer">' +
-                            '                            <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>' +
-                            '                        </div>' +
-                            '                        <!--模态弹窗部分结束 -->' +
-                            '                    </div>' +
-                            '                </div>' +
-                            '            </div>' +
-                            '        </div>' +
-                            '    </div>' +
-                            '</div>'+
-                            '                   </div>'
-                    }
-                    $('.container').empty();
-                    $('.container').html(listConference);
-                    // if (data["code"] === 200) {
-                    //     alert("获取会议数据成功");
-                    // } else {
-                    //     alert("获取数据失败1");
-                    // }
-                },
-                error: function () {
-                    alert("获取会议数据失败");
-                },
-            });
-        })
-
-        function getOrganizerInfo(organizerId) {
-
-            $.ajax({
-                async: false,
-                url: "/organizer/getOrganizerInfo",
-                type: "get",
-                dataType: "text",
-                data: {
-                    'organizerId': organizerId,
-                },
-                success: function (data) {
-                    data = JSON.parse(data)
-                    organizer = data['data']['getOrganizerInfo'];
-                },
-                error: function () {
-                    alert("获取用户数据失败2");
-                },
-            });
-        }
-
-        function attendConference(i,conferenceId){
-            // alert(1)
-            let message = "";
-            getConferenceInfo(conferenceId)
-            // let conferenceId = conference.conferenceId;
-            let conferenceStart = conference.conferenceStart;
-            let conferenceEnd = conference.conferenceEnd;
-            let putup = $("input[name='isPutup']:checked").val();
-            let pickup = $("input[name='isPickup']:checked").val();
-            let toTime = $("#toTime"+i).val().replaceAll('T', ' ');
-            let returnTime = $("#returnTime"+i).val().replaceAll('T', ' ');
-            let trainNumber = $("#trainNumber"+i).val();
-            if(typeof putup == "undefined"){
-                message += "是否住宿必选！\n";
-                // alert("是否住宿必选！")
-                // return
-            }
-            if(typeof pickup == "undefined"){
-                message += "是否接送必选！\n";
-                // alert("是否接送必选！")
-                // return
-            }
-            if(toTime ==""){
-                message += "到达时间不能为空！\n";
-                // alert("到达时间不能为空！")
-                // return
-            } else if(toTime >= conferenceStart){
-                message += "到达时间不能晚于会议开始时间: " + conferenceStart + "！\n";
-                // alert("到达时间不能晚于会议开始时间！"+conferenceStart)
-                // return
-            }
-            if(returnTime ==""){
-                message += "离开时间不能为空！\n";
-                // alert("离开时间不能为空！")
-                // return
-            } else if(returnTime < conferenceEnd){
-                message += "离开时间不能早于会议结束时间: " + conferenceEnd + "！\n";
-                // alert("离开时间不能早于会议结束时间！"+conferenceEnd)
-                // return
-            }
-            if(toTime > returnTime){
-                message += "到达时间不能晚于离开时间！\n";
-                // alert("到达时间不能晚于离开时间！")
-                // return
-            }
-            if(trainNumber ==""){
-                message += "车次/航班号不能为空！\n";
-                // alert("车次/航班号不能为空！")
-                // return
-            }
-            if(message != ""){
-                alert(message);
-                return
-            }
-
-            alert(putup)
-            alert(pickup)
-            alert(toTime)
-            alert(returnTime)
-            alert(trainNumber)
-            $.ajax({
-                async: false,
-                type: "POST",
-                dataType: "json",
-                url: "/joinConference/joinAConference",
-                contentType: "application/json",
-                data:JSON.stringify ({
-                    "participantId":""+$participantId,
-                    "conferenceId":""+conferenceId,
-                    "isPutup":""+putup,
-                    "isPickup":""+pickup,
-                    "toTime":""+toTime,
-                    "returnTime":""+returnTime,
-                    "trainNumber": ""+trainNumber,
-                    "isConfirm":false,
-                }),
-                success: function (data) {
-                    //data = JSON.parse(data)
-                    if(data['code']==200){
-                        alert("申请成功！等待组织者审核！");
-                        window.location.href = "参与者待审核会议.html";
-                    }else{
-                        alert("加入失败！"+ data['message'])
-                        window.location.href = "参与者选择会议.html";
-                    }
-                    console.log(data)
-                },
-                error: function () {
-                    alert("获取用户数据失败2");
-                },
-            });
-
-        }
-        /*获取token里面的用户数据*/
-        function parseJwt(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        }
-        function getConferenceInfo(conferenceId){
-            $.ajax({
-                async: false,
-                url: "/conference/showConferenceById",
-                type: "get",
-                dataType: "text",
-                data: {
-                    'conferenceId':""+conferenceId
-                },
-                success: function (data) {
-                    data = JSON.parse(data)
-                    conference = data['data']['conference'];
-                },
-            });
-        }
-    </script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/pace.min.js"></script>
 <script src="js/jasny-bootstrap.min.js"></script>

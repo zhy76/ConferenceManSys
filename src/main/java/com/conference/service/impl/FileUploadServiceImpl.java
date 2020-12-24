@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+<<<<<<< HEAD
  * @Author: liuCenYu
  * @Date: 2020/12/23 20:43
  **/
@@ -14,6 +15,17 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Autowired
     private AdminDao adminDao;
+=======
+ * @Description
+ * @Author 谢 娇
+ * @Date 2020/12/24 0:20
+ * @sno 6109118015
+ */
+@Service("fileUploadService")
+public class FileUploadServiceImpl implements FileUploadService {
+//    @Autowired
+//    private AdminDao adminDao;
+>>>>>>> lingchen
     @Autowired
     private DriverDao driverDao;
     @Autowired
@@ -34,4 +46,15 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
     }
 
+    @Override
+    public void headPhotoUpload(String role, Integer roleId, String url) {
+//        if( role.equals("admin")){
+//            System.out.println("impl正在执行...");
+//            adminDao.updateAdminPhoto(url,roleId);
+//        }
+        if( role.equals("participant")){
+            System.out.println("impl正在执行...");
+            participantDao.updateParticipantPhoto(url,roleId);
+        }
+    }
 }
