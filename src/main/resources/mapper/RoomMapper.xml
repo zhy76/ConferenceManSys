@@ -12,8 +12,8 @@
         select * from room where hotel_id=#{hotelId}
     </select>
 <!--通过房间号查找房间-->
-    <select id="getRoomByRoomId" resultType="Hotel">
-        select * from room where room_id=#{roomId}
+    <select id="getRoomByRoomId" resultType="Room">
+        select * from room where room_id=#{roomId} AND hotel_id=#{hotelId}
     </select>
 <!--    酒店房间增加-->
     <insert id="addRoom">
@@ -26,7 +26,6 @@
     </delete>
 <!--  更新房间-->
     <update id="updateRoom">
-        UPDATE room SET  is_live=#{isLive},
-        room_type=#{roomType} WHERE hotel_id=#{hotelId} AND room_id=#{roomId};
+        UPDATE room SET  is_live=#{isLive} WHERE hotel_id=#{hotelId} AND room_id=#{roomId};
     </update>
 </mapper>

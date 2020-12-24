@@ -25,4 +25,6 @@ public interface HotelDao {
     int updateHotel(@Param("hotelName")String hotelName, @Param("hotelLocation")String hotelLocation,
                     @Param("hotelPhone")String hotelPhone, @Param("hotelPass")String hotelPass,
                     @Param("hotelInfo")String hotelInfo,@Param("hotelId")int hotelId);
+
+    int updateHotelPhoto(@Param("hotelPhoto") String adminPhoto, @Param("hotelId") Integer hotelId);
 }
