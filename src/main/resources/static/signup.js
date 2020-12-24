@@ -20,22 +20,25 @@ $(function() {
         let password = $("#password").val();
         if (role == "participant") {
             let participantEmail = $("#email").val();
-            let hotelLocation = $("#hotelLocation").val();
+            let participantName = $("#participantName").val();
             $.ajax({
                 type: "POST",
                 dataType: "json",
                 url: '/participant/register',
                 contentType: "application/json",
                 data: JSON.stringify({
-                    "hotelPhone": "" + phone,
-                    "hotelPass": "" + password,
-                    "hotelName": "" + hotelName,
-                    "hotelLocation": "" + hotelLocation,
-                    "hotelInfo": "写点什么吧.."
+                    "participantEmail": "" + participantEmail,
+                    "participantPhone": "" + phone,
+                    "participantPass": "" + password,
+                    "participantName": "" + participantName,
+                    "participantSex": "M"
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
@@ -48,23 +51,84 @@ $(function() {
             });
         }
         else if (role == "organizer") {
-            let hotelName = $("#hotelName").val();
-            let hotelLocation = $("#hotelLocation").val();
+            let organizerUnit = $("#unit").val();
             $.ajax({
                 type: "POST",
                 dataType: "json",
-                url: '/hotel/register',
+                url: '/organizer/register',
                 contentType: "application/json",
                 data: JSON.stringify({
-                    "hotelPhone": "" + phone,
-                    "hotelPass": "" + password,
-                    "hotelName": "" + hotelName,
-                    "hotelLocation": "" + hotelLocation,
-                    "hotelInfo": "写点什么吧.."
+                    "organizerPhone": "" + phone,
+                    "organizerPass": "" + password,
+                    "organizerUnit": "" + organizerUnit,
+                    "organizerEmail": ""
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]) {
+
+                        localStorage.setItem("conNCU", jsonData["data"]["token"]);
+
+                        alert("注册成功");
+                        window.location.href = role + "-index.html";
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            });
+        }
+        else if (role == "driver") {
+            let driverName = $("#driverName").val();
+            let carNumber = $("#carNumber").val();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '/driver/register',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "driverPhone": "" + phone,
+                    "driverPass": "" + password,
+                    "driverName": "" + driverName,
+                    "carNumber": "" + carNumber
+                }),
+                success: function (jsonData, result) {
+                    console.log("data is :" + result);
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]!=null) {
+
+                        localStorage.setItem("conNCU", jsonData["data"]["token"]);
+
+                        alert("注册成功");
+                        window.location.href = role + "-index.html";
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            });
+        }
+        else if (role == "fleet") {
+            let fleetName = $("#fleetName").val();
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '/fleet/register',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "fleetPhone": "" + phone,
+                    "fleetPass": "" + password,
+                    "fleetName": "" + fleetName
+                }),
+                success: function (jsonData, result) {
+                    console.log("data is :" + result);
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
@@ -93,7 +157,10 @@ $(function() {
                 }),
                 success: function (jsonData, result) {
                     console.log("data is :" + result);
-                    if (jsonData["data"]["token"]) {
+                    if(jsonData["code"]!=200){
+                        alert(jsonData["message"]);
+                    }
+                    else if (jsonData["data"]["token"]!=null) {
 
                         localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
@@ -162,6 +229,26 @@ function check(){
             $("#email-icon").css({"color":"green","display":"block"});
         }
 
+    })
+    $("#participantName").on("blur keyup",function(){
+        var val = $("#participantName").val();
+        if( val == '' )
+        {
+            $("#participantName-icon").removeClass();
+            $("#participantName-icon").addClass('glyphicon glyphicon-remove');
+            $("#participantName-icon").css({"color":"red","display":"block"});
+            $("#participantName-icon").css({"display":"block"});
+            $("#participantNameInfo").show('.2s');
+            $("#participantNameInfo strong").text(" 姓名不可以为空");
+        }
+        else
+        {
+            $("#participantName-icon").removeClass();
+            $("#participantName-icon").addClass('glyphicon glyphicon-ok');
+            $("#participantNameInfo").hide('.2s');
+            // $("#phoneInfo").css({"display":"none"});
+            $("#participantName-icon").css({"color":"green","display":"block"});
+        }
     })
     $("#unit").on("blur keyup",function(){
         var val = $("#unit").val();
@@ -363,7 +450,18 @@ function showOrganizerForm(){
     $("#signForm").append($html);
 }
 function showParticipantForm(){
-    let $html="<!--/.form-group -->\n" +
+
+   let  $html="<!--/.form-group -->\n" +
+        "<div class=\"form-group\">\n" +
+        "    <label for=\"participantName\"><span class=\"glyphicon glyphicon-user\" style=\"color: rgb(140, 132, 251);\"></span> 姓名</label>\n" +
+        "    <input type=\"text\" class=\"form-control\" id=\"participantName\" placeholder=\"请输入您的姓名\" onclick=\"check()\">\n" +
+        "    <span id=\"participantName-icon\" class=\"glyphicon glyphicon-remove\"\n" +
+        "        style=\"float:right ; color: red; font-size: 20px;margin-top: -35px; display: none;\"></span>\n" +
+        "    <div id=\"participantNameInfo\" style=\"color:red; font-weight: bold; display: none;\"><span\n" +
+        "            class=\"glyphicon glyphicon-exclamation-sign\"></span><strong></strong></div>\n" +
+        "</div>\n" +
+        "<!--/.form-group -->"
+    $html+="<!--/.form-group -->\n" +
         "\n" +
         "<div class=\"form-group\">\n" +
         "    <label for=\"email\"><span class=\"glyphicon glyphicon-envelope\" style=\"color: rgb(140, 132, 251);\"></span> 邮箱</label>\n" +

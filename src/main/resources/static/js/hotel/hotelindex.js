@@ -36,8 +36,8 @@ $(function () {
     }
 //获取酒店信息
     $("#get-hotel a").click(function () {
-        console.log("信息获取");
-        showHotelInfo();
+            console.log("信息获取");
+            showHotelInfo();
     })
     $("#get-hotel-up").click(function () {
         console.log("信息获取");
@@ -85,6 +85,7 @@ function headPhotoUpload() {
 
             if (result.message == "成功") {
                 alert("更新头像成功!");
+                location.reload();
                 // $.alert({
                 //     title: '提示信息',
                 //     content: '更新头像成功!',
@@ -182,7 +183,7 @@ function showLiveRoomTable(){
         }
 
     }
-    let $htmlEnd =
+        let $htmlEnd =
         "                            </tbody>\n" +
         "                        </table>\n" +
         "\n" +
@@ -284,7 +285,7 @@ function updateLiveRoom(liveTable,i){
             type: "POST",
             url: '/liveRoom/updateLiveRoom',
             contentType: "application/json",
-            // headers: { 'token': localStorage.getItem("conNCU") },
+           // headers: { 'token': localStorage.getItem("conNCU") },
             data: JSON.stringify({
                 "participantId": $participantId,
                 "hotelId":$hotelId,
@@ -377,7 +378,7 @@ function  showHotelInfo(){
         "                        <div class=\"panel-body\">\n" +
         "                            <!--                        头像展示-->\n" +
         "                            <div class=\"head_photo_container\">\n" +
-        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\"../../headphoto/default.jpg\" style=\"\">\n" +
+        "                                <img id=\"head_photo\" class=\"img-responsive center-block\" src=\""+hotel.hotelPhoto+"\" style=\"\">\n" +
         "                            </div>\n" +
         "                            <hr>\n" +
         "\n" +
@@ -401,16 +402,16 @@ function  showHotelInfo(){
         "\n" +
         "                        </div>\n" +
         "                    </div>\n" +
-        "                </div>\n" +
-        getHotelInfo($hotelId);
-    $html+="                <div class=\"col-sm-8\">\n" +
+        "                </div>\n" 
+        //getHotelInfo($hotelId);
+        $html+="                <div class=\"col-sm-8\">\n" +
         "                    <div class=\"panel panel-default\">\n" +
         "                        <div class=\"panel-body\">\n" +
         "                            <div class=\"row\" style=\"margin-left: 20px; margin-right: 20px;\">\n" +
         "                                <h3>酒店信息</h3>\n" +
         "                                <hr>\n" +
         "                                <form id=\"hotelForm\" class=\"form-horizontal\" action=\"\">\n" +
-        " <input type=\"hidden\" name=\"hotelId\" id=\"hotelId\" value=\"\">"+
+           " <input type=\"hidden\" name=\"hotelId\" id=\"hotelId\" value=\"\">"+
         "                                    <div class=\"form-group\">\n" +
         "                                        <label class=\"control-label col-sm-3\"><label\n" +
         "                                                for=\"hotelName\">酒店名：</label></label>\n" +
@@ -552,32 +553,32 @@ function submitChange() {
         alert("信息有误")
         return;
     }
-    $.ajax({
-        async: false,
-        type: "POST",
-        url: '/hotel/updateHotel',
-        contentType: "application/json",
-        headers: { 'token': localStorage.getItem("conNCU") },
-        data: JSON.stringify({
-            "hotelName": $("#hotelName").val(),
-            "hotelLocation": $("#hotelLocation").val(),
-            "hotelPhone": $("#hotelPhone").val(),
-            "hotelPass": $("#hotelPass").val(),
-            "hotelInfo": $("#hotelInfo").val(),
-        }),
-        success: function (jsonData, result) {
-            console.log(jsonData);
-            console.log(result);
-            if (jsonData['code'] === 200) {
-                alert("修改成功");
-                // localStorage.setItem("function", "showHotelInfo()");
-                // location.reload();
-            } else {
-                alert("修改失败");
-                //location.reload();
-            }
-        },
-    });
+        $.ajax({
+             async: false,
+            type: "POST",
+            url: '/hotel/updateHotel',
+            contentType: "application/json",
+            headers: { 'token': localStorage.getItem("conNCU") },
+            data: JSON.stringify({
+                "hotelName": $("#hotelName").val(),
+                "hotelLocation": $("#hotelLocation").val(),
+                "hotelPhone": $("#hotelPhone").val(),
+                "hotelPass": $("#hotelPass").val(),
+                "hotelInfo": $("#hotelInfo").val(),
+            }),
+            success: function (jsonData, result) {
+                console.log(jsonData);
+                console.log(result);
+                if (jsonData['code'] === 200) {
+                    alert("修改成功");
+                    // localStorage.setItem("function", "showHotelInfo()");
+                    // location.reload();
+                } else {
+                    alert("修改失败");
+                    //location.reload();
+                }
+            },
+        });
     // for (let i = 0; i < 500000000; i++) {
     //
     // }

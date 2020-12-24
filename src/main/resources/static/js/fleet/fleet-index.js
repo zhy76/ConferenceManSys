@@ -130,7 +130,7 @@ function fix(num, length) {
 
 function getFleetInfo($fleetId) {
     $.ajax({
-        async: false,
+        // async: false,
         headers: {
             'token': token,
         },
