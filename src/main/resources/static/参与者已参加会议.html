@@ -287,7 +287,7 @@
             function getOrganizerInfo(organizerId) {
                 $.ajax({
                     async: false,
-                    url: "/organizer/getOrganizerInfo",
+                    url: "/organizer/getOrganizerInfoById",
                     type: "get",
                     dataType: "text",
                     data: {
@@ -296,7 +296,7 @@
                     success: function (data) {
                         data = JSON.parse(data)
                         // console.log(data['data']['getOrganizerInfo'])
-                        organizer = data['data']['getOrganizerInfo'];
+                        organizer = data['data']['getOrganizerInfoById'];
                     },
                     error: function () {
                         alert("获取用户数据失败2");

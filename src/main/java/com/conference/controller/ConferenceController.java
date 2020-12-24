@@ -52,7 +52,7 @@ public class ConferenceController {
     @Autowired
     private HotelService hotelService;
 
-    @PostMapping("/showConferences")
+    @GetMapping("/showConferences")
     public Result showConferences(){
         List<Conference> conferencesList = conferenceService.queryConferences();
         return Result.success("conferencesList",conferencesList);

@@ -15,17 +15,6 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Autowired
     private AdminDao adminDao;
-=======
- * @Description
- * @Author 谢 娇
- * @Date 2020/12/24 0:20
- * @sno 6109118015
- */
-@Service("fileUploadService")
-public class FileUploadServiceImpl implements FileUploadService {
-//    @Autowired
-//    private AdminDao adminDao;
->>>>>>> lingchen
     @Autowired
     private DriverDao driverDao;
     @Autowired
@@ -41,17 +30,10 @@ public class FileUploadServiceImpl implements FileUploadService {
     public void headPhotoUpload(String role,Integer roleId, String url) {
         if( role.equals("admin")){
             adminDao.updateAdminPhoto(url,roleId);
-        } else if (role.equals("driver")) {
+        }
+        if (role.equals("driver")) {
             driverDao.updateDriverPhoto(url, roleId);
         }
-    }
-
-    @Override
-    public void headPhotoUpload(String role, Integer roleId, String url) {
-//        if( role.equals("admin")){
-//            System.out.println("impl正在执行...");
-//            adminDao.updateAdminPhoto(url,roleId);
-//        }
         if( role.equals("participant")){
             System.out.println("impl正在执行...");
             participantDao.updateParticipantPhoto(url,roleId);
