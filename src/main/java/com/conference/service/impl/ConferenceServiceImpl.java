@@ -53,10 +53,6 @@ public class ConferenceServiceImpl implements ConferenceService {
         return conferenceDao.queryConferenceByConferenceId(conferenceId);
     }
 
-    @Override
-    public int addConference(Conference conference) {
-        return 0;
-    }
 
     @Override
     public List<Conference> queryConferenceByOrganizerId(Integer organizerId) { //用于修改

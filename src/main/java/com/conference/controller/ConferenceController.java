@@ -104,14 +104,15 @@ public class ConferenceController {
         return Result.success("trueConferencesList",trueConferencesList);
     }
 
-    @PostMapping("/updateConferenceByAdmin/{conferenceId}/{organizerId}/{hotelId}/{fleetId}")
-    public Result updateConferenceByAdmin(@PathVariable Integer conferenceId,@PathVariable Integer organizerId,@PathVariable Integer hotelId,@PathVariable Integer fleetId){
-    @GetMapping("/showConferenceById")
-    public Result showConference(@RequestParam Integer conferenceId){
-        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
-        System.out.println(conference);
-        return Result.success("conference",conference);
-    }
+//    @PostMapping("/updateConferenceByAdmin/{conferenceId}/{organizerId}/{hotelId}/{fleetId}")
+//    public Result updateConferenceByAdmin(@PathVariable Integer conferenceId,@PathVariable Integer organizerId,@PathVariable Integer hotelId,@PathVariable Integer fleetId){}
+
+//    @GetMapping("/showConferenceById")
+//    public Result showConference(@RequestParam Integer conferenceId){
+//        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+//        System.out.println(conference);
+//        return Result.success("conference",conference);
+//    }
 
 //    /**
 //     * 修改对应会议信息
@@ -160,24 +161,24 @@ public class ConferenceController {
         return Result.success();
     }
 
-    /**
-     * 通过车队id查会议
-     */
-    @GetMapping("/queryConferenceByFleetId")
-    public Result queryConferenceByFleetId(@RequestParam Integer fleetId) {
-        List<Conference> conference = conferenceService.queryConferenceByFleetId(fleetId);
-        return Result.success("conference", conference);
-        System.out.println(conference);
-        Organizer organizer = organizerService.findOrganizerById(organizerId);
-        Fleet fleet = fleetService.findFleetById(fleetId);
-        Hotel hotel = hotelService.getHotelById(hotelId);
-        Map<String, Object> map = new HashMap<>();
-        map.put("conference",conference);
-        map.put("organizer",organizer);
-        map.put("fleet",fleet);
-        map.put("hotel",hotel);
-        return Result.success(map);
-    }
+//    /**
+//     * 通过车队id查会议
+//     */
+//    @GetMapping("/queryConferenceByFleetId")
+//    public Result queryConferenceByFleetId(@RequestParam Integer fleetId) {
+//        List<Conference> conference = conferenceService.queryConferenceByFleetId(fleetId);
+//        return Result.success("conference", conference);
+//        System.out.println(conference);
+//        Organizer organizer = organizerService.findOrganizerById(organizerId);
+//        Fleet fleet = fleetService.findFleetById(fleetId);
+//        Hotel hotel = hotelService.getHotelById(hotelId);
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("conference",conference);
+//        map.put("organizer",organizer);
+//        map.put("fleet",fleet);
+//        map.put("hotel",hotel);
+//        return Result.success(map);
+//    }
 
     @PostMapping("/submitUpdateConferenceByAdmin")
     public Result submitUpdateConferenceByAdmin(@RequestParam Map<String,Object> map){
@@ -210,45 +211,20 @@ public class ConferenceController {
         return conference;
     }
 
-    /**
-     * 删除指定会议
-     * @param conferenceId
-     * @return
-     */
-    @GetMapping("/deleteConference")
-    public Result deleteConference(@RequestParam Integer conferenceId) {
-        conferenceService.deleteConference(conferenceId);
-//        if (driverNum < 1) return new Result(ResultCode.FAIL);
-        return Result.success();
-    }
-
-    /**
-     * 生成会议
-     * @param
-     * @return
-     */
-    @PostMapping("/addConference")
-    public Result addConference(@Validated({OrganizerRegister.class}) @RequestBody Conference conference) {
-        conferenceService.addConference(conference);
-//        if (driverNum < 1) return new Result(ResultCode.FAIL);
-        return Result.success();
-    }
-
-    /**
-     * 修改会议
-     * @param conference
-     * @return
-     */
-    @PostMapping("/updateConference")
-    public Result updateConference(@Validated({OrganizerRegister.class}) @RequestBody Conference conference) {
-        conferenceService.updateConference(conference);
-        return Result.success();
-    }
 
     @GetMapping("/queryConferenceByOrganizerId")
     public Result queryConferenceByOrganizerId(@RequestParam int OrganizerId) {
         List<Conference> queryConferenceByOrganizerId = conferenceService.queryConferenceByOrganizerId(OrganizerId);
         return Result.success("queryConferenceByOrganizerId", queryConferenceByOrganizerId);
+    }
+
+    /**
+     * 通过车队id查会议
+     */
+    @GetMapping("/queryConferenceByFleetId")
+    public Result queryConferenceByFleetId(@RequestParam Integer fleetId) {
+        List<Conference> conference = conferenceService.queryConferenceByFleetId(fleetId);
+        return Result.success("conference", conference);
     }
 }
 

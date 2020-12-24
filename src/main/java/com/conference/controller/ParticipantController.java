@@ -145,33 +145,5 @@ public class ParticipantController {
         return Result.success(participantsList);
     }
 
-    /*
-     * @Description 返回参会者已有的所有信息
-     * @return
-     **/
-    @GetMapping("/getParticipantInfo")
-    public Result getParticipantInfo(HttpServletRequest request){
-        Claims claims = tokenService.parseToken(request.getHeader("token"));
-        System.out.println("getParticipantInfo");
-        Participant getParticipantInfo = participantService.queryParticipantByParticipantId((Integer) claims.get("participantId"));
-        return Result.success("getParticipantInfo",getParticipantInfo);
-    }
-
-    @PostMapping("/queryParticipantByParticipantId")
-    public Result queryParticipantByParticipantId(@RequestParam int participantId){
-        //System.out.println("getParticipantInfo");
-        Participant queryParticipantByParticipantId = participantService.queryParticipantByParticipantId(participantId);
-        //System.out.println(queryParticipantByParticipantId);
-        return Result.success("queryParticipantByParticipantId",queryParticipantByParticipantId);
-    }
-
-    @GetMapping("/queryParticipantByParticipantPhone")
-    public Result queryParticipantByParticipantPhone(@RequestParam String participantPhone){
-
-        //System.out.println("getParticipantInfo");
-        Participant queryParticipantByParticipantPhone = participantService.queryParticipantByParticipantPhone(participantPhone);
-        //System.out.println(queryParticipantByParticipantPhone);
-        return Result.success("queryParticipantByParticipantPhone",queryParticipantByParticipantPhone);
-    }
 
 }
