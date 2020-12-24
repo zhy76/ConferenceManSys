@@ -45,6 +45,38 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="tab-pane fade" id="fleet">
+                <div class="panel-body">
+                    <form class="form-inline text-center" >
+                        <div class="form-group">
+                            <label for="searchFleetName">车队名</label>
+                            <input type="text" class="form-control" id="searchFleetName" placeholder="车队名">
+                        </div>
+                        <div class="form-group">
+                            <label for="searchFleetPhone">联系电话</label>
+                            <input type="email" class="form-control" id="searchFleetPhone" placeholder="联系电话">
+                        </div>
+                        <button id="submitFleetSearch" class="btn btn-default">查询</button>
+                    </form>
+                </div>
+                <!--                        表格展示-->
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>车队名</th>
+                        <th>联系电话</th>
+                        <th>密码</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!--填充车队表格信息-->
+                    </tbody>
+                </table>
+            </div>
+
             <!--                分页-->
             <nav class = "pull-right" >
                 <ul class="pagination">

@@ -97,7 +97,6 @@
                             type:"post",
                             url: "/participant/deleteParticipantByAdmin/" + participantId,
                             data: {},
-                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -106,6 +105,10 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
                                     participants();
                                 }
                                 else
@@ -262,7 +265,6 @@
                             type:"post",
                             url: "/organizer/deleteOrganizerByAdmin/" + organizerId,
                             data: {},
-                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -271,6 +273,10 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
                                     organizers();
                                 }
                                 else
@@ -391,7 +397,6 @@
                             type:"get",
                             url: "/conference/deleteConference/" + conferenceId,
                             data: {},
-                            headers:{"conNCU": localStorage.conNCU},
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -400,13 +405,17 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
                                     conferences();
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -538,13 +547,17 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
                                     fleets();
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -668,13 +681,17 @@
                                 // console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
                                     drivers();
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -752,30 +769,33 @@
         //酒店模块
         function hotels() {
             $.ajax({
-                type:"post",
+                type:"get",
                 url: "/hotel/getAllHotel",
                 data: "",
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    //获取到所有车队
+                    //获取到所有酒店
+                    // console.dir(result);
                     var listHotels = "";
-                    console.dir(result["data"]["trueHotelsList"]);
-                    result["data"]["trueHotelsList"].forEach( (hotel) => {
-
+                    result = result["data"]["getAllHotel"];
+                    // console.dir(result);
+                    for(var i = 0 ; i < result.length ; i ++ )
+                    {
                         listHotels +=' <tr>\n' +
-                            '                                        <td hidden>'+ hotel.hotelId +'</td>\n' +
-                            '                                        <td>'+ hotel.hotelName +'</td>\n' +
-                            '                                        <td>'+hotel.hotelPhone +'</td>\n' +
-                            '                                        <td>'+ hotel.hotelPass+'</td>\n' +
+                            '                                        <td hidden>'+ result[i].hotelId +'</td>\n' +
+                            '                                        <td>'+ result[i].hotelName +'</td>\n' +
+                            '                                        <td>'+result[i].hotelPhone +'</td>\n' +
+                            '                                        <td>'+ result[i].hotelPass+'</td>\n' +
+                            '                                        <td>'+ result[i].hotelLocation+'</td>\n' +
+                            '                                        <td>'+ result[i].hotelInfo+'</td>\n' +
                             '                                        <td>\n' +
-                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateHotel" data-backdrop="false" onclick = "javascript:updateHotel('+  hotel.hotelId + ',' + hotel.organizerId + ',' + hotel.hotelId + ',' + hotel.hotelId +')"> 修改</button>&nbsp;&nbsp;\n' +
-                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteHotel('+ hotel.hotelId +')">删除</button>\n' +
+                            '                                            <button  class="btn btn-info btn-xs" data-toggle="modal" data-target="#updateHotel" data-backdrop="false" onclick = "javascript:updateHotel('+ result[i].hotelId +')"> 修改</button>&nbsp;&nbsp;\n' +
+                            '                                            <button  class="btn btn-danger btn-xs" onclick = "javascript:deleteHotel('+ result[i].hotelId  +')">删除</button>\n' +
                             '                                        </td>\n' +
                             '                                    </tr>'
-                    });
+                    };
                     $('#hotel table tbody').html(listHotels);
                 },
                 error:function () {
@@ -784,7 +804,7 @@
             })
         }
 
-        function deleteHotel(hotelId){
+        function deleteHotel(id){
             $.confirm({
                 title: '提示信息',
                 content: '确认要删除吗?',
@@ -793,9 +813,8 @@
                         $.ajax({
                             async: false,
                             type:"get",
-                            url: "/hotel/deleteHotel/" + hotelId,
-                            data: {},
-                            headers:{"conNCU": localStorage.conNCU},
+                            url: "/hotel/deleteHotel?id=" + id,
+                            data: "",
                             dataType:"json",
                             processData:false,
                             contentType:false,
@@ -804,13 +823,17 @@
                                 console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
+                                    $.alert({
+                                        title: '提示信息',
+                                        content: '删除成功！',
+                                    });
                                     hotels();
                                 }
                                 else
                                 {
                                     $.alert({
                                         title: '提示信息',
-                                        content: '删除失败',
+                                        content: '删除失败！',
                                     });
                                 }
                             },
@@ -826,37 +849,24 @@
             });
         }
 
-        function updateHotel(hotelId,organizerId,hotelId,hotelId){
-            // console.dir(hotelId);
-            // console.dir(organizerId);
-            // console.dir(hotelId);
-            // console.dir(hotelId);
+        function updateHotel(hotelId){
             $.ajax({
                 type:"post",
-                url: "/hotel/updateHotelByAdmin/" + hotelId + "/" + organizerId + "/" + hotelId + "/" + hotelId,
+                url: "/hotel/updateHotelByAdmin?hotelId=" + hotelId,
                 data: "",
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    //获取到会议信息
-                    var hotel = result.data.hotel;
-                    var hotel = result.data.hotel;
-                    var hotel = result.data.hotel;
-                    var organizer = result.data.organizer;
-                    $("#hotelId").val(hotel.hotelId);
-                    $("#hotelName").val(hotel.hotelName);
-                    $("#hotelOrganizerUnitId").val(hotel.organizerId);
-                    $("#hotelOrganizerUnit").val(organizer.organizerUnit);
-                    $("#hotelStart").val(hotel.hotelStart);
-                    $("#hotelEnd").val(hotel.hotelEnd);
-                    $("#hotelLocation").val(hotel.hotelLocation);
-                    $("#hotelId").val(hotel.hotelId);
-                    $("#hotelName").val(hotel.hotelName);
-                    $("#hotelId").val(hotel.hotelId);
-                    $("#hotelName").val(hotel.hotelName);
-                    $("#hotelInfo").val(hotel.hotelInfo);
+                    //获取到指定id酒店信息
+                    result = result.data;
+                   // console.dir(result);
+                    $("#hotel-Id").val(result.hotelId);
+                    $("#hotel-Name").val(result.hotelName);
+                    $("#hotelPhone").val(result.hotelPhone);
+                    $("#hotelPass").val(result.hotelPass);
+                    $("#hotelLocation").val(result.hotelLocation);
+                    $("#hotelInfo").val(result.hotelInfo);
                 },
                 error:function () {
                     alert("请求异常");
@@ -871,12 +881,25 @@
                 type:"post",
                 url: "/hotel/submitUpdateHotelByAdmin",
                 data: form,
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    console.dir(result);
+                    // console.dir(result);
+                    if( result.code == 200 )
+                    {
+                        $.alert({
+                            title: '提示信息',
+                            content: '修改成功!',
+                        });
+                    }
+                    else
+                    {
+                        $.alert({
+                            title: '提示信息',
+                            content: '修改失败!',
+                        });
+                    }
                 },
                 error:function () {
                     $.alert({
@@ -1390,8 +1413,8 @@
                 <div class="modal-body">
                     <form id = "updateHotelForm">
                         <div class = "row">
-                            <div class="col-sm-4" style="margin-top:0px;">
-                                <h5 class ="text-center" style="font-weight: bold;">车队头像</h5>
+                            <div class="col-sm-4" style="margin-top:72px;">
+                                <h5 class ="text-center" style="font-weight: bold;">酒店头像</h5>
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         <img id="hotelPhoto" class="img-responsive center-block" src="headphoto/default.jpg" alt="" style="vertical-align: middle" >
@@ -1405,8 +1428,8 @@
                                     <input type="hidden" class="form-control" name="hotelId" id="hotel-Id" placeholder="id" value="">
                                 </div>
                                 <div class="form-group">
-                                    <label for="hotel-Name">车队名</label>
-                                    <input type="text" class="form-control"  name="hotelName" id="hotel-Name" placeholder="车队名"  value="">
+                                    <label for="hotel-Name">酒店名</label>
+                                    <input type="text" class="form-control"  name="hotelName" id="hotel-Name" placeholder="酒店名"  value="">
                                 </div>
                                 <div class="form-group">
                                     <label for="hotelPhone">联系电话</label>
@@ -1415,6 +1438,14 @@
                                 <div class="form-group">
                                     <label for="hotelPass">密码</label>
                                     <input type="text" class="form-control" name = "hotelPass" id="hotelPass" placeholder="密码" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotelLocation">地址</label>
+                                    <input type="text" class="form-control" name = "hotelLocation" id="hotelLocation" placeholder="酒店地址" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="hotelInfo">其它</label>
+                                    <input type="text" class="form-control" name = "hotelInfo" id="hotelInfo" placeholder="其它信息" value="">
                                 </div>
                             </div>
                         </div>

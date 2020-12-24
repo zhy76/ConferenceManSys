@@ -6,7 +6,7 @@ public class Admin {
     private String adminName; //管理员姓名
     private String adminPass; //管理员密码
     private String adminAccount; //管理员账号
-    private String adminPhoto = "/headphoto/default.jpg"; //管理员照片地址
+    private String adminPhoto = "headphoto/default.jpg"; //管理员照片地址
 
     public Admin() {
     }

@@ -22,11 +22,11 @@
     </insert>
 <!--    删除酒店-->
     <delete id="deleteHotelById">
-        DELETE FROM Hotel WHERE hotel_id=#{hotelId}
+        DELETE FROM hotel WHERE hotel_id=#{hotelId}
     </delete>
 <!--    更新酒店-->
     <update id="updateHotel">
-        UPDATE Hotel SET hotel_name=#{hotelName}, hotel_location=#{hotelLocation}, hotel_phone=#{hotelPhone},
+        UPDATE hotel SET hotel_name=#{hotelName}, hotel_location=#{hotelLocation}, hotel_phone=#{hotelPhone},
         hotel_pass=#{hotelPass}, hotel_info=#{hotelInfo} WHERE hotel_id=#{hotelId};
     </update>
 </mapper>
