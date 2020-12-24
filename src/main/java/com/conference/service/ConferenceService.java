@@ -8,6 +8,7 @@ package com.conference.service;
  */
 
 import com.conference.entity.Conference;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 

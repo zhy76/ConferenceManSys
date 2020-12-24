@@ -98,12 +98,21 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>1.6.0</version>
 		</dependency>
-		<!-- 引入thymeleaf!  -->
 
+		<!-- 引入thymeleaf!  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+
+		<!-- 分页插件 -->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>1.2.5</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
