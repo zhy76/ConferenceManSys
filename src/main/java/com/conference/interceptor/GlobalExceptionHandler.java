@@ -67,8 +67,9 @@ public class GlobalExceptionHandler {
             return result;
         } else if (e instanceof UnauthenticatedException) {                         //用户没有登录
             return new Result(ResultCode.UnauthenticatedException);
-        } else {
+        }else {
             return Result.error();                                                  //其它异常
         }
     }
 }
+

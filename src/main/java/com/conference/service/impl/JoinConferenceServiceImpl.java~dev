@@ -30,40 +30,22 @@ public class JoinConferenceServiceImpl implements JoinConferenceService {
         return joinConferenceDao.cancelAJoinedConferenceById(participantId,conferenceId);
     }
 
-    /**
-     * 左海余
-     * 确定会议
-     * @param participantId
-     * @param conferenceId
-     * @return
-     */
-    @Override
-    public int confirmAJoinedConferenceById(Integer participantId, Integer conferenceId) {
-        return joinConferenceDao.confirmAJoinedConferenceById(participantId,conferenceId);
-    }
-    /**
-     * 左海余
-     * 确定会议后与酒店同步
-     * @param participantId
-     * @param conferenceId
-     * @return
-     */
-    @Override
-    public int addAJoinedConferenceToRoom(Integer participantId, Integer hotelId,Integer conferenceId) {
-        return joinConferenceDao.addAJoinedConferenceToRoom(participantId,hotelId,conferenceId);
-    }
-
     @Override
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId) {
         return joinConferenceDao.queryConferenceByParticipantId(participantId);
     }
-
     @Override
     public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId) {
         return joinConferenceDao.queryUnConfirmConferenceByParticipantId(participantId);
     }
+
     @Override
-    public List<JoinConference> queryConferenceByConferenceId(Integer conferenceId) {
-        return joinConferenceDao.queryConferenceByConferenceId(conferenceId);
+    public List<JoinConference>  queryJoinConferenceByConferenceId(Integer conferenceId) {
+        return joinConferenceDao.queryJoinConferenceByConferenceId(conferenceId);
+    }
+
+    @Override
+    public JoinConference queryJoinedConferenceByParticipantIdAndConferenceId(Integer participantId, Integer conferenceId) {
+        return joinConferenceDao.queryJoinedConferenceByParticipantIdAndConferenceId(participantId,conferenceId);
     }
 }

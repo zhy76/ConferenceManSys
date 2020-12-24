@@ -2,7 +2,6 @@ package com.conference.controller;
 
 import com.conference.entity.Driver;
 import com.conference.entity.Fleet;
-import com.conference.entity.Hotel;
 import com.conference.service.DriverService;
 import com.conference.service.FleetService;
 import com.conference.service.PickUpService;
@@ -133,6 +132,7 @@ public class FleetController {
      */
     @GetMapping("/deleteFleet")
     public Result deleteFleet(@RequestParam("fleetId") Integer fleetId) {
+        System.out.println(fleetId);
         fleetService.deleteFleetById(fleetId);
         return Result.success();
     }
@@ -169,9 +169,23 @@ public class FleetController {
         return Result.success();
     }
 
+    /**
+     *
+     * @param fleetId
+     * @return
+     */
     @GetMapping("/findFleetById")
     public Result findFleetById(@RequestParam int fleetId){
         Fleet findFleetById =fleetService.findFleetById(fleetId);
         return Result.success("findFleetById", findFleetById);
+    }
+
+    /**
+     * 管理员修改车队信息
+     */
+    @PostMapping("/updateFleetByAdmin")
+    public Result updateFleetByAdmin(Fleet fleet) {
+        fleetService.updateFleet(fleet);
+        return Result.success();
     }
 }

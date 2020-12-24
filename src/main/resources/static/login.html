@@ -56,13 +56,28 @@
 
 		<script>
 			$(function(){
+				//监听如果role角色选择了管理员，那么手机号/邮箱显示改成账号！
+				$("#role").on('change',function() {
+					if ( $("#role option:selected").val() == "admin" )
+					{
+						$("label[for='userAccount']").html('<span class="glyphicon glyphicon-edit" style="color: rgb(140, 132, 251);"></span>  账号');
+						$("#userAccount").attr("placeholder","请输入账号");
+					}
+					else
+					{
+						$("label[for='userAccount']").html('<span class="glyphicon glyphicon-phone" style="color: rgb(140, 132, 251);"></span>  手机号/\n' +
+								'\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t<span class="glyphicon glyphicon-envelope" style="color: rgb(140, 132, 251);"></span>  电子邮箱');
+						$("#userAccount").attr("placeholder","请输入手机号/电子邮箱");
+					}
+				});
+
 				// $('#account').focus(function(){
 				// 	$("#account-icon").css({"display":"none"});
 				// })
 				//
-				$('#accountPass').focus(function(){
-					$("#accountPass-icon").css({"display":"none"});
-				})
+				// $('#psw').focus(function(){
+				// 	$("#psw-icon").css({"display":"none"});
+				// })
 
 				$("#verifyCode").on('focus',function(){
 					$("#code-icon").css({"display":"none"});
@@ -137,34 +152,36 @@
 					if(openCloseFlag == true)
 					{
 						$("#openClose").addClass('glyphicon glyphicon-eye-open');
+
 						$("#accountPass").attr("type","text");
+
 						openCloseFlag = false;
 					}
 					else
 					{
 						$("#openClose").addClass('glyphicon glyphicon-eye-close');
+
 						$("#accountPass").attr("type","password");
+
 						openCloseFlag = true;
 					}
 					
 				});
+
+
 				$("#login").click(function () {
 					let role = $("#role").val();
-					// console.log($("#role").val());
-					//alert(role);
 					var userAccount = $("#userAccount").val();
 					var accountPass = $("#accountPass").val();
 					var phoneKey = role + "Phone";
+					if( role == 'admin' ) phoneKey = "adminAccount";
 					var passKey = role + "Pass";
 					var json = {
 						// phoneKey: "" + driverPhone,
 						// passKey: "" + driverPass
 					};
 					json[phoneKey] = userAccount;
-					json[passKey] = accountPass;
-					console.log(json);
-
-					console.log(userAccount);
+					json[passKey] = accountPass;console.log(json);
 					$.ajax({
 						type: "POST",
 						dataType: "json",
@@ -172,12 +189,14 @@
 						contentType: "application/json",
 						data: JSON.stringify(json),// 方法将一个 JavaScript 对象或值转换为 JSON 字符串
 						success: function (jsonData, result) {
-							console.log("data is :" + result);
+							console.dir("data is :" + result);
+							console.dir(jsonData);
 							if(jsonData["code"]!=200){
 								alert(jsonData["message"]);
 							}
 							else if (jsonData["data"]["token"]!=null) {
 								localStorage.setItem("conNCU", jsonData["data"]["token"]);
+								// redirect(role + "-index");
 								window.location.href = role + "-index.html";
 							} else {
 								console.log(jsonData["data"]["token"]);
@@ -185,6 +204,8 @@
 							}
 						}
 					});
+
+
 				})
 			});
 
@@ -229,7 +250,8 @@
 											<select  class="form-control" id="role">
 												<option value="participant">会议参加者</option>
 												<option value="organizer">会议组织者</option>
-												<option value="administrator">管理员</option>
+												<option value="admin">管理员</option>
+
 												<option value="driver">司机</option>
 												<option value="fleet">车队</option>
 												<option value="hotel">酒店</option>
@@ -250,9 +272,11 @@
 										<div class="form-group">
 											<label for="accountPass"><span class="glyphicon glyphicon-lock" style="color: rgb(140, 132, 251);"></span>  密码</label>
 											<input type="password" class="form-control" id="accountPass" placeholder="请输入密码" >
-											<span id = "openClose" class="glyphicon glyphicon-eye-close" style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 30px;"></span>
-											<span id = "accountPass-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px;display: none;" ></span>
-											<div id = "accountPassInfo" style = "color:red; font-weight: bold; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
+
+											<span id = "openClose" class="glyphicon glyphicon-eye-close" style="float:right ;  color: #cccccc; font-size: 25px;margin-top: -35px; margin-right: 0px;"></span>
+
+											<span id = "psw-icon" class="glyphicon glyphicon-remove" style = "float:right ; color: green; font-size: 20px; margin-top: -35px;display: none;" ></span>
+											<div id = "pswInfo" style = "color:red; font-weight: bold; display: none;"><span class="glyphicon glyphicon-exclamation-sign"></span><strong></strong></div>
 											
 										</div><!--/.form-group -->
 									
@@ -296,7 +320,7 @@
 													<!-- 忘记密码 -->
 								
 											<div class="single-forgot-password-circle pull-right" style = "margin-top: 10px;">
-												<a href="登录New.html">忘记密码</a>
+												<a href="login.html">忘记密码</a>
 											</div>
 									
 									</div>
@@ -309,7 +333,9 @@
 										</button>
 										<p class = "text-center">
 											    还没有账号？
-											<a href="注册.html" style="font-weight:bold ; color:red">点击注册</a>
+
+											<a href="注册New.html" style="font-weight:bold ; color:red">点击注册</a>
+
 										</p>
 									</div>
 								</div>

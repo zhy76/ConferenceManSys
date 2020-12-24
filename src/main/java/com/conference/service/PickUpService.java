@@ -32,7 +32,7 @@ public interface PickUpService {
     List<PickUp> findAllConferencePickUp(Integer conferenceId);
 
     // 精确查
-    PickUp findPickUp(Integer participantId, Integer driverId, Integer conferenceId);
+    PickUp findPickUp(Integer participantId, Integer conferenceId);
 
     PickUp findPickUpById(Integer pickUpId);
 //    // 改
@@ -44,4 +44,5 @@ public interface PickUpService {
     // 单独改
     int updatePickUp(PickUp pickUp);
 
+    int updatePickUpByConferenceIdAndParticipantId(PickUp pickUp);
 }

@@ -8,10 +8,7 @@ package com.conference;
  */
 
 import com.conference.dao.ConferenceDao;
-import com.conference.dao.JoinConferenceDao;
 import com.conference.entity.Conference;
-import com.conference.service.JoinConferenceService;
-import org.assertj.core.condition.Join;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,18 +20,9 @@ import java.sql.Timestamp;
 @SpringBootTest
 public class ConferenceDaoTest {
     @Autowired
-
-    private JoinConferenceService js;
+    private ConferenceDao conferenceDao;
 
     @Test
     public void contextLoads(){
-//        System.out.println(conferenceDao.queryConferences());
-//        System.out.println(conferenceDao.updateConference(new Conference(1,1,1,1,"左海余", Timestamp.valueOf("2008-08-08 12:10:00") ,Timestamp.valueOf("2008-08-10 12:10:00"),"信工e224","巴拉巴拉")));
-//        System.out.println(conferenceDao.queryConferences());
-//        System.out.println(conferenceDao.addConference(new Conference(null ,1,1,1,"左海余2", Timestamp.valueOf("2009-08-08 12:10:00") ,Timestamp.valueOf("2008-08-10 12:10:00"),"信工e224","add操作测试")));
-//        System.out.println(conferenceDao.addConference(new Conference(null ,1,2,1,"左海余3", Timestamp.valueOf("2009-08-08 12:10:00") ,Timestamp.valueOf("2008-08-10 12:10:00"),"信工e224","add操作测试")));
-//  System.out.println(conferenceDao.deleteConference(6));
-//        System.out.println(joinConferenceDao.confirmAJoinedConferenceById(29,13));
-        System.out.println(js.addAJoinedConferenceToRoom(1,1,1));
     }
 }

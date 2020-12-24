@@ -1,26 +1,38 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// var jquery_1 = require("jquery");
 let driver;
 let fleet;
 let pickUp;
 let token;
 let mes;
+let conference;
+let participant;
 let allFleetDriver;
 let $driverId;
 let $fleetId;
 let $participantId;
+let joinConference;
+
 $(function () {
     let $fleetPhone;
     /*获取token*/
-    token = localStorage.getItem("hcs");
+    token = localStorage.getItem("conNCU");
     console.log(typeof (token));
     console.log(token);
     if (token == null || token === "null" || token === "undefined") {
         console.log("no token");
     } else {
         $fleetId = parseJwt(token).fleetId;/*获取用户信息*/
-        console.log($driverId);
+        console.log($fleetId);
+    }
+    if (token == null || token == "null" || typeof ($fleetId) == "undefined" || $fleetId == undefined) {//未登录
+        console.log("未登录");
+        localStorage.setItem("conNCU", null);
+        alert("请先登录！");
+        window.location.href = "popupsignin.html";
+    }
+
+    if (localStorage.getItem("function") !== "null" && localStorage.getItem("function") !== null) {
+        eval(localStorage.getItem("function"));
+        localStorage.setItem("function", null);
     }
     getFleetInfo($fleetId);
     // showFleetInfo();
@@ -34,13 +46,15 @@ $(function () {
     })
 //接送管理
     $("#to-pick-up a").click(function () {
-
-
-        //console.log("success");
-
-
-        alert(11);
+        showAllFleetAssignPickUp()
+        $('#datatable').dataTable();
     })
+    //接送查询
+    $("#to-query-pick-up a").click(function () {
+        showAllFleetAllPickUp();
+        $('#datatable').dataTable();
+    })
+
 //司机管理
     $("#to-driver a").click(function () {
         //console.log("success");
@@ -48,19 +62,23 @@ $(function () {
         getAllFleetDriver($fleetId);
         // alert(2);
     })
+    //查看所有记录
+
+
     //会议订单管理
     $("#to-conference a").click(function () {
-        //console.log("success");
-        alert(3);
+        fleetConference();
+        // alert(3);
+        // localStorage.setItem("hcs", token);
+        // window.location.href = "../../fleet-conference.html";
     })
 
     /*点击 退出登录 按钮*/
     $("#login-out").click(function () {
         clearDriverInfo();
-        //localStorage.clear();
-        localStorage.setItem("hcs", null);
+        localStorage.setItem("conNCU", null);
         alert("退出成功");
-        window.location.href = "popupsignin.html";
+        window.location.href = "../../popupsignin.html";
     })
     // submitChange();
 })
@@ -110,7 +128,7 @@ function fix(num, length) {
 
 function getFleetInfo($fleetId) {
     $.ajax({
-        // async: false,
+        async: false,
         headers: {
             'token': token,
         },
@@ -134,6 +152,8 @@ function getFleetInfo($fleetId) {
         },
     });
 }
+
+
 
 /**
  * 清空登入时清空用户信息
@@ -163,33 +183,33 @@ function showFleetInfo() {
     getFleetInfo($fleetId);
     console.log(fleet);
     let $html =
-        "<form class=\"form-horizontal form-material\">\n" +
+        "<form class=\"form-horizontal form-material\" id='fleetInfo' onsubmit='return false;'>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">车队名</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
-        "                                                               value=\"" + fleet.fleetName + "\" id='fleetName'>\n" +
+        "                                                               value=\"" + fleet.fleetName + "\" id='fleetName' name='fleetName'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">电话号码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"text\"\n" +
-        "                                                               value=\"" + fleet.fleetPhone + "\" id='fleetPhone'>\n" +
+        "                                                               value=\"" + fleet.fleetPhone + "\" id='fleetPhone' name='fleetPhone'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">密码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
-        "                                                               value=\"" + fleet.fleetPass + "\" id='fleetPass'>\n" +
+        "                                                               value=\"" + fleet.fleetPass + "\" id='fleetPass' name='fleetPass'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <div class=\"form-group\">\n" +
         "                                                    <label class=\"col-md-12\">重复密码</label>\n" +
         "                                                    <div class=\"col-md-12\">\n" +
         "                                                        <input class=\"form-control form-control-line\" type=\"password\"\n" +
-        "                                                               value=\"" + fleet.fleetPass + "\" id='repeatFleetPass'>\n" +
+        "                                                               value=\"" + fleet.fleetPass + "\" id='repeatFleetPass' name='repeatFleetPass'>\n" +
         "                                                    </div>\n" +
         "                                                </div>\n" +
         "                                                <br/>\n" +
@@ -207,60 +227,53 @@ function showFleetInfo() {
 
 
 /**
- * 司机信息表单前端验证
+ * 车队信息表单前端验证
  */
-function validform() {
+function validForm() {
     // alert()
     // return $("#driverInfo");
     /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
-    alert(1);
-    console.log($("#driverInfo"));
-    alert(1);
-    return $("#driverInfo").validate({
+    // alert(1);
+    // console.log($("#driverInfo"));
+    // alert(1);
+    return $("#fleetInfo").validate({
         rules: {
-            driverName: {
+            fleetName: {
+                required: true,
                 minlength: 2,
                 maxlength: 13
             },
-            driverPass: {
+            fleetPass: {
                 minlength: 5,
                 maxlength: 20
             },
-            repeatDriverPass: {
+            repeatFleetPass: {
                 minlength: 5,
                 maxlength: 20,
-                equalTo: "#repeatDriverPass"
+                equalTo: "#fleetPass"
             },
-            driverPhone: {
+            fleetPhone: {
                 minlength: 11,
                 maxlength: 11
-            },
-            carNumber: {
-                minlength: 2,
-                maxlength: 8
             }
         },
         messages: {
-            driverName: {
+            fleetName: {
                 minlength: "姓名名至少包含2个字符",
                 maxlength: "用户名长度不能超过13个字符"
             },
-            driverPass: {
+            fleetPass: {
                 minlength: "密码长度不能少于6个字符",
                 maxlength: "密码长度不能多于20个字符"
             },
-            repeatDriverPass: {
+            repeatFleetPass: {
                 minlength: "密码长度不能少于6个字符",
                 maxlength: "密码长度不能多于20个字符",
                 equalTo: "两次密码输入不一致"
             },
-            driverPhone: {
+            fleetPhone: {
                 minlength: "请输入正确的电话号码",
                 maxlength: "请输入正确的电话号码"
-            },
-            carNumber: {
-                minlength: "请输入正确的车牌号码",
-                maxlength: "请输入正确的车牌号码"
             }
         }
     });
@@ -272,15 +285,16 @@ function validform() {
 function submitChange() {
     /**
      * @TODO : 前端验证
-     * validform().form()
+     *
      */
-    if (1) {
+    if (validForm().form()) {
+        alert(1);
         $.ajax({
-            // async: false,
+            async: false,
             type: "POST",
             url: '/fleet/updateFleet',
             contentType: "application/json",
-            headers: {'token': localStorage.getItem("hcs")},
+            headers: {'token': localStorage.getItem("conNCU")},
             data: JSON.stringify({
                 "fleetName": $("#fleetName").val(),
                 "fleetPass": $("#fleetPass").val(),
@@ -304,7 +318,6 @@ function submitChange() {
             },
         });
         for (let i = 0; i < 500000000; i++) {
-
             /**
              * 意义不明的代码，
              * 不加会有bug
@@ -312,8 +325,8 @@ function submitChange() {
              * 二分
              */
         }
-        // showDriverInfo();
         showFleetInfo();
+
     } else {
         alert("信息格式有误，请重新填写！");
     }

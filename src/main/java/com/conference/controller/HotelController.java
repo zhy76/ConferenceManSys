@@ -5,8 +5,8 @@ import com.conference.dao.HotelDao;
 import com.conference.entity.Driver;
 import com.conference.entity.Hotel;
 import com.conference.service.HotelService;
-import com.conference.service.impl.TokenServiceImpl;
 import com.conference.service.TokenService;
+import com.conference.service.impl.TokenServiceImpl;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
 import io.jsonwebtoken.Claims;
@@ -21,8 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/hotel")
 public class HotelController {
-//    @Autowired
-//    private TokenServiceImpl tokenServiceImpl;
+    @Autowired
+    private TokenServiceImpl tokenServiceImpl;
     @Autowired
     private HotelDao hotelDao;
     @Autowired
@@ -47,7 +47,7 @@ public class HotelController {
         int addNumber = hotelService.addHotel(hotel);
         Hotel hotelForBase = hotelService.getHotelByPhone(hotel.getHotelPhone());
         if(addNumber>0){
-            String token = tokenService.getToken(hotelForBase);
+            String token = tokenServiceImpl.getToken(hotelForBase);
             return Result.success("token", token);
         }else{
             return new Result(ResultCode.FAIL);
@@ -68,16 +68,18 @@ public class HotelController {
             if (!hotelForBase.getHotelPass().equals(hotel.getHotelPass())){
                 return new Result(ResultCode.IncorrectCredentialsException);
             }else {
-                String token = tokenService.getToken(hotelForBase);
+                String token = tokenServiceImpl.getToken(hotelForBase);
                 return Result.success("token", token);
             }
         }
     }
+
     @GetMapping("/getHotelById")
     public Result getHotelById(@RequestParam int hotelId){
         Hotel getHotelById = hotelService.getHotelById(hotelId);
         return Result.success("getHotelById", getHotelById);
     }
+
     @PostMapping("/getHotelInfo")
     public Result getHotelInfo(HttpServletRequest request) {
        // System.out.println(request.getHeader("token"));
@@ -86,6 +88,7 @@ public class HotelController {
         //System.out.println(getHotelInfo);
         return Result.success("getHotelInfo", getHotelInfo);
     }
+
     @GetMapping("/getAllHotel")
         public Result getAllHotel() {
         List<Hotel> getAllHotel = hotelService.findAllHotel();

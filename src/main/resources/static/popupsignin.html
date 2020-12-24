@@ -209,7 +209,7 @@
                         if (jsonData["code"] !== 200) {
                             alert(jsonData["message"]);
                         } else if (jsonData["data"]["token"] !== null) {
-                            localStorage.setItem("hcs", jsonData["data"]["token"]);
+                            localStorage.setItem("conNCU", jsonData["data"]["token"]);
 
                             window.location.href = role + "-index.html";
                         } else {

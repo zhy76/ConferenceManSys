@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -73,8 +74,13 @@ public class JoinConferenceController {
 
     @PostMapping("/joinAConference")
     public Result joinAConference(@RequestBody JoinConference joinConference){
+        System.out.println(joinConference);
         if(joinConference.getParticipantId()==null||joinConference.getConferenceId()==null){
             return new Result(ResultCode.BindException);
+        }
+        JoinConference isJoinedConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(joinConference.getParticipantId(), joinConference.getConferenceId());
+        if(isJoinedConference != null){
+            return new Result(3,"您已加入该会议！");
         }
         //获取当前会议的开始和结束时间
         Conference conference = conferenceService.queryConferenceByConferenceId(joinConference.getConferenceId());
@@ -135,6 +141,33 @@ public class JoinConferenceController {
         } else {
             return new Result(ResultCode.FAIL);
         }
+    }
+
+
+
+    @GetMapping("/queryUnConfirmConference")
+    public Result queryUnConfirmConferenceByParticipantId(@RequestParam Integer participantId){
+        List<JoinConference> unConfirmConferenceList = joinConferenceService.queryUnConfirmConferenceByParticipantId(participantId);
+        return Result.success("unConfirmConferenceList",unConfirmConferenceList);
+    }
+
+    @GetMapping("/queryJoinConferenceByConferenceId")
+    public Result queryJoinConferenceByConferenceId(@RequestParam Integer conferenceId) {
+        List<JoinConference> joinConferences = joinConferenceService.queryJoinConferenceByConferenceId(conferenceId);
+        List<JoinConference> joinConference = new ArrayList<>();
+        for (JoinConference it : joinConferences) {
+            if (it.getPickup()) {
+                joinConference.add(it);
+            }
+        }
+        return Result.success("joinConference", joinConference);
+    }
+
+    @GetMapping("/queryJoinedConferenceByParticipantIdAndConferenceId")
+    public Result queryJoinedConferenceByParticipantIdAndConferenceId(@RequestParam Integer participantId,
+                                                                      @RequestParam Integer conferenceId){
+        JoinConference joinConference = joinConferenceService.queryJoinedConferenceByParticipantIdAndConferenceId(participantId, conferenceId);
+        return Result.success("joinConference",joinConference);
     }
 
     @GetMapping("/queryJoinedConference")

@@ -8,7 +8,6 @@ package com.conference.entity;
  */
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.sql.Timestamp;
 public class Conference {
     private Integer conferenceId;
     private Integer organizerId;
@@ -22,8 +21,7 @@ public class Conference {
     private String conferenceLocation; //会议地址
     private String conferenceInfo; //会议相关信息
 
-    public Conference(Integer conferenceId, Integer organizerId, Integer fleetId, Integer hotelId, String conferenceName,
-                      String conferenceStart, String conferenceEnd, String conferenceLocation, String conferenceInfo) {
+    public Conference(Integer conferenceId, Integer organizerId, Integer fleetId, Integer hotelId, String conferenceName, String conferenceStart, String conferenceEnd, String conferenceLocation, String conferenceInfo) {
         this.conferenceId = conferenceId;
         this.organizerId = organizerId;
         this.fleetId = fleetId;
@@ -33,6 +31,24 @@ public class Conference {
         this.conferenceEnd = conferenceEnd;
         this.conferenceLocation = conferenceLocation;
         this.conferenceInfo = conferenceInfo;
+    }
+
+    public Conference() {
+    }
+
+    @Override
+    public String toString() {
+        return "Conference{" +
+                "conferenceId=" + conferenceId +
+                ", organizerId=" + organizerId +
+                ", fleetId=" + fleetId +
+                ", hotelId=" + hotelId +
+                ", conferenceName='" + conferenceName + '\'' +
+                ", conferenceStart=" + conferenceStart +
+                ", conferenceEnd=" + conferenceEnd +
+                ", conferenceLocation='" + conferenceLocation + '\'' +
+                ", conferenceInfo='" + conferenceInfo + '\'' +
+                '}';
     }
 
     public Integer getConferenceId() {

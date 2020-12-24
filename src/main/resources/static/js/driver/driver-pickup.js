@@ -1,4 +1,3 @@
-
 /**
  * 接送id, 参会姓名,电话号码,火车航班
  * 到达时间, 离开时间, 是否完成
@@ -15,7 +14,6 @@ function parseJwt(token) {
     }).join(''));
     return JSON.parse(jsonPayload);
 }
-
 
 
 function getDriverAllPickUp() {
@@ -100,8 +98,7 @@ function showWaitPickUpTable() {
         "                                                    <th>电话号码</th>\n" +
         "                                                    <th>航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
-        "                                                    <th>是否完成</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
         "                                                    <th>操作</th>\n" +
         "                                                </tr>\n" +
         "                                                </thead>\n" +
@@ -129,8 +126,9 @@ function showWaitPickUpTable() {
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
             "                                                    <td>" + i.returnTime + "</td>\n" +
-            "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
-            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button>" +
+            // "                                                    <td><input type='datetime-local' value=\"2020-12-20T13:59:59\" min=\"2020-09-24T13:59:59\" max=\"2029-09-24T13:59:59\"/></td>\n" +
+            // "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"finish(this)\" >完成</button></td>\n" +
             "                                                </tr>\n";
     }
     let $htmlEnd =
@@ -143,8 +141,8 @@ function showWaitPickUpTable() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 }
 
@@ -172,7 +170,7 @@ function showAllPickUpTable() {
         "                                                    <th>电话号码</th>\n" +
         "                                                    <th>火车航班</th>\n" +
         "                                                    <th>到达时间</th>\n" +
-        "                                                    <th>离开时间</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
         "                                                    <th>是否完成</th>\n" +
         "                                                </tr>\n" +
         "                                                </thead>\n" +
@@ -196,6 +194,8 @@ function showAllPickUpTable() {
             "                                                    <td>" + participant.participantPhone + "</td>\n" +
             "                                                    <td>" + i.trainNumber + "</td>\n" +
             "                                                    <td>" + i.toTime + "</td>\n" +
+            // <input type="date">
+            // "                                                    <td><input type=\"date\"></td>\n" +
             "                                                    <td>" + i.returnTime + "</td>\n" +
             "                                                    <td>" + (i.finishPickup ? "是" : "否") + "</td>\n" +
             "                                                </tr>\n";
@@ -210,12 +210,12 @@ function showAllPickUpTable() {
         "                            </div><!--end row-->";
 
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($htmlStart + $html + $htmlEnd);
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
     $('#datatable').dataTable();
 }
 
-function getPickUpId(btn){
+function getPickUpId(btn) {
     /**
      * 找表的
      * @type {jQuery}
@@ -262,4 +262,125 @@ function finish(btn) {
     } else {
         alert("信息格式有误，请重新填写！");
     }
+}
+
+
+function getDriverConfirmPickUp($driverId) {
+    if (1) {
+        $.ajax({
+            async: false,
+            type: "GET",
+            url: '/pickUp/getDriverConfirmPickUp',
+            contentType: "json",
+            // headers: { 'token': localStorage.getItem("conNCU") },
+            data: {
+                "driverId": $driverId
+            },
+            success: function (jsonData, result) {
+                console.log(jsonData);
+                console.log(result);
+                if (jsonData['code'] === 200) {
+                    pickUp = jsonData['data']['pickUp'];
+                    // location.reload();
+                } else {
+                    alert("完成失败");
+                    // location.reload();
+                }
+            },
+        });
+    } else {
+        alert("信息格式有误，请重新填写！");
+    }
+}
+
+
+function showDriverConfirmPickUp($driverId) {
+    getDriverConfirmPickUp($driverId)
+    let $htmlStart =
+        "                            <div class=\"row\">\n" +
+        "                                <div class=\"col-md-12\">\n" +
+        "                                    <div class=\"panel panel-default collapsed\">\n" +
+        "                                        <div class=\"panel-heading\">\n" +
+        "                                            待确认记录\n" +
+        "                                        </div>\n" +
+        "                                        <div class=\"panel-body\">\n" +
+        "                                            <table class=\"table table-striped dt-responsive nowrap\" id=\"datatable\">\n" +
+        "                                                <thead>\n" +
+        "                                                <tr>\n" +
+        "                                                    <th>接送单号</th>\n" +
+        "                                                    <th>姓名</th>\n" +
+        "                                                    <th>电话号码</th>\n" +
+        "                                                    <th>航班</th>\n" +
+        "                                                    <th>到达时间</th>\n" +
+        "                                                    <th>接送时间</th>\n" +
+        "                                                    <th>操作</th>\n" +
+        "                                                </tr>\n" +
+        "                                                </thead>\n" +
+        "                                                <tbody>\n"
+    let $html = "";
+    var newDate = new Date();
+    let dateToday = "" + newDate.getFullYear() + '-' + fix((newDate.getMonth() + 1), 2) + '-'  + fix(newDate.getDate(), 2) + 'T' + fix(newDate.getHours(),2) + ':' + fix(newDate.getMinutes(), 2);
+    // alert(dateToday);
+    console.log(pickUp);
+    for (let i of pickUp) {
+        if (i.finishPickup === true) {
+            continue;
+        }
+        queryParticipantByParticipantId(i.participantId);
+        console.log(participant);
+        $html +=
+            "                                                <tr>\n" +
+            "                                                    <td>" + fix(i.pickUpId, 4) + "</td>\n" +
+            "                                                    <td>" + participant.participantName + "</td>\n" +
+            "                                                    <td>" + participant.participantPhone + "</td>\n" +
+            "                                                    <td>" + i.trainNumber + "</td>\n" +
+            "                                                    <td>" + i.toTime + "</td>\n" +
+            "                                                    <td><input type='datetime-local' id=\"pickUpTime\" value='" + dateToday + "''/></td>\n" +
+            // "                                                    <td><input type='datetime-local' value=\"2020-12-20T13:59:59\" min=\"2020-09-24T13:59:59\" max=\"2029-09-24T13:59:59\"/></td>\n" +
+            // "                                                    <td>" + i.returnTime + "</td>\n" +
+            "                                    <td><button type='button' class=\"btn btn-info\" onclick=\"confirm(this)\" >确认</button></td>\n" +
+            "                                                </tr>\n";
+    }
+    let $htmlEnd =
+        "                                                </tbody>\n" +
+        "                                            </table>\n" +
+        "\n" +
+        "                                        </div>\n" +
+        "                                    </div>\n" +
+        "                                </div>\n" +
+        "                            </div><!--end row-->";
+
+    // 清空节点
+    $(".card").empty();
+    $(".card").append($htmlStart + $html + $htmlEnd);
+    $('#datatable').dataTable();
+}
+
+function confirm(btn) {
+    // alert(1);
+    let time = $(btn).parent().parent("tr").children('td').eq(5).children().val().replaceAll('T', ' ');
+    let pickUpId = Number($(btn).parent().parent("tr").children('td').eq(0).html());
+    $.ajax({
+        async: false,
+        type: "GET",
+        url: '/pickUp/updateDriverConfirmPickUp',
+        contentType: "json",
+        // headers: { 'token': localStorage.getItem("conNCU") },
+        data: {
+            "pickUpId": pickUpId,
+            "returnTime": time
+        },
+        success: function (jsonData, result) {
+            console.log(jsonData);
+            console.log(result);
+            if (jsonData['code'] === 200) {
+                alert("确认成功");
+                showDriverConfirmPickUp($driverId);
+                // location.reload();
+            } else {
+                alert("确认失败");
+                // location.reload();
+            }
+        },
+    });
 }

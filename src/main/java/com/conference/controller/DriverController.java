@@ -1,7 +1,9 @@
 package com.conference.controller;
 
 import com.conference.entity.Driver;
+import com.conference.entity.Fleet;
 import com.conference.service.DriverService;
+import com.conference.service.FleetService;
 import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
@@ -17,15 +19,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName: DriverController
- * @Description: TODO  司机的分派算法：
- * 1. 司机的未完成订单量
- * 2. 司机的从现在到未来第一个订单的时间长度（司机当前空闲时间）
- * 3. 司机的接送订单中，前1hour和后1hour不能有其他接送订单了
- * 4. 考虑司机不够，乘客要等待的情况，使用先来先服务
+ * @Description:
  * @Author: Lance
  * @Date: 2020/12/2 18:52
  */
@@ -42,6 +40,9 @@ public class DriverController {
 
     @Autowired
     private PickUpService pickUpService;
+
+    @Autowired
+    private FleetService fleetService;
 
 
     /**
@@ -85,9 +86,8 @@ public class DriverController {
 //            return new Result(ResultCode.IllegalArgumentException);
 //        }
         int addNumber = driverService.addDriver(driver);
-        Driver driverForBase = driverService.findDriverByPhone(driver.getDriverPhone());
         if (addNumber > 0) {
-            String token = tokenService.getToken(driverForBase);
+            String token = tokenService.getToken(addNumber);
             return Result.success("token", token);
         } else {
             return new Result(ResultCode.FAIL);
@@ -125,9 +125,10 @@ public class DriverController {
 
     /**
      * 司机登出 Api
+     *
+     * @return
      * @TODO 登出
      * /driver/logout
-     * @return
      */
     @PostMapping("/logout")
     public Result logout() {
@@ -146,6 +147,8 @@ public class DriverController {
      */
     @PostMapping("/adminUpdateDriver")
     public Result adminUpdateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver) {
+        System.out.println("修改中...");
+        System.out.println(driver);
         driverService.updateDriver(driver);
         return Result.success();
     }
@@ -153,7 +156,8 @@ public class DriverController {
     /**
      * 司机自己修改自己的信息 Api
      * /driver/updateDriver
-     * @param driver {}
+     *
+     * @param driver  {}
      * @param request
      * @return result {}
      */
@@ -199,6 +203,7 @@ public class DriverController {
     /**
      * 查找登入司机的所有信息
      * /driver/getDriverInfo
+     *
      * @param request
      * @return
      */
@@ -206,6 +211,68 @@ public class DriverController {
     public Result getDriverInfo(HttpServletRequest request) {
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         Driver getDriverInfo = driverService.findDriverById((Integer) claims.get("driverId"));
+        System.out.println("/getDriverInfo");
         return Result.success("getDriverInfo", getDriverInfo);
+    }
+
+    /**
+     * 司机自己查找登入司机的所有信息
+     * /driver/getDriverInfo
+     *
+     * @param driverId
+     * @return
+     */
+    @GetMapping("/getDriverInfoById")
+    public Result getDriverInfoById(@RequestParam("driverId") Integer driverId) {
+        Driver getDriverInfo = driverService.findDriverById(driverId);
+        System.out.println("/getDriverInfoById");
+        return Result.success("getDriverInfoById", getDriverInfo);
+    }
+
+    /**
+     * 管理员查找所有的司机 Api
+     * /driver/getAllDriver
+     *
+     * @return result {}
+     */
+    @GetMapping("/getAllDriverByAdmin")
+    public Result getAllDriverByAdmin() {
+        List<Driver> getAllDriver = driverService.findAllDriver();
+        Map<Integer, List<Object>> map = new HashMap<>(); //找到对应的Map
+        for (int i = 0; i < getAllDriver.size(); i++) {
+            Fleet fleet = fleetService.findFleetById(getAllDriver.get(i).getFleetId());
+            map.put(i, new ArrayList<>(Arrays.asList(getAllDriver.get(i), fleet)));
+        }
+        return Result.success("getAllDriver", map);
+    }
+
+    /**
+     * 管理员查找指定id的司机 Api
+     * /driver/getAllDriver
+     *
+     * @return result {}
+     */
+    @PostMapping("/updateDriverByAdmin")
+    public Result updateDriverByAdmin(@RequestParam Integer driverId) {
+        Driver driver = driverService.findDriverById(driverId);
+        System.out.println(driver);
+        Map<String, List<Object>> map = new HashMap<>(); //找到对应的Map
+        Fleet fleet = fleetService.findFleetById(driver.getFleetId());
+        map.put("getDriverById", new ArrayList<>(Arrays.asList(driver, fleet)));
+        return Result.success(map);
+    }
+
+    /**
+     * 管理员修改司机的信息
+     * /driver/updateDriverByAdmin
+     *
+     * @param driver {}
+     * @return result {}
+     */
+    @PostMapping("/submitDriverByAdmin")
+    public Result submitDriverByAdmin(@RequestBody Driver driver) {
+//        System.out.println(driver);
+        driverService.updateDriver(driver);
+        return Result.success();
     }
 }

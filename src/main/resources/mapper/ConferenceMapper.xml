@@ -29,10 +29,18 @@
         VALUES(null,#{organizerId}, #{fleetId}, #{hotelId}, #{conferenceName}, #{conferenceStart}, #{conferenceEnd},#{conferenceLocation},#{conferenceInfo})
     </insert>
 
-    <select id = "queryConferenceByConferenceId" resultType="Conference">
+    <select id = "queryConferenceById" resultType="Conference">
        select * from conference where conference_id = #{conferenceId};
     </select>
 
+    <select id="queryConferenceByConferenceId" resultType="Conference">
+        select * from conference where conference_id = #{conferenceId};
+    </select>
+
+
+    <select id="queryConferenceByFleetId" resultType="Conference">
+        select * from conference where fleet_id = #{fleetId};
+    </select>
     <select id="queryConferenceByOrganizerId" resultType="Conference">
         select * from conference where organizer_id=#{organizerId};
     </select>

@@ -1,6 +1,3 @@
-// "use strict";
-// Object.defineProperty(exports, "__esModule", { value: true });
-// var jquery_1 = require("jquery");
 let driver;
 let pickUp;
 let token;
@@ -19,11 +16,25 @@ $(function () {
         $driverId = parseJwt(token).driverId;/*获取用户信息*/
         console.log($driverId);
     }
-
+    // $.alert({
+    //     title: '提示信息',
+    //     content: '请先登录！',
+    // });
     if (token == null || token == "null" || typeof ($driverId) == "undefined" || $driverId == undefined) {//未登录
         console.log("未登录");
-        localStorage.setItem("hcs", null);
-        alert("请先登录！");
+        localStorage.setItem("conNCU", null);
+        alert(2);
+        $.alert({
+            title: '提示信息',
+            content: '请先登录！',
+        });
+        window.location.href = "popupsignin.html";
+    }
+    else if (parseJwt(token).role !== "driver") {
+        $.alert({
+            title: '提示信息',
+            content: 'token错误',
+        });
         window.location.href = "popupsignin.html";
     }
     /**
@@ -34,6 +45,10 @@ $(function () {
             showDriverInfo();
         }
     )
+    $("#to-confirm-pick a").click(function () {
+        // getDriverConfirmPickUp($driverId);
+        showDriverConfirmPickUp($driverId)
+    })
     $("#to-wait-pick a").click(function () {
         getDriverAllPickUp();
         // for (let it of pickUp) {
@@ -52,17 +67,23 @@ $(function () {
     $(".login-out").click(function () {
         clearDriverInfo();
         //localStorage.clear();
-        localStorage.setItem("hcs", null);
-        alert("退出成功");
+        localStorage.setItem("conNCU", null);
+        $.alert({
+            title: '提示信息',
+            content: '退出成功',
+        });
         window.location.href = "popupsignin.html";
     })
 
+    // $('#driverInfo').submit(function () {	//这次我们这么绑定
+    //     alert(1);
+    //     return false;	//还是要return false, 跟上面一样的道理
+    // });
 })
 
 /**
  * 得到登入司机的信息
  */
-
 function getDriverInfo($driverId) {
     $.ajax({
         async: false,
@@ -81,11 +102,17 @@ function getDriverInfo($driverId) {
                 driver = data["data"]["getDriverInfo"];
                 console.log(driver);
             } else {
-                alert("获取用户数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取用户数据失败',
+                });
             }
         },
         error: function () {
-            alert("获取用户数据失败");
+            $.alert({
+                title: '提示信息',
+                content: '获取用户数据失败',
+            });
         },
     });
 }
@@ -119,11 +146,17 @@ function getAllFleet() {
                 allFleet = allFleet["getAllFleet"];
                 console.log(allFleet);
             } else {
-                alert("获取车队数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取司机数据失败',
+                });
             }
         },
         error: function () {
-            alert("获取车队数据失败");
+            $.alert({
+                title: '提示信息',
+                content: '获取司机数据失败',
+            });
         },
     });
 
@@ -160,14 +193,13 @@ function showDriverInfo() {
     getDriverInfo($driverId);
     console.log(driver);
     let $html =
-        // "                                <ul class=\"nav nav-tabs profile-tab\" role=\"tablist\">\n" +
-        // "                                    <li class=\"nav-item active\"><a class=\"nav-link\" data-toggle=\"tab\" href=\"#个人信息\" role=\"tab\">个人信息</a>\n" +
-        // "                                    </li>\n" +
-        // "                                </ul>" +
-        // "<br>" +
-        "<div class=\"tab-pane\" role=\"tabpanel\">\n" +
-        "                                    <div class=\"card-body\">\n" +
-        "                                        <form  class=\"form-horizontal form-material\" id='driverInfo' >\n" +
+        "                                <ul class=\"nav nav-tabs profile-tab\" role=\"tablist\">\n" +
+        "                                    <li class=\"nav-item active\"><a class=\"nav-link\" data-toggle=\"tab\" href=\"#个人信息\" role=\"tab\">个人信息</a>\n" +
+        "                                    </li>\n" +
+        "                                </ul>" +
+        "<br>" +
+
+        "                                        <form  class=\"form-horizontal form-material\" id='driverInfo'>\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">姓名</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
@@ -175,14 +207,6 @@ function showDriverInfo() {
         "                                                        name='driverName' id='driverName' value=\"" + driver.driverName + "\">\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
-        // "                                            <div class=\"form-group\">\n" +
-        // "                                                <label for=\"example-email\" class=\"col-md-12\">邮箱</label>\n" +
-        // "                                                <div class=\"col-md-12\">\n" +
-        // "                                                    <input type=\"email\" \n" +
-        // "                                                        class=\"form-control form-control-line\" name=\"example-email\"\n" +
-        // "                                                        id=\"example-email\">\n" +
-        // "                                                </div>\n" +
-        // "                                            </div>\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <label class=\"col-md-12\">密码</label>\n" +
         "                                                <div class=\"col-md-12\">\n" +
@@ -264,49 +288,52 @@ function showDriverInfo() {
         "                                            <br />\n" +
         "                                            <div class=\"form-group\">\n" +
         "                                                <div class=\"col-sm-12 text-center\">\n" +
-        "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新'>\n" +
+        "<button type=\"submit\" id=\"submit\"  class=\"btn btn-info\" onclick='submitChange()'>更新</button>" +
+        // "                                                    <input type='submit' class=\"btn-info\" onclick='submitChange()' value='更新'>\n" +
         "                                                </div>\n" +
         "                                            </div>\n" +
         "                                        </form>\n" +
         "                                    </div>\n" +
         "                                </div>"
     // 清空节点
-    $(".jumbotron").empty();
-    $(".jumbotron").append($html);
+    $(".card").empty();
+    $(".card").append($html);
 }
 
-
 /**
- * 司机信息表单前端验证
+ *
+ * @returns {jQuery|*}
  */
-function validform() {
-    // alert()
-    // return $("#driverInfo");
-    /*关键在此增加了一个return，返回的是一个validate对象，这个对象有一个form方法，返回的是是否通过验证*/
-    alert(1);
-    console.log($("#driverInfo"));
-    alert(1);
+
+function validForm() {
+    jQuery.validator.addMethod("mobile", function(value, element) {
+        var length = value.length;
+        var mobile = /^1[3456789]\d{9}$/
+        return this.optional(element) || (length == 11 && mobile.test(value));
+    }, "手机号码格式错误");
     return $("#driverInfo").validate({
         rules: {
             driverName: {
-                minlength: 2,
-                maxlength: 13
+                required: true,
+                minlength: 1,
+                maxlength: 10,
             },
             driverPass: {
-                minlength: 5,
+                minlength: 6,
                 maxlength: 20
             },
             repeatDriverPass: {
-                minlength: 5,
+                minlength: 6,
                 maxlength: 20,
-                equalTo: "#repeatDriverPass"
+                equalTo: "#driverPass"
             },
             driverPhone: {
                 minlength: 11,
-                maxlength: 11
+                maxlength: 11,
+                mobile: true
             },
             carNumber: {
-                minlength: 2,
+                minlength: 6,
                 maxlength: 8
             }
         },
@@ -344,47 +371,55 @@ function submitChange() {
      * @TODO : 前端验证
      * validform().form()
      */
-    if (1) {
-        $.ajax({
-            // async: false,
-            type: "POST",
-            url: '/driver/updateDriver',
-            contentType: "application/json",
-            headers: {'token': localStorage.getItem("hcs")},
-            data: JSON.stringify({
-                "driverName": $("#driverName").val(),
-                "carNumber": $("#carNumber").val(),
-                "fleetId": Number($("#fleetId").val()),
-                "driverPass": $("#driverPass").val(),
-                "driverPhone": $("#driverPhone").val()
-            }),
-            success: function (jsonData, result) {
-                console.log(jsonData);
-                console.log(result);
-                if (jsonData['code'] === 200) {
-                    console.log('成功');
-
-                    alert("修改成功");
-                    // showDriverInfo(driver);
-                    // location.reload();
-                } else {
-                    console.log('失败');
-                    alert("修改失败");
-                    // location.reload();
-                }
-            },
-        });
-        for (let i = 0; i < 500000000; i++) {
-            /**
-             * 意义不明的代码，
-             * 不加会有bug
-             * 170000000
-             * 二分
-             */
-        }
-        showDriverInfo();
-        // showDriverInfo();
-    } else {
-        alert("信息格式有误，请重新填写！");
+    if (!validForm().form()) {
+        alert("信息有误")
+        return;
     }
+    $.ajax({
+        async: false,
+        type: "POST",
+        url: '/driver/updateDriver',
+        contentType: "application/json",
+        headers: {'token': localStorage.getItem("conNCU")},
+        data: JSON.stringify({
+            "driverName": $("#driverName").val(),
+            "carNumber": $("#carNumber").val(),
+            "fleetId": Number($("#fleetId").val()),
+            "driverPass": $("#driverPass").val(),
+            "driverPhone": $("#driverPhone").val()
+        }),
+        success: function (jsonData, result) {
+            console.log(jsonData);
+            console.log(result);
+            if (jsonData['code'] === 200) {
+                console.log('成功');
+                $.alert({
+                    title: '提示信息',
+                    content: '修改成功',
+                });
+                // showDriverInfo(driver);
+                // location.reload();
+            } else {
+                console.log('失败');
+                $.alert({
+                    title: '提示信息',
+                    content: '修改失败',
+                });
+                // location.reload();
+            }
+        },
+    });
+    // for (let i = 0; i < 500000000; i++) {
+    //     /**
+    //      * 意义不明的代码，
+    //      * 不加会有bug
+    //      * 170000000
+    //      * 二分
+    //      */
+    // }
+    showDriverInfo();
+    // showDriverInfo();
 }
+
+
+

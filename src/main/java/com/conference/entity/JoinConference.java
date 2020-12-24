@@ -11,6 +11,19 @@ import java.sql.Timestamp;
  */
 
 public class JoinConference {
+    @Override
+    public String toString() {
+        return "JoinConference{" +
+                "participantId=" + participantId +
+                ", conferenceId=" + conferenceId +
+                ", isPutup=" + isPutup +
+                ", isPickup=" + isPickup +
+                ", toTime='" + toTime + '\'' +
+                ", returnTime='" + returnTime + '\'' +
+                ", trainNumber='" + trainNumber + '\'' +
+                ", isConfirm=" + isConfirm +
+                '}';
+    }
 
     public Integer getParticipantId() {
         return participantId;
@@ -28,12 +41,12 @@ public class JoinConference {
         this.conferenceId = conferenceId;
     }
 
-    public Integer getIsPutup() {
+    public Boolean getPutup() {
         return isPutup;
     }
 
-    public void setIsPutup(Integer isPutup) {
-        this.isPutup = isPutup;
+    public void setPutup(Boolean putup) {
+        isPutup = putup;
     }
 
     public Boolean getPickup() {
@@ -64,6 +77,17 @@ public class JoinConference {
         return trainNumber;
     }
 
+    public JoinConference(Integer participantId, Integer conferenceId, Boolean isPutup, Boolean isPickup, String toTime, String returnTime, String trainNumber, Boolean isConfirm) {
+        this.participantId = participantId;
+        this.conferenceId = conferenceId;
+        this.isPutup = isPutup;
+        this.isPickup = isPickup;
+        this.toTime = toTime;
+        this.returnTime = returnTime;
+        this.trainNumber = trainNumber;
+        this.isConfirm = isConfirm;
+    }
+
     public void setTrainNumber(String trainNumber) {
         this.trainNumber = trainNumber;
     }
@@ -76,23 +100,10 @@ public class JoinConference {
         isConfirm = confirm;
     }
 
-    @Override
-    public String toString() {
-        return "JoinConference{" +
-                "participantId=" + participantId +
-                ", conferenceId=" + conferenceId +
-                ", isPutup=" + isPutup +
-                ", isPickup=" + isPickup +
-                ", toTime='" + toTime + '\'' +
-                ", returnTime='" + returnTime + '\'' +
-                ", trainNumber='" + trainNumber + '\'' +
-                ", isConfirm=" + isConfirm +
-                '}';
-    }
-
     private Integer participantId;
     private Integer conferenceId;
-    private Integer isPutup; //是否需要住宿
+//    private Integer isPutup; //是否需要住宿
+    private Boolean isPutup;
     private Boolean isPickup; //是否需要接送
     private String toTime; //参会往时间
     private String returnTime; //参会返时间

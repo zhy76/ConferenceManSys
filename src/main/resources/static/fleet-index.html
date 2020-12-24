@@ -22,6 +22,64 @@
         <link href="css/jquery.toast.min.css" rel="stylesheet">
         <!--template css-->
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="fonts/font_byLCY/iconfont.css">
+        <style>
+            .error {
+                color: red;
+            }
+        </style>
+        <style type="text/css">
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            .card a .items{
+                border: 1px solid#eeeeee;
+                /* padding: 5px; */
+                margin-bottom: 50px;
+                background-color: #ffffff;
+                box-shadow: 0px 0 16px rgba(0, 0, 0, 0.2);
+            }
+            .card a .items p {
+                color: #6f6f6f;
+                padding :0px 10px;
+                margin: 0px;
+            }
+            .card a .items h4{
+                padding :0px 10px;
+                margin-top:10px;
+                color: #666666;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .card a:hover div{
+                transform: scale(1.15);
+                transition: all .65s;
+                overflow: hidden;
+            }
+            .card a:hover h4{
+                color: #00a0e9;
+            }
+            .card a p span{
+                color :#d7d7d7;
+            }
+            .back-to-top {
+                position: fixed;
+                display: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 3px;
+                right: 15px;
+                bottom: 15px;
+                background: #428bca;
+                color: #ffffff;
+                text-align: center;
+                line-height: 40px;
+                transition: display 0.5s ease-in-out;
+                z-index: 99999;
+            }
+        </style>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -88,9 +146,10 @@
                             <a aria-expanded="true" href="javascript: void(0);"><i class="icon-list"></i> 车队管理 <span
                                     class="fa arrow"></span></a>
                             <ul aria-expanded="true" class="nav-second-level nav">
-                                <li  id="to-pick-up"><a href="javascript:void(0)">接送管理</a></li>
-                                <li  id="to-driver"><a href="javascript:void(0)">司机管理</a></li>
-                                <li  id="to-conference"><a href="javascript:void(0)">参会人员管理</a></li>
+                                <li id="to-conference"><a href="javascript:void(0)">会议订单管理</a></li>
+                                <li id="to-pick-up"><a href="javascript:void(0)">接送管理</a></li>
+                                <li id="to-query-pick-up"><a href="javascript:void(0)">接送查询</a></li>
+                                <li id="to-driver"><a href="javascript:void(0)">司机管理</a></li>
                             </ul>
                         </li>
                         <li>
@@ -117,61 +176,41 @@
                     </div>
                 </div>
             </div>
-            <!--主体页面头部结束-->
-
             <!--页面主体内容部分开始-->
-            <!--页面主体内容部分开始-->
-<!--            <div class="page-wrapper">-->
-<!--                <div class="container-fluid">-->
-<!--                    &lt;!&ndash; Row &ndash;&gt;-->
-<!--                    <div class="row">-->
-<!--                        &lt;!&ndash; Column &ndash;&gt;-->
-<!--                        <div class="col-sm-11">-->
-<!--                            <div class="card">-->
-<!--                                &lt;!&ndash; Nav tabs &ndash;&gt;-->
-<!--                                <ul class="nav nav-tabs profile-tab" role="tablist">-->
-<!--                                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#车队信息" role="tab" id="btn">车队信息</a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                                &lt;!&ndash; Tab panes &ndash;&gt;-->
-<!--                                <div class="tab-content">-->
-<!--                                    <div class="tab-pane" id="车队信息" role="tabpanel">-->
-<!--                                        <div class="card-body">-->
+            <div class="page-wrapper">
+                <div class="container-fluid">
+                    <!-- Row -->
+                    <div class="row">
+                        <!-- Column -->
+                        <div class="col-sm-12">
+                            <div class="card">
 
-
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash; Column &ndash;&gt;-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; Row &ndash;&gt;-->
-
-<!--                </div>-->
-<!--            </div>-->
-
-            <!--页面主体内容部分结束-->
-            <!--页面主体内容部分开始-->
-            <div class="container">
-                <div class="row clearfix">
-                    <div class="col-md-10 column">
-                        <div class="jumbotron">
-                            <h1>
-                                欢迎!
-                            </h1>
-                            <p>
-                                这里是车队的管理界面，可以执行您需要的操作！
-                            </p>
+                                <div class="container">
+                                    <div class="row clearfix">
+                                        <div class="col-md-10 column">
+                                            <div class="jumbotron">
+                                                <h1>
+                                                    欢迎!
+                                                </h1>
+                                                <p>
+                                                    这里是车队的管理界面，可以执行您需要的操作！
+                                                </p>
+                                                <!--                            <p>-->
+                                                <!--                                <a class="btn btn-primary btn-large" href="#">Learn more</a>-->
+                                                <!--                            </p>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Column -->
                     </div>
-                    <!--            <div class="col-md-4 column">-->
-                    <!--                <img alt="这里有一张图片" src="assets/picture/3.jpg" />-->
-                    <!--            </div>-->
+                    <!-- Row -->
+
                 </div>
             </div>
-
-<!--            &lt;!&ndash;页面主体内容部分结束&ndash;&gt;-->
+            <!--            &lt;!&ndash;页面主体内容部分结束&ndash;&gt;-->
 
             <!--页面主体内容部分结束-->
 
@@ -188,10 +227,6 @@
 
         <!--Common plugins-->
         <script src="js/jquery.min.js"></script>
-        <script src="js/fleet/fleet-index.js"></script>
-        <script src="js/fleet/fleet-mange.js"></script>
-
-
         <script src="js/bootstrap.min.js"></script>
         <script src="js/pace.min.js"></script>
         <script src="js/jasny-bootstrap.min.js"></script>
@@ -209,5 +244,11 @@
         <script src="js/datatables.responsive.min.js"></script>
         <script src="js/jquery.toast.min.js"></script>
         <script src="js/dashboard-alpha.js"></script>
+
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+        <script src="js/fleet/fleet-index.js"></script>
+        <script src="js/fleet/fleet-mange.js"></script>
+        <script src="js/fleet/fleet-conference.js"></script>
     </body>
 </html>

@@ -12,6 +12,7 @@ public class PickUp {
 
     private Integer pickUpId;
     private Integer participantId;
+    private Integer fleetId;
     private Integer driverId;
     private Integer conferenceId;
     private String trainNumber;
@@ -19,11 +20,28 @@ public class PickUp {
     private String returnTime;
     private boolean isFinishPickup;
 
+    public PickUp() {
+    }
+
+    public PickUp(Integer pickUpId, Integer participantId, Integer fleetId, Integer driverId, Integer conferenceId,
+                  String trainNumber, String toTime, String returnTime, boolean isFinishPickup) {
+        this.pickUpId = pickUpId;
+        this.participantId = participantId;
+        this.fleetId = fleetId;
+        this.driverId = driverId;
+        this.conferenceId = conferenceId;
+        this.trainNumber = trainNumber;
+        this.toTime = toTime;
+        this.returnTime = returnTime;
+        this.isFinishPickup = isFinishPickup;
+    }
+
     @Override
     public String toString() {
         return "PickUp{" +
                 "pickUpId=" + pickUpId +
                 ", participantId=" + participantId +
+                ", fleetId=" + fleetId +
                 ", driverId=" + driverId +
                 ", conferenceId=" + conferenceId +
                 ", trainNumber='" + trainNumber + '\'' +
@@ -47,6 +65,14 @@ public class PickUp {
 
     public void setParticipantId(Integer participantId) {
         this.participantId = participantId;
+    }
+
+    public Integer getFleetId() {
+        return fleetId;
+    }
+
+    public void setFleetId(Integer fleetId) {
+        this.fleetId = fleetId;
     }
 
     public Integer getDriverId() {

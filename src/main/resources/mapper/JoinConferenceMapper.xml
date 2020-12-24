@@ -32,7 +32,11 @@
         select * from join_conference where participant_id = #{participantId} and is_confirm = false ;
     </select>
 
-    <select id="queryConferenceByConferenceId" resultType="JoinConference">
+    <select id="queryJoinConferenceByConferenceId" resultType="JoinConference">
         select * from join_conference where conference_id = #{conferenceId}
+    </select>
+
+    <select id="queryJoinedConferenceByParticipantIdAndConferenceId" resultType="JoinConference">
+        select * from join_conference where conference_id = #{conferenceId} and participant_id = #{participantId};
     </select>
 </mapper>
