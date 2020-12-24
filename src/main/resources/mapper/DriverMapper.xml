@@ -47,7 +47,7 @@
     </update>
 
     <update id = "updateDriverPhoto">
-        update admin set driver_photo=#{driverPhoto} where driver_id=#{driverId};
+        update driver set driver_photo=#{driverPhoto} where driver_id=#{driverId};
     </update>
 
 <!--    <resultMap type="Driver" id="DriverResultMap" >-->

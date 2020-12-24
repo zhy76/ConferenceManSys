@@ -192,27 +192,32 @@ function headPhotoUpload() {
         success:function(result) {
 
             if (result.message == "成功") {
-                alert("更新头像成功!");
-                // $.alert({
-                //     title: '提示信息',
-                //     content: '更新头像成功!',
-                // });
+                // alert("更新头像成功!");
+
+                $.alert({
+                    title: '提示信息',
+                    content: '更新头像成功!',
+                });
+                location.reload();
             } else {
-                alert("更新头像失败!");
-                // $.alert({
-                //     title: '提示信息',
-                //     content: '更新头像失败!',
-                // });
+                // alert("更新头像失败!");
+                $.alert({
+                    title: '提示信息',
+                    content: '更新头像失败!',
+                });
             }
         },
         error:function() {
-            alert("更新异常!");
-            // $.alert({
-            //     title: '提示信息',
-            //     content: '更新异常!',
-            // });
+            // alert("更新异常!");
+            $.alert({
+                title: '提示信息',
+                content: '更新异常!',
+            });
         }
     });
+
+    // localStorage.setItem('function', 'showDriverInfo()');
+
 }
 //预览图片
 function onLoadImage() {
@@ -251,7 +256,7 @@ function showDriverInfo() {
         "                            <!--                        换头像-->\n" +
         "                            <div align=\"center\">\n" +
         "                                <form id=\"form_submit_photo\" class=\"form-horizontal\">\n" +
-        "                                    <input type=\"hidden\" name=\"role\" value=\"hotel\">\n" +
+        "                                    <input type=\"hidden\" name=\"role\" value=\"driver\">\n" +
         "                                    <input type=\"hidden\" name=\"roleId\" value=\"" + driver.driverId + "\" id=\"roleId\">\n" +
         "                                    <label class=\"btn btn-default btn-file\">\n" +
         "                                        更新头像\n" +
