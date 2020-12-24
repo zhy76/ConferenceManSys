@@ -75,6 +75,7 @@
                     $("#adminPass").val(result.data.adminPass);
                     $("#roleId").val(result.data.adminId);
                     $("#head_photo").attr("src",result.data.adminPhoto);
+                    $("#nav-head-photo").attr("src",result.data.adminPhoto);
                 },
                 error:function () {
                     $.alert({
@@ -130,8 +131,6 @@
                 }
             }
 
-
-
     </script>
 </head>
 
@@ -167,7 +166,7 @@
                         <a href="#"  class="dropdown-toggle" data-toggle="dropdown"  aria-haspopup="true" aria-expanded="false">
                             <span>
                                 <!-- 头像 size要求：128*128尺寸-->
-                                <img src="picture/noLogin.jpg" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;<b class="caret"></b>
+                                <img id = "nav-head-photo" src="" class="img-circle"  alt="" style = "width: 20px;">&nbsp;&nbsp;<b class="caret"></b>
                             </span>
                         </a>
                         <ul class="dropdown-menu">

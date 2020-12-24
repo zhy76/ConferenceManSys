@@ -1,7 +1,9 @@
 package com.conference.controller;
 
 import com.conference.entity.Driver;
+import com.conference.entity.Fleet;
 import com.conference.service.DriverService;
+import com.conference.service.FleetService;
 import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName: DriverController
@@ -42,6 +44,9 @@ public class DriverController {
 
     @Autowired
     private PickUpService pickUpService;
+
+    @Autowired
+    private FleetService fleetService;
 
 
     /**
@@ -145,6 +150,8 @@ public class DriverController {
      */
     @PostMapping("/adminUpdateDriver")
     public Result adminUpdateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver) {
+        System.out.println("修改中...");
+        System.out.println(driver);
         driverService.updateDriver(driver);
         return Result.success();
     }
@@ -219,6 +226,54 @@ public class DriverController {
         Driver getDriverInfo = driverService.findDriverById(driverId);
         System.out.println("/getDriverInfoById");
         return Result.success("getDriverInfoById", getDriverInfo);
+    }
+
+    /**
+     * 管理员查找所有的司机 Api
+     * /driver/getAllDriver
+     *
+     * @return result {}
+     */
+    @GetMapping("/getAllDriverByAdmin")
+    public Result getAllDriverByAdmin() {
+        List<Driver> getAllDriver = driverService.findAllDriver();
+        Map<Integer,List<Object>> map = new HashMap<>(); //找到对应的Map
+        for(int i = 0 ; i < getAllDriver.size() ; i ++)
+        {
+            Fleet fleet = fleetService.findFleetById(getAllDriver.get(i).getFleetId());
+            map.put(i,new ArrayList<>(Arrays.asList(getAllDriver.get(i),fleet)));
+        }
+        return Result.success("getAllDriver", map);
+    }
+
+    /**
+     * 管理员查找指定id的司机 Api
+     * /driver/getAllDriver
+     *
+     * @return result {}
+     */
+    @PostMapping("/updateDriverByAdmin")
+    public Result updateDriverByAdmin(@RequestParam Integer driverId) {
+        Driver driver = driverService.findDriverById(driverId);
+        System.out.println(driver);
+        Map<String,List<Object>> map = new HashMap<>(); //找到对应的Map
+        Fleet fleet = fleetService.findFleetById(driver.getFleetId());
+        map.put("getDriverById",new ArrayList<>(Arrays.asList(driver,fleet)));
+        return Result.success(map);
+    }
+
+    /**
+     * 管理员修改司机的信息
+     * /driver/updateDriverByAdmin
+     *
+     * @param driver {}
+     * @return result {}
+     */
+    @PostMapping("/submitDriverByAdmin")
+    public Result submitDriverByAdmin(@RequestBody Driver driver) {
+//        System.out.println(driver);
+        driverService.updateDriver(driver);
+        return Result.success();
     }
 
 }

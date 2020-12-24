@@ -28,7 +28,6 @@ public class FileUploadServiceImpl implements FileUploadService {
     @Override
     public void headPhotoUpload(String role,Integer roleId, String url) {
         if( role.equals("admin")){
-            System.out.println("impl正在执行...");
             adminDao.updateAdminPhoto(url,roleId);
         }
 

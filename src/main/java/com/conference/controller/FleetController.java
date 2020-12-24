@@ -81,10 +81,13 @@ public class FleetController {
     @PostMapping("/login")
     public Result login(@RequestBody Fleet fleet) {
         Fleet fleetForBase = fleetService.findFleetByPhone(fleet.getFleetPhone());
+        System.out.println(fleet);
+        System.out.println("111111111111111");
         if (fleetForBase == null) {
             return new Result(ResultCode.UnknownAccountException);
         } else {
             if (!fleetForBase.getFleetPass().equals(fleet.getFleetPass())) {
+                System.out.println("error");
                 return new Result(ResultCode.IncorrectCredentialsException);
             } else {
                 String token = tokenService.getToken(fleetForBase);
@@ -129,6 +132,7 @@ public class FleetController {
      */
     @GetMapping("/deleteFleet")
     public Result deleteFleet(@RequestParam("fleetId") Integer fleetId) {
+        System.out.println(fleetId);
         fleetService.deleteFleetById(fleetId);
         return Result.success();
     }
@@ -163,5 +167,25 @@ public class FleetController {
         fleet.setFleetId((Integer) claims.get("fleetId"));
         fleetService.updateFleet(fleet);
         return Result.success();
+    }
+
+    /**
+     * 管理员修改车队信息
+     */
+    @PostMapping("/updateFleetByAdmin")
+    public Result updateFleetByAdmin(Fleet fleet) {
+        fleetService.updateFleet(fleet);
+        return Result.success();
+    }
+
+    /**
+     *根据id查找fleet！！！
+     * @param fleetId
+     * @return
+     */
+    @GetMapping("/findFleetById")
+    public Result findFleetById(@RequestParam Integer fleetId){
+        Fleet findFleetById =fleetService.findFleetById(fleetId);
+        return Result.success("findFleetById", findFleetById);
     }
 }
