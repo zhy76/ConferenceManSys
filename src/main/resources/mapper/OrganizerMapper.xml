@@ -10,27 +10,27 @@
     <!--    id对应方法名 resultType结果集类型-->
     <update id = "updateOrganizer" parameterType="Organizer">
         update organizer set organizer_pass=#{organizerPass},organizer_phone=#{organizerPhone},
-        organizer_unit=#{organizerUnit},organizer_email=#{organizerEmail} where organizer_id=#{organizerId};
+        organizer_unit=#{organizerUnit},organizer_email=#{organizerEmail} where organizer_id=#{organizerId}
     </update>
 
     <select id="findAllOrganizer" resultType="Organizer">
-        select * from organizer;
+        select * from organizer
     </select>
 
     <select id="findOrganizerById" resultType="Organizer">
-        select * from organizer where organizer_id=#{organizerId};
+        select * from organizer where organizer_id=#{organizerId}
     </select>
 
     <select id="findOrganizerByPhone" resultType="Organizer">
-        select * from organizer where organizer_phone=#{organizerPhone};
+        select * from organizer where organizer_phone=#{organizerPhone}
     </select>
 
     <insert id="addOrganizer">
         INSERT INTO organizer
-        VALUES(null,#{organizerPass}, #{organizerPhone}, #{organizerUnit}, #{organizerEmail});
+        VALUES(null,#{organizerPass}, #{organizerPhone}, #{organizerUnit}, #{organizerEmail})
     </insert>
 
     <delete id="deleteOrganizerById">
-        DELETE FROM organizer WHERE organizer_id=#{organizerId};
+        DELETE FROM organizer WHERE organizer_id=#{organizerId}
     </delete>
 </mapper>

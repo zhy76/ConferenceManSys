@@ -8,11 +8,11 @@
 
     <insert id="joinAConference" parameterType="JoinConference">
         insert into join_conference(participant_id,conference_id,is_putup,is_pickup,to_time,return_time,Train_number)
-        values (#{participantId},#{conferenceId},#{isPutup},#{isPickup},#{toTime},#{returnTime},#{trainNumber});
+        values (#{participantId},#{conferenceId},#{isPutup},#{isPickup},#{toTime},#{returnTime},#{trainNumber})
     </insert>
 
     <delete id="cancelAJoinedConferenceById">
-        delete from join_conference where participant_id = #{participantId} and conference_id = #{conferenceId};
+        delete from join_conference where participant_id = #{participantId} and conference_id = #{conferenceId}
     </delete>
 
     <select id="queryConferenceByParticipantId" resultType="JoinConference">

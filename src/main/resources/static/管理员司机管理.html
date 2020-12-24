@@ -4,8 +4,8 @@
 <div class="col-sm-9">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-        <li id = "fleetLi" ><a href="#fleet" data-toggle="tab" onclick="fleets();" >车队</a></li>
-        <li id = "driverLi" class = "active"><a href="#driver" data-toggle="tab" onclick="drivers();" >司机</a></li>
+        <li id = "fleetLi" ><a href="#fleet" data-toggle="tab" onclick="fleets(1,10);" >车队</a></li>
+        <li id = "driverLi" class = "active"><a href="#driver" data-toggle="tab" onclick="drivers(1,10);" >司机</a></li>
     </ul>
     <!--                对应面板-->
     <div class="panel panel-default">
@@ -61,7 +61,7 @@
                     </form>
                 </div>
                 <!--                        表格展示-->
-                <table class="table table-striped table-bordered table-hover">
+                <table id = "datatable" class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
                         <th hidden>ID</th>
@@ -76,27 +76,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <!--                分页-->
-            <nav class = "pull-right" >
-                <ul class="pagination">
-                    <li class="disabled">
-                        <a href="#" id="previous">
-                            <span>&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" id="next">
-                            <span>&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
 
         </div>
 

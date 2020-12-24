@@ -33,17 +33,17 @@
     <!--    VALUES(null,"glz", "111111", null, "123456", "19914665732", 0);-->
 
     <delete id="deleteDriverById">
-        DELETE FROM driver WHERE driver_id=#{driverId};
+        DELETE FROM driver WHERE driver_id=#{driverId}
     </delete>
 
 
     <update id="updateDriver">
         UPDATE driver SET driver_name=#{driverName}, car_number=#{carNumber}, fleet_id=#{fleetId},
-        driver_pass=#{driverPass},driver_phone=#{driverPhone}, is_assign=#{isAssign} WHERE driver_id=#{driverId};
+        driver_pass=#{driverPass},driver_phone=#{driverPhone}, is_assign=#{isAssign} WHERE driver_id=#{driverId}
     </update>
 
     <update id="updateDriverIsAssign">
-        UPDATE driver SET is_assign=#{isAssign} WHERE driver_id=#{driverId};
+        UPDATE driver SET is_assign=#{isAssign} WHERE driver_id=#{driverId}
     </update>
 <!--    <resultMap type="Driver" id="DriverResultMap" >-->
 <!--        <result property="driverId" column="driver_id"/>-->

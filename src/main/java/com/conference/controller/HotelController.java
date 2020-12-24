@@ -3,12 +3,15 @@ package com.conference.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.conference.dao.HotelDao;
 import com.conference.entity.Driver;
+import com.conference.entity.Fleet;
 import com.conference.entity.Hotel;
 import com.conference.service.HotelService;
 import com.conference.service.impl.TokenServiceImpl;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,6 +110,18 @@ public class HotelController {
 //                             @PathVariable String hotelInfo, @PathVariable int hotelId) {
 //        hotelDao.updateHotel(hotelName,hotelLocation,hotelPhone,hotelPass,hotelInfo,hotelId);
 //    }
+
+    /**
+     * 管理员获取全部酒店
+     * @return
+     */
+    @PostMapping("/getAllHotelByAdmin")
+    public Result getAllHotelByAdmin(@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<Hotel> getAllHotel = hotelService.findAllHotel();
+        PageInfo<Hotel> pi = new PageInfo<>(getAllHotel);
+        return Result.success("getAllHotel", pi.getList());
+    }
 
     /**
      * 管理员根据酒店id查询出酒店信息

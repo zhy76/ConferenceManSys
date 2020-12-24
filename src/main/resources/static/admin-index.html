@@ -132,21 +132,16 @@
 
         }
         // 展示所有的参加者信息
-        function participants() {
+        function participants(pageNum,pageSize) {
             $.ajax({
                 type:"post",
-                url: "/participant/showParticipants",
+                url: "/participant/showParticipants?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
-                headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
                 processData:false,
                 contentType:false,
                 success:function (result) {
                     //获取到所有参加者
-                    // console.log(result);
-                    // console.log(result["code"]);
-                    // console.log(result["message"]);
-                    // console.log(result["data"])
                     var listParticipants = "";
                     for(var i = 0 ; i < result["data"].length ; i ++)
                     {
@@ -176,6 +171,7 @@
                             '                                    </tr>'
                     }
                     $("#participant table tbody").html(listParticipants);
+                    $("#nowPage").html(pageNum);
 
                 },
                 error:function () {
@@ -210,10 +206,10 @@
         // 参加者模块
 
         //组织者模块
-        function organizers(){
+        function organizers(pageNum,pageSize){
             $.ajax({
                 type:"post",
-                url: "/organizer/showOrganizers",
+                url: "/organizer/showOrganizers?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
                 headers:{"conNCU": localStorage.conNCU},
                 dataType:"json",
@@ -246,7 +242,7 @@
                             '                                    </tr>'
                     }
                     $("#organizer table tbody").html(listOrganizers);
-
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -347,10 +343,10 @@
 
 
         //会议模块
-        function conferences() {
+        function conferences(pageNum,pageSize) {
             $.ajax({
                 type:"post",
-                url: "/conference/showConferencesByAdmin",
+                url: "/conference/showConferencesByAdmin?pageNum=" + pageNum + "&pageSize=" + pageSize,
                 data: "",
                 dataType:"json",
                 processData:false,
@@ -378,6 +374,7 @@
                             '                                    </tr>'
                     });
                     $('#conference table tbody').html(listConferences);
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -493,10 +490,10 @@
         //会议模块
 
         //车队模块
-        function fleets() {
+        function fleets(pageNum,pageSize) {
             $.ajax({
-                type:"get",
-                url: "/fleet/getAllFleet",
+                type:"Post",
+                url: "/fleet/getAllFleetByAdmin?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
                 dataType:"json",
                 processData:false,
@@ -520,6 +517,7 @@
                             '                                    </tr>'
                     });
                     $('#fleet table tbody').html(listFleets);
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -624,7 +622,7 @@
         //车队模块
 
         //司机模块
-        function drivers() {
+        function drivers(pageNum,pageSize) {
             $.ajax({
                 type:"get",
                 url: "/driver/getAllDriverByAdmin",
@@ -706,9 +704,6 @@
             });
         }
 
-        // 需要修改的
-        //  bug
-        //  错误
         function updateDriver(driverId){
             // console.dir(driverId);
             $.ajax({
@@ -728,9 +723,6 @@
                    $("#driverPass").val(result[0].driverPass);
                    $("#carNumber").val(result[0].carNumber);
                    $("#driverPhoto").attr("src",result[0].driverPhoto);
-                   // 需要修改的
-                   //  bug
-                   //  错误
                     $("#driver-fleet-Id").val(result[0].fleetId);
                    // $("#driver-fleet-Id").val(result[1].fleetName);
                     $("#assign").val(result[0].assign);
@@ -766,10 +758,10 @@
         //司机模块
 
         //酒店模块
-        function hotels() {
+        function hotels(pageNum,pageSize) {
             $.ajax({
-                type:"get",
-                url: "/hotel/getAllHotel",
+                type:"post",
+                url: "/hotel/getAllHotelByAdmin?pageNum=" + pageNum +"&pageSize=" + pageSize,
                 data: "",
                 dataType:"json",
                 processData:false,
@@ -796,6 +788,7 @@
                             '                                    </tr>'
                     };
                     $('#hotel table tbody').html(listHotels);
+                    $("#nowPage").html(pageNum);
                 },
                 error:function () {
                     alert("请求异常");
@@ -1007,8 +1000,8 @@
                                     <div class="panel-body">
 <!--                                        nav list-group  nav-tap   class="list-group-item"-->
                                         <ul class="nav list-group  nav-tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;"><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员参加者人员管理.html'); participants(); })()" >参加者</a></li>
-                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)"  onclick="(function(){$('#main').load('管理员组织者单位管理.html'); organizers(); })()">组织者</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;"><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员参加者人员管理.html'); participants(1,10); })()" >参加者</a></li>
+                                            <li  style="border: 1px solid #dddddd; border-top: 0px;border-radius: 4px; "><a href="javascript:void(0)"  onclick="(function(){$('#main').load('管理员组织者单位管理.html'); organizers(1,10); })()">组织者</a></li>
 
                                         </ul>
                                     </div>
@@ -1028,7 +1021,7 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员会议管理.html'); conferences()})()">会议列表</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员会议管理.html'); conferences(1,10)})()">会议列表</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -1048,8 +1041,8 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员车队管理.html'); fleets(); })()">车队</a></li>
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员司机管理.html'); drivers(); })()">司机</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员车队管理.html'); fleets(1,10); })()">车队</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员司机管理.html'); drivers(1,10); })()">司机</a></li>
 
                                         </ul>
                                     </div>
@@ -1069,7 +1062,7 @@
                                     <div class="panel-body">
 
                                         <ul class="nav list-group  nav- tap">
-                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员酒店管理.html'); hotels(); })()">酒店</a></li>
+                                            <li  style="border: 1px solid #dddddd;border-radius: 4px;" ><a href="javascript:void(0)" onclick="(function(){$('#main').load('管理员酒店管理.html'); hotels(1,10); })()">酒店</a></li>
 
                                         </ul>
                                     </div>
@@ -1093,7 +1086,7 @@
         </div>
     </div>
 
-<!--    修改参加者信息的模态框-->
+    <!--    修改参加者信息的模态框-->
     <div class="modal fade" id = "updateParticipant" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -1150,7 +1143,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-<!--        修改组织者信息的模态框-->
+    <!--        修改组织者信息的模态框-->
     <div class="modal fade" id = "updateOrganizer" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

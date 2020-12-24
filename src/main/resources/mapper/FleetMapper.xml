@@ -4,19 +4,19 @@
 
 <mapper namespace="com.conference.dao.FleetDao">
     <select id="findAllFleet" resultType="Fleet">
-        select * from fleet;
+        select * from fleet
     </select>
 
     <select id="findFleetById" resultType="Fleet">
-        SELECT * FROM fleet WHERE fleet_id=#{fleetId};
+        SELECT * FROM fleet WHERE fleet_id=#{fleetId}
     </select>
 
     <select id="findFleetByPhone" resultType="Fleet">
-        SELECT * FROM fleet WHERE fleet_phone=#{fleetPhone};
+        SELECT * FROM fleet WHERE fleet_phone=#{fleetPhone}
     </select>
 
     <delete id="deleteFleetById">
-        DELETE FROM fleet WHERE fleet_id=#{fleetId};
+        DELETE FROM fleet WHERE fleet_id=#{fleetId}
     </delete>
 
 
@@ -28,7 +28,7 @@
 
     <update id="updateFleet">
         UPDATE fleet SET fleet_name=#{fleetName}, fleet_pass=#{fleetPass},fleet_phone=#{fleetPhone}
-         WHERE fleet_id=#{fleetId};
+         WHERE fleet_id=#{fleetId}
     </update>
 
 </mapper>

@@ -1,6 +1,8 @@
 package com.conference.service;
 
 import com.conference.entity.Participant;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ public interface ParticipantService {
      * @return 返回一个Participant列表
      **/
     public List<Participant> queryParticipants();
+
+    //分页查询
+    public  List<Participant> selectAll(Integer pageNum, Integer pageSize);
 
     /**
      * @Description 通过用户名查询Participant

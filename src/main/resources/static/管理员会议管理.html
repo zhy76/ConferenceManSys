@@ -2,7 +2,7 @@
 <div class="col-sm-9">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
-        <li id = "conferenceLi" class = "active"><a href="#conference" data-toggle="tab" onclick="conferences();" >会议列表</a></li>
+        <li id = "conferenceLi" class = "active"><a href="#conference" data-toggle="tab" onclick="conferences(1,10);" >会议列表</a></li>
     </ul>
     <!--                对应面板-->
     <div class="panel panel-default">
@@ -48,18 +48,16 @@
             <!--                分页-->
             <nav class = "pull-right" >
                 <ul class="pagination">
-                    <li class="disabled">
-                        <a href="#" id="previous">
+                    <li>
+<!--                        上一页-->
+                        <a href="javascript:void(previous());" id="previous">
                             <span>&laquo;</span>
                         </a>
                     </li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    <li class="active"><a href="javascript:void(0);" id = "nowPage">1</a></li>
+<!--                    下一页-->
                     <li>
-                        <a href="#" id="next">
+                        <a href="javascript:void(next());" id="next">
                             <span>&raquo;</span>
                         </a>
                     </li>
@@ -72,4 +70,39 @@
 
 </div>
 
+<script>
+    function previous(){
+        var nowPage = $("#nowPage").text();
+        if( nowPage > 1)
+        {
+            conferences(nowPage - 1,10);
+        }
+        else
+        {
+            $.alert({
+                title: '警告!',
+                content: '已经是第一页惹,点不动了。',
+            });
+            return false;
+        }
+
+    }
+
+    function next(){
+        var nowPage = $("#nowPage").text();
+        var length = $("#datatable tbody > tr").size();
+        console.dir(length);
+        if(length < 10)
+        {
+            $.alert({
+                title: '警告!',
+                content: '已经是最后一页惹,点不动了。',
+            });
+            return false;
+        }
+        else {
+            conferences(Number(nowPage) + 1 ,10);
+        }
+    }
+</script>
 

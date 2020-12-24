@@ -10,29 +10,29 @@
 
     <!--    id对应方法名 resultType结果集类型-->
     <select id="queryParticipants" resultType="Participant">
-       select * from participant;
+       select * from participant
     </select>
 
     <select id="queryParticipantByParticipantName" resultType="Participant" >
-       select * from participant where participant_name = #{participantName};
+       select * from participant where participant_name = #{participantName}
     </select>
 
     <update id = "updateParticipant" parameterType="Participant">
         update participant set participant_name=#{participantName},participant_job=#{participantJob},
         participant_work_unit=#{participantWorkUnit},participant_email=#{participantEmail},
         participant_pass=#{participantPass},participant_phone=#{participantPhone},participant_sex=#{participantSex},
-        participant_id_card=#{participantIdCard} where participant_id=#{participantId};
+        participant_id_card=#{participantIdCard} where participant_id=#{participantId}
     </update>
 
     <delete id = "deleteParticipant">
-        delete from participant where participant_id = #{participantId};
+        delete from participant where participant_id = #{participantId}
     </delete>
     
     <insert id = "addAParticipant" parameterType="Participant">
         insert into participant(participant_id,participant_name,participant_job,participant_work_unit,
         participant_email,participant_pass,participant_phone,participant_sex,participant_id_card)
         values(#{participantId},#{participantName},#{participantJob},#{participantWorkUnit},
-        #{participantEmail},#{participantPass},#{participantPhone},#{participantSex},#{participantIdCard});
+        #{participantEmail},#{participantPass},#{participantPhone},#{participantSex},#{participantIdCard})
     </insert>
 
     <select id="queryParticipantByParticipantId" resultType="Participant">
