@@ -7,6 +7,8 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title>司机主页</title>
         <!-- Common plugins -->
+        <script src="admin/jquery.min.js"></script>
+        <script src="admin/bootstrap.min.js"></script>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/simple-line-icons.css" rel="stylesheet">
         <link href="assets/css/font-awesome.min.css" rel="stylesheet">
@@ -28,13 +30,37 @@
             }
         </style>
 
-        <script src="js/driver/laydate.js"></script>
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.min.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
+        <!--    去除掉alert、confirm显示的URL-->
+
+        <script src="admin/deleteURL.js"></script>
+        <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+        <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
+
+
+
+        <script src="js/pace.min.js"></script>
+        <script src="js/jasny-bootstrap.min.js"></script>
+        <script src="js/jquery.slimscroll.min.js"></script>
+        <script src="js/jquery.nanoscroller.min.js"></script>
+        <script src="js/metismenu.min.js"></script>
+        <script src="js/float-custom.js"></script>
+        <!--page script-->
+        <script src="js/d3.min.js"></script>
+        <script src="js/c3.min.js"></script>
+        <!-- iCheck for radio and checkboxes -->
+        <script src="js/icheck.min.js"></script>
+        <!-- Datatables-->
+        <script src="js/jquery.datatables.min.js"></script>
+        <script src="js/datatables.responsive.min.js"></script>
+        <script src="js/jquery.toast.min.js"></script>
+        <script src="js/dashboard-alpha.js"></script>
+
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/messages_zh.js"></script>
+
+
+        <script src="js/driver/driver-pickup.js"></script>
+        <script src="js/driver/driver-index.js"></script>
     </head>
     <body>
 
@@ -173,29 +199,11 @@
 
 
         <!--Common plugins-->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/pace.min.js"></script>
-        <script src="js/jasny-bootstrap.min.js"></script>
-        <script src="js/jquery.slimscroll.min.js"></script>
-        <script src="js/jquery.nanoscroller.min.js"></script>
-        <script src="js/metismenu.min.js"></script>
-        <script src="js/float-custom.js"></script>
-        <!--page script-->
-        <script src="js/d3.min.js"></script>
-        <script src="js/c3.min.js"></script>
-        <!-- iCheck for radio and checkboxes -->
-        <script src="js/icheck.min.js"></script>
-        <!-- Datatables-->
-        <script src="js/jquery.datatables.min.js"></script>
-        <script src="js/datatables.responsive.min.js"></script>
-        <script src="js/jquery.toast.min.js"></script>
-        <script src="js/dashboard-alpha.js"></script>
+<!--        <script src="admin/jquery.min.js"></script>-->
+<!--        <script src="admin/bootstrap.min.js"></script>-->
+<!--        <script src="js/jquery.min.js"></script>-->
+<!--        <script src="js/bootstrap.min.js"></script>-->
 
-        <script src="js/jquery.validate.min.js"></script>
-        <script src="js/messages_zh.js"></script>
-        <script src="js/driver/driver-pickup.js"></script>
-        <script src="js/driver/driver-index.js"></script>
 
     </body>
 </html>

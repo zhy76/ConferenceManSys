@@ -21,11 +21,7 @@ import java.util.List;
 
 /**
  * @ClassName: DriverController
- * @Description: TODO  司机的分派算法：
- * 1. 司机的未完成订单量
- * 2. 司机的从现在到未来第一个订单的时间长度（司机当前空闲时间）
- * 3. 司机的接送订单中，前1hour和后1hour不能有其他接送订单了
- * 4. 考虑司机不够，乘客要等待的情况，使用先来先服务
+ * @Description:
  * @Author: Lance
  * @Date: 2020/12/2 18:52
  */
@@ -124,9 +120,10 @@ public class DriverController {
 
     /**
      * 司机登出 Api
+     *
+     * @return
      * @TODO 登出
      * /driver/logout
-     * @return
      */
     @PostMapping("/logout")
     public Result logout() {
@@ -152,7 +149,8 @@ public class DriverController {
     /**
      * 司机自己修改自己的信息 Api
      * /driver/updateDriver
-     * @param driver {}
+     *
+     * @param driver  {}
      * @param request
      * @return result {}
      */
@@ -162,6 +160,7 @@ public class DriverController {
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         driver.setDriverId((Integer) claims.get("driverId"));
+        System.out.println(driver.getDriverId());
         driver.setAssign(driverService.findDriverById(driver.getDriverId()).getAssign());
         driverService.updateDriver(driver);
         return Result.success();
@@ -198,6 +197,7 @@ public class DriverController {
     /**
      * 司机自己查找登入司机的所有信息
      * /driver/getDriverInfo
+     *
      * @param request
      * @return
      */
@@ -208,9 +208,11 @@ public class DriverController {
         System.out.println("/getDriverInfo");
         return Result.success("getDriverInfo", getDriverInfo);
     }
+
     /**
      * 司机自己查找登入司机的所有信息
      * /driver/getDriverInfo
+     *
      * @param driverId
      * @return
      */

@@ -14,7 +14,7 @@ let joinConference;
 $(function () {
     let $fleetPhone;
     /*获取token*/
-    token = localStorage.getItem("hcs");
+    token = localStorage.getItem("conNCU");
     console.log(typeof (token));
     console.log(token);
     if (token == null || token === "null" || token === "undefined") {
@@ -25,7 +25,7 @@ $(function () {
     }
     if (token == null || token == "null" || typeof ($fleetId) == "undefined" || $fleetId == undefined) {//未登录
         console.log("未登录");
-        localStorage.setItem("hcs", null);
+        localStorage.setItem("conNCU", null);
         alert("请先登录！");
         window.location.href = "popupsignin.html";
     }
@@ -76,7 +76,7 @@ $(function () {
     /*点击 退出登录 按钮*/
     $("#login-out").click(function () {
         clearDriverInfo();
-        localStorage.setItem("hcs", null);
+        localStorage.setItem("conNCU", null);
         alert("退出成功");
         window.location.href = "../../popupsignin.html";
     })
@@ -294,7 +294,7 @@ function submitChange() {
             type: "POST",
             url: '/fleet/updateFleet',
             contentType: "application/json",
-            headers: {'token': localStorage.getItem("hcs")},
+            headers: {'token': localStorage.getItem("conNCU")},
             data: JSON.stringify({
                 "fleetName": $("#fleetName").val(),
                 "fleetPass": $("#fleetPass").val(),

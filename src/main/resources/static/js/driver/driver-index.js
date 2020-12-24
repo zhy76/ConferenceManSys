@@ -16,11 +16,25 @@ $(function () {
         $driverId = parseJwt(token).driverId;/*获取用户信息*/
         console.log($driverId);
     }
-
+    // $.alert({
+    //     title: '提示信息',
+    //     content: '请先登录！',
+    // });
     if (token == null || token == "null" || typeof ($driverId) == "undefined" || $driverId == undefined) {//未登录
         console.log("未登录");
-        localStorage.setItem("hcs", null);
-        alert("请先登录！");
+        localStorage.setItem("conNCU", null);
+        alert(2);
+        $.alert({
+            title: '提示信息',
+            content: '请先登录！',
+        });
+        window.location.href = "popupsignin.html";
+    }
+    else if (parseJwt(token).role !== "driver") {
+        $.alert({
+            title: '提示信息',
+            content: 'token错误',
+        });
         window.location.href = "popupsignin.html";
     }
     /**
@@ -53,8 +67,11 @@ $(function () {
     $(".login-out").click(function () {
         clearDriverInfo();
         //localStorage.clear();
-        localStorage.setItem("hcs", null);
-        alert("退出成功");
+        localStorage.setItem("conNCU", null);
+        $.alert({
+            title: '提示信息',
+            content: '退出成功',
+        });
         window.location.href = "popupsignin.html";
     })
 
@@ -85,11 +102,17 @@ function getDriverInfo($driverId) {
                 driver = data["data"]["getDriverInfo"];
                 console.log(driver);
             } else {
-                alert("获取用户数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取用户数据失败',
+                });
             }
         },
         error: function () {
-            alert("获取用户数据失败");
+            $.alert({
+                title: '提示信息',
+                content: '获取用户数据失败',
+            });
         },
     });
 }
@@ -123,11 +146,17 @@ function getAllFleet() {
                 allFleet = allFleet["getAllFleet"];
                 console.log(allFleet);
             } else {
-                alert("获取司机数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取司机数据失败',
+                });
             }
         },
         error: function () {
-            alert("获取司机数据失败");
+            $.alert({
+                title: '提示信息',
+                content: '获取司机数据失败',
+            });
         },
     });
 
@@ -351,7 +380,7 @@ function submitChange() {
         type: "POST",
         url: '/driver/updateDriver',
         contentType: "application/json",
-        headers: {'token': localStorage.getItem("hcs")},
+        headers: {'token': localStorage.getItem("conNCU")},
         data: JSON.stringify({
             "driverName": $("#driverName").val(),
             "carNumber": $("#carNumber").val(),
@@ -364,13 +393,18 @@ function submitChange() {
             console.log(result);
             if (jsonData['code'] === 200) {
                 console.log('成功');
-
-                alert("修改成功");
+                $.alert({
+                    title: '提示信息',
+                    content: '修改成功',
+                });
                 // showDriverInfo(driver);
                 // location.reload();
             } else {
                 console.log('失败');
-                alert("修改失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '修改失败',
+                });
                 // location.reload();
             }
         },
