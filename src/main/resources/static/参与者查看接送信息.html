@@ -9,6 +9,9 @@
     <!-- Common plugins -->
     <!--    <script src="js/jquery-3.1.1.min.js"></script>-->
     <script src="js/jquery.min.js"></script>
+    <script src="admin/deleteURL.js"></script>
+    <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+    <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
     <script type="text/javascript">
         let participant;
         let token = localStorage.getItem("conNCU");
@@ -19,7 +22,6 @@
             if (token == null || token === "null" || token === "undefined") {}
             else {
                 $participantId = parseJwt(token).participantId;/*获取用户信息*/
-                console.log($participantId);
                 getParticipantInfo($participantId);
 
                 $(".img-circle").attr("src", participant.participantPhoto);
@@ -38,9 +40,12 @@
                     showPickupInfo();
                     },
                 error: function () {
-                    alert("获取用户数据失败2");
-                    },
-                });
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取用户数据失败!',
+                    });
+                },
+            });
 
         })
         function showPickupInfo(){
@@ -116,7 +121,10 @@
                     driver = data['data']['getDriverInfoById'];
                 },
                 error: function () {
-                    alert("获取用户数据失败2");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取用户数据失败!',
+                    });
                 },
             });
         }
@@ -142,15 +150,20 @@
                     'participantId': $participantId,
                 },
                 success: function (data) {
-                    console.log(data);
                     if (data["code"] === 200) {
                         participant = data["data"]["getParticipantInfo"];
                     } else {
-                        alert("获取用户数据失败");
+                        $.alert({
+                            title: '提示信息',
+                            content: '获取用户数据失败!',
+                        });
                     }
                 },
                 error: function () {
-                    alert("获取用户数据失败");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取用户数据失败!',
+                    });
                 },
             });
         }

@@ -11,24 +11,28 @@ $(function () {
 
     //获取token
     token = localStorage.getItem("conNCU");
-    console.log(typeof (token));
-    console.log(token);
+    // console.log(typeof (token));
+    // console.log(token);
     if (token == null || token == "null") {
         console.log("no token");
     } else {
         $hotelId = parseJwt(token).hotelId;/*获取用户信息*/
         getHotelInfo($hotelId);
         $(".img-circle").attr("src",hotel.hotelPhoto);
-        console.log(parseJwt(token));
-        console.log($hotelId);
+        // console.log(parseJwt(token));
+        // console.log($hotelId);
     }
     //判断是否为未登录用户
 
     if (token == null || token == "null" || typeof ($hotelId) == "undefined" || $hotelId == undefined) {//未登录
         console.log("未登录");
         localStorage.setItem("conNCU", null);
-        alert("请先登录！");
-        window.location.href = "登录New.html";
+        // alert("请先登录");
+        $.alert({
+            title: '提示信息',
+            content: '请先登录',
+        });
+        window.location.href = "login.html";
     }
     if (localStorage.getItem("function") !== "null" && localStorage.getItem("function") !== null) {
         eval(localStorage.getItem("function"));
@@ -65,7 +69,11 @@ $(function () {
         clearHotelInfo();
         //localStorage.clear();
         localStorage.setItem("conNCU", null);
-        alert("退出成功");
+        // alert("退出成功");
+        $.alert({
+            title: '提示信息',
+            content: '退出成功',
+        });
         window.location.href = "login.html";
     })
 
@@ -84,26 +92,30 @@ function headPhotoUpload() {
         success:function(result) {
 
             if (result.message == "成功") {
-                alert("更新头像成功!");
+                //alert("更新头像成功!");
+                $.alert({
+                    title: '提示信息',
+                    content: '更新头像成功!',
+                });
                 location.reload();
                 // $.alert({
                 //     title: '提示信息',
                 //     content: '更新头像成功!',
                 // });
             } else {
-                alert("更新头像失败!");
-                // $.alert({
-                //     title: '提示信息',
-                //     content: '更新头像失败!',
-                // });
+                //alert("更新头像失败!");
+                $.alert({
+                    title: '提示信息',
+                    content: '更新头像失败!',
+                });
             }
         },
         error:function() {
-            alert("更新异常!");
-            // $.alert({
-            //     title: '提示信息',
-            //     content: '更新异常!',
-            // });
+            //alert("更新异常!");
+            $.alert({
+                title: '提示信息',
+                content: '更新异常!',
+            });
         }
     });
 }
@@ -135,13 +147,20 @@ function  findAllLiveRoomByHotelId(){
             //console.log(data);
             if (data["code"] === 200) {
                 liveRoom = data["data"]["findAllLiveRoomByHotelId"];
-                console.log(liveRoom);
+               // console.log(liveRoom);
             } else {
-                alert("获取用户数据失败");
+               // alert("获取用户数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取用户数据失败!',
+                });
             }
         },
         error: function () {
-            alert("获取用户数据失败!");
+            $.alert({
+                title: '提示信息',
+                content: '获取用户数据失败!',
+            });
         },
     });
 }
@@ -222,7 +241,7 @@ function doLiveRoom(){
         "                            <tbody>\n"
     for (let i in liveRoom) {
         if (liveRoom[i].roomId==null){
-            console.log(i);
+           // console.log(i);
             $participantId=liveRoom[i].participantId;
             queryParticipantByParticipantId($participantId);
             $html +=
@@ -251,7 +270,7 @@ function doLiveRoom(){
 function updateLiveRoom(liveTable,i){
     getBothId(liveTable);
     var roomId = $("#roomId"+i).val();
-    console.log(roomId);
+   // console.log(roomId);
     //检验输入房间是否存在
     $.ajax({
         async: false,
@@ -269,13 +288,19 @@ function updateLiveRoom(liveTable,i){
             //console.log(data);
             if (data["code"] === 200) {
                 Room = data["data"]["getRoomByRoomId"];
-                console.log(Room);
+                //console.log(Room);
             } else {
-                alert("获取用户数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取用户数据失败!',
+                });
             }
         },
         error: function () {
-            alert("获取用户数据失败!");
+            $.alert({
+                title: '提示信息',
+                content: '获取用户数据失败!',
+            });
         },
     });
     //房间存在且没有安排
@@ -293,8 +318,8 @@ function updateLiveRoom(liveTable,i){
                 "roomId": roomId
             }),
             success: function (jsonData, result) {
-                console.log(jsonData);
-                console.log(result);
+                // console.log(jsonData);
+                // console.log(result);
                 if (jsonData['code'] === 200) {
                     //alert("设置成功");
                     //将房间设置为已经安排
@@ -310,21 +335,29 @@ function updateLiveRoom(liveTable,i){
                             "isLive": 1
                         }),
                         success: function (jsonData, result) {
-                            console.log(jsonData);
-                            console.log(result);
+                            // console.log(jsonData);
+                            // console.log(result);
                             if (jsonData['code'] === 200) {
-                                alert("设置成功");
+                                //alert("设置成功");
+                                $.alert({
+                                    title: '提示信息',
+                                    content: '设置成功！',
+                                });
 
                             } else {
-                                alert("设置失败");
-                                //location.reload();
+                                $.alert({
+                                    title: '提示信息',
+                                    content: '设置失败！',
+                                });
                             }
                         },
                     });
                     //location.reload();
                 } else {
-                    alert("设置失败");
-                    //location.reload();
+                    $.alert({
+                        title: '提示信息',
+                        content: '设置失败！',
+                    });
                 }
             },
         });
@@ -332,10 +365,18 @@ function updateLiveRoom(liveTable,i){
         doLiveRoom();
     }
     else if (Room!=null&&Room.isLive==1){
-        alert("房间已经安排，请检查！");
+        $.alert({
+            title: '提示信息',
+            content: '房间已经安排，请检查！',
+        });
+       // alert("房间已经安排，请检查！");
     }
     else {
-        alert("输入房间号不存在！");
+        $.alert({
+            title: '提示信息',
+            content: '输入房间号不存在！',
+        });
+        //alert("输入房间号不存在！");
     }
 }
 
@@ -352,17 +393,23 @@ function getHotelInfo($hotelId) {
             'hotelId': $hotelId,
         },
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             if (data["code"] === 200) {
                 hotel = data["data"]["getHotelInfo"];
-                console.log(hotel);
+               // console.log(hotel);
                 $("#head_photo").attr("src",hotel.hotelPhoto);
             } else {
-                alert("获取信息失败！");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取信息失败！',
+                });
             }
         },
         error: function () {
-            alert("获取信息失败！");
+            $.alert({
+                title: '提示信息',
+                content: '获取信息失败！',
+            });
         },
     });
 }
@@ -550,7 +597,10 @@ function validForm() {
 function submitChange() {
     //console.log("修改中...");
     if (!validForm().form()) {
-        alert("信息有误")
+        $.alert({
+            title: '提示信息',
+            content: '信息有误！',
+        });
         return;
     }
         $.ajax({
@@ -567,22 +617,23 @@ function submitChange() {
                 "hotelInfo": $("#hotelInfo").val(),
             }),
             success: function (jsonData, result) {
-                console.log(jsonData);
-                console.log(result);
+                //console.log(jsonData);
+                //console.log(result);
                 if (jsonData['code'] === 200) {
-                    alert("修改成功");
-                    // localStorage.setItem("function", "showHotelInfo()");
-                    // location.reload();
+                    $.alert({
+                        title: '提示信息',
+                        content: '修改成功！',
+                    });
+
                 } else {
-                    alert("修改失败");
-                    //location.reload();
+                    $.alert({
+                        title: '提示信息',
+                        content: '修改失败！',
+                    });
                 }
             },
         });
-    // for (let i = 0; i < 500000000; i++) {
-    //
-    // }
-    //     showHotelInfo();
+
 }
 /*base 64 加密字符串*/
 function encodeStr(str) {

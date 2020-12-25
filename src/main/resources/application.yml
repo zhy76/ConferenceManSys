@@ -1,10 +1,14 @@
 spring:
   datasource:
+#    username: ENC(JEHU5Ig4n4DWwh2FzdRZ8A==)
+#    password: ENC(JEHU5Ig4n4DWwh2FzdRZ8A==)
+#    url: jdbc:mysql://localhost:3306/conference?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     username: admin
     password: admin
+    url: jdbc:mysql://47.96.234.116:3306/conference?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
     #?serverTimezone=UTC解决时区的报错
     #要设置亚洲时间serverTimezone=Asia/Shanghai
-    url: jdbc:mysql://47.96.234.116:3306/conference?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8
+
     driver-class-name: com.mysql.cj.jdbc.Driver
     #更改上传文件大小限制
   servlet:
@@ -12,11 +16,19 @@ spring:
       max-file-size: 100MB # 单个文件大小
       max-request-size: 100MB # 设置总上传的数据大小
       enabled: true #开启
-  #
-  mvc:
-    hiddenmethod:
-      filter:
-        enabled: true
+
+
+#
+jasypt:
+  encryptor:
+    password: conference
+#    hiddenmethod:
+#      filter:
+#        enabled: true
+#    static-path-pattern: /image/**
+#  resources:
+#    static-locations: file:/D:/conference/headphoto
+#    static-locations: file:/usr/loacl/conference/headphoto
 
 #整合mybatis
 mybatis:
@@ -25,6 +37,19 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
+#server:
+#  tomcat:
+#    basedir: img
+# img
+#resourcePath: D:\conference\
+#resourcePath: D:\EdgeDownload\CTF_down\1\glz\ConferenceManSys\target\img
+#absoluteImgPath: D:\bbsImage\
+#sonImgPath: \images\
+#resourcePath: D:\EdgeDownload\CTF_down\1\glz\ConferenceManSys\target\classes\static\headphoto
+#  resourcePath: /usr/local/img
 
+#absoluteImgPath: D://headphoto/
+#sonImgPath: /headphoto/
 
-
+absoluteImgPath: /usr/local/headphoto/
+sonImgPath: /headphoto/

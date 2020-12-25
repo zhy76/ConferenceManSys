@@ -8,6 +8,25 @@
     <title>组织者查看会议</title>
     <!-- Common plugins -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/simple-line-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/pace.css" rel="stylesheet">
+    <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/nanoscroller.css">
+    <link rel="stylesheet" href="css/metismenu.min.css">
+    <link href="css/c3.min.css" rel="stylesheet">
+    <link href="css/blue.css" rel="stylesheet">
+    <!-- dataTables -->
+    <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+
+
     <link href="会务管理系统样式1/css/bootstrap.min.css" rel="stylesheet">
     <link href="会务管理系统样式1/css/simple-line-icons.css" rel="stylesheet">
     <link href="会务管理系统样式1/css/font-awesome.min.css" rel="stylesheet">
@@ -45,11 +64,52 @@
     <link href="css/jquery.toast.min.css" rel="stylesheet">
     <!--template css-->
     <link href="css/style.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+    HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+    WARNING: Respond.js doesn't work if you view the page via file://
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+<!--    <link href="会务管理系统样式1/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link href="会务管理系统样式1/css/simple-line-icons.css" rel="stylesheet">-->
+<!--    <link href="会务管理系统样式1/css/font-awesome.min.css" rel="stylesheet">-->
+<!--    <link href="会务管理系统样式1/css/pace.css" rel="stylesheet">-->
+<!--    <link href="会务管理系统样式1/css/jasny-bootstrap.min.css" rel="stylesheet">-->
+<!--    <link rel="会务管理系统样式1/stylesheet" href="css/nanoscroller.css">-->
+<!--    <link rel="会务管理系统样式1/stylesheet" href="css/metismenu.min.css">-->
+<!--    <link href="会务管理系统样式1/css/c3.min.css" rel="stylesheet">-->
+<!--    <link href="会务管理系统样式1/css/blue.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; dataTables &ndash;&gt;-->
+<!--    <link href="会务管理系统样式1/css/jquery.datatables.min.css" rel="stylesheet" type="text/css">-->
+<!--    <link href="会务管理系统样式1/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">-->
+<!--    <link href="会务管理系统样式1/css/jquery.toast.min.css" rel="stylesheet">-->
+<!--    &lt;!&ndash;template css&ndash;&gt;-->
+<!--    <link href="会务管理系统样式1/css/style.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries &ndash;&gt;-->
+<!--    &lt;!&ndash; WARNING: Respond.js doesn't work if you view the page via file:// &ndash;&gt;-->
+
+<!--    <script src="会务管理系统样式1/js/html5shiv.min.js"></script>-->
+<!--    <script src="会务管理系统样式1/js/respond.min.js"></script>-->
+
+<!--    <link rel="stylesheet" href="会务管理系统样式1/fonts/iconfont.css">-->
+<!--    <link href="assets/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link href="assets/css/simple-line-icons.css" rel="stylesheet">-->
+<!--    <link href="assets/css/font-awesome.min.css" rel="stylesheet">-->
+<!--    <link href="assets/css/pace.css" rel="stylesheet">-->
+<!--    <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="assets/css/nanoscroller.css">-->
+<!--    <link rel="stylesheet" href="assets/css/metismenu.min.css">-->
+<!--    <link href="assets/css/c3.min.css" rel="stylesheet">-->
+<!--    <link href="assets/css/blue.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; dataTables &ndash;&gt;-->
+<!--    <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">-->
+<!--    <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">-->
+<!--    <link href="css/jquery.toast.min.css" rel="stylesheet">-->
+<!--    &lt;!&ndash;template css&ndash;&gt;-->
+<!--    <link href="css/style.css" rel="stylesheet">-->
+<!--    &lt;!&ndash; HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries &ndash;&gt;-->
+<!--    &lt;!&ndash; WARNING: Respond.js doesn't work if you view the page via file:// &ndash;&gt;-->
+<!--    &lt;!&ndash;[if lt IE 9]>-->
+<!--    <script src="js/html5shiv.min.js"></script>-->
+<!--    <script src="js/respond.min.js"></script>-->
     <style type="text/css">
         *{
             margin: 0px;
@@ -166,7 +226,7 @@
 
         function submitUpdateOrganizer(){
             var form = new FormData(document.getElementById("updateOrganizerForm"));//把表单的对象作为一个参数
-            console.dir(form);
+            // console.dir(form);
             $.ajax({
                 async: false,
                 type:"post",
@@ -236,22 +296,71 @@
                         var conferenceLocation = conferences[i].conferenceLocation;
                         var conferenceStart = conferences[i].conferenceStart;
                         var conferenceEnd = conferences[i].conferenceEnd;
-
+                        var conferenceId = conferences[i].conferenceId;
                         var organizerId = conferences[i].organizerId;
+                        var conferenceInfo = conferences[i].conferenceInfo;
                         getOrganizerInfo(organizerId);
 
                         var organizerUnit = organizer.organizerUnit;
                         listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
-                            '                        <a href = "#">' +
+                            '                        <a href = "javascript:void(0);">' +
                             '                            <div class="items">' +
-                            '                                <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
+                            '                                <img class="img-responsive" src="picture/conference-img/conference' + ((i) % 10 + 1).toString() + '-img.jpg" />' +
                             '                                <h4>'+ conferenceName +'</h4>' +
                             '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
                             '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
                             '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
+                                "<br>"+
+                            '                                <button id="info" type="button" class="btn btn-success" data-toggle="modal" data-target="#lingchen'+conferenceId+'" style = "margin-left:85px;">会议详情</input>' +
                             '                            </div>' +
                             '                        </a>' +
-                            '                    </div>'
+                            '                    </div>'+
+                            '<div class="modal fade" id="lingchen'+conferenceId+'">' +
+                        '                <div class="modal-dialog modal-lg modal_position">' +
+                        '                    <div class="modal-content">' +
+                        '                        <div class="modal-header">' +
+                        '                            <h4 class="modal-title" id="">会议详情</h4>' +
+                        '                            <button type="button" class="close" data-dismiss="modal">&times;</button>' +
+                        '                        </div>\n' +
+                        '                        <!-- 模态弹窗部分开始 -->' +
+                        '                        <div class="modal-body">' +
+                        '                            <table id="xztb" class="table">' +
+                        '                                <!--新修改弹窗的样式-->' +
+                        '                                <tbody>' +
+                        '                                <tr>' +
+                        '                                    <td class="tb_bg"><label for="">会议名称</label></td>' +
+                        '                                    <td><input type="text" name="conferenceName" id="conferenceName'+i+'" readonly unselectable="on"  value="'+ conferenceName +'"></td>' +
+                        '                                </tr>' +
+                        '                                <tr>' +
+                        '                                    <td class="tb_bg"><label for="">会议开始时间</label></td>' +
+                        '                                    <td><input type="text" name="conferenceStart" id="conferenceStart'+i+'" readonly unselectable="on" value="'+ conferenceStart +'"></td>' +
+                        '                                </tr>' +
+                        '                                <tr>'+
+                        '                                      <td class="tb_bg"><label for="">会议结束时间</label></td>'+
+                        '                                      <td><input type="text" name="conferenceEnd" id="conferenceEnd'+i+'" readonly unselectable="on" value="'+ conferenceEnd +'"></td>'+
+                        '                                </tr>'+
+                        '                                <tr>' +
+                        '                                    <td class="tb_bg"><label for="">会议地点</label></td>' +
+                        '                                    <td><input type="text" name="conferenceLocation" id="conferenceLocation'+i+'" readonly unselectable="on" value="'+ conferenceLocation +'"></td>' +
+                        '                                </tr>' +
+                        '                                <tr>' +
+                        '                                    <td class="tb_bg"><label for="">会议相关信息</label></td>' +
+                        '                                    <td><input type="text" name="conferenceInfo" id="conferenceInfo'+i+'" readonly unselectable="on" value="'+ conferenceInfo +'"></td>' +
+                        '                                </tr>' +
+                        '                                <tr>' +
+                        '                                    <td class="tb_bg"><label for="">会议主办单位</label></td>' +
+                        '                                    <td><input type="text" name="organizerUnit" id="organizerUnit'+i+'" readonly unselectable="on" value="'+ organizerUnit +'"></td>' +
+                        '                                </tr>' +
+                        '                                </tbody>' +
+                        '                            </table>' +
+                        '                        </div>' +
+                        '                        <div class="modal-footer">' +
+                        '                            <button type="button" class="btn btn-success" data-dismiss="modal">确定</button>' +
+                        '                        </div>' +
+                        '                        <!--模态弹窗部分结束 -->' +
+                        '                    </div>' +
+                        '                </div>' +
+                        '            </div>'
                     }
                     $('#mainContent').html(listConference);
 
@@ -391,23 +500,23 @@
 
 
 <!--Common plugins-->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/pace.min.js"></script>
-<script src="js/jasny-bootstrap.min.js"></script>
-<script src="js/jquery.slimscroll.min.js"></script>
-<script src="js/jquery.nanoscroller.min.js"></script>
-<script src="js/metismenu.min.js"></script>
-<script src="js/float-custom.js"></script>
-<!--page script-->
-<script src="js/d3.min.js"></script>
-<script src="js/c3.min.js"></script>
-<!-- iCheck for radio and checkboxes -->
-<script src="js/icheck.min.js"></script>
-<!-- Datatables-->
-<script src="js/jquery.datatables.min.js"></script>
-<script src="js/datatables.responsive.min.js"></script>
-<script src="js/jquery.toast.min.js"></script>
-<script src="js/dashboard-alpha.js"></script>
+<!--<script src="js/jquery.min.js"></script>-->
+<!--<script src="js/bootstrap.min.js"></script>-->
+<!--<script src="js/pace.min.js"></script>-->
+<!--<script src="js/jasny-bootstrap.min.js"></script>-->
+<!--<script src="js/jquery.slimscroll.min.js"></script>-->
+<!--<script src="js/jquery.nanoscroller.min.js"></script>-->
+<!--<script src="js/metismenu.min.js"></script>-->
+<!--<script src="js/float-custom.js"></script>-->
+<!--&lt;!&ndash;page script&ndash;&gt;-->
+<!--<script src="js/d3.min.js"></script>-->
+<!--<script src="js/c3.min.js"></script>-->
+<!--&lt;!&ndash; iCheck for radio and checkboxes &ndash;&gt;-->
+<!--<script src="js/icheck.min.js"></script>-->
+<!--&lt;!&ndash; Datatables&ndash;&gt;-->
+<!--<script src="js/jquery.datatables.min.js"></script>-->
+<!--<script src="js/datatables.responsive.min.js"></script>-->
+<!--<script src="js/jquery.toast.min.js"></script>-->
+<!--<script src="js/dashboard-alpha.js"></script>-->
 </body>
 </html>

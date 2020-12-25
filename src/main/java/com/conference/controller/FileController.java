@@ -8,11 +8,13 @@ import com.conference.service.FileUploadService;
 import com.conference.util.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.*;
 import java.util.UUID;
 
@@ -25,13 +27,21 @@ public class FileController {
 
     @Autowired
     private FileUploadService  fileUploadService ;
+    @Value("${absoluteImgPath}" + "${sonImgPath}")
+    String path;
 
     @PostMapping("/headPhotoUpload")
     public Result headPhotoUpload(@RequestParam("role") String role ,@RequestParam("roleId") Integer roleId, @RequestParam("file") MultipartFile file, HttpServletRequest request) throws FileNotFoundException {
         System.out.println(role);
         System.out.println(roleId);
-        String path = ResourceUtils.getURL("classpath:").getPath() + "static/headphoto";
-        String realPath = path.replace('/', '\\').substring(1,path.length());
+
+//        String path = ResourceUtils.getURL("classpath:").getPath() + "static/headphoto";
+        System.out.println(path);
+        String realPath = path;
+//        String realPath = path.replace('/', '\\').substring(0,path.length());
+//        String path = ResourceUtils.getURL("classpath:").getPath() + "static/headphoto";
+        System.out.println(path);
+//        String realPath = path.replace('/', '\\').substring(1,path.length());
         //用于查看路径是否正确
         System.out.println(realPath);
 
@@ -46,7 +56,7 @@ public class FileController {
             File newFile = new File(realPath,fileName);
             System.out.println(newFile);
             file.transferTo(newFile);
-            String url="headphoto/"+fileName;
+            String url="headphoto/headphoto/"+fileName;
             fileUploadService.headPhotoUpload(role,roleId,url);
             return Result.success("成功");
         } catch (Exception e) {

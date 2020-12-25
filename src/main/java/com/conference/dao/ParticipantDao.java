@@ -1,6 +1,5 @@
 package com.conference.dao;
 
-import com.conference.entity.Organizer;
 import com.conference.entity.Participant;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

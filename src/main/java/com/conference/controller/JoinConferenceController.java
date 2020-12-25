@@ -1,5 +1,6 @@
 package com.conference.controller;
 
+import com.conference.dao.LiveRoomDao;
 import com.conference.entity.Conference;
 import com.conference.entity.JoinConference;
 import com.conference.service.ConferenceService;
@@ -9,7 +10,6 @@ import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,9 @@ public class JoinConferenceController {
 
     @Autowired
     private ConferenceService conferenceService;
+
+    @Autowired
+    private LiveRoomDao liveRoomDao;
 
 
     //参加者加入一个会议
@@ -123,8 +126,18 @@ public class JoinConferenceController {
 //    }
 
     @GetMapping("/cancelAConference")
-    public Result cancelAJoinedConferenceById(@RequestParam Integer participantId,@RequestParam Integer conferenceId){
+    public Result cancelAJoinedConferenceById(@RequestParam Integer participantId, @RequestParam Integer conferenceId){
         int cancelNumber = joinConferenceService.cancelAJoinedConferenceById(participantId,conferenceId);
+        if (cancelNumber > 0) {
+            return Result.success("cancelAConference","取消成功");
+        } else {
+            return new Result(ResultCode.FAIL);
+        }
+    }
+    @GetMapping("/cancelAConferenceByOrganizer")
+    public Result cancelAJoinedConferenceByOrganizer(@RequestParam Integer participantId, @RequestParam Integer conferenceId){
+        int cancelNumber = joinConferenceService.cancelAJoinedConferenceById(participantId,conferenceId);
+        liveRoomDao.deleteLiveRoom(participantId,conferenceId);
         if (cancelNumber > 0) {
             return Result.success("cancelAConference","取消成功");
         } else {

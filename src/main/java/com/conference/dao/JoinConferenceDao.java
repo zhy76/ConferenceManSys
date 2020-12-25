@@ -1,7 +1,6 @@
 package com.conference.dao;
 
 import com.conference.entity.JoinConference;
-import com.conference.entity.Participant;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -25,9 +24,9 @@ public interface JoinConferenceDao {
 
     public int joinAConference(JoinConference joinConference);
 
-    public int cancelAJoinedConferenceById(Integer participantId,Integer conferenceId);
-    public int confirmAJoinedConferenceById(Integer participantId,Integer conferenceId);
-    public int addAJoinedConferenceToRoom(Integer participantId,Integer hotelId,Integer conferenceId);
+    public int cancelAJoinedConferenceById(Integer participantId, Integer conferenceId);
+    public int confirmAJoinedConferenceById(Integer participantId, Integer conferenceId);
+    public int addAJoinedConferenceToRoom(Integer participantId, Integer hotelId, Integer conferenceId);
     public List<JoinConference> queryConferenceByParticipantId(Integer participantId);
 
     public List<JoinConference> queryUnConfirmConferenceByParticipantId(Integer participantId);

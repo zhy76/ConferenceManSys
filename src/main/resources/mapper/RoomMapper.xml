@@ -26,6 +26,6 @@
     </delete>
 <!--  更新房间-->
     <update id="updateRoom">
-        UPDATE room SET  is_live=#{isLive} WHERE hotel_id=#{hotelId} AND room_id=#{roomId};
+        UPDATE room SET  is_live=#{isLive} WHERE hotel_id=#{hotelId} AND room_id=#{roomId}
     </update>
 </mapper>

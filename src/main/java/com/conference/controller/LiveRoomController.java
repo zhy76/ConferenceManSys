@@ -1,10 +1,6 @@
 package com.conference.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.conference.entity.Driver;
-import com.conference.entity.Hotel;
 import com.conference.entity.LiveRoom;
-import com.conference.entity.PickUp;
 import com.conference.service.HotelService;
 import com.conference.service.LiveRoomService;
 import com.conference.service.TokenService;
@@ -92,7 +88,7 @@ public class LiveRoomController {
     //精确删除
     @GetMapping("/deleteLiveRoomByAll")
     public Result deleteLiveRoomByAll(@RequestParam("participantId") Integer participantId,
-                                 @RequestParam("conferenceId") Integer conferenceId,
+                                      @RequestParam("conferenceId") Integer conferenceId,
                                       @RequestParam("hotelId") Integer hotelId) {
         int deleteLiveRoomByAll = liveRoomService.deleteLiveRoomByAll(participantId,conferenceId,hotelId);
         if (participantId == null||conferenceId == null||hotelId == null)

@@ -7,33 +7,22 @@ package com.conference.controller;
  * @stuid 6109118041
  */
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.conference.entity.Conference;
 import com.conference.entity.Fleet;
 import com.conference.entity.Hotel;
-import com.conference.entity.Organizer;
-import com.conference.entity.Driver;
 import com.conference.entity.Organizer;
 import com.conference.service.ConferenceService;
 import com.conference.service.FleetService;
 import com.conference.service.HotelService;
 import com.conference.service.OrganizerService;
 import com.conference.util.result.Result;
-import com.conference.util.vaild.DriverRegister;
 import com.conference.util.vaild.OrganizerRegister;
-import com.conference.util.vaild.OrganizerRegister;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.Normalizer;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +47,9 @@ public class ConferenceController {
         return Result.success("conferencesList",conferencesList);
     }
 
+
+
+
 //    /**
 //     * 通过车队id查会议
 //     */
@@ -73,7 +65,7 @@ public class ConferenceController {
      */
     //管理员展示所有会议
     @PostMapping("/showConferencesByAdmin")
-    public Result showConferencesByAdmin(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
+    public Result showConferencesByAdmin(@RequestParam("pageNum") Integer pageNum, @RequestParam("pageSize") Integer pageSize){
 //        PageHelper.startPage(pageNum,pageSize); //第1页个数为10
 //        List<Conference> conferencesList = conferenceService.queryConferences();
 //        System.out.println(conferencesList.size());
@@ -111,12 +103,40 @@ public class ConferenceController {
 //    @PostMapping("/updateConferenceByAdmin/{conferenceId}/{organizerId}/{hotelId}/{fleetId}")
 //    public Result updateConferenceByAdmin(@PathVariable Integer conferenceId,@PathVariable Integer organizerId,@PathVariable Integer hotelId,@PathVariable Integer fleetId){}
 
-    @GetMapping("/showConferenceById")
-    public Result showConference(@RequestParam Integer conferenceId){
+    @PostMapping("/updateConferenceByAdmin/{conferenceId}/{organizerId}/{hotelId}/{fleetId}")
+    public Result updateConferenceByAdmin(@PathVariable Integer conferenceId, @PathVariable Integer organizerId, @PathVariable Integer hotelId, @PathVariable Integer fleetId){
         Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
         System.out.println(conference);
-        return Result.success("conference",conference);
+        Organizer organizer = organizerService.findOrganizerById(organizerId);
+        Fleet fleet = fleetService.findFleetById(fleetId);
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("conference",conference);
+        map.put("organizer",organizer);
+        map.put("fleet",fleet);
+        map.put("hotel",hotel);
+        return Result.success(map);
     }
+
+    @PostMapping("/submitUpdateConferenceByAdmin")
+    public Result submitUpdateConferenceByAdmin(@RequestParam Map<String,Object> map){
+        Integer conferenceId = Integer.parseInt(map.get("conferenceId").toString()) ;
+        String conferenceName = (String) map.get("conferenceName");
+        Integer organizerId = Integer.parseInt(map.get("conferenceOrganizerUnitId").toString());
+        String organizerUnit = (String) map.get("conferenceOrganizerUnit");
+        String conferenceStart = (String) map.get("conferenceStart");
+        String conferenceEnd = (String) map.get("conferenceEnd");
+        String conferenceLocation = (String) map.get("conferenceLocation");
+        Integer hotelId = Integer.parseInt(map.get("hotelId").toString());
+        String hotelName = (String) map.get("hotelName");
+        Integer fleetId = Integer.parseInt(map.get("fleetId").toString());
+        String fleetName = (String) map.get("fleetName");
+        String conferenceInfo = (String) map.get("conferenceInfo");
+        conferenceService.updateConference(new Conference(conferenceId,organizerId,fleetId,hotelId,conferenceName,
+                conferenceStart,conferenceEnd,conferenceLocation,conferenceInfo));
+        return Result.success();
+    }
+
 
 //    /**
 //     * 修改对应会议信息
@@ -184,25 +204,25 @@ public class ConferenceController {
 //        return Result.success(map);
 //    }
 
-    @PostMapping("/submitUpdateConferenceByAdmin")
-    public Result submitUpdateConferenceByAdmin(@RequestParam Map<String,Object> map){
-        Integer conferenceId = Integer.parseInt(map.get("conferenceId").toString()) ;
-        String conferenceName = (String) map.get("conferenceName");
-        Integer organizerId = Integer.parseInt(map.get("conferenceOrganizerUnitId").toString());
-        String organizerUnit = (String) map.get("conferenceOrganizerUnit");
-        String conferenceStart = (String) map.get("conferenceStart");
-        String conferenceEnd = (String) map.get("conferenceEnd");
-        String conferenceLocation = (String) map.get("conferenceLocation");
-        Integer hotelId = Integer.parseInt(map.get("hotelId").toString());
-        String hotelName = (String) map.get("hotelName");
-        Integer fleetId = Integer.parseInt(map.get("fleetId").toString());
-        String fleetName = (String) map.get("fleetName");
-        String conferenceInfo = (String) map.get("conferenceInfo");
-        conferenceService.updateConference(new Conference(conferenceId,organizerId,fleetId,hotelId,conferenceName,
-                conferenceStart,conferenceEnd,conferenceLocation,conferenceInfo));
-        return Result.success();
+
+    @GetMapping("/showConferenceById")
+    public Result showConferenceById(@RequestParam Integer conferenceId){
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        System.out.println(conference);
+        return Result.success("conference",conference);
     }
 
+    /**
+     * 查询指定id会议
+     * @param conferenceId
+     * @return
+     */
+    @RequestMapping("/showConference/{conferenceId}")
+    @ResponseBody
+    public Conference showConference(@PathVariable Integer conferenceId){
+        Conference conference = conferenceService.queryConferenceByConferenceId(conferenceId);
+        return conference;
+    }
 
 
     @GetMapping("/queryConferenceByOrganizerId")

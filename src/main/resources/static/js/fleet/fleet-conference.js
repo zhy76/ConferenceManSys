@@ -36,6 +36,7 @@ function fleetConference() {
             var conferences = data['data']['conference'];
             // console.log(conferences);
             // console.log(conferences);
+            let con = 0;
             for (var i = 0; i < conferences.length; i++) {
                 // console.log(conferences[i]);
                 var conferenceName = conferences[i].conferenceName;
@@ -47,7 +48,7 @@ function fleetConference() {
                 var organizerId = conferences[i].organizerId;
                 // alert(organizerId);
                 // alert(typeof organizerId);
-
+                con = (con + 1) % 10 + 1 ;
                 getOrganizerInfo(organizerId);
                 getNeedPickUpParticipant(conferenceId);
 
@@ -56,7 +57,7 @@ function fleetConference() {
                 listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
                     '                        <a href = "#">' +
                     '                            <div class="items">' +
-                    '                                <img class="img-responsive" src="picture/conferenceImg.jpeg" />' +
+                    '                                <img class="img-responsive" src="picture/conference-img/conference' + con + "-img.jpg" +  '"/>' +
                     '                                <h4>' + conferenceName + '</h4>' +
                     '                                <p> <span class="iconfont icon-dizhi"></span> ' + conferenceLocation + '</p>' +
                     '                                <p> <span class="iconfont icon-shijian"></span>' + conferenceStart + '-' + conferenceEnd + '</p>' +

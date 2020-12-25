@@ -18,8 +18,8 @@ function addConference(){
                 "hotelId":$("#chooseHotelId").val()
             }),
             success: function (jsonData, result) {
-                console.log(jsonData);
-                console.log(result);
+                // console.log(jsonData);
+                // console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("生成会议成功");
                     location.reload();
@@ -46,13 +46,13 @@ function getAllFleet() {
         type: "get",
         dataType: "json",
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             if (data["code"] === 200) {
                 // alert("获取车队数据成功");
                 allFleet = data["data"];
-                console.log(allFleet);
+                // console.log(allFleet);
                 allFleet = allFleet["getAllFleet"];
-                console.log(allFleet);
+                // console.log(allFleet);
             } else {
                 alert("获取车队数据失败");
             }
@@ -74,11 +74,11 @@ function getAllHotel() {
         type: "get",
         dataType: "json",
         success: function (data) {
-            console.log(data);
+            // console.log(data);
             if (data["code"] === 200) {
                 allHotel = data["data"];
                 allHotel = allHotel["getAllHotel"];
-                console.log(allHotel);
+                // console.log(allHotel);
             } else {
                 alert("获取酒店数据失败");
             }

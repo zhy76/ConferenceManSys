@@ -10,18 +10,18 @@
 
     <!--    id对应方法名 resultType结果集类型-->
     <select id = "queryConferences" resultType="Conference">
-       select * from conference;
+       select * from conference
     </select>
 
     <update id = "updateConference" parameterType="Conference">
         update conference set organizer_id=#{organizerId},fleet_id=#{fleetId},hotel_id=#{hotelId},
         conference_name=#{conferenceName},conference_start=#{conferenceStart},
         conference_end=#{conferenceEnd},conference_location=#{conferenceLocation},
-        conference_info=#{conferenceInfo} where conference_id=#{conferenceId};
+        conference_info=#{conferenceInfo} where conference_id=#{conferenceId}
     </update>
 
     <delete id = "deleteConference">
-        delete from conference where conference_id = #{conferenceId};
+        delete from conference where conference_id = #{conferenceId}
     </delete>
 
     <insert id="addConference">
@@ -38,11 +38,11 @@
     </select>
 
     <select id="queryConferenceByOrganizerId" resultType="Conference">
-        select * from conference where organizer_id=#{organizerId};
+        select * from conference where organizer_id=#{organizerId}
     </select>
 
 
     <select id="queryConferenceByFleetId" resultType="Conference">
-        select * from conference where fleet_id = #{fleetId};
+        select * from conference where fleet_id = #{fleetId}
     </select>
 </mapper>

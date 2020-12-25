@@ -10,6 +10,9 @@
     <!--    <script src="js/jquery-3.1.1.min.js"></script>-->
     <script src="js/jquery.min.js"></script>
     <!--    <script src="js/participant/participant-index.js"></script>-->
+    <script src="admin/deleteURL.js"></script>
+    <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+    <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
     <script type="text/javascript">
         let participant;
         let token = localStorage.getItem("conNCU");
@@ -37,7 +40,10 @@
                     showPutupInfo();
                 },
                 error: function () {
-                    alert("获取用户数据失败");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取用户数据失败!',
+                    });
                 },
             });
 
@@ -116,7 +122,10 @@
                     hotel = data['data']['getHotelById'];
                 },
                 error: function () {
-                    alert("获取用户数据失败2");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取用户数据失败!',
+                    });
                 },
             });
         }
@@ -145,11 +154,17 @@
                     if (data["code"] === 200) {
                         participant = data["data"]["getParticipantInfo"];
                     } else {
-                        alert("获取用户数据失败");
+                        $.alert({
+                            title: '提示信息',
+                            content: '获取用户数据失败!',
+                        });
                     }
                 },
                 error: function () {
-                    alert("获取用户数据失败");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取用户数据失败!',
+                    });
                 },
             });
         }
@@ -298,7 +313,7 @@
 
 
 <!--Common plugins-->
-<script src="js/jquery.min.js"></script>
+<!--<script src="js/jquery.min.js"></script>-->
 <script src="js/bootstrap.min.js"></script>
 <script src="js/pace.min.js"></script>
 <script src="js/jasny-bootstrap.min.js"></script>

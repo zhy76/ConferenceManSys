@@ -29,7 +29,7 @@ $(function () {
         console.log("未登录");
         localStorage.setItem("conNCU", null);
         alert("请先登录！");
-        window.location.href = "popupsignin.html";
+        window.location.href = "login.html";
     }
 
     if (localStorage.getItem("function") !== "null" && localStorage.getItem("function") !== null) {

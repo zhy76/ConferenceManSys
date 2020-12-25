@@ -50,7 +50,7 @@
         // 修改参加者
         function updateParticipant(participantId){
             $.ajax({
-                type:"post",
+                type:"get",
                 url: "/participant/queryParticipantByParticipantId?participantId=" + participantId,
                 data: "",
                 dataType:"json",
@@ -101,8 +101,8 @@
                             processData:false,
                             contentType:false,
                             success:function (result) {
-                                console.dir(result);
-                                console.dir(result["message"]);
+                                // console.dir(result);
+                                // console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
                                     $.alert({
@@ -265,8 +265,8 @@
                             processData:false,
                             contentType:false,
                             success:function (result) {
-                                console.dir(result);
-                                console.dir(result["message"]);
+                                // console.dir(result);
+                                // console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
                                     $.alert({
@@ -306,7 +306,7 @@
                 contentType:false,
                 success:function (result) {
                     //获取到指定组织者信息
-                    console.dir(result);
+                    // console.dir(result);
                     $("#organizerId").val(result["data"]["queryOrganizerByOrganizerId"].organizerId);
                     $("#organizerUnit").val(result["data"]["queryOrganizerByOrganizerId"].organizerUnit);
                     $("#organizerPhone").val(result["data"]["queryOrganizerByOrganizerId"].organizerPhone);
@@ -354,7 +354,7 @@
                 success:function (result) {
                     //获取到所有会议
                     var listConferences = "";
-                    console.dir(result["data"]["trueConferencesList"]);
+                    // console.dir(result["data"]["trueConferencesList"]);
                     result["data"]["trueConferencesList"].forEach( (conference) => {
 
                         listConferences +=' <tr>\n' +
@@ -397,8 +397,8 @@
                             processData:false,
                             contentType:false,
                             success:function (result) {
-                                console.dir(result);
-                                console.dir(result["message"]);
+                                // console.dir(result);
+                                // console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
                                     $.alert({
@@ -477,7 +477,7 @@
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    console.dir(result);
+                    // console.dir(result);
                 },
                 error:function () {
                     $.alert({
@@ -502,7 +502,7 @@
                     //获取到所有车队
                     // console.dir(result);
                     var listFleets = "";
-                    console.dir(result["data"]["getAllFleet"]);
+                    // console.dir(result["data"]["getAllFleet"]);
                     result["data"]["getAllFleet"].forEach( (fleet) => {
 
                         listFleets +=' <tr>\n' +
@@ -540,8 +540,8 @@
                             processData:false,
                             contentType:false,
                             success:function (result) {
-                                console.dir(result);
-                                console.dir(result["message"]);
+                                // console.dir(result);
+                                // console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
                                     $.alert({
@@ -571,7 +571,7 @@
         }
 
         function updateFleet(fleetId){
-            console.dir(fleetId);
+            // console.dir(fleetId);
             // console.dir(organizerId);
             // console.dir(hotelId);
             // console.dir(fleetId);
@@ -584,7 +584,7 @@
                 contentType:false,
                 success:function (result) {
                     //获取到车队信息
-                    console.dir(result);
+                    // console.dir(result);
                     var fleet = result.data.findFleetById;
                     $("#fleet-Id").val(fleet.fleetId);
                     $("#fleet-Name").val(fleet.fleetName);
@@ -609,7 +609,7 @@
                 processData:false,
                 contentType:false,
                 success:function (result) {
-                    console.dir(result);
+                    // console.dir(result);
                 },
                 error:function () {
                     $.alert({
@@ -632,10 +632,10 @@
                 contentType:false,
                 success:function (result) {
                     //获取到所有司机
-                    console.dir(result);
+                    // console.dir(result);
                     var listDrivers = "";
                     result = result["data"]["getAllDriver"];
-                    console.dir(result);
+                    // console.dir(result);
                     for(var i in result)
                      {
                         listDrivers +=' <tr>\n' +
@@ -717,7 +717,7 @@
                 success:function (result) {
                     //获取到司机信息
                     result = result.data.getDriverById;
-                   console.dir(result);
+                   // console.dir(result);
                    $("#driverId").val(result[0].driverId);
                    $("#driverName").val(result[0].driverName);
                    $("#driverPhone").val(result[0].driverPhone);
@@ -746,7 +746,7 @@
                 processData:false,
                 contentType: "application/json;charset=UTF-8",
                 success:function (result) {
-                    console.dir(result);
+                    // console.dir(result);
                 },
                 error:function () {
                     $.alert({
@@ -812,8 +812,8 @@
                             processData:false,
                             contentType:false,
                             success:function (result) {
-                                console.dir(result);
-                                console.dir(result["message"]);
+                                // console.dir(result);
+                                // console.dir(result["message"]);
                                 if( result["message"] == "成功" )
                                 {
                                     $.alert({

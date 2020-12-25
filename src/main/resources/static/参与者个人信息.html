@@ -36,10 +36,9 @@
     <![endif]-->
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
-<!--    <link href="jquery-confirm-v3.3.4/dist/jquery-confirm.min.css" rel="stylesheet">-->
-<!--    <script src="jquery-confirm-v3.3.4/dist/jquery-confirm.min.js"></script>-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>-->
+    <script src="admin/deleteURL.js"></script>
+    <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+    <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
     <script>
 
     </script>
@@ -264,7 +263,7 @@
 
 
         <!--Common plugins-->
-        <script src="js/jquery.min.js"></script>
+<!--        <script src="js/jquery.min.js"></script>-->
         <script src="js/popper.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/pace.min.js"></script>
@@ -382,14 +381,23 @@
                 contentType:false,
                 success:function(result) {
                     if (result.message == "成功") {
-                        alert('更新头像成功!');
+                        $.alert({
+                            title: '提示信息',
+                            content: '更新头像成功!',
+                        });
                         window.location.reload();
                     } else {
-                        alert('更新头像失败!');
+                        $.alert({
+                            title: '提示信息',
+                            content: '更新头像失败!',
+                        });
                     }
                 },
                 error:function() {
-                    alert('更新异常!');
+                    $.alert({
+                        title: '提示信息',
+                        content: '更新异常!',
+                    });
                 }
             });
         })
@@ -397,7 +405,6 @@
     })
 
     function updateParticipantInfo(){
-        // console.log(token);
         let participantName = $("#participantName").val();
         let participantJob = $("#participantJob").val();
         let participantWorkUnit = $("#participantWorkUnit").val();
@@ -429,10 +436,12 @@
             success: function (jsonData, result) {
                 jsonData = JSON.parse(jsonData)
                 if (jsonData['code'] === 200) {
-                   alert("修改成功！")
                     window.location.reload();
                 } else {
-                    alert("登录失败，请重试");
+                    $.alert({
+                        title: '提示信息',
+                        content: '更新失败!',
+                    });
                 }
             },
         });
@@ -453,13 +462,13 @@
             success: function (data) {
                 if (data["code"] === 200) {
                     participant = data["data"]["getParticipantInfo"];
-                } else {
-                    alert("获取用户数据失败");
                 }
             },
             error: function () {
-
-                alert("获取用户数据失败");
+                $.alert({
+                    title: '提示信息',
+                    content: '获取用户数据失败!',
+                });
             },
         });
     }

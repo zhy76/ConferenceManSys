@@ -105,7 +105,7 @@ function queryConferenceByConferenceId(){
                 //data = JSON.parse(data)
                 if(data['code']==200){
                     JoinConference = data["data"]["queryConferenceByConferenceId"];
-                    console.log(JoinConference);
+                    // console.log(JoinConference);
                     if (JoinConference.length!=0){
                         showJoinParticipant(i);
 
@@ -131,7 +131,7 @@ function cancelAJoinedConferenceById(participantId,conferenceId){
             headers: {
                 'token': token,
             },
-            url: "/joinConference/cancelAConference",
+            url: "/joinConference/cancelAConferenceByOrganizer",
             type: "get",
             dataType: "json",
             data: {
@@ -139,8 +139,8 @@ function cancelAJoinedConferenceById(participantId,conferenceId){
                 "conferenceId": conferenceId
             },
             success: function (jsonData, result) {
-                console.log(jsonData);
-                console.log(result);
+                // console.log(jsonData);
+                // console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("移除成功");
                     location.reload();
@@ -168,8 +168,8 @@ function confirmAJoinedConferenceById(participantId,conferenceId){
                 "conferenceId": conferenceId
             },
             success: function (jsonData, result) {
-                console.log(jsonData);
-                console.log(result);
+                // console.log(jsonData);
+                // console.log(result);
                 if (jsonData['code'] === 200) {
                     alert("审核成功");
                     location.reload();

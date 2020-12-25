@@ -7,7 +7,25 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>参与者查看会议</title>
     <!-- Common plugins -->
+    <!-- Common plugins -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/simple-line-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/pace.css" rel="stylesheet">
+    <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/nanoscroller.css">
+    <link rel="stylesheet" href="css/metismenu.min.css">
+    <link href="css/c3.min.css" rel="stylesheet">
+    <link href="css/blue.css" rel="stylesheet">
+    <!-- dataTables -->
+    <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="css/style.css" rel="stylesheet">
+<!--    <script src="js/jquery.min.js"></script>-->
 
 
     <link href="会务管理系统样式1/css/bootstrap.min.css" rel="stylesheet">
@@ -47,11 +65,13 @@
     <link href="css/jquery.toast.min.css" rel="stylesheet">
     <!--template css-->
     <link href="css/style.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+     HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+     WARNING: Respond.js doesn't work if you view the page via file://
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+    <script src="admin/deleteURL.js"></script>
+    <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+    <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
     <style type="text/css">
         *{
             margin: 0px;
@@ -104,10 +124,9 @@
             z-index: 99999;
         }
     </style>
-    <![endif]-->
-    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>
-    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
-    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
+<!--    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/lib/jquery.js"></script>-->
+<!--    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>-->
+<!--    <script src="https://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>-->
     <script>
         let organizer;
         let token;
@@ -129,11 +148,9 @@
                 else $('.back-to-top').fadeOut('slow');
             });
             token = localStorage.getItem("conNCU");
-            console.log(token);
             $participantId = parseJwt(token).participantId
             getParticipantInfo($participantId)
             $(".img-circle").attr("src", participant.participantPhoto);
-
             $.ajax({
                 async: false,
                 url: "/conference/showConferences",
@@ -153,22 +170,22 @@
                         var conferenceId = conferences[i].conferenceId;
                         var conferenceInfo = conferences[i].conferenceInfo;
                         var organizerId = conferences[i].organizerId;
-
                         getOrganizerInfo(organizerId);
+
 
                         var organizerUnit = organizer.organizerUnit;
                         var newDate = new Date();
                         let dateToday = "" + newDate.getFullYear() + '-' + fix((newDate.getMonth() + 1), 2) + '-'  + fix(newDate.getDate(), 2) + 'T' + fix(newDate.getHours(),2) + ':' + fix(newDate.getMinutes(), 2);
                         listConference += '   <div class="col-lg-3" style = "margin: 0px 10px;">' +
-                            '                        <a href = "#">' +
+                            '                        <a href = "javascript:void(0);">' +
                             '                            <div class="items">' +
-                            '                                <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
+                            '                                <img class="img-responsive" src="picture/conference-img/conference' + ((i) % 10 + 1).toString() + '-img.jpg" />' +
                             '                                <h4>'+ conferenceName +'</h4>' +
                             '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
                             '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
-                            '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
-                            '                                <a id="info" type="button" class="btn btn-primary" data-toggle="modal" data-target="#lingchen'+conferenceId+'">会议详情</a>' +
-                            '                                <a id="new_add" type="button" class="btn btn-success" data-toggle="modal" data-target="#renyuan'+conferenceId+'">加入会议</a>' +
+                            '                                <p style="margin-bottom: 10px;"> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
+                            '                                <button id="info" type="button" class="btn btn-primary" data-toggle="modal" data-target="#lingchen'+conferenceId+'" style = "margin-left:34px;">会议详情</input>' +
+                            '                                <button id="new_add" type="button" class="btn btn-success" data-toggle="modal" data-target="#renyuan'+conferenceId+'" style = "margin-left:20px;">加入会议</input>' +
                             '                            </div>' +
                             '                        </a>' +
                             '<div class="box">' +
@@ -276,7 +293,10 @@
                     $('#mainContent').html(listConference);
                 },
                 error: function () {
-                    alert("获取会议数据失败");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取会议数据失败!',
+                    });
                 },
             });
         })
@@ -296,13 +316,15 @@
                     organizer = data['data']['getOrganizerInfoById'];
                 },
                 error: function () {
-                    alert("获取用户数据失败2");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取组织者数据失败!',
+                    });
                 },
             });
         }
 
         function attendConference(i,conferenceId){
-            // alert(1)
             let message = "";
             getConferenceInfo(conferenceId)
             let conferenceStart = conference.conferenceStart;
@@ -314,44 +336,31 @@
             let trainNumber = $("#trainNumber"+i).val();
             if(typeof putup == "undefined"){
                 message += "是否住宿必选！\n";
-                // alert("是否住宿必选！")
-                // return
             }
             if(typeof pickup == "undefined"){
                 message += "是否接送必选！\n";
-                // alert("是否接送必选！")
-                // return
             }
             if(toTime ==""){
                 message += "到达时间不能为空！\n";
-                // alert("到达时间不能为空！")
-                // return
             } else if(toTime >= conferenceStart){
                 message += "到达时间不能晚于会议开始时间: " + conferenceStart + "！\n";
-                // alert("到达时间不能晚于会议开始时间！"+conferenceStart)
-                // return
             }
             if(returnTime ==""){
                 message += "离开时间不能为空！\n";
-                // alert("离开时间不能为空！")
-                // return
             } else if(returnTime < conferenceEnd){
                 message += "离开时间不能早于会议结束时间: " + conferenceEnd + "！\n";
-                // alert("离开时间不能早于会议结束时间！"+conferenceEnd)
-                // return
             }
             if(toTime > returnTime){
                 message += "到达时间不能晚于离开时间！\n";
-                // alert("到达时间不能晚于离开时间！")
-                // return
             }
             if(trainNumber ==""){
                 message += "车次/航班号不能为空！\n";
-                // alert("车次/航班号不能为空！")
-                // return
             }
             if(message != ""){
-                alert(message);
+                $.alert({
+                    title: '提示信息',
+                    content: message,
+                });
                 return
             }
             $.ajax({
@@ -372,16 +381,24 @@
                 }),
                 success: function (data) {
                     if(data['code']==200){
-                        alert("申请成功！等待组织者审核！");
+                        $.alert({
+                            title: '提示信息',
+                            content: "申请成功！等待组织者审核！",
+                        });
                         window.location.href = "参与者待审核会议.html";
                     }else{
-                        alert("加入失败！"+ data['message'])
+                        $.alert({
+                            title: '提示信息',
+                            content: "加入失败！"+ data['message'],
+                        });
                         window.location.href = "参与者选择会议.html";
                     }
-                    console.log(data)
                 },
                 error: function () {
-                    alert("获取用户数据失败2");
+                    $.alert({
+                        title: '提示信息',
+                        content: "获取用户数据失败2",
+                    });
                 },
             });
 
@@ -426,11 +443,17 @@
                     if (data["code"] === 200) {
                         participant = data["data"]["getParticipantInfo"];
                     } else {
-                        alert("获取用户数据失败");
+                        $.alert({
+                            title: '提示信息',
+                            content: "获取用户数据失败",
+                        });
                     }
                 },
                 error: function () {
-                    alert("获取用户数据失败");
+                    $.alert({
+                        title: '提示信息',
+                        content: "获取用户数据失败",
+                    });
                 },
             });
         }
@@ -546,26 +569,5 @@
 </section>
 <!--end main content-->
 
-
-
-<!--Common plugins-->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/pace.min.js"></script>
-<script src="js/jasny-bootstrap.min.js"></script>
-<script src="js/jquery.slimscroll.min.js"></script>
-<script src="js/jquery.nanoscroller.min.js"></script>
-<script src="js/metismenu.min.js"></script>
-<script src="js/float-custom.js"></script>
-<!--page script-->
-<script src="js/d3.min.js"></script>
-<script src="js/c3.min.js"></script>
-<!-- iCheck for radio and checkboxes -->
-<script src="js/icheck.min.js"></script>
-<!-- Datatables-->
-<script src="js/jquery.datatables.min.js"></script>
-<script src="js/datatables.responsive.min.js"></script>
-<script src="js/jquery.toast.min.js"></script>
-<script src="js/dashboard-alpha.js"></script>
 </body>
 </html>

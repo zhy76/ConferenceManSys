@@ -27,7 +27,7 @@ public interface AdminDao {
      */
     public List<Admin> queryAdmins();
 
-    public Admin queryAdminByAccountAndPass(@Param("adminAccount")String adminAccount , @Param("adminPass") String adminPass);
+    public Admin queryAdminByAccountAndPass(@Param("adminAccount") String adminAccount, @Param("adminPass") String adminPass);
 
     public int addAdmin(Admin admin);
 

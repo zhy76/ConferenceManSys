@@ -5,9 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>参与者查看会议</title>
-    <!-- Common plugins -->
+    <title>参与者待审核会议</title>
+
     <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/simple-line-icons.css" rel="stylesheet">
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/pace.css" rel="stylesheet">
+    <link href="assets/css/jasny-bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/nanoscroller.css">
+    <link rel="stylesheet" href="css/metismenu.min.css">
+    <link href="css/c3.min.css" rel="stylesheet">
+    <link href="css/blue.css" rel="stylesheet">
+    <!-- dataTables -->
+    <link href="css/jquery.datatables.min.css" rel="stylesheet" type="text/css">
+    <link href="css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="css/jquery.toast.min.css" rel="stylesheet">
+    <!--template css-->
+    <link href="css/style.css" rel="stylesheet">
+
     <link href="会务管理系统样式1/css/bootstrap.min.css" rel="stylesheet">
     <link href="会务管理系统样式1/css/simple-line-icons.css" rel="stylesheet">
     <link href="会务管理系统样式1/css/font-awesome.min.css" rel="stylesheet">
@@ -45,11 +62,13 @@
     <link href="css/jquery.toast.min.css" rel="stylesheet">
     <!--template css-->
     <link href="css/style.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+    <!--     HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries-->
+    <!--     WARNING: Respond.js doesn't work if you view the page via file://-->
     <script src="js/html5shiv.min.js"></script>
     <script src="js/respond.min.js"></script>
+    <script src="admin/deleteURL.js"></script>
+    <link rel="stylesheet" href="admin/jquery-confirm-master/dist/jquery-confirm.min.css">
+    <script src ="admin/jquery-confirm-master/dist/jquery-confirm.min.js"></script>
     <style type="text/css">
         *{
             margin: 0px;
@@ -75,21 +94,17 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .container a:hover div{
             transform: scale(1.15);
             transition: all .65s;
             overflow: hidden;
         }
-
         .container a:hover h4{
             color: #00a0e9;
         }
-
         .container a p span{
             color :#d7d7d7;
         }
-
         .back-to-top {
             position: fixed;
             display: none;
@@ -107,8 +122,6 @@
         }
 
     </style>
-
-    <![endif]-->
 
     <script>
         let participant ;
@@ -144,19 +157,24 @@
                     var unConfirmConferenceList = data['data']['unConfirmConferenceList'];
                     for (let i = 0; i < unConfirmConferenceList.length; i++) {
                         $conferenceId = unConfirmConferenceList[i].conferenceId;
-                        // console.log($conferenceId)
                         getConferenceInfo($conferenceId);
                     }
                     $('#mainContent').html(listConference);
-
                     if (data["code"] === 200) {
-                        alert("获取用户数据成功");
+
+                        // alert("获取用户数据成功");
                     } else {
-                        alert("获取用户数据失败1");
+                        $.alert({
+                            title: '提示信息',
+                            content: '获取会议数据失败!',
+                        });
                     }
                 },
                 error: function () {
-                    alert("获取用户数据失败2");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取会议数据失败!',
+                    });
                 },
             });
         })
@@ -192,20 +210,16 @@
                     var organizerUnit = organizer.organizerUnit;
 
                     listConference += '   <div id= "' + $conferenceId +' " class="col-lg-3" style = "margin: 0px 10px;">' +
-                        '                        <a href = "#">' +
+                        '                        <a href = "javascript:void(0)">' +
                         '                            <div class="items">' +
-                        '                                <img class="img-responsive" src="会务管理系统样式1/picture/conferenceImg.jpeg" />' +
+                        '                                <img class="img-responsive" src="picture/conference-img/conference' + (($conferenceId) % 10 + 1).toString() + '-img.jpg" />' +
                         '                                <h4>'+ conferenceName +'</h4>' +
                         '                                <p> <span class="iconfont icon-dizhi"></span> '+conferenceLocation+'</p>' +
                         '                                <p> <span class="iconfont icon-shijian"></span>'+conferenceStart + '-' +conferenceEnd +'</p>' +
-                        '                                <p> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
+                        '                                <p style="margin-bottom: 10px;"> <span class="iconfont icon-zhubandanwei"></span> '+organizerUnit+'</p>' +
+                        '                                <button id="new_add" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#lingchen'+conferenceId+'" style = "margin-left:34px;">查看详情</button>'+
+                        '                                <button  onclick=\"exitConference('+ conferenceId +')"  class="btn btn-danger" style = "margin-left:20px;">撤销申请</button> '+
                         '                            </div>' +
-                        '                            <div class="form-group">' +
-                        '                               <div class="col-sm-12 text-center" > ' +
-                        '                                  <a id="new_add" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#lingchen'+conferenceId+'">查看详情</a>' +
-                        '                                  <a  onclick=\"exitConference('+ conferenceId +')"  class="btn btn-danger">撤销申请</a> ' +
-                        '                               </div>' +
-                        '                           </div>'+
                         '                        </a>' +
                         '            <div class="modal fade" id="lingchen'+conferenceId+'">' +
                         '                <div class="modal-dialog modal-lg modal_position">' +
@@ -262,7 +276,6 @@
             });
         }
         function exitConference(conferenceId){
-            alert(conferenceId);
             $.ajax({
                 async: false,
                 url: "/joinConference/cancelAConference",
@@ -275,14 +288,23 @@
                 success: function (data) {
                     data = JSON.parse(data)
                     if (data["code"] === 200) {
-                        alert("取消会议成功！");
+                        $.alert({
+                            title: '提示信息',
+                            content: '取消会议成功！!',
+                        });
                         window.location.href = "参与者待审核会议.html"
                     } else {
-                        alert("获取用户数据失败1");
+                        $.alert({
+                            title: '提示信息',
+                            content: '撤销申请失败！!',
+                        });
                     }
                 },
                 error: function () {
-                    alert("获取用户数据失败2");
+                    $.alert({
+                        title: '提示信息',
+                        content: '撤销申请失败！!',
+                    });
                 },
             });
         }
@@ -299,11 +321,13 @@
                 },
                 success: function (data) {
                     data = JSON.parse(data)
-                    // console.log(data['data']['getOrganizerInfo'])
                     organizer = data['data']['getOrganizerInfoById'];
                 },
                 error: function () {
-                    alert("获取用户数据失败2");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取组织者数据失败！!',
+                    });
                 },
             });
         }
@@ -323,11 +347,17 @@
                     if (data["code"] === 200) {
                         participant = data["data"]["getParticipantInfo"];
                     } else {
-                        alert("获取用户数据失败");
+                        $.alert({
+                            title: '提示信息',
+                            content: '获取参与者数据失败！!',
+                        });
                     }
                 },
                 error: function () {
-                    alert("获取用户数据失败");
+                    $.alert({
+                        title: '提示信息',
+                        content: '获取参与者数据失败！!',
+                    });
                 },
             });
         }
@@ -443,27 +473,5 @@
 
 </section>
 <!--end main content-->
-
-
-
-<!--Common plugins-->
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/pace.min.js"></script>
-<script src="js/jasny-bootstrap.min.js"></script>
-<script src="js/jquery.slimscroll.min.js"></script>
-<script src="js/jquery.nanoscroller.min.js"></script>
-<script src="js/metismenu.min.js"></script>
-<script src="js/float-custom.js"></script>
-<!--page script-->
-<script src="js/d3.min.js"></script>
-<script src="js/c3.min.js"></script>
-<!-- iCheck for radio and checkboxes -->
-<script src="js/icheck.min.js"></script>
-<!-- Datatables-->
-<script src="js/jquery.datatables.min.js"></script>
-<script src="js/datatables.responsive.min.js"></script>
-<script src="js/jquery.toast.min.js"></script>
-<script src="js/dashboard-alpha.js"></script>
 </body>
 </html>
