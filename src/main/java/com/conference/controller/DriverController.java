@@ -163,7 +163,6 @@ public class DriverController {
      */
     @RequestMapping("/updateDriver")
     public Result updateDriver(@Validated({DriverRegister.class}) @RequestBody Driver driver, HttpServletRequest request) {
-        System.out.println("POST------------------------------------------------");
         System.out.println(request.getHeader("token"));
         Claims claims = tokenService.parseToken(request.getHeader("token"));
         driver.setDriverId((Integer) claims.get("driverId"));
