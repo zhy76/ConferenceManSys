@@ -274,7 +274,7 @@ function deleteConference(conferenceId){
             console.log(data)
         },
         error: function () {
-            alert("获取用户数据失败!");
+            alert("该会议已存在会员或已选定合作酒店，不可删除!");
         },
     });
 }

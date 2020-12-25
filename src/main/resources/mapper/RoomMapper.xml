@@ -17,7 +17,7 @@
     </select>
 <!--    酒店房间增加-->
     <insert id="addRoom">
-        INSERT INTO Room(room_id, hotel_id, is_live, room_type)
+        INSERT INTO room(room_id, hotel_id, is_live, room_type)
         VALUES(#{roomId}, #{hotelId}, #{isLive}, #{roomType})
     </insert>
 <!--    删除房间-->

@@ -24,8 +24,6 @@ import com.conference.util.vaild.DriverRegister;
 import com.conference.util.vaild.OrganizerRegister;
 import com.conference.util.vaild.OrganizerRegister;
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -137,8 +135,8 @@ public class ConferenceController {
      * @param conferenceId
      * @return
      */
-    @GetMapping("/deleteConference/{conferenceId}")
-    public Result deleteConference(@PathVariable("conferenceId") Integer conferenceId) {
+    @GetMapping("/deleteConference")
+    public Result deleteConference(@RequestParam("conferenceId") Integer conferenceId) {
         conferenceService.deleteConference(conferenceId);
 //        if (driverNum < 1) return new Result(ResultCode.FAIL);
         return Result.success();

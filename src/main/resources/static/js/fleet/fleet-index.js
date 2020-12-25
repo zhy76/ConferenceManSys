@@ -291,7 +291,6 @@ function submitChange() {
      *
      */
     if (validForm().form()) {
-        alert(1);
         $.ajax({
             async: false,
             type: "POST",

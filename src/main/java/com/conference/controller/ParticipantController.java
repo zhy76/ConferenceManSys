@@ -11,8 +11,6 @@ import com.conference.service.ParticipantService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,15 +143,15 @@ public class ParticipantController {
     }
 
 
-    //管理员查看所有的参加者
-    @RequestMapping("/showParticipants")
-    @ResponseBody
-    public Result showParticipants(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
-        PageHelper.startPage(pageNum,pageSize);
-        List<Participant> ParticipantList = participantService.queryParticipants();
-        PageInfo<Participant> pi = new PageInfo<>(ParticipantList);
-        return  Result.success(pi.getList());
-    }
+//    //管理员查看所有的参加者
+//    @RequestMapping("/showParticipants")
+//    @ResponseBody
+//    public Result showParticipants(@RequestParam("pageNum") Integer pageNum,@RequestParam("pageSize") Integer pageSize){
+//        PageHelper.startPage(pageNum,pageSize);
+//        List<Participant> ParticipantList = participantService.queryParticipants();
+//        PageInfo<Participant> pi = new PageInfo<>(ParticipantList);
+//        return  Result.success(pi.getList());
+//    }
 
     //管理员根据姓名查找所有的参加者
     @PostMapping("/queryParticipantsByParticipantName")

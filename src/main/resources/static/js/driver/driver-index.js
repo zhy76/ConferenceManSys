@@ -18,18 +18,17 @@ $(function () {
     if (token == null || token == "null" || typeof ($driverId) == "undefined" || $driverId == undefined) {//未登录
         console.log("未登录");
         localStorage.setItem("conNCU", null);
-        alert(2);
         $.alert({
             title: '提示信息',
             content: '请先登录！',
         });
-        window.location.href = "popupsignin.html";
+        window.location.href = "login.html";
     } else if (parseJwt(token).role !== "driver") {
         $.alert({
             title: '提示信息',
             content: 'token错误',
         });
-        window.location.href = "popupsignin.html";
+        window.location.href = "login.html";
     }
 
     getDriverInfo($driverId);
@@ -38,8 +37,12 @@ $(function () {
     /**
      * 点击->个人信息
      */
+    $("#img-circle a ").click(function () {
+        // console.log("信息获取");
+        showDriverInfo();
+    })
     $("#to-info a").click(function () {
-            console.log("信息获取");
+            // console.log("信息获取");
             showDriverInfo();
         }
     )

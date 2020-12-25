@@ -26,7 +26,7 @@
     </select>
 
     <insert id="addOrganizer">
-        INSERT INTO organizer
+        INSERT INTO organizer(organizer_id, organizer_pass, organizer_phone, organizer_unit, organizer_email)
         VALUES(null,#{organizerPass}, #{organizerPhone}, #{organizerUnit}, #{organizerEmail})
     </insert>
 

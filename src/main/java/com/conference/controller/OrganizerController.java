@@ -7,8 +7,8 @@ import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
 import com.conference.util.vaild.OrganizerLogin;
 import com.conference.util.vaild.OrganizerRegister;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+//import com.github.pagehelper.PageHelper;
+//import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -147,18 +147,18 @@ public class OrganizerController {
      * 管理员管理组织者模块
      */
 
-    /**
-     * 管理员查看所有组织者信息
-     * @return
-     */
-    @PostMapping("/showOrganizers")
-    @ResponseBody
-    public Result showOrganizers(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
-        PageHelper.startPage(pageNum,pageSize);
-        List<Organizer> organizersList = organizerService.findAllOrganizer();
-        PageInfo<Organizer>pi = new PageInfo<>(organizersList);
-        return  Result.success(pi.getList());
-    }
+//    /**
+//     * 管理员查看所有组织者信息
+//     * @return
+//     */
+//    @PostMapping("/showOrganizers")
+//    @ResponseBody
+//    public Result showOrganizers(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+//        PageHelper.startPage(pageNum,pageSize);
+//        List<Organizer> organizersList = organizerService.findAllOrganizer();
+//        PageInfo<Organizer>pi = new PageInfo<>(organizersList);
+//        return  Result.success(pi.getList());
+//    }
 
     /**
      * 管理员根据ID查看组织者信息

@@ -1,8 +1,6 @@
 package com.conference.service;
 
 import com.conference.entity.Participant;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 

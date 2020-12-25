@@ -24,18 +24,18 @@ $(function () {
     /**
      * 点击->个人信息
      */
-    $("#to-info a").click(function () {
-
-            showOrganizerInfo();
-
-        }
-    )
-    // $("#to-info a").ready(function () {
+    // $("#to-info a").click(function () {
     //
     //         showOrganizerInfo();
     //
     //     }
     // )
+    $("#to-info a").ready(function () {
+
+            showOrganizerInfo();
+
+        }
+    )
     // /**
     //  * 点击->待接送
     //  */

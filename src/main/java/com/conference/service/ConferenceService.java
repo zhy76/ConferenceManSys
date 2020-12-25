@@ -9,7 +9,6 @@ package com.conference.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.conference.entity.Conference;
-import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 

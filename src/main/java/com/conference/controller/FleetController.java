@@ -9,8 +9,6 @@ import com.conference.service.PickUpService;
 import com.conference.service.TokenService;
 import com.conference.util.result.Result;
 import com.conference.util.result.ResultCode;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -143,19 +141,19 @@ public class FleetController {
         return Result.success("getAllFleet", getAllFleet);
     }
 
-    /**
-     * 查找所有车队 Api
-     * /fleet/getAllFleet
-     *
-     * @return result {}
-     */
-    @PostMapping("/getAllFleetByAdmin")
-    public Result getAllFleetByAdmin(@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<Fleet> getAllFleet = fleetService.findAllFleet();
-        PageInfo<Fleet> pi = new PageInfo<>(getAllFleet);
-        return Result.success("getAllFleet", pi.getList());
-    }
+//    /**
+//     * 查找所有车队 Api
+//     * /fleet/getAllFleet
+//     *
+//     * @return result {}
+//     */
+//    @PostMapping("/getAllFleetByAdmin")
+//    public Result getAllFleetByAdmin(@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
+//        PageHelper.startPage(pageNum,pageSize);
+//        List<Fleet> getAllFleet = fleetService.findAllFleet();
+//        PageInfo<Fleet> pi = new PageInfo<>(getAllFleet);
+//        return Result.success("getAllFleet", pi.getList());
+//    }
 
 
     /**
